@@ -61,7 +61,6 @@ window.onload = function(){
 	    });
 		if( (location.href.indexOf('#spheres-address') > -1 ||
 			 location.href.indexOf('#spheres-filters') > -1 ||
-			 location.href.indexOf('#spheres-create-vote') > -1 ||
 			 location.href.indexOf('#spheres-trust') > -1 ||
 			 location.href.indexOf('#spheres-trust-vote') > -1) &&	( SPHERES.spheres_array.length == 0 && SUPER_PROFILE.auth == true) ){
 			SPHERES.initial();
@@ -135,7 +134,12 @@ window.onload = function(){
 
 		if(location.href.indexOf('#my-fund-page') > -1){
 			console.log('load fund');
-			funds.init();
+			function temp_callback(){
+				return function(){
+					PIF.get_pif_array();
+				}
+			}
+			funds.init( temp_callback() );
 		}
 
 		if( ( location.href.indexOf('#trust-list') > -1 ||
@@ -155,6 +159,15 @@ window.onload = function(){
 			ask_login();
 		}
 
+		if( (
+			  location.href.indexOf('#create-item') > -1 ||
+			  location.href.indexOf('#history-page') > -1 ||
+			  location.href.indexOf('#project-page') > -1 ||
+			  location.href.indexOf('#program-page') > -1 ||
+			  location.href.indexOf('#request-page') > -1) && SUPER_PROFILE.auth == true){
+			PIF.get_pif_array();
+		}
+
 		if(location.href.indexOf('#trust-list') > -1 && SUPER_PROFILE.auth == true){
 			$('#trusted_checkbox').data('checked', false);
 			$('#trusted_checkbox').click();
@@ -167,6 +180,7 @@ window.onload = function(){
 			//$('[name=trusted_checkbox]').data('cacheval', false);
 			//$('#trusted_checkbox').click();
 		}
+
 		if(( location.href.indexOf('#edit-address') > -1 || 
 			 location.href.indexOf('#address-item-1') > -1 ||
 			 location.href.indexOf('#address-item-2') > -1 ||
@@ -175,6 +189,7 @@ window.onload = function(){
 				ADRESS.init();
 			}
 		}
+
 		if(location.href.indexOf('#spheres-filters') > -1 && SUPER_PROFILE.auth == true){
 			//SPHERES.set_spheres_filters();
 			$('#spheres-filters select').selectmenu().selectmenu("refresh", true);
@@ -383,6 +398,13 @@ window.onload = function(){
 	PROJECTS.build_history_page();
 	REQUESTS.build_history_page();
 	CREATE_ITEM.check_item();
+
+	try{
+		$('#select-lang-button span').html('Українська')
+		$('#select-lang').selectmenu("refresh", true);
+	}catch(e){
+		console.log('exception catched, all ok');
+	}
 };
 
 window.onhashchange = function(){
@@ -405,13 +427,6 @@ window.onhashchange = function(){
 		ask_login();
 	}
 
-	if( (location.href.indexOf('#spheres-address') > -1 ||
-		 location.href.indexOf('#spheres-filters') > -1 ||
-		 location.href.indexOf('#spheres-create-vote') > -1 ||
-		 location.href.indexOf('#spheres-trust') > -1 ||
-		 location.href.indexOf('#spheres-trust-vote') > -1) &&	( SPHERES.spheres_array.length == 0 && SUPER_PROFILE.auth == true) ){
-		SPHERES.initial();
-	}
 	if(location.href.indexOf('#address-item-1') > -1){
 		$('#address-item-1 #delete_address').attr('style', 'display: none');
 	}
@@ -459,7 +474,12 @@ window.onhashchange = function(){
 
 	if(location.href.indexOf('#my-fund-page') > -1 && location.href.indexOf('&ui-state=dialog') == -1){
 			console.log('load fund');
-			funds.init();
+			function temp_callback(){
+				return function(){
+					PIF.get_pif_array();
+				}
+			}
+			funds.init( temp_callback() );
 		}
 
 	if(location.href.indexOf('#create-item-nko-page') > -1){
@@ -603,7 +623,7 @@ window.onhashchange = function(){
 		funds.set_pif_options_transaction_page('#transaction-page');
 	}
 	if(location.href.indexOf('#my-fund-page') > -1){
-		funds.set_pif_options_transaction_page('#my-fund-page');
+		//funds.set_pif_options_transaction_page('#my-fund-page');
 		//funds.current_fund_history();
 	}		
 
@@ -622,6 +642,8 @@ window.onhashchange = function(){
 	CREATE_ITEM.check_item();
 	funds.current_fund_history();
 	try{
+		var new_lang = $('#select-lang').find("option:selected").val();
+        $('#select-lang > option[value="' + new_lang + '"]').attr('selected', 'selected');
 		$('#select-lang').selectmenu("refresh", true);
 	}catch(e){
 		console.log('exception catched, all ok');
@@ -846,6 +868,11 @@ var COMMON_OBJECT = {
 				//$(object).html('Hide filter');
 				//$(object).data('show', 0);
 				break;
+		}
+	},
+	free_callbacker: function(callback_function){
+		if(callback_function){
+			callback_function();
 		}
 	}
 };
@@ -1211,20 +1238,14 @@ var CREATE_VOTE = {
 
 var PIF = {
 	pif_array: [],
-	get_pif_array: function(){
+	get_pif_array: function(force_get_array, callback_function ){
 		var self = this;
-		$.ajax({
-		  	url: "http://gurtom.mobi/fund_user.php",
-		  	type: "GET",
-		  	xhrFields: {
-	       		withCredentials: true
-	      	},
-         	crossDomain: true,
-		  	complete: function( response ){
-		  		self.pif_array =  JSON.parse( response.responseText );
-		  		var ui_pif_option = '';
+
+		function temp_callback(){
+			return function(){
+				var ui_pif_option = '';
 		  		var unique_array = [];
-		  		var temp_flag = 0;
+		  		var temp_flag = 0;		  		
 		    	jQuery.each(self.pif_array, function(i, one_pif) {
 		    		switch(one_pif.currency){
 		    			case "1":
@@ -1260,9 +1281,33 @@ var PIF = {
 				}
 				if(location.href.indexOf('#my-fund-page') > -1){
 					funds.set_pif_options_transaction_page('#my-fund-page');	
-				}		    	
-		  	}
-		});
+				}
+			}
+		}
+
+		if(funds.arr && !force_get_array && !callback_function){
+			self.pif_array = funds.arr;
+			COMMON_OBJECT.free_callbacker( temp_callback() );
+		}else{
+			console.log(force_get_array);
+			console.log(funds.arr);
+			console.log('pif here');
+			$.ajax({
+			  	url: "http://gurtom.mobi/fund_user.php",
+			  	type: "GET",
+			  	xhrFields: {
+		       		withCredentials: true
+		      	},
+	         	crossDomain: true,
+			  	complete: function( response ){
+			  		self.pif_array =  JSON.parse( response.responseText );	
+			  		COMMON_OBJECT.free_callbacker( temp_callback() );
+			  		if( callback_function ){
+			  			callback_function();
+			  		}	  				    	
+			  	}
+			});
+		}
 	},
 	get_currency_name_by_id: function(currency_id){
 		switch(currency_id){
@@ -1292,6 +1337,62 @@ var PIF = {
 				break;
   		}
   		return currency_name;
+	},
+	set_select_input: function(selector_container, object_name, special_type, id_object, code_type_object, currency_asking){
+		var self = this;
+		function temp_callback(selector_container, object_name, special_type, id_object, code_type_object, currency_asking){
+			return function(){				
+				var ui_pif_option = '';
+		    	var flag_selected = 0;
+		    	jQuery.each(self.pif_array, function(i, one_pif) {
+		    		if(one_pif.currency == currency_asking){
+		    			ui_pif_option += '<option data-currency = "' + one_pif.currency + '" value="' + one_pif.id + '">' + one_pif.id + ' - ' + one_pif.saldo + '</option>';
+		    			flag_selected = 1;
+		    		}
+		    	});
+
+		    	if(flag_selected == 1){
+		    		var ui_donate_panel = '<div class="ui-grid-a">\
+					                        <div class="ui-block-a">\
+					                            <div>\
+					                                <label>Choose PIF</label><select name="pif">\
+					                                ' + ui_pif_option + '\
+					                                </select>\
+					                            </div>\
+					                        </div>\
+					                        <div class="ui-block-b">\
+					                            <div class="text-field">\
+					                                <label>Amount of money</label>\
+					                                <div class="ui-input-text">\
+					                                    <input type="text" name="amount" data-enhanced="true" />\
+					                                </div>\
+					                            </div>\
+					                        </div>\
+					                    </div>\
+					                    <div class="ui-grid-solo">\
+					                        <div class="ui-block-a">\
+					                            <button onclick = "' + object_name + '.donate(\'' + special_type + '\', ' + id_object + ', ' + code_type_object + ')" class="ui-btn ui-corner-all ui-shadow donate-btn">Donate</button>\
+					                        </div>\
+					                        <div class="ui-block-a center">\
+					                            <div class="ui-checkbox">\
+					                                <label id = "anonimous_check" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Anonymous donation</label><input type="checkbox" name="" value="1" data-enhanced="true" />\
+					                            </div>\
+					                        </div>\
+					                    </div>\
+					                </div>\ ';
+		    	}else{
+	    			if(SUPER_PROFILE.auth == true){
+		    			var warning_link = '<a href = "#my-fund-page">My funds</a>';
+		    		}else{
+		    			var warning_link = '<a href = "#registration">Registration</a>';
+		    		}
+		    		var ui_donate_panel = '<span>' + LOCALE_ARRAY_ADDITIONAL.warning_donate[CURRENT_LANG] +' ' + warning_link + '</span>';
+		    	}
+		    	$(selector_container + ' .donate-wrap').html(ui_donate_panel);
+		    	$(selector_container + ' select').selectmenu().selectmenu("refresh", true);
+			}
+		}
+		self.get_pif_array( true, temp_callback( selector_container, object_name, special_type, id_object, code_type_object, currency_asking ) );
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////Projects 
@@ -1845,12 +1946,17 @@ var PROJECTS = {
 			                    </div>\
 			                </div>\ ';
     	}else{
-    		if(SUPER_PROFILE.auth == true){
-    			var warning_link = '<a href = "#my-fund-page">My funds</a>';
+    		if(PIF.pif_array.length == 0){
+    			var ui_donate_panel = '';
+    			PIF.set_select_input('#project-page', 'PROJECTS', 'project', data_for_build.id, 4, data_for_build.currency_asking);
     		}else{
-    			var warning_link = '<a href = "#registration">Registration</a>';
+    			if(SUPER_PROFILE.auth == true){
+	    			var warning_link = '<a href = "#my-fund-page">My funds</a>';
+	    		}else{
+	    			var warning_link = '<a href = "#registration">Registration</a>';
+	    		}
+	    		var ui_donate_panel = '<span>' + LOCALE_ARRAY_ADDITIONAL.warning_donate[CURRENT_LANG] +' ' + warning_link + '</span>';
     		}
-    		var ui_donate_panel = '<span>' + LOCALE_ARRAY_ADDITIONAL.warning_donate[CURRENT_LANG] +' ' + warning_link + '</span>';
     	}
 
     	var ui_string = '';
@@ -2050,12 +2156,17 @@ var PROJECTS = {
 			                    </div>\
 			                </div>\ ';
     	}else{
-    		if(SUPER_PROFILE.auth == true){
-    			var warning_link = '<a href = "#my-fund-page">My funds</a>';
+    		if(PIF.pif_array.length == 0){
+    			var ui_donate_panel = '';
+    			PIF.set_select_input('#project-page', 'PROJECTS', 'project', data_for_build.id, 3, data_for_build.currency_asking);
     		}else{
-    			var warning_link = '<a href = "#registration">Registration</a>';
+    			if(SUPER_PROFILE.auth == true){
+	    			var warning_link = '<a href = "#my-fund-page">My funds</a>';
+	    		}else{
+	    			var warning_link = '<a href = "#registration">Registration</a>';
+	    		}
+	    		var ui_donate_panel = '<span>' + LOCALE_ARRAY_ADDITIONAL.warning_donate[CURRENT_LANG] +' ' + warning_link + '</span>';
     		}
-    		var ui_donate_panel = '<span>' + LOCALE_ARRAY_ADDITIONAL.warning_donate[CURRENT_LANG] +' ' + warning_link + '</span>';
     	}
 
     	var ui_string = '';
@@ -2248,9 +2359,9 @@ var PROJECTS = {
 		});
 	},
 	get_one_element: function(data_id, type_trigger, project_proposition){
-		var url = 'http://gurtom.mobi/project.php?filter=' + data_id;
+		var url = 'http://gurtom.mobi/project.php?id=' + data_id;
 		if(project_proposition){
-			url = 'http://gurtom.mobi/project_propositions.php?filter=' + data_id;			
+			url = 'http://gurtom.mobi/project_propositions.php?id=' + data_id;			
 		}
 		var self = this;
 		var return_element;
@@ -2468,7 +2579,7 @@ var PROJECTS = {
 	        complete: function(data){
         		alert(LOCALE_ARRAY_ADDITIONAL.return_donate_successfull[CURRENT_LANG]);
         		console.log(return_page);
-        		PIF.get_pif_array();
+        		PIF.get_pif_array(true);
         		$.mobile.navigate(return_page);
 	            //alert('okay');
 	        }
@@ -3014,12 +3125,17 @@ var PROGRAMS = {
 			                    </div>\
 			                </div>\ ';
     	}else{
-    		if(SUPER_PROFILE.auth == true){
-    			var warning_link = '<a href = "#my-fund-page">My funds</a>';
+    		if(PIF.pif_array.length == 0){
+    			var ui_donate_panel = '';
+    			PIF.set_select_input('#program-page', 'PROGRAMS', 'program', data_for_build.id, 2, data_for_build.currency_asking);
     		}else{
-    			var warning_link = '<a href = "#registration">Registration</a>';
+    			if(SUPER_PROFILE.auth == true){
+	    			var warning_link = '<a href = "#my-fund-page">My funds</a>';
+	    		}else{
+	    			var warning_link = '<a href = "#registration">Registration</a>';
+	    		}
+	    		var ui_donate_panel = '<span>' + LOCALE_ARRAY_ADDITIONAL.warning_donate[CURRENT_LANG] +' ' + warning_link + '</span>';
     		}
-    		var ui_donate_panel = '<span>' + LOCALE_ARRAY_ADDITIONAL.warning_donate[CURRENT_LANG] +' ' + warning_link + '</span>';
     	}
 
     	var ui_string = '';
@@ -3412,7 +3528,7 @@ var PROGRAMS = {
 	        complete: function(data){
         		alert(LOCALE_ARRAY_ADDITIONAL.return_donate_successfull[CURRENT_LANG]);
         		console.log(return_page);
-        		PIF.get_pif_array();
+        		PIF.get_pif_array(true);
         		$.mobile.navigate(return_page);
 	            //alert('okay');
 	        }
@@ -3961,12 +4077,17 @@ var REQUESTS = {
 			                    </div>\
 			                </div>\ ';
     	}else{
-    		if(SUPER_PROFILE.auth == true){
-    			var warning_link = '<a href = "#my-fund-page">My funds</a>';
+    		if(PIF.pif_array.length == 0){
+    			var ui_donate_panel = '';
+    			PIF.set_select_input('#request-page', 'REQUESTS', 'request', data_for_build.id, 5, data_for_build.currency_asking);
     		}else{
-    			var warning_link = '<a href = "#registration">Registration</a>';
+    			if(SUPER_PROFILE.auth == true){
+	    			var warning_link = '<a href = "#my-fund-page">My funds</a>';
+	    		}else{
+	    			var warning_link = '<a href = "#registration">Registration</a>';
+	    		}
+	    		var ui_donate_panel = '<span>' + LOCALE_ARRAY_ADDITIONAL.warning_donate[CURRENT_LANG] +' ' + warning_link + '</span>';
     		}
-    		var ui_donate_panel = '<span>' + LOCALE_ARRAY_ADDITIONAL.warning_donate[CURRENT_LANG] +' ' + warning_link + '</span>';
     	}
 
     	var ui_string = '';
@@ -4356,7 +4477,7 @@ var REQUESTS = {
 	        complete: function(data){
         		alert(LOCALE_ARRAY_ADDITIONAL.return_donate_successfull[CURRENT_LANG]);
         		console.log(return_page);
-        		PIF.get_pif_array();
+        		PIF.get_pif_array(true);
         		$.mobile.navigate(return_page);
 	            //alert('okay');
 	        }
@@ -4385,11 +4506,8 @@ var funds = {
         "840" : "USD",
         "978" : "EUR"
     },
-    init : function(){
-        this.get();
-    },
-    get : function(){
-        var self = this;
+    init : function(callback_function){
+    	var self = this;
         $.ajax({
             url: "http://gurtom.mobi/fund_user.php",
             type: "GET",
@@ -4400,8 +4518,16 @@ var funds = {
             complete: function(data){
                 self.arr = JSON.parse(data.responseText);
                 self.build_page(self.arr);
+                if(callback_function){
+                	console.log('callback');
+                	callback_function();
+                	
+                }
             }
         });
+    },
+    get : function( ){
+        alert('repare this');
     },
     build_fund : function(fund){
         var currency_str = this.currency[fund.currency];
@@ -4487,14 +4613,12 @@ var funds = {
         var build_string_list = "";
         var build_string_select = '<label>Choose Fund</label><select id="select-pay-block">';
         jQuery.each(data,function(i , one_data){
-            console.log(self);
             build_string_list += self.build_fund(one_data);
             build_string_select += self.build_fund_select(one_data);
 
         });
         build_string_select += '</select>';
         $(".fund-list").html(build_string_list);
-        console.log(build_string_select);
         $(".fund-list").next().find("form .select-field").html(build_string_select);
         $("#select-pay-block").selectmenu().selectmenu("refresh", true);
         $("#select-pay-block").change(function(){
@@ -5599,11 +5723,15 @@ var WEIGHTED_VOTINGS = {
 		  },
 		});
 	},
-	get_open_voters_list:function(vote_id){
+	get_open_voters_list:function(vote_id, idu_input){
 		var self = this;
 		$.mobile.loading( "show", {  theme: "z"	});
+		var filter_id = '';
+		if(idu_input){
+			filter_id = '&idu=' + $(idu_input).val();
+		}
 		$.ajax({
-		  url: 'http://gurtom.mobi/vote_open.php?id=' + vote_id,
+		  url: 'http://gurtom.mobi/weighted_vote_open.php?id=' + vote_id + filter_id,
 		  type: "GET",
 		  xhrFields: {
 	       withCredentials: true
@@ -5624,7 +5752,7 @@ var WEIGHTED_VOTINGS = {
 					        <h1>\
 					            ' + LOCALE_ARRAY_ADDITIONAL.voters[CURRENT_LANG] + '\
 					        </h1>\
-					        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" href="#weighted-vote-page?vote=' + vote_id + '">' + LOCALE_ARRAY_ADDITIONAL.back[CURRENT_LANG] + '</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#voters-help">' + LOCALE_ARRAY_ADDITIONAL.ask[CURRENT_LANG] + '</a>\
+					        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate(\'#weighted-vote-page?vote=' + vote_id + '\')" href="">' + LOCALE_ARRAY_ADDITIONAL.back[CURRENT_LANG] + '</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#voters-help">' + LOCALE_ARRAY_ADDITIONAL.ask[CURRENT_LANG] + '</a>\
 					        <div id="voters-help" class="help-popup" data-role="popup" data-history="false">\
 					            <div class="title">\
 					                ' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
@@ -5637,7 +5765,7 @@ var WEIGHTED_VOTINGS = {
 					    <div role="main" class="ui-content">\
 					        <form action="" accept-charset="UTF-8" method="post">\
 					                <div class="ui-input-search ui-input-has-clear">\
-					                    <input type="search" name="" placeholder="Search" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">' + LOCALE_ARRAY_ADDITIONAL.clear_text[CURRENT_LANG] + '</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />\
+					                    <input id = "filter_input" onkeyup="WEIGHTED_VOTINGS.get_open_voters_list(\'' + vote_id + '\', this)" type="search" name="" placeholder="Search" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">' + LOCALE_ARRAY_ADDITIONAL.clear_text[CURRENT_LANG] + '</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />\
 					                </div></form>\
 					        <div class="ui-grid-b voters-list">\
 						        <div class="ui-block-a">\
@@ -5666,7 +5794,7 @@ var WEIGHTED_VOTINGS = {
 		                        <img src="http://' + one_voter.avatar + '" />\
 		                    </div>\
 		                    <div class="id">\
-		                        ID:' + one_voter.id + '\
+		                        ID:' + one_voter.user_id + '\
 		                    </div>\
 		                    <div class="name">\
 		                        ' + one_voter.name + '\
@@ -6136,7 +6264,7 @@ var SPHERES = {
 			  selector_name: "local_self_goverments",
 			  type: 10,
 			  objects: []}*/],
-	initial: function(){
+	initial: function(callback_function){
 		var self = this;
 		$.mobile.loading( "show", {  theme: "z"	});
 		self.spheres[0].name =  LOCALE_ARRAY_ADDITIONAL.votings_by_sphere[CURRENT_LANG];
@@ -6163,7 +6291,11 @@ var SPHERES = {
 		  		self.set_spheres_and_listeners();
 		  		self.set_spheres_filters();
 		  		//self.set_spheres_create_vote();
-		  		$.mobile.loading( "hide" );	  	
+		  		$.mobile.loading( "hide" );
+		  		
+		  		if(callback_function)
+		  			callback_function();
+		  			  	
 		  },
 		});
 	},
@@ -6399,64 +6531,76 @@ var SPHERES = {
 	},
 	set_spheres_create_vote: function(){
 		var self = this;
-		var ui_string = '<legend>' + LOCALE_ARRAY_ADDITIONAL.choose_sphere[CURRENT_LANG] + '</legend>';
 
-		for ( var i = 0; i < SPHERES.spheres.length; i++ ) {
-			if(SPHERES.spheres[i].objects.length == 0){
-				ui_string += '<div>\
-				<select class = "non_container" name="' + SPHERES.spheres[i].selector_name + '">\
-					<option value="' + SPHERES.spheres[i].name + '">' + SPHERES.spheres[i].name + '</option>\
-				</select></div>';
+		function temp_callback(){
+			return function(){
+				var ui_string = '<legend>' + LOCALE_ARRAY_ADDITIONAL.choose_sphere[CURRENT_LANG] + '</legend>';
+
+				for ( var i = 0; i < SPHERES.spheres.length; i++ ) {
+					if(SPHERES.spheres[i].objects.length == 0){
+						ui_string += '<div>\
+						<select class = "non_container" name="' + SPHERES.spheres[i].selector_name + '">\
+							<option value="' + SPHERES.spheres[i].name + '">' + SPHERES.spheres[i].name + '</option>\
+						</select></div>';
+					}
+
+					if(SPHERES.spheres[i].objects.length == 1){
+						//console.log('equal one');
+						ui_string += '<div class = "content_value">\
+				                        <select  onchange = "$.mobile.navigate(\'#create-vote\'); $(\'#create-vote [name=sph]\').val($(this).val()); $(\'#create_vote_sphere\').html(\'' + LOCALE_ARRAY_ADDITIONAL.choose_sphere[CURRENT_LANG] + ': ' + SPHERES.spheres[i].name + '\');" name = "' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
+				                            <option>' + SPHERES.spheres[i].name + '</option>';
+				        
+				        for (var j = 0; j < SPHERES.spheres[i].objects[0].sph.length; j++) {
+				        	ui_string += '<option data-checkbox = "1" value = "' + SPHERES.spheres[i].objects[0].sph[j].idc +  '">' + SPHERES.spheres[i].objects[0].sph[j].sphere + '</option>';		        	
+				        }
+
+				        ui_string +=  '</select>\
+				                    </div>';
+					}
+
+					if(SPHERES.spheres[i].objects.length > 1){
+						//console.log('equal more than one');
+						var varable = '#spheres-create-vote #' + SPHERES.spheres[i].selector_name + '_content';
+						ui_string += '<div>\
+				                        <select class = "container" onclick = "SPHERES.show_mini_spheres(\'' + varable + '\');" name="' + SPHERES.spheres[i].selector_name + '"><option value="' + SPHERES.spheres[i].name + '">' + SPHERES.spheres[i].name + '</option></select>\
+				                    </div>';
+				        ui_string += '<div id = "' + SPHERES.spheres[i].selector_name + '_content" style = "display:none;">';
+				        for (var k = 0; k < SPHERES.spheres[i].objects.length; k++) {
+				           ui_string += '<div class = "content_value">\
+				                        <select  onchange = "$.mobile.navigate(\'#create-vote\'); $(\'#create-vote [name=sph]\').val($(this).val()); $(\'#create_vote_sphere\').html(\'' + LOCALE_ARRAY_ADDITIONAL.choose_sphere[CURRENT_LANG] + ': ' + SPHERES.spheres[i].name + '\');" data-mini="true" name ="' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
+				                            <option>' + SPHERES.spheres[i].objects[k].org + '</option>';
+					        
+					        for (var j = 0; j < SPHERES.spheres[i].objects[k].sph.length; j++) {
+								ui_string += '<option data-checkbox = "1"  value = "' + SPHERES.spheres[i].objects[k].sph[j].idc +  '">' + SPHERES.spheres[i].objects[k].sph[j].sphere + '</option>';			        	
+					        }
+					        ui_string +=  '</select>\
+				                    </div>'; 
+				        }
+				        ui_string += '</div>';		        
+					}
+				}
+				console.log('second');
+				$('#spheres-create-vote #sphere_form').html(ui_string);
+				var arr = $('#spheres-create-vote #sphere_form .container option');
+				for (var i = 0; i < arr.length; i++) {
+					$(arr[i]).hide();
+				}
+				var arr = $('#spheres-create-vote #sphere_form .non_container');
+				for (var i = 0; i < arr.length; i++) {
+					$(arr[i]).hide();
+				}
+				if(location.href.indexOf('#spheres-create-vote') > -1){
+					$('#spheres-create-vote #sphere_form select').selectmenu().selectmenu("refresh", true);	
+				}
 			}
+		}
 
-			if(SPHERES.spheres[i].objects.length == 1){
-				//console.log('equal one');
-				ui_string += '<div class = "content_value">\
-		                        <select  onchange = "$.mobile.navigate(\'#create-vote\'); $(\'#create-vote [name=sph]\').val($(this).val()); $(\'#create_vote_sphere\').html(\'' + LOCALE_ARRAY_ADDITIONAL.choose_sphere[CURRENT_LANG] + ': ' + SPHERES.spheres[i].name + '\');" name = "' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
-		                            <option>' + SPHERES.spheres[i].name + '</option>';
-		        
-		        for (var j = 0; j < SPHERES.spheres[i].objects[0].sph.length; j++) {
-		        	ui_string += '<option data-checkbox = "1" value = "' + SPHERES.spheres[i].objects[0].sph[j].idc +  '">' + SPHERES.spheres[i].objects[0].sph[j].sphere + '</option>';		        	
-		        }
-
-		        ui_string +=  '</select>\
-		                    </div>';
-			}
-
-			if(SPHERES.spheres[i].objects.length > 1){
-				//console.log('equal more than one');
-				var varable = '#spheres-create-vote #' + SPHERES.spheres[i].selector_name + '_content';
-				ui_string += '<div>\
-		                        <select class = "container" onclick = "SPHERES.show_mini_spheres(\'' + varable + '\');" name="' + SPHERES.spheres[i].selector_name + '"><option value="' + SPHERES.spheres[i].name + '">' + SPHERES.spheres[i].name + '</option></select>\
-		                    </div>';
-		        ui_string += '<div id = "' + SPHERES.spheres[i].selector_name + '_content" style = "display:none;">';
-		        for (var k = 0; k < SPHERES.spheres[i].objects.length; k++) {
-		           ui_string += '<div class = "content_value">\
-		                        <select  onchange = "$.mobile.navigate(\'#create-vote\'); $(\'#create-vote [name=sph]\').val($(this).val()); $(\'#create_vote_sphere\').html(\'' + LOCALE_ARRAY_ADDITIONAL.choose_sphere[CURRENT_LANG] + ': ' + SPHERES.spheres[i].name + '\');" data-mini="true" name ="' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
-		                            <option>' + SPHERES.spheres[i].objects[k].org + '</option>';
-			        
-			        for (var j = 0; j < SPHERES.spheres[i].objects[k].sph.length; j++) {
-						ui_string += '<option data-checkbox = "1"  value = "' + SPHERES.spheres[i].objects[k].sph[j].idc +  '">' + SPHERES.spheres[i].objects[k].sph[j].sphere + '</option>';			        	
-			        }
-			        ui_string +=  '</select>\
-		                    </div>'; 
-		        }
-		        ui_string += '</div>';		        
-			}
-		}
-		$('#spheres-create-vote #sphere_form').html(ui_string);
-		var arr = $('#spheres-create-vote #sphere_form .container option');
-		for (var i = 0; i < arr.length; i++) {
-			$(arr[i]).hide();
-		}
-		var arr = $('#spheres-create-vote #sphere_form .non_container');
-		for (var i = 0; i < arr.length; i++) {
-			$(arr[i]).hide();
-		}
-		if(location.href.indexOf('#spheres-create-vote') > -1){
-			$('#spheres-create-vote #sphere_form select').selectmenu().selectmenu("refresh", true);	
-		}
-	}
+		if(SPHERES.spheres_array.length == 0){
+			self.initial(temp_callback());
+		}else{
+			COMMON_OBJECT.free_callbacker( temp_callback() );			
+		}		
+	},	
 };
 
 
@@ -9207,33 +9351,39 @@ var MY_VOTINGS = {
 var ADRESS = {
 			address_arr: [],
 			init:function(){
-				//if(location.href.indexOf('#address-item') > -1){
-			//		var match_array = location.href.match(/#address-item-[0-9]*/i);
-			//		var object_id = match_array[0].match(/[0-9]+/i);
-			//	}
-				for(var j = 1; j < 4; j++){
-					this.setListener(j);
+				if(location.href.indexOf('#address-item') > -1){
+					var match_array = location.href.match(/#address-item-[0-9]*/i);
+					var object_id = match_array[0].match(/[0-9]+/i);
 
-					function callback_country(j){
+					this.setListener(object_id);
+
+					function callback_country(object_id){
 				        return function(){
-				        	ADRESS.selectCountry(j, $('#address-item-' + j + ' [name=country] > option:eq(0)').val());
-				        	if(location.href.indexOf('#address-item-' + j) > -1){
-			          			$('#address-item-' + j + ' [name=country]').selectmenu("refresh", true);								
+				        	ADRESS.selectCountry(object_id, $('#address-item-' + object_id + ' [name=country] > option:eq(0)').val());
+				        	if(location.href.indexOf('#address-item-' + object_id) > -1){
+			          			$('#address-item-' + object_id + ' [name=country]').selectmenu("refresh", true);								
 							}
-							ADRESS.enable(j, 'state');				   
+							ADRESS.enable(object_id, 'state');				   
 				        }  						
 				    }
 
-					this.getCountry(j, callback_country(j));
-					this.disable(j, 'state');
-					this.disable(j, 'county');
-					this.disable(j, 'city');
-					this.disable(j, 'index');
-				}				
+					this.getCountry(object_id, callback_country(object_id));
+					this.disable(object_id, 'state');
+					this.disable(object_id, 'county');
+					this.disable(object_id, 'city');
+					this.disable(object_id, 'index');				
+					
+					this.setDefault();
+					window.ADRESS = ADRESS;
+					if(ADRESS.address_arr[object_id-1]){
+						this.getCurrent(false,false, object_id);
+					}
+					return false;
+
+			 	}
 				
 				window.ADRESS = ADRESS;
-				this.setDefault();
-				this.getCurrent();
+				this.getCurrent(false,false, false);
 				
 			},
 			levFind:function(source,obj){
@@ -9391,17 +9541,14 @@ var ADRESS = {
 			       withCredentials: true
 			      },
 		          crossDomain: true,
-				  complete: function(){
-				  	function callback_current(){
-				  		return function(){				  			
-				  			$.mobile.navigate("#edit-address");
-				  			//$.mobile.loading( "hide" );
-				  		}
-				  	}
+				  complete: function(){			  			
+		  			$.mobile.navigate("#edit-address");
+		  			$.mobile.loading( "hide" );
+
 				  	//if(page > 2 && ADRESS.address_arr.length < 2){
 				  	//	self.getCurrent(0, callback_current());
 				  	//}else{
-				  	self.getCurrent(0, callback_current());				
+				  	//self.getCurrent(0, callback_current(), page);				
 				  	//}			
 
 				  	//alert('Changing complete');
@@ -9435,7 +9582,7 @@ var ADRESS = {
 						  		}
 						  	}						  	
 						  	$.mobile.navigate("#edit-address");						
-						  	self.getCurrent(0, callback_current());				
+						  	//self.getCurrent(0, callback_current(), page);				
 						  	
 						  },
 						});
@@ -9788,126 +9935,152 @@ var ADRESS = {
 				$('#address-item-' + page + ' [name="'+name+'"]').attr("disabled",false);
 				if(!choose)$('#address-item-' + page + ' [name="'+name+'"]').parent().find("span").html('Choose '+ name);
 			},
-			/*
-			el.val(id).attr('selected', true).siblings('option').removeAttr('selected');
-
-			// jQM refresh
-			el.selectmenu("refresh", true);
-			*/
-			getCurrent:function(not_refresh, callback_redirect){
+			getCurrent:function(not_refresh, callback_redirect, page){
 				var self = this;
-				$.ajax({
-	    			url:"http://gurtom.mobi/user_address.php",
-	    			type:"GET",
-			        crossDomain: true,
-	    			xhrFields: {
-				       withCredentials: true
-				    },
-			        complete: function(response){
-			        	var data = response.responseText;
-			            var address_arr = jQuery.parseJSON(data);
-			            for(var i in address_arr){
-			            	var address = address_arr[i];
-			            	var en = address.str+" "+address.bld+", "+address.city_en;
-			            	var ru = address.str+" "+address.bld+", "+address.city_ru;
-			            	var ua = address.str+" "+address.bld+", "+address.city_ua;
-			            	$(".address-item a.js-address:eq("+i+")")
-			            		.data("en",en)
-			            		.data("ru",ru)
-			            		.data("ua",ua);
+				if(self.address_arr.length > 0 && location.href.indexOf('#address-item') > -1){
+					if(page && self.address_arr[page-1]){
+						self.set_one_address(page, not_refresh, callback_redirect);						
+					}else{
+						if(page){
+							self.clear_address_info(page);
+						}			          	
+					}
+					if(location.href.indexOf('#edit-address') > -1){
+						for (var i = 1; i < 4; i++) {
+							if(self.address_arr[i-1]){
+								$('#edit-address [href=#address-item-' + i + ']').html(self.address_arr[i-1]['str'] + ' '  +
+			          																   self.address_arr[i-1]['bld'] + ', ' + 
+			          																   self.address_arr[i-1]['city_' + CURRENT_LANG]);
+							}else{
+								$('#edit-address [href=#address-item-' + i + ']').html('Address ' + i);	
+							}														
+						}
+						if(i < 3){
+							for (var j = i; j < 4; j++) {
+								$('#edit-address [href=#address-item-' + j + ']').html('Address ' + j);						
+							}								
+						}										
+					}
+				}else{
+					$.ajax({
+		    			url:"http://gurtom.mobi/user_address.php",
+		    			type:"GET",
+				        crossDomain: true,
+		    			xhrFields: {
+					       withCredentials: true
+					    },
+				        complete: function(response){
+				        	var data = response.responseText;
+				            var address_arr = jQuery.parseJSON(data);
+				            for(var i in address_arr){
+				            	var address = address_arr[i];
+				            	var en = address.str+" "+address.bld+", "+address.city_en;
+				            	var ru = address.str+" "+address.bld+", "+address.city_ru;
+				            	var ua = address.str+" "+address.bld+", "+address.city_ua;
+				            	$(".address-item a.js-address:eq("+i+")")
+				            		.data("en",en)
+				            		.data("ru",ru)
+				            		.data("ua",ua);
 
-			            	$(".address-item a.js-sphere:eq("+i+")")
-			            		.data("en","Choose sphere for "+en)
-			            		.data("ru","Выберите сферы для "+ru)
-			            		.data("ua","Виберіть галузі для "+ua);
-			            }
+				            	$(".address-item a.js-sphere:eq("+i+")")
+				            		.data("en","Choose sphere for "+en)
+				            		.data("ru","Выберите сферы для "+ru)
+				            		.data("ua","Виберіть галузі для "+ua);
+				            }
 
-			            //lang_activate_el($("#edit-address"));
-			          	self.address_arr = address_arr;
-			          	
-			          	switch(CURRENT_LANG){
-			          		case 'ua':
-			          			var address_lang = 'uk';
-			          			break;
-			          		case 'ru':
-			          			var address_lang = 'ru';
-			          			break
-			          		case 'en':
-			          			var address_lang = 'en';
-			          			break;
-			          	}
-			          		
-						var z = 1;
-			          	jQuery.each(self.address_arr, function(i, one_address) {
-			          		$('#address-item-' + z + ' #delete_address').attr('style', 'display: block');
-			          		$('#edit-address [href=#address-item-' + z + ']').html(one_address['str'] + ' '  +
-			          																   one_address['bld'] + ', ' + 
-			          																   one_address['city_' + address_lang]);			          	
-		          			function callback_country(z){
-								return function(){
-					                 function callback_state(){
-					                 	return function(){
-					                 		function callback_county(){
-					                 			return function(){
-					                 				function callback_city(){
-					                 					return function(){
-					                 						$('#address-item-' + z + ' [name=city] option[value=' + one_address['city_id']  + ']').attr('selected', 'selected');
-					                 						$('#address-item-' + z + ' [name=index] option[value=' + one_address['zip']  + ']').attr('selected', 'selected');
-					                 						$('#address-item-' + z + ' [name=street]').val(one_address['str']);
-				          									$('#address-item-' + z + ' [name=house]').val(one_address['bld']);
-				          									$('#address-item-' + z + ' [name=comment]').val(one_address['oth']);
-				          									/*if(one_address['reg_adr']){
-				          										console.log('reg_adr');
-				          										$('#address-item-' + z + ' .ui-btn.ui-btn-inherit.ui-btn-icon-left.ui-checkbox-off').attr('class', 'ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-on');
-				          										$('#address-item-' + z + ' [name=off_address]').data('cacheval', 'false');
-				          									}*/
-				          									if(location.href.indexOf('#address-item-' + z) > -1){
-				          										$('#address-item-' + z + ' [name=country]').selectmenu("refresh", true);
-				          										$('#address-item-' + z + ' [name=state]').selectmenu("refresh", true);
-																$('#address-item-' + z + ' [name=county]').selectmenu("refresh", true);
-																$('#address-item-' + z + ' [name=city]').selectmenu("refresh", true);
-																$('#address-item-' + z + ' [name=index]').selectmenu("refresh", true);
-																//alert($('#address-item-' + z + ' [name=index]').val());
-															}
-					                 					}
-					                 				}
-					                 				$('#address-item-' + z + ' [name=county] option[value=' + one_address['county_id']  + ']').attr('selected', 'selected');
-					                 				self.selectCity(z, one_address['city_id'], callback_city());
-					                 			}				           
-					                 		}
-					                 	  $('#address-item-' + z + ' [name=state] option[value=' + one_address['state_id']  + ']').attr('selected', 'selected');
-						                  self.selectCounty(z, one_address['county_id'], callback_county());
-						                  //alert(one_address['county_en']);					                  
-					                 	}						            
-					                  //alert(county_id);
-					                 }
+				            //lang_activate_el($("#edit-address"));
+				          	self.address_arr = address_arr;
+				          	
+				          	
+				          	if(page && self.address_arr[page-1]){
+								self.set_one_address(page, not_refresh, callback_redirect);						
+							}else{
+								if(page){
+									self.clear_address_info(page);
+								}
+							}				
+							if(location.href.indexOf('#edit-address') > -1){
+								for (var i = 1; i < 4; i++) {
+									if(self.address_arr[i-1]){
+										$('#edit-address [href=#address-item-' + i + ']').html(self.address_arr[i-1]['str'] + ' '  +
+					          																   self.address_arr[i-1]['bld'] + ', ' + 
+					          																   self.address_arr[i-1]['city_' + CURRENT_LANG]);
+									}else{
+										$('#edit-address [href=#address-item-' + i + ']').html('Address ' + i);	
+									}							
+								}
+								if(i < 3){
+									for (var j = i; j < 4; j++) {
+										$('#edit-address [href=#address-item-' + j + ']').html('Address ' + j);						
+									}								
+								}					
+							}
+				        }
+					});
+				}				
+					
 
-					                 $('#address-item-' + z + ' [name=country] option[value=' + one_address['country_id']  + ']').attr('selected', 'selected');
-					         		self.selectState(z, one_address['state_id'], callback_state());				         			        
-				        		}
-			        		}
-			        		if(!not_refresh){
-			        			self.selectCountry(z, one_address['country_id'], callback_country(z));
-			        		}      			
-			          			//$('#address-item-' + z + ' [name=street]').val(one_address['str']);
-			          			//$('#address-item-' + z + ' [name=house]').val(one_address['bld']);		        			
-			          		z++;
-					    });
-			          	
-			          	if(callback_redirect){
-			          		callback_redirect();
-			          	}
-			          	if(z < 4){
-			          		while(z < 4 && !self.address_arr[z]){
-			          			self.clear_address_info(z);
-			          			z++;
-			          		}
-			          	}          	
-						
-			        }
-				});
 			},
-			
+			set_one_address: function(page, not_refresh, callback_redirect){
+					var self = this;				
+	          		var z = page;
+					var one_address = self.address_arr[page-1];
+		          		$('#address-item-' + z + ' #delete_address').attr('style', 'display: block');
+		          				          	
+	          			function callback_country(z){
+							return function(){
+				                 function callback_state(){
+				                 	return function(){
+				                 		function callback_county(){
+				                 			return function(){
+				                 				function callback_city(){
+				                 					return function(){
+				                 						$('#address-item-' + z + ' [name=city] option[value=' + one_address['city_id']  + ']').attr('selected', 'selected');
+				                 						$('#address-item-' + z + ' [name=index] option[value=' + one_address['zip']  + ']').attr('selected', 'selected');
+				                 						$('#address-item-' + z + ' [name=street]').val(one_address['str']);
+			          									$('#address-item-' + z + ' [name=house]').val(one_address['bld']);
+			          									$('#address-item-' + z + ' [name=comment]').val(one_address['oth']);
+			          									/*if(one_address['reg_adr']){
+			          										console.log('reg_adr');
+			          										$('#address-item-' + z + ' .ui-btn.ui-btn-inherit.ui-btn-icon-left.ui-checkbox-off').attr('class', 'ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-on');
+			          										$('#address-item-' + z + ' [name=off_address]').data('cacheval', 'false');
+			          									}*/
+			          									if(location.href.indexOf('#address-item-' + z) > -1){
+			          										$('#address-item-' + z + ' [name=country]').selectmenu("refresh", true);
+			          										$('#address-item-' + z + ' [name=state]').selectmenu("refresh", true);
+															$('#address-item-' + z + ' [name=county]').selectmenu("refresh", true);
+															$('#address-item-' + z + ' [name=city]').selectmenu("refresh", true);
+															$('#address-item-' + z + ' [name=index]').selectmenu("refresh", true);
+															//alert($('#address-item-' + z + ' [name=index]').val());
+														}
+				                 					}
+				                 				}
+				                 				$('#address-item-' + z + ' [name=county] option[value=' + one_address['county_id']  + ']').attr('selected', 'selected');
+				                 				self.selectCity(z, one_address['city_id'], callback_city());
+				                 			}				           
+				                 		}
+				                 	  $('#address-item-' + z + ' [name=state] option[value=' + one_address['state_id']  + ']').attr('selected', 'selected');
+					                  self.selectCounty(z, one_address['county_id'], callback_county());
+					                  //alert(one_address['county_en']);					                  
+				                 	}						            
+				                  //alert(county_id);
+				                 }
+
+				                 $('#address-item-' + z + ' [name=country] option[value=' + one_address['country_id']  + ']').attr('selected', 'selected');
+				         		self.selectState(z, one_address['state_id'], callback_state());				         			        
+			        		}
+		        		}
+		        		if(!not_refresh){
+		        			self.selectCountry(z, one_address['country_id'], callback_country(z));
+		        		}      			
+		          			//$('#address-item-' + z + ' [name=street]').val(one_address['str']);
+		          			//$('#address-item-' + z + ' [name=house]').val(one_address['bld']);		        			
+		          	
+		          	if(callback_redirect){
+		          		callback_redirect();
+		          	}
+		          	
+			},
 			setOption:function(page, name,id){
 				$("#address-item-" + page + " [name="+name+"]").val(id).attr('selected', true).siblings('option').removeAttr('selected');
 				$("#address-item-" + page + " [name="+name+"]").selectmenu("refresh", true);
@@ -10109,6 +10282,14 @@ console.log(window.location.toString());
 		            PROFILE.profile_obj = jQuery.parseJSON(data)[0];
 		            if(jQuery.parseJSON(data)[0] && data.indexOf('error') == -1){
 		        		auth(true);
+		        		if(( location.href.indexOf('#edit-address') > -1 || 
+							 location.href.indexOf('#address-item-1') > -1 ||
+							 location.href.indexOf('#address-item-2') > -1 ||
+							 location.href.indexOf('#address-item-3') > -1 ) && SUPER_PROFILE.auth == true){
+							if(ADRESS){
+								ADRESS.init();
+							}
+						}
 		        	}
 		        	else{
 		        		auth(false);
@@ -10137,7 +10318,9 @@ console.log(window.location.toString());
 				PROFILE.auth = true;
 				SUPER_PROFILE.auth = true;
 				PROFILE.getProfile();
-				PIF.get_pif_array();
+				/*if(location.href.indexOf('#transaction-page') > -1 || location.href.indexOf('#my-fund-page') > -1){
+					PIF.get_pif_array();
+				}*/				
 				//VOTINGS.init();
 				//NEWS.init();
 				COMMON_OBJECT.init_common_listeners();
@@ -10642,8 +10825,14 @@ console.log(window.location.toString());
 							if(typeof SOCIAL[i] != "object") continue;
 							var soc = SOCIAL[i];
 							for(var b in that.profile_obj){
-								if(b != i) continue;
-								soc.auth = that.profile_obj[b]?true:false;
+								if(b != i) continue;								
+								if(that.profile_obj[b] != 0){
+									soc.auth = true;
+								}else{
+									soc.auth = false;
+								}	
+								//soc.auth = that.profile_obj[b]?true:false;
+
 							}
 						}
 						//SOCIAL.init();
@@ -10672,13 +10861,18 @@ console.log(window.location.toString());
 					            that.payment = that.profile_obj.payment;
 					            SUPER_PROFILE.gender = that.gender;
 					            SUPER_PROFILE.id = that.profile_obj.id;
+					            console.log('start00');
 					            for (var i in SOCIAL){
+					            	console.log('start0');
 									if(typeof SOCIAL[i] != "object") continue;
 									var soc = SOCIAL[i];
+									console.log('start');
 									for(var b in that.profile_obj){
 										if(b != i) continue;
 										soc.auth = that.profile_obj[b]?true:false;
+										console.log(soc.auth);
 									}
+									console.log('finish');
 								}
 								//SOCIAL.init();
 					            that.updateMenu();		            
