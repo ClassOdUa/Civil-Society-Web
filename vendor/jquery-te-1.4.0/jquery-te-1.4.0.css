@@ -1,0 +1,143 @@
+/*!
+ *
+ * jQuery TE 1.4.0 , http://jqueryte.com/
+ * Copyright (C) 2013, Fatih Koca (fattih@fattih.com), (http://jqueryte.com/about)
+
+ * jQuery TE is provided under the MIT LICENSE.
+ *
+*/
+
+/* editor's general field */
+.jqte {
+    position: relative;
+    margin: 0;
+    padding: 1em;
+    background: #ffffff;
+    min-height: 5em;
+}
+
+/* toolbar */
+.jqte_toolbar {
+    position: absolute;
+    top: -23px;
+    right: 0;
+    overflow: auto;
+    text-align: right;
+}
+
+.jqte_tool {
+    float: left;
+    margin: 0 0 0 6px;
+    padding: 0;
+    cursor: pointer;
+}
+
+.jqte_tool, .jqte_tool_icon, .jqte_tool_label {
+    background: #ffffff;
+}
+
+.jqte_hiddenField {
+    display: none;
+}
+
+.jqte_tool_icon {
+    display: block;
+    width: 23px;
+    height: 23px;
+    background: url(jquery-te.png) no-repeat;
+    -moz-background-size: 69px 46px;
+    -o-background-size: 69px 46px;
+    -webkit-background-size: 69px 46px;
+    background-size: 69px 46px;
+}
+
+.jqte_tool.jqte_tool_4 .jqte_tool_icon {
+    background-position: 0 0;
+}
+
+.jqte_tool.jqte_tool_5 .jqte_tool_icon {
+    background-position: -23px 0;
+}
+
+.jqte_tool.jqte_tool_6 .jqte_tool_icon {
+    background-position: -46px 0;
+}
+
+.jqte_tool.jqte_tool_1:hover .jqte_tool_icon, .jqte_tool.jqte_tool_1:active .jqte_tool_icon {
+    border: none;
+}
+
+.jqte_tool_depressed {
+    background-color: #4d4d4d;
+}
+
+.jqte_tool_depressed.jqte_tool_4 .jqte_tool_icon {
+    background-position: 0 -23px;
+}
+
+.jqte_tool_depressed.jqte_tool_5 .jqte_tool_icon {
+    background-position: -23px -23px;
+}
+
+.jqte_tool_depressed.jqte_tool_6 .jqte_tool_icon {
+    background-position: -46px -23px;
+}
+
+/* editor area */
+.jqte_editor, .jqte_source {
+    padding: 0 0 8px;
+    background: #FFF;
+    overflow: auto;
+    outline: none;
+    word-wrap: break-word;
+    -ms-word-wrap: break-word;
+    resize: none;
+    border-bottom: 0.125em solid #dddddd;
+}
+
+.jqte_editor div, .jqte_editor p {
+    margin: 0 0 7px;
+}
+
+.jqte_focused .jqte_editor {
+    border-color: #2196f3;
+}
+
+/* source area */
+.jqte_source, .jqte_source textarea {
+    background: #ffffff;
+}
+
+.jqte_source textarea {
+    margin: 0 !important;
+    padding: 0 !important;
+    display: block !important;
+    width: 100% !important;
+    min-height: 100px;
+    font-family: Courier, Arial, sans-serif !important;
+    font-weight: normal;
+    font-size: 15px;
+    overflow: hidden !important;
+    outline: none;
+    resize: none;
+}
+
+.jqte_source textarea, .jqte_source textarea:focus {
+    css_shadow: none !important;
+    background: none !important;
+    border: none !important;
+}
+
+/* placeholder */
+.jqte_placeholder {
+    position: relative;
+    display: block;
+}
+
+.jqte_placeholder_text {
+    position: absolute;
+    top: 2px;
+    left: 0;
+    font-weight: 300;
+    color: #aaaaaa;
+}
