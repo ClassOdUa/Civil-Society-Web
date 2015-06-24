@@ -47,6 +47,69 @@ var LOCALE_ARRAY = [{selector: '#main-page .ui-title', en: 'Log in', ru: 'Вхо
 {selector: '#forgot-password .ui-title', en: 'Forgot password', ru: 'Забыли пароль', ua: 'Забули пароль'},/*inner html*/
 {selector: '#forgot-password .ui-input-text > input', value: 'placeholder', en: 'Username', ru: 'Имя пользователя', ua: 'Ім\'я користувача'},/*placeholder*/
 {selector: '#forgot-password .ui-btn.ui-btn-corner-all.ui-shadow', value: 'value', en: 'Restore access', ru: 'Восстановить доступ', ua: 'Відновити доступ'},/*value*/
+{selector: '#help .ui-title', en: 'Help', ru: 'Помощь', ua: 'Допомога'},/*inner html*/
+{selector: '#decision-making .ui-title', en: 'Decision-making', ru: 'Принятие решений', ua: 'Прийняття рішень'},/*inner html*/
+{selector: '#decision-making #decision-making-help .title', en: 'Description', ru: 'Детальнее', ua: 'Детальніше'},/*inner html*/
+{selector: '#decision-making #decision-making-help .text', 
+	en: 'Help', 
+	ru: 'Помощь', 
+	ua: 'Допомога'},/*inner html*/
+{selector: '#decision-making [data-link=#trust-list]', en: 'Trust List', ru: 'Список Доверия', ua: 'Список довіри'},/*inner html*/
+{selector: '#decision-making [data-link=#public-proposals]', en: 'Public proposals', ru: 'Общественные предложения', ua: 'Громадські пропозиції'},/*inner html*/
+{selector: '#decision-making [data-link=#local-self-governments]', 
+	en: 'Issues of local self-governments', 
+	ru: 'Вопросы местного самоуправления', 
+	ua: 'Питання місцевого самоврядування'},/*inner html*/
+{selector: '#decision-making [data-link=#co-owners]', 
+	en: 'Solutions with other co-owners and co-investors', 
+	ru: 'Решения с другими совладельцами и соинвесторами', 
+	ua: 'Рішення з іншими співвласниками і співінвесторами'},/*inner html*/
+{selector: '#decision-making [data-link=#parties]', 
+	en: 'Political parties, NGOs volunteering groups', 
+	ru: 'Политические партии, общественные организации добровольческих групп', 
+	ua: 'Політичні партії, громадські організації добровольчих груп'},/*inner html*/
+{selector: '#decision-making [data-link=#primaries]', en: 'Primaries, elections, exit-polls', ru: 'Первичные, выборы, экзит-', ua: 'Первинні, вибори, екзит'},/*inner html*/
+{selector: '#social-investment .ui-title', en: 'Social Investment', ru: 'Социальные инвестиции', ua: 'Соціальні інвестиції'},/*inner html*/
+{selector: '#social-investment #social-investment-help .title', en: 'Description', ru: 'Детальнее', ua: 'Детальніше'},/*inner html*/
+{selector: '#social-investment #social-investment-help .text', 
+	en: 'Help', 
+	ru: 'Помощь', 
+	ua: 'Допомога'},/*inner html*/
+{selector: '#social-investment [data-link=#my-fund-page]', en: 'My Personal Funds', ru: 'Мои персональные фонды', ua: 'Мої персональні фонди'},/*inner html*/
+{selector: '#social-investment [data-link=#programs-page]', en: 'Program of social co-investment', ru: 'Программа социального соинвестирования', ua: 'Програма соціального співінвестування'},/*inner html*/
+{selector: '#social-entrepreneurship .ui-title', en: 'Social Entrepreneurship', ru: 'Социальное предпринимательство', ua: 'Соціальне підприємництво'},/*inner html*/
+{selector: '#social-entrepreneurship #social-entrepreneurship-help .title', en: 'Description', ru: 'Детальнее', ua: 'Детальніше'},/*inner html*/
+{selector: '#social-entrepreneurship #social-entrepreneurship-help .text', 
+	en: 'Help', 
+	ru: 'Помощь', 
+	ua: 'Допомога'},/*inner html*/
+{selector: '#social-entrepreneurship [data-link=#projects-page]', en: 'Projects', ru: 'Проекты', ua: 'Проекти'},/*inner html*/
+{selector: '#social-entrepreneurship [data-link=#project_propositions-page]', en: 'Projects on Call', ru: 'Проекты по вызову', ua: 'Проекти за викликом'},/*inner html*/
+{selector: '#social-entrepreneurship [data-link=#requests-page]', en: 'Requests for help', ru: 'Просьбы о помощи', ua: 'Прохання про допомогу'},/*inner html*/
+{selector: '#my-activities-page .ui-title', en: 'My activities', ru: 'Моя деятельность', ua: 'Моя діяльність'},/*inner html*/
+{selector: '#my-activities-page #my-activities-help .title', en: 'Description', ru: 'Детальнее', ua: 'Детальніше'},/*inner html*/
+{selector: '#my-activities-page #my-activities-help .text', 
+	en: 'Help', 
+	ru: 'Помощь', 
+	ua: 'Допомога'},/*inner html*/
+{selector: '#my-activities-page [data-link=#profile-page]', en: 'My Profile', ru: 'Мой профиль', ua: 'Мій профіль'},/*inner html*/
+{selector: '#my-activities-page [data-link=#my-votings-page]', en: 'My votings', ru: 'Мои голосования', ua: 'Мої голосування'},/*inner html*/
+{selector: '#my-activities-page [data-link=#my-programs-page]', en: 'My programs', ru: 'Мои программы', ua: 'Мої програми'},/*inner html*/
+{selector: '#my-activities-page [data-link=#my_project_propositions-page]', en: 'My projects on Call', ru: 'Мои проекты по вызову', ua: 'Мої проекти за викликом'},/*inner html*/
+{selector: '#my-activities-page [data-link=#weighted-votings-page]', en: 'My weighted votings on programs', ru: 'Мои взвешенные голосования по программам', ua: 'Мої зважені голосування за програмами'},/*inner html*/
+{selector: '#my-activities-page [data-link=#my_project-page]', en: 'My projects', ru: 'Мои проекты', ua: 'Мої проекти'},/*inner html*/
+{selector: '#my-activities-page [data-link=#my_request-page]', en: 'My requests', ru: 'Мои запросы', ua: 'Мої запити'},/*inner html*/
+
+{selector: '#future .ui-title', en: 'Future', ru: 'В будущем', ua: 'В майбутньому'},/*inner html*/
+{selector: '#future #future-help .title', en: 'Description', ru: 'Детальнее', ua: 'Детальніше'},/*inner html*/
+{selector: '#future #future-help .text', 
+	en: 'Help', 
+	ru: 'Помощь', 
+	ua: 'Допомога'},/*inner html*/
+{selector: '#future [role=main] p', en: 'This option will be activated in future releases', 
+	ru: 'Эта опция будет активирована в будущих релизах', 
+	ua: 'Ця опція буде активована в майбутніх релізах'},/*inner html*/
+
 {selector: '#news-page .ui-title', en: 'News', ru: 'Новости', ua: 'Новини'},/*inner html*/
 {selector: '#news-page .author > span', en: 'news by', ru: 'опубликовано', ua: 'опубліковано'},/*inner html*/
 {selector: '#news-page #news-help .title', en: 'Description', ru: 'Детальнее', ua: 'Детальніше'},/*inner html*/
@@ -139,7 +202,10 @@ var LOCALE_ARRAY = [{selector: '#main-page .ui-title', en: 'Log in', ru: 'Вхо
 {selector: '#left-panel .menu-icon-projects', en: 'Social Entrepreneurship', ru: 'Социальное предпринимательство', ua: 'Соціальне підприємництво'},/*inner html*/
 {selector: '#left-panel .menu-icon-logout', en: 'Logout', ru: 'Выйти', ua: 'Вийти'},/*inner html*/
 {selector: '#left-panel .menu-icon-help', en: 'Help', ru: 'Помощь', ua: 'Допомога'},/*inner html*/
+{selector: '#left-panel .menu-icon-activities', en: 'My Activites', ru: 'Мои активности', ua: 'Мої активності'},/*inner html*/
+{selector: '#left-panel .menu-icon-tasks', en: 'My tasks', ru: 'Мои задачи', ua: 'Мої задачі'},/*inner html*/
 {selector: '#left-panel .menu-icon-options', en: 'Options', ru: 'Настройки', ua: 'Настройки'},/*inner html*/
+{selector: '#left-panel .menu-icon-login', en: 'Login', ru: 'Войти', ua: 'Ввійти'},/*inner html*/
 {selector: '#profile-page [aria-owns=change-password]', en: 'Change password here', ru: 'Сменить пароль здесь', ua: 'Змінити пароль тут'},/*inner html*/
 {selector: '#profile-page .btn-next-page .title', en: 'Select sphere which are interest you', ru: 'Выберите сферу которая вас интересует', ua: 'Оберіть сферу яка вас цікавить'},/*inner html*/
 {selector: '#profile-page [href=#spheres-address]', en: 'Choose sphere', ru: 'Выберите сферу', ua: 'Оберіть сферу'},/*inner html*/

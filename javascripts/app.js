@@ -145,9 +145,9 @@
             if ( GetIEVersion() > 0 ) {
                 filtersPanelInner.show();
             } else {
-                $(document).on('swipedown', activePage, function () {
+                /*$(document).on('swipedown', activePage, function () {
                     //filtersPanelInner.slideDown(500);
-                });
+                });*/
             }
         });
 

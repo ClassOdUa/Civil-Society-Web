@@ -2,30 +2,31 @@ var DEFAULT_LANG = "en";
 var CURRENT_LANG = false;
 var FILE;
 
+$.mobile.defaultPageTransition = 'none';
+
 function lang_activate_el(element){
     var lang = false;
     if(!CURRENT_LANG){
     	if(readCookie("lang")){
-        	lang = readCookie("lang");
-        	CURRENT_LANG = lang;
-        	}
-        else{
-        	CURRENT_LANG = lang = DEFAULT_LANG;
+        	CURRENT_LANG = readCookie("lang");
+        }else{
+        	CURRENT_LANG = DEFAULT_LANG;
         }
-    }else{
-    	lang = CURRENT_LANG;
+    }
+    if(element == "ua" || element == "ru" || element == "en"){
+    	CURRENT_LANG = element;
     }
 
-    /*jQuery.each(LOCALE_ARRAY, function(i, one_element) {
+    jQuery.each(LOCALE_ARRAY, function(i, one_element) {
 		if($(one_element['selector'])){
 			if(one_element['value']){
-				$(one_element['selector']).attr(one_element['value'], one_element[lang]);
+				$(one_element['selector']).attr(one_element['value'], one_element[CURRENT_LANG]);
 			}else{
 				$(one_element['selector']).html(one_element[CURRENT_LANG]);
 			}
 				
 		}
-    });*/
+    });
     /*$(element).find(":data("+lang+"),[data-"+lang+"]").each(function(){
 
     	
@@ -47,6 +48,7 @@ function lang_activate_el(element){
 }
 
 window.onload = function(){
+	lang_activate_el();
 	setTimeout(function(){
 
 		jQuery.each(LOCALE_ARRAY, function(i, one_element) {
@@ -400,7 +402,8 @@ window.onload = function(){
 	CREATE_ITEM.check_item();
 
 	try{
-		$('#select-lang-button span').html('Українська')
+		$('#lang label').attr('lang', CURRENT_LANG);
+	    $('#lang label').html($('#lang label').data(CURRENT_LANG));
 		$('#select-lang').selectmenu("refresh", true);
 	}catch(e){
 		console.log('exception catched, all ok');
@@ -408,7 +411,7 @@ window.onload = function(){
 };
 
 window.onhashchange = function(){
-	lang_activate_el('body');
+	lang_activate_el();
 
 	if( ( location.href.indexOf('#trust-list') > -1 ||
 		  location.href.indexOf('#create-item') > -1 ||
@@ -583,20 +586,20 @@ window.onhashchange = function(){
 		var page = 1;
 		$('#address-item-' + page + ' [name=country]').selectmenu("refresh", true);
 		$('#address-item-' + page + ' [name=state]').selectmenu("refresh", true);
-		$('#address-item-' + page + ' [name=city]').selectmenu("refresh", true);
-		$('#address-item-' + page + ' [name=index]').selectmenu("refresh", true);
+		//$('#address-item-' + page + ' [name=city]').selectmenu("refresh", true);
+		//$('#address-item-' + page + ' [name=index]').selectmenu("refresh", true);
 	}else if(location.href.indexOf('#address-item-2') > -1){
 		var page = 2;
 		$('#address-item-' + page + ' [name=country]').selectmenu("refresh", true);
 		$('#address-item-' + page + ' [name=state]').selectmenu("refresh", true);
-		$('#address-item-' + page + ' [name=city]').selectmenu("refresh", true);
-		$('#address-item-' + page + ' [name=index]').selectmenu("refresh", true);
+		//$('#address-item-' + page + ' [name=city]').selectmenu("refresh", true);
+		//$('#address-item-' + page + ' [name=index]').selectmenu("refresh", true);
 	}else if(location.href.indexOf('#address-item-3') > -1){
 		var page = 3;
 		$('#address-item-' + page + ' [name=country]').selectmenu("refresh", true);
 		$('#address-item-' + page + ' [name=state]').selectmenu("refresh", true);
-		$('#address-item-' + page + ' [name=city]').selectmenu("refresh", true);
-		$('#address-item-' + page + ' [name=index]').selectmenu("refresh", true);	
+		//$('#address-item-' + page + ' [name=city]').selectmenu("refresh", true);
+		//$('#address-item-' + page + ' [name=index]').selectmenu("refresh", true);	
 	}
 	if(typeof ADRESS !== 'undefined' ){
 		if(ADRESS.address_arr[page-1]){
@@ -650,11 +653,11 @@ window.onhashchange = function(){
 	}
 };
 
-function lang_activate(lang){
+/*function lang_activate(lang){
 	CURRENT_LANG = lang;
  	createCookie("lang",lang);
  	lang_activate_el("body");
-    }
+    }*/
 
 function createCookie(name, value, days) {
                 var expires;
@@ -9354,7 +9357,7 @@ var ADRESS = {
 				if(location.href.indexOf('#address-item') > -1){
 					var match_array = location.href.match(/#address-item-[0-9]*/i);
 					var object_id = match_array[0].match(/[0-9]+/i);
-
+					
 					this.setListener(object_id);
 
 					function callback_country(object_id){
@@ -9375,9 +9378,7 @@ var ADRESS = {
 					
 					this.setDefault();
 					window.ADRESS = ADRESS;
-					if(ADRESS.address_arr[object_id-1]){
-						this.getCurrent(false,false, object_id);
-					}
+					this.getCurrent(false,false, object_id);
 					return false;
 
 			 	}
@@ -9445,21 +9446,26 @@ var ADRESS = {
 			},
 			setListener:function(page){
 				var self = this;
+				self.clear_listeners(page);
 				$("#address-item-" + page + " [name=country]").change(function(){
 					var value = $(this).val();
 					self.selectCountry(page, value);
+					$("#address-item-" + page + " [name=country]").selectmenu("refresh", true);
 				});
 				$("#address-item-" + page + " [name=state]").change(function(){
 					var value = $(this).val();
 					self.selectState(page, value);
+					$("#address-item-" + page + " [name=state]").selectmenu("refresh", true);
 				});
 				$("#address-item-" + page + " [name=county]").change(function(){
 					var value = $(this).val();
 					self.selectCounty(page, value);
+					$("#address-item-" + page + " [name=county]").selectmenu("refresh", true);
 				});
 				$("#address-item-" + page + " [name=city]").change(function(){
 					var value = $(this).val();
 					self.selectCity(page, value);
+					$("#address-item-" + page + " [name=city]").selectmenu("refresh", true);
 				});
 				$('#address-item-' + page + ' .btn-delete.ui-btn.ui-shadow.ui-corner-all').click(function(){
 					self.delete_address(page);
@@ -9506,6 +9512,16 @@ var ADRESS = {
 					      }
 					   });
 		    	});
+			},
+			clear_listeners: function(page){
+				var self = this;
+				$("#address-item-" + page + " [name=country]").off();
+				$("#address-item-" + page + " [name=state]").off();
+				$("#address-item-" + page + " [name=county]").off();
+				$("#address-item-" + page + " [name=city]").off();
+				$('#address-item-' + page + ' .btn-delete.ui-btn.ui-shadow.ui-corner-all').off();
+				$("#address-item-" + page + " .ui-btn-right.ui-btn.ui-icon-check.ui-btn-icon-right").off();
+				$("#findgps-" + page).off();
 			},
 			save_address:function(page){
 				var self = this;
@@ -9668,12 +9684,52 @@ var ADRESS = {
 			},
 			getCountry:function(page, cb){/*cb*/
 				var self = this;
-				$.ajax({
+				if(self.country){
+					$("#address-item-" + page + " [name=country]").html('');
+			            for(var i = 0; i < self.country.length; i++){
+			            	var c = self.country[i];
+			            	var option = document.createElement("option");
+			            	$(option).val(c.id);
+			            	if(CURRENT_LANG){
+			            		switch(CURRENT_LANG){
+				            		case 'ua':
+				            			$(option).html(c.name_uk);
+				            			break;
+				            		case 'en':
+				            			$(option).html(c.name_en);
+				            			break;
+				            		case 'ru':
+				            			$(option).html(c.name_ru);
+				            			break;
+			            		}
+			            	}else{
+			            		switch(DEFAULT_LANG){
+				            		case 'ua':
+				            			$(option).html(c.name_uk);
+				            			break;
+				            		case 'en':
+				            			$(option).html(c.name_en);
+				            			break;
+				            		case 'ru':
+				            			$(option).html(c.name_ru);
+				            			break;
+			            		}
+			            	}
+
+			            	$("#address-item-" + page + " [name=country]").append(option);
+			            	//console.log(1);
+			            }
+			            if(cb){
+			            	cb(self.country);
+			            }
+				}else{
+					$.ajax({
 	    			url:"http://gurtom.mobi/list_adr_country.php",
 	    			type:"GET",
 	    			xhrFields: {
 				       withCredentials: true
 				    },
+				    async: false,
 			        crossDomain: true,
 			        complete: function(response){
 			        	var data = response.responseText;
@@ -9681,13 +9737,6 @@ var ADRESS = {
 			            self.country = jQuery.parseJSON(data);
 			            //console.log(self.country);
 			            $("#address-item-" + page + " [name=country]").html('');
-			            //$("[name=country]").html('<option></option>');
-			            //self.disable("state");
-
-			            //var option_empty = document.createElement("option");
-			            //$(option_empty).val('-1');
-			            //$(option_empty).html('Select country');
-			            //$("[name=country]").append(option_empty);
 
 			            for(var i = 0; i < self.country.length; i++){
 			            	var c = self.country[i];
@@ -9718,37 +9767,72 @@ var ADRESS = {
 				            			break;
 			            		}
 			            	}
-			            	//$(option).data("en",c.name_en);
-			            	//$(option).data("ua",c.name_uk);
-			            	//$(option).data("ru",c.name_ru);
 
 			            	$("#address-item-" + page + " [name=country]").append(option);
 			            	//console.log(1);
 			            }
-			            //console.log(2);
-			            //lang_activate_el("[name=country]");
-			            //self.enable("country");
 			            if(cb){
 			            	cb(self.country);
 			            }
 
-						//console.log(ready_locations);
 
 			        	}
 					});
+				}
+				
 			},
 			getState:function(page, idc,cb){
 				var self = this;
-				$.ajax({
+				if(self.state){
+					$("#address-item-" + page + " [name=state]").html('');
+			            $("#address-item-" + page + " [name=state]").show();
+			            for(var i = 0; i < self.state.length; i++){
+			            	var c = self.state[i];
+			            	var option = document.createElement("option");
+			            	$(option).val(c.id);
+			            	if(CURRENT_LANG){
+			            		switch(CURRENT_LANG){
+				            		case 'ua':
+				            			$(option).html(c.name_uk);
+				            			break;
+				            		case 'en':
+				            			$(option).html(c.name_en);
+				            			break;
+				            		case 'ru':
+				            			$(option).html(c.name_ru);
+				            			break;
+			            		}
+			            	}else{
+			            		switch(DEFAULT_LANG){
+				            		case 'ua':
+				            			$(option).html(c.name_uk);
+				            			break;
+				            		case 'en':
+				            			$(option).html(c.name_en);
+				            			break;
+				            		case 'ru':
+				            			$(option).html(c.name_ru);
+				            			break;
+			            		}
+			            	}
+
+			            	$("#address-item-" + page + " [name=state]").append(option);
+			            }
+			            //lang_activate_el("#address-item-" + page + " [name=state]");
+			            if(cb){
+			            	cb(self.state);
+			            }
+				}else{
+					$.ajax({
 	    			url:"http://gurtom.mobi/list_adr_state.php?idc="+idc,
 	    			type:"GET",
 	    			xhrFields: {
 				       withCredentials: true
 				    },
+				    async: false,
 			        crossDomain: true,
 			        complete: function(response){
 			        	var data = response.responseText;
-			           // console.log(data);
 			            self.state = jQuery.parseJSON(data);
 			            $("#address-item-" + page + " [name=state]").html('');
 			            $("#address-item-" + page + " [name=state]").show();
@@ -9785,12 +9869,14 @@ var ADRESS = {
 			            	$("#address-item-" + page + " [name=state]").append(option);
 			            	
 			            }
-			            lang_activate_el("#address-item-" + page + " [name=state]");
+			            //lang_activate_el("#address-item-" + page + " [name=state]");
 			            if(cb){
 			            	cb(self.state);
 			            }
-			        	}
-					})
+			        }
+				});
+				}
+				
 			},
 			getCounty:function(page, idc,ids,cb){
 				var self = this;
@@ -9840,7 +9926,7 @@ var ADRESS = {
 			            	$("#address-item-" + page + " [name=county]").append(option);
 			            	
 			            }
-			            lang_activate_el("#address-item-" + page + " [name=county]");
+			            //lang_activate_el("#address-item-" + page + " [name=county]");
 			            if(cb){
 			            	cb(self.county);
 			            }
@@ -9895,7 +9981,7 @@ var ADRESS = {
 			            	$("#address-item-" + page + " [name=city]").append(option);
 			            	
 			            }
-			            lang_activate_el("#address-item-" + page + " [name=city]");
+			            //lang_activate_el("#address-item-" + page + " [name=city]");
 			            if(cb){
 			            	cb(self.city);
 			            }
@@ -9988,7 +10074,6 @@ var ADRESS = {
 				            		.data("ua","Виберіть галузі для "+ua);
 				            }
 
-				            //lang_activate_el($("#edit-address"));
 				          	self.address_arr = address_arr;
 				          	
 				          	
@@ -10096,7 +10181,7 @@ var ADRESS = {
 			            		.data("ru","Выберите сферы")
 			            		.data("ua","Виберіть галузі");
 				}
-				lang_activate_el($("#edit-address"));
+				//lang_activate_el($("#edit-address"));
 			},
 			disable:function(page, name){
 				if(name == "state"){
@@ -10240,7 +10325,9 @@ console.log(window.location.toString());
 	            var new_lang = $(this).find("option:selected").val();
 	            //createCookie("lang", new_lang);
 	            $('#select-lang2 > option[value="' + new_lang + '"]').attr('selected', 'selected');
-	            jQuery.each(LOCALE_ARRAY, function(i, one_element) {
+	            $('#lang label').attr('lang', new_lang);
+	            $('#lang label').html($('#lang label').data(new_lang));
+	           /*jQuery.each(LOCALE_ARRAY, function(i, one_element) {
 					if($(one_element['selector'])){
 						if(one_element['value']){
 							$(one_element['selector']).attr(one_element['value'], one_element[CURRENT_LANG]);
@@ -10249,14 +10336,16 @@ console.log(window.location.toString());
 						}
 							
 					}
-			    });
-	            lang_activate(new_lang);
+			    });*/
+	            lang_activate_el(new_lang);
         	});
         	$("#select-lang").change(function(){
 	            var new_lang = $(this).find("option:selected").val();
 	            //createCookie("lang", new_lang);
 	            $('#select-lang > option[value="' + new_lang + '"]').attr('selected', 'selected');
-	            jQuery.each(LOCALE_ARRAY, function(i, one_element) {
+	            $('#lang label').attr('lang', new_lang);
+	            $('#lang label').html($('#lang label').data(new_lang));
+	           /* jQuery.each(LOCALE_ARRAY, function(i, one_element) {
 					if($(one_element['selector'])){
 						if(one_element['value']){
 							$(one_element['selector']).attr(one_element['value'], one_element[CURRENT_LANG]);
@@ -10264,12 +10353,11 @@ console.log(window.location.toString());
 							$(one_element['selector']).html(one_element[CURRENT_LANG]);
 						}							
 					}
-			    });
-	            lang_activate(new_lang);
-	            window.location.reload();
+			    });*/
+	            lang_activate_el(new_lang);
         	});
 
-			lang_activate_el("body");
+			//lang_activate_el("body");
 			$.ajax({
 				url:"http://gurtom.mobi/profile.php",
 				type:"GET",
@@ -10564,7 +10652,7 @@ console.log(window.location.toString());
 								
 							});
 							}
-						lang_activate_el($button);
+						//lang_activate_el($button);
 						}
 					//$("#main-page").find(soc.element).attr("href",soc.activate);
 				}
@@ -10585,7 +10673,7 @@ console.log(window.location.toString());
 							$button.removeClass("active");
 							$button.html('<span>' + LOCALE_ARRAY_ADDITIONAL.deactivate[CURRENT_LANG] + '</span>');
 							}
-						lang_activate_el($button);
+						//lang_activate_el($button);
 						}
 					//$("#main-page").find(soc.element).attr("href",soc.activate);
 				}				
@@ -10596,7 +10684,7 @@ console.log(window.location.toString());
 					//$.mobile.navigate('#spheres-address');
 					//$.mobile.navigate('#profile-page');
 				});
-				
+				$('#profile-page .ui-btn-right.ui-btn.ui-icon-check.ui-btn-icon-right').off();
 				$('#profile-page .ui-btn-right.ui-btn.ui-icon-check.ui-btn-icon-right').click(function(){
 					if($('#profile-page #male').hasClass('ui-radio-on')){
 						var g = 0;
