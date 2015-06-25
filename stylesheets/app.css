@@ -793,7 +793,7 @@ label.ui-btn {
     font-weight: normal; }
 
 #main-page {
-  background: url(../images/svg/bg.svg) 50% 50% no-repeat;
+  background: url(../images/bg.png) 50% 50% no-repeat;
   -moz-background-size: cover;
   -o-background-size: cover;
   -webkit-background-size: cover;

@@ -44,7 +44,7 @@
     </div>
     <div role="main" class="ui-content">
         <div id="logo">
-            <img src="" />
+            <img src="images/logo.png" />
         </div>
         <div class="name">
             <h1>
@@ -5283,10 +5283,10 @@
     </div>
     <div role="main" class="ui-content">
         <div class="ui-checkbox">
-            <label id = "trusted_checkbox" data-checked = "true" onclick = "TRUST_LIST.filter_by_id()" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Trusted only</label><input type="checkbox" name="trusted_checkbox" value="1" data-enhanced="true" />
+            <label id = "trusted_checkbox" data-checked = "true" onclick = "TRUST_LIST.filter_by_id(true)" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Trusted only</label><input type="checkbox" name="trusted_checkbox" value="1" data-enhanced="true" />
         </div>
         <div class="ui-input-search ui-input-has-clear">
-            <input onkeyup="TRUST_LIST.filter_by_id()" onchange="TRUST_LIST.filter_by_id()" id = "searched_string" type="search" name="" placeholder="Search by ID" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">Clear text</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />
+            <input onkeyup="TRUST_LIST.filter_by_id()" id = "searched_string" type="search" name="" placeholder="Search by ID" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">Clear text</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />
         </div>
         <div>
             <select id = "choose_sphere_trust" onclick = "TRUST_LIST.set_spheres_and_listeners(); $.mobile.navigate('#spheres-trust');" name=""><option style = "display:none" value="Choose vote type">Choose vote type</option>

@@ -62,7 +62,6 @@ window.onload = function(){
 			}
 	    });
 		if( (location.href.indexOf('#spheres-address') > -1 ||
-			 location.href.indexOf('#spheres-filters') > -1 ||
 			 location.href.indexOf('#spheres-trust') > -1 ||
 			 location.href.indexOf('#spheres-trust-vote') > -1) &&	( SPHERES.spheres_array.length == 0 && SUPER_PROFILE.auth == true) ){
 			SPHERES.initial();
@@ -125,9 +124,9 @@ window.onload = function(){
 			SPHERES.set_spheres_create_vote();
 		}
 
-		if(location.href.indexOf('#spheres-filters') > -1 && location.href.indexOf('&ui-state=dialog') == -1){
+		if(location.href.indexOf('#spheres-filters') > -1 && location.href.indexOf('&ui-state=dialog') == -1 && SUPER_PROFILE.auth == true){
 			console.log('load spheres: filters');
-			SPHERES.set_spheres_filters();
+			SPHERES.initial();
 		}
 
 		if(location.href.indexOf('#create-item-nko-page') > -1){
@@ -157,7 +156,8 @@ window.onload = function(){
 			  location.href.indexOf('#weighted-votings-page?my=1') > -1 ||
 			  location.href.indexOf('#weighted-votings-page?my=2') > -1 ||
 			  location.href.indexOf('#projects-page?my_project=true') > -1 ||
-			  location.href.indexOf('#requests-page?my_request=true') > -1) && SUPER_PROFILE.auth == false){
+			  location.href.indexOf('#requests-page?my_request=true') > -1 ||
+			  location.href.indexOf('#spheres-trust-vote') > -1) && SUPER_PROFILE.auth == false){
 			ask_login();
 		}
 
@@ -193,7 +193,7 @@ window.onload = function(){
 		}
 
 		if(location.href.indexOf('#spheres-filters') > -1 && SUPER_PROFILE.auth == true){
-			//SPHERES.set_spheres_filters();
+			SPHERES.initial();
 			$('#spheres-filters select').selectmenu().selectmenu("refresh", true);
 		}
 
@@ -426,7 +426,8 @@ window.onhashchange = function(){
 		  location.href.indexOf('#weighted-votings-page?my=1') > -1 ||
 		  location.href.indexOf('#weighted-votings-page?my=2') > -1 ||
 		  location.href.indexOf('#projects-page?my_project=true') > -1 ||
-		  location.href.indexOf('#requests-page?my_request=true') > -1) && SUPER_PROFILE.auth == false){
+		  location.href.indexOf('#requests-page?my_request=true') > -1 ||
+		  location.href.indexOf('#spheres-trust-vote') > -1) && SUPER_PROFILE.auth == false){
 		ask_login();
 	}
 
@@ -525,7 +526,7 @@ window.onhashchange = function(){
 
 	if(location.href.indexOf('#spheres-filters') > -1 && location.href.indexOf('&ui-state=dialog') == -1){
 		console.log('load spheres: filters');
-		SPHERES.set_spheres_filters();
+		SPHERES.initial();
 	}
 
 	if(location.href.indexOf('#create-vote') > -1 && SUPER_PROFILE.auth == true){
@@ -1648,17 +1649,22 @@ var PROJECTS = {
     		$('#projects-page #projects-list').html(elements_string);
     	}
 	},
-	stars_action: function(current_star){
+	stars_action: function(current_star, project_proposition){
 		//$('.stars-wrap span').on('click', function(){
             var star = $(current_star);
             var allStar = star.parent().find('span');
             var val = star.index();
             var vote_id = $(current_star).data('vote_id');
 
+            var obj_type = '4';
+            if(project_proposition){
+            	obj_type = '3';
+            }
             if (star.hasClass('active') && !star.next().hasClass('active')) {
                 allStar.removeClass('active');
+                
                 $.ajax({
-				  url: "http://gurtom.mobi/stars_add.php?id=" + vote_id + "&stars=0&obj=1",
+				  url: "http://gurtom.mobi/stars_add.php?id=" + vote_id + "&stars=0&obj=" + obj_type,
 				  type: "GET",
 				  xhrFields: {
 			       withCredentials: true
@@ -1672,7 +1678,7 @@ var PROJECTS = {
             }
 
             $.ajax({
-			  url: "http://gurtom.mobi/stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=1",
+			  url: "http://gurtom.mobi/stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=" + obj_type,
 			  type: "GET",
 			  xhrFields: {
 		       withCredentials: true
@@ -2078,19 +2084,19 @@ var PROJECTS = {
 
     	switch(data_for_build.stars){
     		case "0":
-    			var stars_ui = '<span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span>\ ';
+    			var stars_ui = '<span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span>\ ';
     			break;
     		case "1":
-    			var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span>\ ';
+    			var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span>\ ';
     			break;
     		case "2":
-    			var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span>\ ';
+    			var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span>\ ';
     			break;
     		case "3":
-    			var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span>\ ';
+    			var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span>\ ';
     			break;
     		case "4":
-    			var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span>\ ';
+    			var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span>\ ';
     			break;
     	}
 
@@ -2868,7 +2874,7 @@ var PROGRAMS = {
             if (star.hasClass('active') && !star.next().hasClass('active')) {
                 allStar.removeClass('active');
                 $.ajax({
-				  url: "http://gurtom.mobi/stars_add.php?id=" + vote_id + "&stars=0&obj=1",
+				  url: "http://gurtom.mobi/stars_add.php?id=" + vote_id + "&stars=0&obj=2",
 				  type: "GET",
 				  xhrFields: {
 			       withCredentials: true
@@ -2882,7 +2888,7 @@ var PROGRAMS = {
             }
 
             $.ajax({
-			  url: "http://gurtom.mobi/stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=1",
+			  url: "http://gurtom.mobi/stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=2",
 			  type: "GET",
 			  xhrFields: {
 		       withCredentials: true
@@ -3047,19 +3053,19 @@ var PROGRAMS = {
 
     	switch(data_for_build.stars){
     		case "0":
-    			var stars_ui = '<span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span>\ ';
+    			var stars_ui = '<span data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span>\ ';
     			break;
     		case "1":
-    			var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span>\ ';
+    			var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span>\ ';
     			break;
     		case "2":
-    			var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span>\ ';
+    			var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span>\ ';
     			break;
     		case "3":
-    			var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span>\ ';
+    			var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span>\ ';
     			break;
     		case "4":
-    			var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span>\ ';
+    			var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span>\ ';
     			break;
     	}
 
@@ -3333,7 +3339,7 @@ var PROGRAMS = {
 		var self = this;
 		var return_element;
 		$.ajax({
-			  url: 'http://gurtom.mobi/program.php?filter=' + data_id,
+			  url: 'http://gurtom.mobi/program.php?id=' + data_id,
 			  type: "GET",
 			  xhrFields: {
 		       withCredentials: true
@@ -3820,7 +3826,7 @@ var REQUESTS = {
             if (star.hasClass('active') && !star.next().hasClass('active')) {
                 allStar.removeClass('active');
                 $.ajax({
-				  url: "http://gurtom.mobi/stars_add.php?id=" + vote_id + "&stars=0&obj=1",
+				  url: "http://gurtom.mobi/stars_add.php?id=" + vote_id + "&stars=0&obj=5",
 				  type: "GET",
 				  xhrFields: {
 			       withCredentials: true
@@ -3834,7 +3840,7 @@ var REQUESTS = {
             }
 
             $.ajax({
-			  url: "http://gurtom.mobi/stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=1",
+			  url: "http://gurtom.mobi/stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=5",
 			  type: "GET",
 			  xhrFields: {
 		       withCredentials: true
@@ -3999,19 +4005,19 @@ var REQUESTS = {
 
     	switch(data_for_build.stars){
     		case "0":
-    			var stars_ui = '<span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span>\ ';
+    			var stars_ui = '<span data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span>\ ';
     			break;
     		case "1":
-    			var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span>\ ';
+    			var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span>\ ';
     			break;
     		case "2":
-    			var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span>\ ';
+    			var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span>\ ';
     			break;
     		case "3":
-    			var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span>\ ';
+    			var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span>\ ';
     			break;
     		case "4":
-    			var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span>\ ';
+    			var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span>\ ';
     			break;
     	}
 
@@ -4283,7 +4289,7 @@ var REQUESTS = {
 		var self = this;
 		var return_element;
 		$.ajax({
-			  url: 'http://gurtom.mobi/request.php?filter=' + data_id,
+			  url: 'http://gurtom.mobi/request.php?id=' + data_id,
 			  type: "GET",
 			  xhrFields: {
 		       withCredentials: true
@@ -5021,7 +5027,7 @@ var WEIGHTED_VOTINGS = {
             if (star.hasClass('active') && !star.next().hasClass('active')) {
                 allStar.removeClass('active');
                 $.ajax({
-				  url: "http://gurtom.mobi/stars_add.php?id=" + vote_id + "&stars=0&obj=1",
+				  url: "http://gurtom.mobi/stars_add.php?id=" + vote_id + "&stars=0&obj=6",
 				  type: "GET",
 				  xhrFields: {
 			       withCredentials: true
@@ -5035,7 +5041,7 @@ var WEIGHTED_VOTINGS = {
             }
 
             $.ajax({
-			  url: "http://gurtom.mobi/stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=1",
+			  url: "http://gurtom.mobi/stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=6",
 			  type: "GET",
 			  xhrFields: {
 		       withCredentials: true
@@ -5839,21 +5845,23 @@ var WEIGHTED_VOTINGS = {
 var TRUST_LIST = {
 	trust_array: [],
 	trust_last_item: 10,
-	init: function(searched_id){
+	init: function(searched_id, click){
 		var self = this;
 		$.mobile.loading( "show", {  theme: "z"	});
-		if($('#trusted_checkbox').data('checked') == true){
+		if($('#trusted_checkbox').data('checked') == 'true'){
 			var url = 'http://gurtom.mobi/trust.php';
 			if(searched_id){
-				url += "?s="  + searched_id
-			}
-			$('#trusted_checkbox').data('checked', false);			
+				url += "?s="  + searched_id;
+			}else if(click){
+				$('#trusted_checkbox').data('checked', 'false');	
+			}					
 		}else{
 			var url = 'http://gurtom.mobi/trust.php?p_s=1';
 			if(searched_id){
 				url += "&s="  + searched_id
+			}else if(click){
+				$('#trusted_checkbox').data('checked', 'true');	
 			}
-			$('#trusted_checkbox').data('checked', true);	
 		}
 		$.ajax({
 		  url: url,
@@ -5876,7 +5884,7 @@ var TRUST_LIST = {
 	reinit: function(){
 		var self = this;
 		$.mobile.loading( "show", {  theme: "z"	});
-		if($('#trusted_checkbox').hasClass('ui-checkbox-on')){
+		if($('#trusted_checkbox').data('checked') == false){
 			var url = 'http://gurtom.mobi/trust.php?p_s=1&ls=' + self.trust_last_item;
 		}else{
 			var url = 'http://gurtom.mobi/trust.php?ls=' + self.trust_last_item;
@@ -5900,12 +5908,15 @@ var TRUST_LIST = {
 		  },
 		});
 	},
-	filter_by_id:function(){
+	filter_by_id:function(click){
 		var self = this;
+		if(click)
+			$('#trust-list #searched_string').val('');
+
 		if($('#trust-list #searched_string').val() != ""){
 			self.init($('#trust-list #searched_string').val());
-		}else{
-			self.init();
+		}else{			
+			self.init(false, click);
 		}
 	},
 	build_elements: function(reinit, reinit_array){
@@ -7836,7 +7847,7 @@ var VOTINGS = {
 		var self = this;
 		var return_element;
 		$.ajax({
-			  url: 'http://gurtom.mobi/mc.php?sph=0&filter=' + vote_id,
+			  url: 'http://gurtom.mobi/mc.php?sph=0&id=' + vote_id,
 			  type: "GET",
 			  xhrFields: {
 		       withCredentials: true
@@ -9064,7 +9075,7 @@ var MY_VOTINGS = {
 		var self = this;
 		var return_element;
 		$.ajax({
-			  url: 'http://gurtom.mobi/mc.php?sph=0&filter=' + vote_id,
+			  url: 'http://gurtom.mobi/mc.php?sph=0&id=' + vote_id,
 			  type: "GET",
 			  xhrFields: {
 		       withCredentials: true
