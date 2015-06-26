@@ -1164,7 +1164,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id = "activated_filter" class="ui-grid-a">
+                        <div style = "display: none" id = "activated_filter" class="ui-grid-a">
                             <div class="ui-block-a">
                                 <div id = "filter_activator" onclick = "PROGRAMS.activated_hard_filter = 1; $.mobile.navigate('#filter-page-programs');" class="ui-input-btn ui-btn ui-btn-icon-right filter-active">
                                     <span>Filter is activated</span><input type="button" value="" data-enhanced="true" />
@@ -1602,7 +1602,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id = "activated_filter" class="ui-grid-a">
+                        <div style = "display: none" id = "activated_filter" class="ui-grid-a">
                             <div class="ui-block-a">
                                 <div id = "filter_activator" onclick = "PROJECTS.activated_hard_filter = 1; $.mobile.navigate('#filter-page-projects');" class="ui-input-btn ui-btn ui-btn-icon-right filter-active">
                                     <span>Filter is activated</span><input type="button" value="" data-enhanced="true" />
@@ -2041,7 +2041,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id = "activated_filter" class="ui-grid-a">
+                        <div style = "display: none" id = "activated_filter" class="ui-grid-a">
                             <div class="ui-block-a">
                                 <div id = "filter_activator" onclick = "REQUESTS.activated_hard_filter = 1; $.mobile.navigate('#filter-page-requests');" class="ui-input-btn ui-btn ui-btn-icon-right filter-active">
                                     <span>Filter is activated</span><input type="button" value="" data-enhanced="true" />
@@ -2468,14 +2468,14 @@
                             <option value="Sort by supported">Sort by supported</option>
                             </select>
                         </div>
-                        <div id = "solo_filter" onclick = "$.mobile.navigate('#filter-page'); WEIGHTED_VOTINGS.activated_hard_filter = 1;  $('#activated_filter').css('display', 'block'); $('#solo_filter').css('display', 'none');" class="ui-grid-solo">
+                        <div id = "solo_filter" onclick = "$.mobile.navigate('#filter-page'); WEIGHTED_VOTINGS.activated_hard_filter = 1;  $('#weighted-votings-page #activated_filter').css('display', 'block'); $('#weighted-votings-page #solo_filter').css('display', 'none');" class="ui-grid-solo">
                             <div class="ui-block-a">
                                 <div class="ui-input-btn ui-btn ui-btn-icon-right filter-normal">
                                     <span>Filter</span><input type="button" value="" data-enhanced="true" />
                                 </div>
                             </div>
                         </div>
-                        <div id = "activated_filter" class="ui-grid-a">
+                        <div style = "display: none" id = "activated_filter" class="ui-grid-a">
                             <div class="ui-block-a">
                                 <div id = "filter_activator" onclick = "WEIGHTED_VOTINGS.activated_hard_filter = 1; $.mobile.navigate('#filter-page');" class="ui-input-btn ui-btn ui-btn-icon-right filter-active">
                                     <span>Filter is activated</span><input type="button" value="" data-enhanced="true" />
@@ -3695,14 +3695,14 @@
                             <option value="Sort by supported">Sort by supported</option>
                             </select>
                         </div>
-                        <div id = "solo_filter" onclick = "$.mobile.navigate('#filter-page'); VOTINGS.activated_hard_filter = 1;  $('#activated_filter').css('display', 'block'); $('#solo_filter').css('display', 'none');" class="ui-grid-solo">
+                        <div id = "solo_filter" onclick = "$.mobile.navigate('#filter-page'); VOTINGS.activated_hard_filter = 1;  $('#votings-page #activated_filter').css('display', 'block'); $('#votings-page #solo_filter').css('display', 'none');" class="ui-grid-solo">
                             <div class="ui-block-a">
                                 <div class="ui-input-btn ui-btn ui-btn-icon-right filter-normal">
                                     <span>Filter</span><input type="button" value="" data-enhanced="true" />
                                 </div>
                             </div>
                         </div>
-                        <div id = "activated_filter" class="ui-grid-a">
+                        <div style = "display:none" id = "activated_filter" class="ui-grid-a">
                             <div class="ui-block-a">
                                 <div id = "filter_activator" onclick = "VOTINGS.activated_hard_filter = 1; $.mobile.navigate('#filter-page');" class="ui-input-btn ui-btn ui-btn-icon-right filter-active">
                                     <span>Filter is activated</span><input type="button" value="" data-enhanced="true" />
@@ -3840,14 +3840,14 @@
                             <option value="Sort by supported">Sort by supported</option>
                             </select>
                         </div>
-                        <div id = "solo_filter" onclick = "$.mobile.navigate('#filter-page'); MY_VOTINGS.activated_hard_filter = 1;  $('#activated_filter').css('display', 'block'); $('#solo_filter').css('display', 'none');" class="ui-grid-solo">
+                        <div id = "solo_filter" onclick = "$.mobile.navigate('#filter-page'); MY_VOTINGS.activated_hard_filter = 1;  $('#my-votings-page #activated_filter').css('display', 'block'); $('#my-votings-page #solo_filter').css('display', 'none');" class="ui-grid-solo">
                             <div class="ui-block-a">
                                 <div class="ui-input-btn ui-btn ui-btn-icon-right filter-normal">
                                     <span>Filter</span><input type="button" value="" data-enhanced="true" />
                                 </div>
                             </div>
                         </div>
-                        <div id = "activated_filter" class="ui-grid-a">
+                        <div style = "display:none" id = "activated_filter" class="ui-grid-a">
                             <div class="ui-block-a">
                                 <div id = "filter_activator" onclick = "MY_VOTINGS.activated_hard_filter = 1; $.mobile.navigate('#filter-page');" class="ui-input-btn ui-btn ui-btn-icon-right filter-active">
                                     <span>Filter is activated</span><input type="button" value="" data-enhanced="true" />

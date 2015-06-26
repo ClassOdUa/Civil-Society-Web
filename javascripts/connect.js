@@ -1,6 +1,7 @@
 var DEFAULT_LANG = "en";
 var CURRENT_LANG = false;
 var FILE;
+var UI_STATE_DIALOG = 0;
 
 $.mobile.defaultPageTransition = 'none';
 
@@ -63,8 +64,9 @@ window.onload = function(){
 	    });
 		if( (location.href.indexOf('#spheres-address') > -1 ||
 			 location.href.indexOf('#spheres-trust') > -1 ||
-			 location.href.indexOf('#spheres-trust-vote') > -1) &&	( SPHERES.spheres_array.length == 0 && SUPER_PROFILE.auth == true) ){
-			SPHERES.initial();
+			 location.href.indexOf('#spheres-trust-vote') > -1 ||
+			 location.href.indexOf('#spheres-filters') > -1)){
+				SPHERES.initial();
 		}
 
 		$('#profile-page .avatar').click(function(){
@@ -117,16 +119,6 @@ window.onload = function(){
 		if(location.href.indexOf('#requests-page') > -1){
 			console.log('load requests');
 			REQUESTS.init();
-		}
-
-		if(location.href.indexOf('#spheres-create-vote') > -1 && location.href.indexOf('&ui-state=dialog') == -1 && SUPER_PROFILE.auth == true){
-			console.log('load spheres: create vote');
-			SPHERES.set_spheres_create_vote();
-		}
-
-		if(location.href.indexOf('#spheres-filters') > -1 && location.href.indexOf('&ui-state=dialog') == -1 && SUPER_PROFILE.auth == true){
-			console.log('load spheres: filters');
-			SPHERES.initial();
 		}
 
 		if(location.href.indexOf('#create-item-nko-page') > -1){
@@ -192,11 +184,6 @@ window.onload = function(){
 			}
 		}
 
-		if(location.href.indexOf('#spheres-filters') > -1 && SUPER_PROFILE.auth == true){
-			SPHERES.initial();
-			$('#spheres-filters select').selectmenu().selectmenu("refresh", true);
-		}
-
 		if(location.href.indexOf('#create-vote') > -1 && SUPER_PROFILE.auth == true){
 			set_dates_range('#create-vote [name=s_time_date]', '#create-vote [name=s_time_month]', '#create-vote [name=s_time_year]', new Date().getFullYear(), 2, "current");
 			set_dates_range('#create-vote [name=f_time_date]', '#create-vote [name=f_time_month]', '#create-vote [name=f_time_year]', new Date().getFullYear(), 2, "current");
@@ -209,10 +196,6 @@ window.onload = function(){
 
 	//PIF.get_pif_array();
 
-	if(location.href.indexOf('#spheres-address') > -1){
-		SPHERES.set_spheres_and_listeners();
-		$('#spheres-address #sphere_form select').selectmenu().selectmenu("refresh", true);
-	}
 	$('#picture_form').ajaxForm({url: 'http://gurtom.mobi/i/up.php', type: 'post', success: function(response) {
 		$.ajax({
 			url:"http://gurtom.mobi/profile.php",
@@ -412,6 +395,9 @@ window.onload = function(){
 
 window.onhashchange = function(){
 	lang_activate_el();
+	if(UI_STATE_DIALOG == 0 && location.href.indexOf('ui-state=dialog') > -1){
+		UI_STATE_DIALOG = 1;
+	}
 
 	if( ( location.href.indexOf('#trust-list') > -1 ||
 		  location.href.indexOf('#create-item') > -1 ||
@@ -439,6 +425,13 @@ window.onhashchange = function(){
 	}
 	if(location.href.indexOf('#address-item-3') > -1){
 		$('#address-item-3 #delete_address').attr('style', 'display: none');
+	}
+
+	if( (location.href.indexOf('#spheres-address') > -1 ||
+		 location.href.indexOf('#spheres-trust') > -1 ||
+		 location.href.indexOf('#spheres-trust-vote') > -1 ||
+		 location.href.indexOf('#spheres-filters') > -1) && UI_STATE_DIALOG == 0){
+			SPHERES.initial();
 	}
 
 	if(location.href.indexOf('#votings-page') > -1 
@@ -515,19 +508,7 @@ window.onhashchange = function(){
 			ADRESS.init();
 		}
 	}
-	if(location.href.indexOf('#spheres-filters') > -1 && SUPER_PROFILE.auth == true){
-		$('#spheres-filters select').selectmenu().selectmenu("refresh", true);
-	}
 
-	if(location.href.indexOf('#spheres-create-vote') > -1 && location.href.indexOf('&ui-state=dialog') == -1 && SUPER_PROFILE.auth == true){
-		console.log('load spheres: create vote');
-		SPHERES.set_spheres_create_vote();
-	}
-
-	if(location.href.indexOf('#spheres-filters') > -1 && location.href.indexOf('&ui-state=dialog') == -1){
-		console.log('load spheres: filters');
-		SPHERES.initial();
-	}
 
 	if(location.href.indexOf('#create-vote') > -1 && SUPER_PROFILE.auth == true){
 		set_dates_range('#create-vote [name=s_time_date]', '#create-vote [name=s_time_month]', '#create-vote [name=s_time_year]', new Date().getFullYear(), 2, "current");
@@ -561,15 +542,6 @@ window.onhashchange = function(){
 		alert(LOCALE_ARRAY_ADDITIONAL.not_auth[CURRENT_LANG]);
 	}
 
-	if(location.href.indexOf('#profile-page') > -1){
-		if(location.href.indexOf('#profile-page&ui') == -1){
-			SPHERES.set_spheres_and_listeners();
-		}
-		$('#spheres-address #sphere_form select').selectmenu().selectmenu("refresh", true);
-	}
-	if(location.href.indexOf('#spheres-address') > -1){
-		$('#spheres-address #sphere_form select').selectmenu().selectmenu("refresh", true);
-	}
 	if(location.href.indexOf('#spheres-trust') > -1){
 		$('#spheres-trust #sphere_form select').selectmenu().selectmenu("refresh", true);
 	}
@@ -651,6 +623,10 @@ window.onhashchange = function(){
 		$('#select-lang').selectmenu("refresh", true);
 	}catch(e){
 		console.log('exception catched, all ok');
+	}
+
+	if(UI_STATE_DIALOG == 1 && location.href.indexOf('ui-state=dialog') == -1){
+		UI_STATE_DIALOG = 0;
 	}
 };
 
@@ -4849,8 +4825,8 @@ var WEIGHTED_VOTINGS = {
 			  		$.mobile.loading( "hide" );
 			  		self.check_current_url( 1 );
 			  		self.build_elements();
-			  		$('#activated_filter').css('display', 'none'); 
-			  		$('#solo_filter').css('display', 'block');	 	
+			  		$('#weighted-votings-page #activated_filter').css('display', 'none'); 
+			  		$('#weighted-votings-page #solo_filter').css('display', 'block');	 	
 			  },
 			});
 		}
@@ -5622,12 +5598,14 @@ var WEIGHTED_VOTINGS = {
 			  complete: function( response ){
 			  		return_element = JSON.parse( response.responseText );
 			  		data_for_build = return_element[0];
+			  		console.log('data_for_build');
+			  		console.log(data_for_build);
 			  		switch(data_for_build.status){
 						case '0':
-							self.current_vote_page_voting_period( data_for_build, 1, type_trigger);
+							self.current_vote_page_voting_period( data_for_build, 0, type_trigger);
 							break;
 						case '1':
-							self.current_vote_page_voting_period(  data_for_build, 0, type_trigger);
+							self.current_vote_page_voting_period(  data_for_build, 1, type_trigger);
 							break;
 					}
 
@@ -5644,7 +5622,6 @@ var WEIGHTED_VOTINGS = {
 			        });			  		
 			  },
 			});
-		return return_element[0];
 	},
 	check_current_url:function(type_trigger){
 		var self = this;
@@ -5712,7 +5689,7 @@ var WEIGHTED_VOTINGS = {
 		      },
 		      crossDomain: true,
 			  complete: function( response ){
-			  	window.location.reload();
+			  		self.get_one_element(object_id);
 			  		console.log('ok');  	
 			  },
 			});
@@ -5877,6 +5854,7 @@ var TRUST_LIST = {
 	  		console.log(self.trust_array);
 	  		self.build_elements();
 	  		self.set_spheres_and_listeners();
+	  		SPHERES.initial();
 	  		$.mobile.loading( "hide" );	
 		  },
 		});
@@ -6291,39 +6269,71 @@ var SPHERES = {
 		/*self.spheres[7].name =  LOCALE_ARRAY_ADDITIONAL.candidates_proposal[CURRENT_LANG];
 		self.spheres[8].name =  LOCALE_ARRAY_ADDITIONAL.candidates_parties[CURRENT_LANG];
 		self.spheres[9].name =  LOCALE_ARRAY_ADDITIONAL.local_self_goverments[CURRENT_LANG];*/
-		$.ajax({
-		  url: 'http://gurtom.mobi/filter.php',
-		  type: "GET",
-		  xhrFields: {
-	       withCredentials: true
-	      },
-          crossDomain: true,
-		  complete: function( response ){
-		  		self.spheres_array = JSON.parse( response.responseText );	
-		  		//alert('okey');
-		  		self.normalize_array();
-		  		self.set_spheres_and_listeners();
-		  		self.set_spheres_filters();
-		  		//self.set_spheres_create_vote();
-		  		$.mobile.loading( "hide" );
-		  		
-		  		if(callback_function)
-		  			callback_function();
-		  			  	
-		  },
-		});
+		if(SPHERES.spheres_array.length == 0){
+			$.ajax({
+				  url: 'http://gurtom.mobi/filter.php',
+				  type: "GET",
+				  xhrFields: {
+			       withCredentials: true
+			      },
+		          crossDomain: true,
+				  complete: function( response ){
+				  		self.spheres_array = JSON.parse( response.responseText );	
+				  		self.normalize_array();
+				  		if(location.href.indexOf('#spheres-filters') > -1){
+				  			self.set_spheres_filters();
+				  			$('#spheres-filters #sphere_form select').selectmenu().selectmenu("refresh", true);
+				  		}
+				  		if(location.href.indexOf('#spheres-address') > -1){
+				  			self.set_spheres_and_listeners();				  			
+				  			$('#spheres-address #sphere_form select').selectmenu().selectmenu("refresh", true);
+				  		}
+				  		if(location.href.indexOf('#spheres-create-vote') > -1){
+				  			self.set_spheres_create_vote();
+				  			$('#spheres-create-vote #sphere_form select').selectmenu().selectmenu("refresh", true);
+				  		}		
+				  		$.mobile.loading( "hide" );
+				  		
+				  		if(callback_function)
+				  			callback_function();
+				  			  	
+				  },
+				});
+		}else{
+			if(location.href.indexOf('#spheres-filters') > -1){
+	  			self.set_spheres_filters();
+	  			console.log('#spheres-filters');
+	  			$('#spheres-filters #sphere_form select').selectmenu().selectmenu("refresh", true);
+	  		}
+	  		if(location.href.indexOf('#spheres-address') > -1){
+	  			self.set_spheres_and_listeners();
+	  			console.log('#spheres-address');
+	  			$('#spheres-address #sphere_form select').selectmenu().selectmenu("refresh", true);
+	  		}
+	  		if(location.href.indexOf('#spheres-create-vote') > -1){
+	  			self.set_spheres_create_vote();
+	  			console.log('#spheres-create-vote');
+	  			$('#spheres-create-vote #sphere_form select').selectmenu().selectmenu("refresh", true);
+	  		}		
+	  		$.mobile.loading( "hide" );
+	  		
+	  		if(callback_function)
+	  			callback_function();
+		}
 	},
 	normalize_array: function(){
 		var self = this;
-		for ( var i = 0; i < self.spheres_array.length; i++ ) {
-			for ( var j = 0; j < self.spheres.length; j++ ) {
+		for ( var j = 0; j < self.spheres.length; j++ ) {				
+			self.spheres[j].objects = [];
+		}
+		for ( var i = 0; i < self.spheres_array.length; i++ ) {			
+			for ( var j = 0; j < self.spheres.length; j++ ) {				
 				if( self.spheres_array[i].type == self.spheres[j].type ){
 					self.spheres[j].objects[self.spheres[j].objects.length] = self.spheres_array[i];
 					break; 
 				}
 			}
 		}
-		console.log(self.spheres);
 	},
 	set_spheres_and_listeners: function(){
 		var self = this;
@@ -6340,7 +6350,7 @@ var SPHERES = {
 			if(self.spheres[i].objects.length == 1){
 				//console.log('equal one');
 				ui_string += '<div class = "content_value">\
-		                        <select name = "' + self.spheres[i].selector_name + '" multiple="multiple" data-native-menu="false">\
+		                        <select data-ajax="false" name = "' + self.spheres[i].selector_name + '" multiple="multiple" data-native-menu="false">\
 		                            <option>' + self.spheres[i].name + '</option>';
 		        
 		        for (var j = 0; j < self.spheres[i].objects[0].sph.length; j++) {
@@ -6382,6 +6392,7 @@ var SPHERES = {
 		        ui_string += '</div>';		        
 			}
 		}
+		$('#spheres-address #sphere_form').html('');
 		$('#spheres-address #sphere_form').html(ui_string);
 		var arr = $('#spheres-address #sphere_form .container option');
 		for (var i = 0; i < arr.length; i++) {
@@ -6390,9 +6401,6 @@ var SPHERES = {
 		var arr = $('#spheres-address #sphere_form .non_container');
 		for (var i = 0; i < arr.length; i++) {
 			$(arr[i]).hide();
-		}
-		if(location.href.indexOf('#spheres-address') > -1){
-			$('#spheres-address #sphere_form select').selectmenu().selectmenu("refresh", true);	
 		}
 		/*$('#spheres-address .ui-content input[type=submit]').on('click', function(){
 			
@@ -6443,8 +6451,8 @@ var SPHERES = {
 		});
 	},
 	show_mini_spheres: function (selector_content){
-	if($(selector_content).attr('style') == 'display:none;'){
-		$(selector_content).attr('style', '');
+		if($(selector_content).attr('style') == 'display:none;'){
+			$(selector_content).attr('style', '');
 		}else{
 			$(selector_content).attr('style', 'display:none;');
 		}
@@ -6508,40 +6516,6 @@ var SPHERES = {
 		if(location.href.indexOf('#spheres-filters') > -1){
 			$('#spheres-filters #sphere_form select').selectmenu().selectmenu("refresh", true);	
 		}
-
-		/*for ( var i = 0; i < SPHERES.spheres.length; i++ ) {
-			if(SPHERES.spheres[i].objects.length == 1){
-				ui_string += '<div class = "content_value">\
-		                        <select onchange = "$.mobile.navigate(\'#filter-page\'); VOTINGS.filter_data($(this).val(), 0, \'' + SPHERES.spheres[i].selector_name + '\')" name = "' + SPHERES.spheres[i].selector_name + '">\
-		                            <option style = "display:none">' + SPHERES.spheres[i].name + '</option>';
-		        
-		        for (var j = 0; j < SPHERES.spheres[i].objects[0].sph.length; j++) {
-		        	ui_string += '<option value = "' + SPHERES.spheres[i].objects[0].sph[j].idc +  '">' + SPHERES.spheres[i].objects[0].sph[j].sphere + '</option>';
-		        	
-		        }
-
-		        ui_string +=  '</select>\
-		                    </div>';
-			}
-
-			if(SPHERES.spheres[i].objects.length > 1){
-				var varable = '#' + SPHERES.spheres[i].selector_name + '_content';
-				ui_string += '<div>\
-		                        <select onchange = "$.mobile.navigate(\'#filter-page\'); VOTINGS.filter_data($(this).val(), 0, \'' + SPHERES.spheres[i].selector_name + '\')"><option style = "display: none" value="' + SPHERES.spheres[i].name + '">' + SPHERES.spheres[i].name + '</option>';
-		        for (var k = 0; k < SPHERES.spheres[i].objects.length; k++) {			        
-			        for (var j = 0; j < SPHERES.spheres[i].objects[k].sph.length; j++) {
-			        	ui_string += '<option value = "' + SPHERES.spheres[i].objects[k].sph[j].idc +  '">' + SPHERES.spheres[i].objects[k].sph[j].sphere + '</option>';
-			        	
-			        } 
-		        }
-		        ui_string +=  '</select>\
-		                    </div>';	        
-			}
-		}
-		$('#spheres-filters #sphere-form').html(ui_string);*/
-		/*if(location.href.indexOf('#spheres-filters') > -1){
-			$('#spheres-filters #sphere_form select').selectmenu().selectmenu("refresh", true);	
-		}*/
 	},
 	set_spheres_create_vote: function(){
 		var self = this;
@@ -6920,8 +6894,8 @@ var VOTINGS = {
 		  		$.mobile.loading( "hide" );
 		  		self.check_current_url( 1 );
 		  		self.build_elements();
-		  		$('#activated_filter').css('display', 'none'); 
-		  		$('#solo_filter').css('display', 'block');	 
+		  		$('#votings-page #activated_filter').css('display', 'none'); 
+		  		$('#votings-page #solo_filter').css('display', 'block');	 
 		  		if(call_back){
 		  			call_back();
 		  		} 	
@@ -7332,13 +7306,13 @@ var VOTINGS = {
     			break;
     	}
     	var create_project_button = '';
-    	if(SUPER_PROFILE.auth == true){
+    	if( data_for_build.cpb == "1" && SUPER_PROFILE.auth == true){
     		create_project_button = '<div id = "create_project_button" class="btn-login-soc">\
 					                    <a class="ui-btn ui-corner-all ui-shadow" onclick="VOTINGS.create_project_request(\'' + data_for_build.id + '\',\'project\')">' + LOCALE_ARRAY_ADDITIONAL.create_project[CURRENT_LANG] + '</a>\
 					                </div>';
     	}	
     	var create_request_button = '';
-    	if(SUPER_PROFILE.auth == true){
+    	if( data_for_build.crb == "1" && SUPER_PROFILE.auth == true){
     		create_request_button = '<div id = "create_request_button" class="btn-login-soc">\
 					                    <a class="ui-btn ui-corner-all ui-shadow" onclick="VOTINGS.create_project_request(\'' + data_for_build.id + '\',\'request\')">' + LOCALE_ARRAY_ADDITIONAL.create_request[CURRENT_LANG] + '</a>\
 					                </div>';
@@ -8203,8 +8177,8 @@ var MY_VOTINGS = {
 		  		self.votings_array = JSON.parse( response.responseText );	
 		  		console.log( self.votings_array );
 		  		$.mobile.loading( "hide" );
-		  		$('#activated_filter').css('display', 'none'); 
-		  		$('#solo_filter').css('display', 'block');	
+		  		$('#my-votings-page #activated_filter').css('display', 'none'); 
+		  		$('#my-votings-page #solo_filter').css('display', 'block');	
 		  		self.check_current_url( 1 );
 		  		self.build_elements();	 
 		  		if(call_back){
@@ -8562,13 +8536,13 @@ var MY_VOTINGS = {
     			break;
     	}
     	var create_project_button = '';
-    	if(SUPER_PROFILE.auth == true){
+    	if( data_for_build.cpb == "1" && SUPER_PROFILE.auth == true){
     		create_project_button = '<div id = "create_project_button" class="btn-login-soc">\
 					                    <a class="ui-btn ui-corner-all ui-shadow" onclick="VOTINGS.create_project_request(\'' + data_for_build.id + '\',\'project\')">' + LOCALE_ARRAY_ADDITIONAL.create_project[CURRENT_LANG] + '</a>\
 					                </div>';
     	}	
     	var create_request_button = '';
-    	if(SUPER_PROFILE.auth == true){
+    	if( data_for_build.crb == "1" && SUPER_PROFILE.auth == true){
     		create_request_button = '<div id = "create_request_button" class="btn-login-soc">\
 					                    <a class="ui-btn ui-corner-all ui-shadow" onclick="VOTINGS.create_project_request(\'' + data_for_build.id + '\',\'request\')">' + LOCALE_ARRAY_ADDITIONAL.create_request[CURRENT_LANG] + '</a>\
 					                </div>';
@@ -8758,13 +8732,13 @@ var MY_VOTINGS = {
     			break;
     	}
     	var create_project_button = '';
-    	if(SUPER_PROFILE.auth == true){
+    	if( data_for_build.cpb == "1" && SUPER_PROFILE.auth == true){
     		create_project_button = '<div id = "create_project_button" class="btn-login-soc">\
 					                    <a class="ui-btn ui-corner-all ui-shadow" onclick="VOTINGS.create_project_request(\'' + data_for_build.id + '\',\'project\')">' + LOCALE_ARRAY_ADDITIONAL.create_project[CURRENT_LANG] + '</a>\
 					                </div>';
     	}	
     	var create_request_button = '';
-    	if(SUPER_PROFILE.auth == true){
+    	if( data_for_build.crb == "1" && SUPER_PROFILE.auth == true){
     		create_request_button = '<div id = "create_request_button" class="btn-login-soc">\
 					                    <a class="ui-btn ui-corner-all ui-shadow" onclick="VOTINGS.create_project_request(\'' + data_for_build.id + '\',\'request\')">' + LOCALE_ARRAY_ADDITIONAL.create_request[CURRENT_LANG] + '</a>\
 					                </div>';
@@ -10417,17 +10391,13 @@ console.log(window.location.toString());
 				PROFILE.auth = true;
 				SUPER_PROFILE.auth = true;
 				PROFILE.getProfile();
-				/*if(location.href.indexOf('#transaction-page') > -1 || location.href.indexOf('#my-fund-page') > -1){
-					PIF.get_pif_array();
-				}*/				
-				//VOTINGS.init();
-				//NEWS.init();
 				COMMON_OBJECT.init_common_listeners();
 				//TRUST_LIST.init();
 				set_unset_links(1, '.menu-icon-activities', '#my-activities-page');
 				set_unset_links(1, '.menu-icon-options', '#options-page');
 				set_unset_links(1, '[data-link=#trust-list]');
-
+				SOCIAL.init();
+				SOCIAL.listener();
 			}else{
 				PROFILE.auth = false;
 				SUPER_PROFILE.auth = false;
@@ -10436,8 +10406,7 @@ console.log(window.location.toString());
 				set_unset_links(0, '.menu-icon-options');
 				set_unset_links(0, '[data-link=#trust-list]');
 			}
-			SOCIAL.init();
-			SOCIAL.listener();
+			
 			
 		}
 		$("#logout").click(function(){
@@ -10611,7 +10580,7 @@ console.log(window.location.toString());
 					if(typeof this[i] != "object") continue;
 					var soc = this[i];
 					var link = soc.auth ? soc.sn : soc.activate;
-					if(PROFILE.auth){
+					if(SUPER_PROFILE.auth){
 						$button = $("#profile-page").find(soc.element);
 						$button.attr("href",link);
 						if(!soc.auth){
@@ -10907,6 +10876,7 @@ console.log(window.location.toString());
 					console.log("profile_obj");
 		            console.log(that.profile_obj);
 		            if(that.profile_obj && !that.profile_obj.error){
+		            	console.log('yeah');
 		            	that.email = that.profile_obj.email;
 			            that.login = that.profile_obj.login;
 			            that.avatar = that.profile_obj.avatar;
@@ -10934,9 +10904,11 @@ console.log(window.location.toString());
 
 							}
 						}
-						//SOCIAL.init();
+						
 			            that.updateMenu();
+			            SOCIAL.init();
 		            }else{
+		            	console.log('nothing');
 		            	$.ajax({
 							url:"http://gurtom.mobi/profile.php",
 							type:"GET",
@@ -10960,21 +10932,24 @@ console.log(window.location.toString());
 					            that.payment = that.profile_obj.payment;
 					            SUPER_PROFILE.gender = that.gender;
 					            SUPER_PROFILE.id = that.profile_obj.id;
-					            console.log('start00');
 					            for (var i in SOCIAL){
-					            	console.log('start0');
 									if(typeof SOCIAL[i] != "object") continue;
 									var soc = SOCIAL[i];
-									console.log('start');
 									for(var b in that.profile_obj){
-										if(b != i) continue;
-										soc.auth = that.profile_obj[b]?true:false;
-										console.log(soc.auth);
+										if(b != i) continue;								
+										if(that.profile_obj[b] != 0){
+											soc.auth = true;
+											console.log(SOCIAL[i]);
+											console.log(SOCIAL[i].auth);
+										}else{
+											soc.auth = false;
+										}	
+										//soc.auth = that.profile_obj[b]?true:false;
+
 									}
-									console.log('finish');
 								}
-								//SOCIAL.init();
-					            that.updateMenu();		            
+					            that.updateMenu();
+					            SOCIAL.init();		            
 					        }
 						}); 	
 		            	
@@ -10995,7 +10970,7 @@ console.log(window.location.toString());
 			        	$("#login-form [name=login]").val("");
 			        	$("#login-form [name=pass]").val("");
 			            self.updateMenu();
-
+			            PROFILE.profile_obj = false;
 			        	}
 					})
     		},
