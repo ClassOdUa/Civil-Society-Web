@@ -2132,7 +2132,10 @@ label.ui-btn {
       #news-page .news-list .item .info .author {
         position: absolute;
         bottom: 0.5em;
-        font-size: 0.65em; }
+        font-size: 0.65em;
+        width: 100%;
+        background: rgba(255,255,255,0.9);
+        }
         #news-page .news-list .item .info .author strong {
           font-weight: 900; }
 

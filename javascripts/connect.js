@@ -64,6 +64,7 @@ window.onload = function(){
 	    });
 		if( (location.href.indexOf('#spheres-address') > -1 ||
 			 location.href.indexOf('#spheres-trust') > -1 ||
+			 location.href.indexOf('#spheres-create-vote') > -1 ||
 			 location.href.indexOf('#spheres-trust-vote') > -1 ||
 			 location.href.indexOf('#spheres-filters') > -1)){
 				SPHERES.initial();
@@ -430,6 +431,7 @@ window.onhashchange = function(){
 	if( (location.href.indexOf('#spheres-address') > -1 ||
 		 location.href.indexOf('#spheres-trust') > -1 ||
 		 location.href.indexOf('#spheres-trust-vote') > -1 ||
+		 location.href.indexOf('#spheres-create-vote') > -1 ||
 		 location.href.indexOf('#spheres-filters') > -1) && UI_STATE_DIALOG == 0){
 			SPHERES.initial();
 	}
@@ -765,7 +767,7 @@ function nko_create_page_data(){
 						        <h1>\
 						            Список НКО\
 						        </h1>\
-						        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" href="#create-item">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#program-nko-help">Ask</a>\
+						        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#program-nko-help">Ask</a>\
 						        <div id="project-nko-help" class="help-popup" data-role="popup" data-history="false">\
 						            <div class="title">\
 						                Description\
@@ -1533,6 +1535,14 @@ var PROJECTS = {
 				url += '?sort=5';
 				break;	
 		}
+		switch($('#projects-page [name=sort_direction]').val()){
+			case "up":
+				url += '&direct=0';
+				break;
+			case "down":
+				url += '&direct=1';
+				break;	
+		}
 
 		switch($('#projects-page [name=sort]').data('direct')){
 			case 0:
@@ -1949,7 +1959,7 @@ var PROJECTS = {
 			        <h1>\
 			            ' + LOCALE_ARRAY_ADDITIONAL.project[CURRENT_LANG] + '\
 			        </h1>\
-			        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" href="#projects-page">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#project-help">Ask</a>\
+			        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#project-help">Ask</a>\
 			        <div id="project-help" class="help-popup" data-role="popup" data-history="false">\
 			            <div class="title">\
 			                Description\
@@ -2723,6 +2733,14 @@ var PROGRAMS = {
 				url += '?sort=4';
 				break;
 		}
+		switch($('#programs-page [name=sort_direction]').val()){
+			case "up":
+				url += '&direct=0';
+				break;
+			case "down":
+				url += '&direct=1';
+				break;	
+		}
 
 		switch($('#programs-page [name=sort]').data('direct')){
 			case 0:
@@ -3128,7 +3146,7 @@ var PROGRAMS = {
 			        <h1>\
 			            ' + LOCALE_ARRAY_ADDITIONAL.program[CURRENT_LANG] + '\
 			        </h1>\
-			        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" href="#programs-page">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#program-help">Ask</a>\
+			        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#program-help">Ask</a>\
 			        <div id="program-help" class="help-popup" data-role="popup" data-history="false">\
 			            <div class="title">\
 			                Description\
@@ -3675,6 +3693,14 @@ var REQUESTS = {
 				url += '?sort=6';
 				break;	
 		}
+		switch($('#requests-page [name=sort_direction]').val()){
+			case "up":
+				url += '&direct=0';
+				break;
+			case "down":
+				url += '&direct=1';
+				break;	
+		}
 
 		switch($('#requests-page [name=sort]').data('direct')){
 			case 0:
@@ -4080,7 +4106,7 @@ var REQUESTS = {
 			        <h1>\
 			            ' + LOCALE_ARRAY_ADDITIONAL.request[CURRENT_LANG] + '\
 			        </h1>\
-			        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" href="#requests-page">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#request-help">Ask</a>\
+			        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#request-help">Ask</a>\
 			        <div id="request-help" class="help-popup" data-role="popup" data-history="false">\
 			            <div class="title">\
 			                Description\
@@ -4877,6 +4903,14 @@ var WEIGHTED_VOTINGS = {
 				$('#weighted-votings-page [name=sort]').data('direct', 0);
 				break;
 		}
+		switch($('#weighted-votings-page [name=sort_direction]').val()){
+			case "up":
+				url += '&direct=0';
+				break;
+			case "down":
+				url += '&direct=1';
+				break;	
+		}
 
 		if(self.activated_hard_filter){
 			var start_date = $('#filter-page [name=start_year]').val() + "-" 
@@ -5206,7 +5240,7 @@ var WEIGHTED_VOTINGS = {
     	var ui_string = '';
 		ui_string += '<div data-role="header" data-position="fixed" data-tap-toggle="false">\
 							        <h1>' + LOCALE_ARRAY_ADDITIONAL.weighted_vote[CURRENT_LANG] + '</h1>\
-							        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" href="#weighted-votings-page">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#vote-help">Ask</a>\
+							        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#vote-help">Ask</a>\
 							        <div id="vote-help" class="help-popup" data-role="popup" data-history="false">\
 							            <div class="title">\
 							                ' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
@@ -5822,22 +5856,27 @@ var WEIGHTED_VOTINGS = {
 var TRUST_LIST = {
 	trust_array: [],
 	trust_last_item: 10,
-	init: function(searched_id, click){
+	init: function(next_used){
 		var self = this;
 		$.mobile.loading( "show", {  theme: "z"	});
-		if($('#trusted_checkbox').data('checked') == 'true'){
-			var url = 'http://gurtom.mobi/trust.php';
-			if(searched_id){
-				url += "?s="  + searched_id;
-			}else if(click){
-				$('#trusted_checkbox').data('checked', 'false');	
-			}					
+		if(next_used){
+			if($('#trusted_checkbox').hasClass('ui-checkbox-off')){
+				var url = 'http://gurtom.mobi/trust.php';					
+			}else{
+				var url = 'http://gurtom.mobi/trust.php?p_s=1';
+			}
 		}else{
-			var url = 'http://gurtom.mobi/trust.php?p_s=1';
-			if(searched_id){
-				url += "&s="  + searched_id
-			}else if(click){
-				$('#trusted_checkbox').data('checked', 'true');	
+			if($('#trusted_checkbox').hasClass('ui-checkbox-on')){
+				var url = 'http://gurtom.mobi/trust.php';					
+			}else{
+				var url = 'http://gurtom.mobi/trust.php?p_s=1';
+			}
+		}
+		if($('#trust-list #searched_string').val() != ''){
+			if(url.indexOf('?') > -1){
+				url += "&s="  + $('#trust-list #searched_string').val();
+			}else{
+				url += "?s="  + $('#trust-list #searched_string').val();
 			}
 		}
 		$.ajax({
@@ -5862,10 +5901,13 @@ var TRUST_LIST = {
 	reinit: function(){
 		var self = this;
 		$.mobile.loading( "show", {  theme: "z"	});
-		if($('#trusted_checkbox').data('checked') == false){
-			var url = 'http://gurtom.mobi/trust.php?p_s=1&ls=' + self.trust_last_item;
+		if($('#trusted_checkbox').hasClass('ui-checkbox-on')){
+			var url = 'http://gurtom.mobi/trust.php?p_s=1&ls=' + self.trust_last_item;			
 		}else{
 			var url = 'http://gurtom.mobi/trust.php?ls=' + self.trust_last_item;
+		}
+		if($('#trust-list #searched_string').val() != ''){
+				url += "&s="  + $('#trust-list #searched_string').val();
 		}
 		$.ajax({
 		  url: url,
@@ -5891,11 +5933,7 @@ var TRUST_LIST = {
 		if(click)
 			$('#trust-list #searched_string').val('');
 
-		if($('#trust-list #searched_string').val() != ""){
-			self.init($('#trust-list #searched_string').val());
-		}else{			
-			self.init(false, click);
-		}
+			self.init();
 	},
 	build_elements: function(reinit, reinit_array){
 		var self = this;
@@ -6018,60 +6056,60 @@ var TRUST_LIST = {
 					<option value="' + SPHERES.spheres[i].name + '">' + SPHERES.spheres[i].name + '</option>\
 				</select></div>';
 			}
-			if(SPHERES.spheres[i].objects.length == 1){
-				//console.log('equal one');
-				ui_string += '<div class = "content_value">\
-		                        <select name = "' + SPHERES.spheres[i].selector_name + '" multiple="multiple" data-native-menu="false">\
-		                            <option>' + SPHERES.spheres[i].name + '</option>';
-		        
-		        for (var j = 0; j < SPHERES.spheres[i].objects[0].sph.length; j++) {
-		        	stop_flag = 0;
-		        	for (var current_index = 0; current_index < current_trust.t_l.length; current_index++) {
-		        		if(current_trust.t_l[current_index].sphere_id == SPHERES.spheres[i].objects[0].sph[j].idc){
-		        			ui_string += '<option value = "' + SPHERES.spheres[i].objects[0].sph[j].idc +  '" selected>' + SPHERES.spheres[i].objects[0].sph[j].sphere + '</option>';
-			        		stop_flag = 1;
-			        		break;
-			        	}
-		        	} 
-		        	if(stop_flag != 1){
-		        		ui_string += '<option value = "' + SPHERES.spheres[i].objects[0].sph[j].idc +  '">' + SPHERES.spheres[i].objects[0].sph[j].sphere + '</option>';
-		        	}
-		        }
-
-		        ui_string +=  '</select>\
-		                    </div>';
-			}
-
-			if(SPHERES.spheres[i].objects.length > 1){
-				//console.log('equal more than one');
-				var varable = '#spheres-trust-vote #' + SPHERES.spheres[i].selector_name + '_content';
-				ui_string += '<div>\
-		                        <select class = "container" onclick = "TRUST_LIST.show_mini_spheres(\'' + varable + '\');" name="' + SPHERES.spheres[i].selector_name + '"><option value="' + SPHERES.spheres[i].name + '">' + SPHERES.spheres[i].name + '</option></select>\
-		                    </div>';
-		        ui_string += '<div id = "' + SPHERES.spheres[i].selector_name + '_content" style = "display:none;">';
-		        for (var k = 0; k < SPHERES.spheres[i].objects.length; k++) {
-		           ui_string += '<div>\
-		                        <select class = "content_value" data-mini="true" name ="' + SPHERES.spheres[i].selector_name + '" multiple="multiple" data-native-menu="false">\
-		                            <option>' + SPHERES.spheres[i].objects[k].org + '</option>';
+			if(SPHERES.spheres[i].objects.length > 0){
+				if(SPHERES.spheres[i].objects[0].org == ''){
+					//console.log('equal one');
+					ui_string += '<div class = "content_value">\
+			                        <select name = "' + SPHERES.spheres[i].selector_name + '" multiple="multiple" data-native-menu="false">\
+			                            <option>' + SPHERES.spheres[i].name + '</option>';
 			        
-			        for (var j = 0; j < SPHERES.spheres[i].objects[k].sph.length; j++) {
+			        for (var j = 0; j < SPHERES.spheres[i].objects[0].sph.length; j++) {
 			        	stop_flag = 0;
 			        	for (var current_index = 0; current_index < current_trust.t_l.length; current_index++) {
-			        		if(current_trust.t_l[current_index].sphere_id == SPHERES.spheres[i].objects[k].sph[j].idc){
-			        			ui_string += '<option value = "' + SPHERES.spheres[i].objects[k].sph[j].idc +  '" selected>' + SPHERES.spheres[i].objects[k].sph[j].sphere + '</option>';
+			        		if(current_trust.t_l[current_index].sphere_id == SPHERES.spheres[i].objects[0].sph[j].idc){
+			        			ui_string += '<option value = "' + SPHERES.spheres[i].objects[0].sph[j].idc +  '" selected>' + SPHERES.spheres[i].objects[0].sph[j].sphere + '</option>';
 				        		stop_flag = 1;
-			        			break;
+				        		break;
 				        	}
-		        		}
-		        		if(stop_flag != 1){
-			        		ui_string += '<option value = "' + SPHERES.spheres[i].objects[k].sph[j].idc +  '">' + SPHERES.spheres[i].objects[k].sph[j].sphere + '</option>';
-			        	}		        		
-			        	
+			        	} 
+			        	if(stop_flag != 1){
+			        		ui_string += '<option value = "' + SPHERES.spheres[i].objects[0].sph[j].idc +  '">' + SPHERES.spheres[i].objects[0].sph[j].sphere + '</option>';
+			        	}
 			        }
+
 			        ui_string +=  '</select>\
-		                    </div>'; 
-		        }
-		        ui_string += '</div>';		        
+			                    </div>';
+				}else{
+					//console.log('equal more than one');
+					var varable = '#spheres-trust-vote #' + SPHERES.spheres[i].selector_name + '_content';
+					ui_string += '<div onclick = "TRUST_LIST.show_mini_spheres(\'' + varable + '\');">\
+			                        <select disabled class = "container"  name="' + SPHERES.spheres[i].selector_name + '"><option value="' + SPHERES.spheres[i].name + '">' + SPHERES.spheres[i].name + '</option></select>\
+			                    </div>';
+			        ui_string += '<div id = "' + SPHERES.spheres[i].selector_name + '_content" style = "display:none;">';
+			        for (var k = 0; k < SPHERES.spheres[i].objects.length; k++) {
+			           ui_string += '<div>\
+			                        <select class = "content_value" data-mini="true" name ="' + SPHERES.spheres[i].selector_name + '" multiple="multiple" data-native-menu="false">\
+			                            <option>' + SPHERES.spheres[i].objects[k].org + '</option>';
+				        
+				        for (var j = 0; j < SPHERES.spheres[i].objects[k].sph.length; j++) {
+				        	stop_flag = 0;
+				        	for (var current_index = 0; current_index < current_trust.t_l.length; current_index++) {
+				        		if(current_trust.t_l[current_index].sphere_id == SPHERES.spheres[i].objects[k].sph[j].idc){
+				        			ui_string += '<option value = "' + SPHERES.spheres[i].objects[k].sph[j].idc +  '" selected>' + SPHERES.spheres[i].objects[k].sph[j].sphere + '</option>';
+					        		stop_flag = 1;
+				        			break;
+					        	}
+			        		}
+			        		if(stop_flag != 1){
+				        		ui_string += '<option value = "' + SPHERES.spheres[i].objects[k].sph[j].idc +  '">' + SPHERES.spheres[i].objects[k].sph[j].sphere + '</option>';
+				        	}		        		
+				        	
+				        }
+				        ui_string +=  '</select>\
+			                    </div>'; 
+			        }
+			        ui_string += '</div>';	
+				}
 			}
 		}
 		ui_string += '</fieldset>\
@@ -6347,49 +6385,49 @@ var SPHERES = {
 					<option value="' + self.spheres[i].name + '">' + self.spheres[i].name + '</option>\
 				</select></div>';
 			}
-			if(self.spheres[i].objects.length == 1){
-				//console.log('equal one');
-				ui_string += '<div class = "content_value">\
-		                        <select data-ajax="false" name = "' + self.spheres[i].selector_name + '" multiple="multiple" data-native-menu="false">\
-		                            <option>' + self.spheres[i].name + '</option>';
-		        
-		        for (var j = 0; j < self.spheres[i].objects[0].sph.length; j++) {
-		        	if(self.spheres[i].objects[0].sph[j].fav == 1){
-		        		ui_string += '<option value = "' + self.spheres[i].objects[0].sph[j].idc +  '" selected>' + self.spheres[i].objects[0].sph[j].sphere + '</option>';
-		        	}else{
-		        		ui_string += '<option value = "' + self.spheres[i].objects[0].sph[j].idc +  '">' + self.spheres[i].objects[0].sph[j].sphere + '</option>';
-		        	}
-		        	
-		        }
-
-		        ui_string +=  '</select>\
-		                    </div>';
-			}
-
-			if(self.spheres[i].objects.length > 1){
-				//console.log('equal more than one');
-				var varable = '#spheres-address #' + self.spheres[i].selector_name + '_content';
-				ui_string += '<div>\
-		                        <select class = "container" onclick = "SPHERES.show_mini_spheres(\'' + varable + '\');" name="' + self.spheres[i].selector_name + '"><option value="' + self.spheres[i].name + '">' + self.spheres[i].name + '</option></select>\
-		                    </div>';
-		        ui_string += '<div id = "' + self.spheres[i].selector_name + '_content" style = "display:none;">';
-		        for (var k = 0; k < self.spheres[i].objects.length; k++) {
-		           ui_string += '<div class = "content_value">\
-		                        <select data-mini="true" name ="' + self.spheres[i].selector_name + '" multiple="multiple" data-native-menu="false">\
-		                            <option>' + self.spheres[i].objects[k].org + '</option>';
+			if(self.spheres[i].objects.length > 0){
+				if(self.spheres[i].objects[0].org == ''){
+					//console.log('equal one');
+					ui_string += '<div class = "content_value">\
+			                        <select data-ajax="false" name = "' + self.spheres[i].selector_name + '" multiple="multiple" data-native-menu="false">\
+			                            <option>' + self.spheres[i].name + '</option>';
 			        
-			        for (var j = 0; j < self.spheres[i].objects[k].sph.length; j++) {
-			        	if(self.spheres[i].objects[k].sph[j].fav == 1){
-			        		ui_string += '<option value = "' + self.spheres[i].objects[k].sph[j].idc +  '" selected>' + self.spheres[i].objects[k].sph[j].sphere + '</option>';
+			        for (var j = 0; j < self.spheres[i].objects[0].sph.length; j++) {
+			        	if(self.spheres[i].objects[0].sph[j].fav == 1){
+			        		ui_string += '<option value = "' + self.spheres[i].objects[0].sph[j].idc +  '" selected>' + self.spheres[i].objects[0].sph[j].sphere + '</option>';
 			        	}else{
-			        		ui_string += '<option value = "' + self.spheres[i].objects[k].sph[j].idc +  '">' + self.spheres[i].objects[k].sph[j].sphere + '</option>';
+			        		ui_string += '<option value = "' + self.spheres[i].objects[0].sph[j].idc +  '">' + self.spheres[i].objects[0].sph[j].sphere + '</option>';
 			        	}
 			        	
 			        }
+
 			        ui_string +=  '</select>\
-		                    </div>'; 
-		        }
-		        ui_string += '</div>';		        
+			                    </div>';
+				}else{
+					//console.log('equal more than one');
+					var varable = '#spheres-address #' + self.spheres[i].selector_name + '_content';
+					ui_string += '<div onclick = "SPHERES.show_mini_spheres(\'' + varable + '\');">\
+			                        <select disabled class = "container" name="' + self.spheres[i].selector_name + '"><option value="' + self.spheres[i].name + '">' + self.spheres[i].name + '</option></select>\
+			                    </div>';
+			        ui_string += '<div id = "' + self.spheres[i].selector_name + '_content" style = "display:none;">';
+			        for (var k = 0; k < self.spheres[i].objects.length; k++) {
+			           ui_string += '<div class = "content_value">\
+			                        <select data-mini="true" name ="' + self.spheres[i].selector_name + '" multiple="multiple" data-native-menu="false">\
+			                            <option>' + self.spheres[i].objects[k].org + '</option>';
+				        
+				        for (var j = 0; j < self.spheres[i].objects[k].sph.length; j++) {
+				        	if(self.spheres[i].objects[k].sph[j].fav == 1){
+				        		ui_string += '<option value = "' + self.spheres[i].objects[k].sph[j].idc +  '" selected>' + self.spheres[i].objects[k].sph[j].sphere + '</option>';
+				        	}else{
+				        		ui_string += '<option value = "' + self.spheres[i].objects[k].sph[j].idc +  '">' + self.spheres[i].objects[k].sph[j].sphere + '</option>';
+				        	}
+				        	
+				        }
+				        ui_string +=  '</select>\
+			                    </div>'; 
+			        }
+			        ui_string += '</div>';
+				}
 			}
 		}
 		$('#spheres-address #sphere_form').html('');
@@ -6469,39 +6507,39 @@ var SPHERES = {
 					<option value="' + SPHERES.spheres[i].name + '">' + SPHERES.spheres[i].name + '</option>\
 				</select></div>';
 			}*/
-			if(SPHERES.spheres[i].objects.length == 1){
-				//console.log('equal one');
-				ui_string += '<div class = "content_value">\
-		                        <select  onchange = "$.mobile.navigate(\'#filter-page\'); WEIGHTED_VOTINGS.filter_data($(this).val(), 0, \'' + SPHERES.spheres[i].selector_name + '\')" name = "' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
-		                            <option>' + SPHERES.spheres[i].name + '</option>';
-		        
-		        for (var j = 0; j < SPHERES.spheres[i].objects[0].sph.length; j++) {
-		        	ui_string += '<option value = "' + SPHERES.spheres[i].objects[0].sph[j].idc +  '">' + SPHERES.spheres[i].objects[0].sph[j].sphere + '</option>';		        	
-		        }
-
-		        ui_string +=  '</select>\
-		                    </div>';
-			}
-
-			if(SPHERES.spheres[i].objects.length > 1){
-				//console.log('equal more than one');
-				var varable = '#spheres-filters #' + SPHERES.spheres[i].selector_name + '_content';
-				ui_string += '<div>\
-		                        <select class = "container" onclick = "SPHERES.show_mini_spheres(\'' + varable + '\');" name="' + SPHERES.spheres[i].selector_name + '"><option value="' + SPHERES.spheres[i].name + '">' + SPHERES.spheres[i].name + '</option></select>\
-		                    </div>';
-		        ui_string += '<div id = "' + SPHERES.spheres[i].selector_name + '_content" style = "display:none;">';
-		        for (var k = 0; k < SPHERES.spheres[i].objects.length; k++) {
-		           ui_string += '<div class = "content_value">\
-		                        <select  onchange = "$.mobile.navigate(\'#filter-page\'); WEIGHTED_VOTINGS.filter_data($(this).val(), 0, \'' + SPHERES.spheres[i].selector_name + '\')" data-mini="true" name ="' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
-		                            <option>' + SPHERES.spheres[i].objects[k].org + '</option>';
+			if(SPHERES.spheres[i].objects.length > 0){
+				if(SPHERES.spheres[i].objects[0].org == ''){
+					//console.log('equal one');
+					ui_string += '<div class = "content_value">\
+			                        <select  onchange = "$.mobile.navigate(\'#filter-page\'); WEIGHTED_VOTINGS.filter_data($(this).val(), 0, \'' + SPHERES.spheres[i].selector_name + '\')" name = "' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
+			                            <option>' + SPHERES.spheres[i].name + '</option>';
 			        
-			        for (var j = 0; j < SPHERES.spheres[i].objects[k].sph.length; j++) {
-						ui_string += '<option value = "' + SPHERES.spheres[i].objects[k].sph[j].idc +  '">' + SPHERES.spheres[i].objects[k].sph[j].sphere + '</option>';			        	
+			        for (var j = 0; j < SPHERES.spheres[i].objects[0].sph.length; j++) {
+			        	ui_string += '<option value = "' + SPHERES.spheres[i].objects[0].sph[j].idc +  '">' + SPHERES.spheres[i].objects[0].sph[j].sphere + '</option>';		        	
 			        }
+
 			        ui_string +=  '</select>\
-		                    </div>'; 
-		        }
-		        ui_string += '</div>';		        
+			                    </div>';
+			    }else{
+			    	//console.log('equal more than one');
+					var varable = '#spheres-filters #' + SPHERES.spheres[i].selector_name + '_content';
+					ui_string += '<div onclick = "SPHERES.show_mini_spheres(\'' + varable + '\');">\
+			                        <select disabled class = "container" name="' + SPHERES.spheres[i].selector_name + '"><option value="' + SPHERES.spheres[i].name + '">' + SPHERES.spheres[i].name + '</option></select>\
+			                    </div>';
+			        ui_string += '<div id = "' + SPHERES.spheres[i].selector_name + '_content" style = "display:none;">';
+			        for (var k = 0; k < SPHERES.spheres[i].objects.length; k++) {
+			           ui_string += '<div class = "content_value">\
+			                        <select  onchange = "$.mobile.navigate(\'#filter-page\'); WEIGHTED_VOTINGS.filter_data($(this).val(), 0, \'' + SPHERES.spheres[i].selector_name + '\')" data-mini="true" name ="' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
+			                            <option>' + SPHERES.spheres[i].objects[k].org + '</option>';
+				        
+				        for (var j = 0; j < SPHERES.spheres[i].objects[k].sph.length; j++) {
+							ui_string += '<option value = "' + SPHERES.spheres[i].objects[k].sph[j].idc +  '">' + SPHERES.spheres[i].objects[k].sph[j].sphere + '</option>';			        	
+				        }
+				        ui_string +=  '</select>\
+			                    </div>'; 
+			        }
+			        ui_string += '</div>';
+			    }				
 			}
 		}
 		$('#spheres-filters #sphere_form').html(ui_string);
@@ -6532,39 +6570,40 @@ var SPHERES = {
 						</select></div>';
 					}
 
-					if(SPHERES.spheres[i].objects.length == 1){
-						//console.log('equal one');
-						ui_string += '<div class = "content_value">\
-				                        <select  onchange = "$.mobile.navigate(\'#create-vote\'); $(\'#create-vote [name=sph]\').val($(this).val()); $(\'#create_vote_sphere\').html(\'' + LOCALE_ARRAY_ADDITIONAL.choose_sphere[CURRENT_LANG] + ': ' + SPHERES.spheres[i].name + '\');" name = "' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
-				                            <option>' + SPHERES.spheres[i].name + '</option>';
-				        
-				        for (var j = 0; j < SPHERES.spheres[i].objects[0].sph.length; j++) {
-				        	ui_string += '<option data-checkbox = "1" value = "' + SPHERES.spheres[i].objects[0].sph[j].idc +  '">' + SPHERES.spheres[i].objects[0].sph[j].sphere + '</option>';		        	
-				        }
-
-				        ui_string +=  '</select>\
-				                    </div>';
-					}
-
-					if(SPHERES.spheres[i].objects.length > 1){
-						//console.log('equal more than one');
-						var varable = '#spheres-create-vote #' + SPHERES.spheres[i].selector_name + '_content';
-						ui_string += '<div>\
-				                        <select class = "container" onclick = "SPHERES.show_mini_spheres(\'' + varable + '\');" name="' + SPHERES.spheres[i].selector_name + '"><option value="' + SPHERES.spheres[i].name + '">' + SPHERES.spheres[i].name + '</option></select>\
-				                    </div>';
-				        ui_string += '<div id = "' + SPHERES.spheres[i].selector_name + '_content" style = "display:none;">';
-				        for (var k = 0; k < SPHERES.spheres[i].objects.length; k++) {
-				           ui_string += '<div class = "content_value">\
-				                        <select  onchange = "$.mobile.navigate(\'#create-vote\'); $(\'#create-vote [name=sph]\').val($(this).val()); $(\'#create_vote_sphere\').html(\'' + LOCALE_ARRAY_ADDITIONAL.choose_sphere[CURRENT_LANG] + ': ' + SPHERES.spheres[i].name + '\');" data-mini="true" name ="' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
-				                            <option>' + SPHERES.spheres[i].objects[k].org + '</option>';
+					if(SPHERES.spheres[i].objects.length > 0){
+						if(SPHERES.spheres[i].objects[0].org == ''){
+							//console.log('equal one');
+							ui_string += '<div class = "content_value">\
+					                        <select  onchange = "$.mobile.navigate(\'#create-vote\'); $(\'#create-vote [name=sph]\').val($(this).val()); $(\'#create_vote_sphere\').html(\'' + LOCALE_ARRAY_ADDITIONAL.choose_sphere[CURRENT_LANG] + ': ' + SPHERES.spheres[i].name + '\');" name = "' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
+					                            <option>' + SPHERES.spheres[i].name + '</option>';
 					        
-					        for (var j = 0; j < SPHERES.spheres[i].objects[k].sph.length; j++) {
-								ui_string += '<option data-checkbox = "1"  value = "' + SPHERES.spheres[i].objects[k].sph[j].idc +  '">' + SPHERES.spheres[i].objects[k].sph[j].sphere + '</option>';			        	
+					        for (var j = 0; j < SPHERES.spheres[i].objects[0].sph.length; j++) {
+					        	ui_string += '<option data-checkbox = "1" value = "' + SPHERES.spheres[i].objects[0].sph[j].idc +  '">' + SPHERES.spheres[i].objects[0].sph[j].sphere + '</option>';		        	
 					        }
+
 					        ui_string +=  '</select>\
-				                    </div>'; 
-				        }
-				        ui_string += '</div>';		        
+					                    </div>';
+		                }else{
+		                	//console.log('equal more than one');
+							var varable = '#spheres-create-vote #' + SPHERES.spheres[i].selector_name + '_content';
+							ui_string += '<div onclick = "SPHERES.show_mini_spheres(\'' + varable + '\');">\
+					                        <select disabled class = "container" name="' + SPHERES.spheres[i].selector_name + '"><option value="' + SPHERES.spheres[i].name + '">' + SPHERES.spheres[i].name + '</option></select>\
+					                    </div>';
+					        ui_string += '<div id = "' + SPHERES.spheres[i].selector_name + '_content" style = "display:none;">';
+					        for (var k = 0; k < SPHERES.spheres[i].objects.length; k++) {
+					           ui_string += '<div class = "content_value">\
+					                        <select  onchange = "$.mobile.navigate(\'#create-vote\'); $(\'#create-vote [name=sph]\').val($(this).val()); $(\'#create_vote_sphere\').html(\'' + LOCALE_ARRAY_ADDITIONAL.choose_sphere[CURRENT_LANG] + ': ' + SPHERES.spheres[i].name + '\');" data-mini="true" name ="' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
+					                            <option>' + SPHERES.spheres[i].objects[k].org + '</option>';
+						        
+						        for (var j = 0; j < SPHERES.spheres[i].objects[k].sph.length; j++) {
+									ui_string += '<option data-checkbox = "1"  value = "' + SPHERES.spheres[i].objects[k].sph[j].idc +  '">' + SPHERES.spheres[i].objects[k].sph[j].sphere + '</option>';			        	
+						        }
+						        ui_string +=  '</select>\
+					                    </div>'; 
+					        }
+					        ui_string += '</div>';
+		                }
+						
 					}
 				}
 				console.log('second');
@@ -6933,6 +6972,14 @@ var VOTINGS = {
 				break;
 			case "Sort by supported":
 				url += '&sort=2';
+				break;	
+		}
+		switch($('#votings-page [name=sort_direction]').val()){
+			case "up":
+				url += '&direct=0';
+				break;
+			case "down":
+				url += '&direct=1';
 				break;	
 		}
 
@@ -7320,7 +7367,7 @@ var VOTINGS = {
     	var ui_string = '';
 		ui_string += '<div data-role="header" data-position="fixed" data-tap-toggle="false">\
 							        <h1>' + LOCALE_ARRAY_ADDITIONAL.vote[CURRENT_LANG] + '</h1>\
-							        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" href="#votings-page">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#vote-help">Ask</a>\
+							        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#vote-help">Ask</a>\
 							        <div id="vote-help" class="help-popup" data-role="popup" data-history="false">\
 							            <div class="title">\
 							                ' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
@@ -7518,7 +7565,7 @@ var VOTINGS = {
     	var ui_string = '';
 		ui_string = '<div data-role="header" data-position="fixed" data-tap-toggle="false">\
 						    <h1>' + LOCALE_ARRAY_ADDITIONAL.vote[CURRENT_LANG] + '</h1>\
-						        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" href="#votings-page">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#vote-help">Ask</a>\
+						        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#vote-help">Ask</a>\
 						        <div id="vote-help" class="help-popup" data-role="popup" data-history="false">\
 						            <div class="title">\
 						                ' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
@@ -8245,6 +8292,14 @@ var MY_VOTINGS = {
 				url += '&sort=2';
 				break;	
 		}
+		switch($('#my-votings-page [name=sort_direction]').val()){
+			case "up":
+				url += '&direct=0';
+				break;
+			case "down":
+				url += '&direct=1';
+				break;	
+		}
 
 		switch($('#my-votings-page [name=sort]').data('direct')){
 			case 0:
@@ -8550,7 +8605,7 @@ var MY_VOTINGS = {
     	var ui_string = '';
 		ui_string += '<div data-role="header" data-position="fixed" data-tap-toggle="false">\
 							        <h1>' + LOCALE_ARRAY_ADDITIONAL.my_vote[CURRENT_LANG] + '</h1>\
-							        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" href="#my-votings-page">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#vote-help">Ask</a>\
+							        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#vote-help">Ask</a>\
 							        <div id="vote-help" class="help-popup" data-role="popup" data-history="false">\
 							            <div class="title">\
 							                ' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
@@ -8746,7 +8801,7 @@ var MY_VOTINGS = {
     	var ui_string = '';
 		ui_string = '<div data-role="header" data-position="fixed" data-tap-toggle="false">\
 						    <h1>' + LOCALE_ARRAY_ADDITIONAL.my_vote[CURRENT_LANG] + '</h1>\
-						        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" href="#my-votings-page">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#vote-help">Ask</a>\
+						        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#vote-help">Ask</a>\
 						        <div id="vote-help" class="help-popup" data-role="popup" data-history="false">\
 						            <div class="title">\
 						                ' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\

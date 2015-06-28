@@ -300,6 +300,8 @@ var LOCALE_ARRAY = [{selector: '#main-page .ui-title', en: 'Log in', ru: 'Вхо
 {selector: '#votings-page [name=sort] option:eq(0)', en: 'Sort by newest', ru: 'Сортировать по новизне', ua: 'Сортувати за новизною'},/*inner html*/
 {selector: '#votings-page [name=sort] option:eq(1)', en: 'Sort by stars', ru: 'Сортировать по рейтингу', ua: 'Сортувати за рейтингом'},/*inner html*/
 {selector: '#votings-page [name=sort] option:eq(2)', en: 'Sort by supported', ru: 'Сортировать по поддержке', ua: 'Сортувати за підтримкою'},/*inner html*/
+{selector: '#votings-page [name=sort_direction] option:eq(0)', en: 'Sort down', ru: 'Сортировать по убыванию', ua: 'Сортувати за спаданням'},/*inner html*/
+{selector: '#votings-page [name=sort_direction] option:eq(1)', en: 'Sort up', ru: 'Сортировать по возрастанию', ua: 'Сортувати за зростанням'},/*inner html*/
 {selector: '#votings-page .ui-input-btn.ui-btn.ui-btn-icon-right.filter-normal span', 
 	en: 'Filter', ru: 'Фильтровать', ua: 'Фільтрувати'},/*inner html*/
 {selector: '#votings-page #filter_activator span', en: 'Filter is activated', ru: 'Фильтр активен', ua: 'Фільтр активний'},/*inner html*/
@@ -317,8 +319,6 @@ var LOCALE_ARRAY = [{selector: '#main-page .ui-title', en: 'Log in', ru: 'Вхо
 	ru: 'На этой странице вы можете настроить отображение голосований по вашему усмотрению или выбирать все записи без применения фильтра', 
 	ua: 'Ця сторінка допоможе вам обрати саме ті голосування які вас цікавлять або обрати всі голосування без задіяння фільтру'},/*inner html*/
 {selector: '#spheres-filters .ui-title:eq(0)', en: 'Spheres', ru: 'Сферы', ua: 'Сфери'},/*inner html*/
-{selector: '#votings-page .ui-btn.ui-icon-carat-d.ui-btn-icon-right.ui-corner-all.ui-shadow span', 
-	en: 'Sort by newest', ru: 'Сортировать по новизне', ua: 'Сортувати за новизною'},/*inner html*/
 {selector: '#filter-page .ui-title', en: 'Filter', ru: 'Фильтр', ua: 'Фільтр'},/*inner html*/
 {selector: '#my-fund-page .long-title', en: 'Personal Funds', ru: 'Персональные фонды', ua: 'Персональні фонди'},/*inner html*/
 {selector: '#my-fund-page .section-title:eq(0)', en: 'Donate Personal Fund', ru: 'Пожертвовать в персональный фонд', ua: 'Пожертвувати до персонального фонду'},/*inner html*/
