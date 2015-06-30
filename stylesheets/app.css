@@ -2441,6 +2441,12 @@ label.ui-btn {
     margin-top: -13px;
     background-position: 50% 50%;
     background-repeat: no-repeat; }
+  #my-activities-page .btn-next-page .ui-btn.menu-icon-profile:before {
+    background-image: url(../images/svg/menu-icon-profile.svg);
+    -moz-background-size: 19px 21px;
+    -o-background-size: 19px 21px;
+    -webkit-background-size: 19px 21px;
+    background-size: 19px 21px; }
   #my-activities-page .btn-next-page .ui-btn.icon-funds:before {
     background-image: url(../images/svg/menu-icon-funds.svg);
     -moz-background-size: 20px 19px;
@@ -2466,7 +2472,7 @@ label.ui-btn {
     -webkit-background-size: 22px 20px;
     background-size: 22px 20px; }
   #my-activities-page .btn-next-page .ui-btn.icon-requests:before {
-    background-image: url(../images/svg/menu-icon-requests.svg);
+    background-image: url(../images/svg/requests.svg);
     -moz-background-size: 22px 19px;
     -o-background-size: 22px 19px;
     -webkit-background-size: 22px 19px;
