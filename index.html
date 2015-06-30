@@ -1149,7 +1149,7 @@
                         <div class="ui-input-search ui-input-has-clear">
                             <input  onkeyup="PROGRAMS.filter_data()" onchange="PROGRAMS.filter_data()" id = "searched_string" type="search" name="" placeholder="Search by ID or name" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">Clear text</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />
                         </div>
-                        <div onclick = "PROGRAMS.filter_data()">
+                        <div onchange = "PROGRAMS.filter_data()">
                             <select data-direct = "0" name="sort" placeholder="Sort by newest">
                             <option value="Sort by id">Sort by id</option>
                             <option value="Sort by name">Sort by name</option>
@@ -1590,7 +1590,7 @@
                         <div class="ui-input-search ui-input-has-clear">
                             <input  onkeyup="PROJECTS.filter_data()" onchange="PROJECTS.filter_data()" id = "searched_string" type="search" name="" placeholder="Search by ID or name" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">Clear text</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />
                         </div>
-                        <div onclick = "PROJECTS.filter_data()">
+                        <div onchange = "PROJECTS.filter_data()">
                             <select data-direct = "0" name="sort" placeholder="Sort by newest">
                             <option value="Sort by id">Sort by id</option>
                             <option value="Sort by name">Sort by name</option>
@@ -1628,7 +1628,8 @@
     </div>
     <div role="main" class="ui-content">
         <a class="ui-btn ui-corner-all ui-shadow" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>
-        <!--<a style = "display:none" id = "create_link" class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate('#create-item?project=true')" href="#">-->
+        <a style = "display:none" id = "create_link" class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate('#create-item?project=true')" href="#">
+         Create project</a>
         <a style = "display:none" id = "create_proposition_link" class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate('#')" href="#">
         Create project proposion</a>
         <div id = "projects-list" class="projects-list">
@@ -2033,7 +2034,7 @@
                         <div class="ui-input-search ui-input-has-clear">
                             <input  onkeyup="REQUESTS.filter_data()" onchange="REQUESTS.filter_data()" id = "searched_string" type="search" name="" placeholder="Search by ID or name" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">Clear text</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />
                         </div>
-                        <div onclick = "REQUESTS.filter_data()">
+                        <div onchange = "REQUESTS.filter_data()">
                             <select data-direct = "0" name="sort" placeholder="Sort by newest">
                             <option value="Sort by id">Sort by id</option>
                             <option value="Sort by name">Sort by name</option>
@@ -2477,7 +2478,7 @@
                         <div class="ui-input-search ui-input-has-clear">
                             <input onkeyup="WEIGHTED_VOTINGS.filter_data()" onchange="WEIGHTED_VOTINGS.filter_data()" id = "searched_string" type="search" name="" placeholder="Search by ID or name" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">Clear text</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />
                         </div>
-                        <div onclick = "WEIGHTED_VOTINGS.filter_data()">
+                        <div onchange = "WEIGHTED_VOTINGS.filter_data()">
                             <select data-direct = "0" name="sort" placeholder="Sort by newest"><option value="Sort by newest">Sort by newest</option>
                             <option value="Sort by stars">Sort by stars</option>
                             <option value="Sort by supported">Sort by supported</option>
@@ -3289,7 +3290,7 @@
 <div id="create-item" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1 id = "title_item">Create</h1>
-        <a class="ui-btn ui-btn-left ui-icon-bars ui-btn-icon-notext" href="#left-panel">Menu</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#create-item-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#create-item-help">Ask</a>
         <div id="create-item-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
@@ -3859,7 +3860,7 @@
                         <div class="ui-input-search ui-input-has-clear">
                             <input onkeyup="MY_VOTINGS.filter_data()" onchange="MY_VOTINGS.filter_data()" id = "searched_string" type="search" name="" placeholder="Search by ID or name" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">Clear text</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />
                         </div>
-                        <div onclick = "MY_VOTINGS.filter_data()">
+                        <div onchange = "MY_VOTINGS.filter_data()">
                             <select data-direct = "0" name="sort" placeholder="Sort by newest"><option value="Sort by newest">Sort by newest</option>
                             <option value="Sort by stars">Sort by stars</option>
                             <option value="Sort by supported">Sort by supported</option>
@@ -4617,7 +4618,7 @@
 <div id="create-vote" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Create vote</h1>
-        <a class="ui-btn ui-btn-left ui-icon-bars ui-btn-icon-notext" href="#left-panel">Menu</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#create-vote-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#create-vote-help">Ask</a>
         <div id="create-vote-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description

@@ -164,16 +164,11 @@ window.onload = function(){
 		}
 
 		if(location.href.indexOf('#trust-list') > -1 && SUPER_PROFILE.auth == true){
-			$('#trusted_checkbox').data('checked', false);
-			$('#trusted_checkbox').click();
 			if(!$('#trusted_checkbox').hasClass('ui-checkbox-on')){
 				console.log('checkbpx off');
 				$('#trust-list input[name=trusted_checkbox]').checkboxradio().prop('checked', true).checkboxradio( 'refresh' );
+				TRUST_LIST.init(false, 'p_s');
 			}
-			//TRUST_LIST.init();
-			//$('#trusted_checkbox').attr('class', 'ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-on');
-			//$('[name=trusted_checkbox]').data('cacheval', false);
-			//$('#trusted_checkbox').click();
 		}
 
 		if(( location.href.indexOf('#edit-address') > -1 || 
@@ -435,6 +430,13 @@ window.onhashchange = function(){
 		 location.href.indexOf('#spheres-filters') > -1) && UI_STATE_DIALOG == 0){
 			SPHERES.initial();
 	}
+	if(location.href.indexOf('#spheres-trust') > -1){
+		$('#spheres-trust #sphere_form select').selectmenu().selectmenu("refresh", true);
+	}
+	if(location.href.indexOf('#spheres-trust-vote') > -1){
+		$('#spheres-trust-vote #sphere_form select').selectmenu().selectmenu("refresh", true);
+		$('#spheres-trust-vote').enhanceWithin();
+	}
 
 	if(location.href.indexOf('#votings-page') > -1 
 		&& VOTINGS.activated_hard_filter != 1
@@ -490,16 +492,11 @@ window.onhashchange = function(){
 	}
 
 	if(location.href.indexOf('#trust-list') > -1 && SUPER_PROFILE.auth == true){
-		$('#trusted_checkbox').data('checked', false);
-		$('#trusted_checkbox').click();
 		if(!$('#trusted_checkbox').hasClass('ui-checkbox-on')){
 			console.log('checkbpx off');
 			$('#trust-list input[name=trusted_checkbox]').checkboxradio().prop('checked', true).checkboxradio( 'refresh' );
+			TRUST_LIST.init(false, 'p_s');
 		}
-		//TRUST_LIST.init();
-		//$('#trusted_checkbox').attr('class', 'ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-on');
-		//$('[name=trusted_checkbox]').data('cacheval', false);
-		//$('#trusted_checkbox').click();
 	}
 
 	if(( location.href.indexOf('#edit-address') > -1 || 
@@ -823,7 +820,7 @@ var COMMON_OBJECT = {
 					if( $(window).scrollTop() == $(document).height() - $(window).height()){
 			          	PROJECTS.reinit();
 			      	}
-				}else if(location.href.indexOf('#request-page') > -1){
+				}else if(location.href.indexOf('#requests-page') > -1){
 					if( $(window).scrollTop() == $(document).height() - $(window).height()){
 			          	REQUESTS.reinit();
 			      	}
@@ -1337,7 +1334,7 @@ var PIF = {
 		    		var ui_donate_panel = '<div class="ui-grid-a">\
 					                        <div class="ui-block-a">\
 					                            <div>\
-					                                <label>Choose PIF</label><select name="pif">\
+					                                <label>Choose Personal Fund</label><select name="pif">\
 					                                ' + ui_pif_option + '\
 					                                </select>\
 					                            </div>\
@@ -1915,7 +1912,7 @@ var PROJECTS = {
     		var ui_donate_panel = '<div class="ui-grid-a">\
 			                        <div class="ui-block-a">\
 			                            <div>\
-			                                <label>Choose Fund</label><select name="pif">\
+			                                <label>Choose Personal Fund</label><select name="pif">\
 			                                ' + ui_pif_option + '\
 			                                </select>\
 			                            </div>\
@@ -1941,16 +1938,14 @@ var PROJECTS = {
 			                    </div>\
 			                </div>\ ';
     	}else{
+    		var ui_donate_panel = '';
     		if(PIF.pif_array.length == 0){
-    			var ui_donate_panel = '';
     			PIF.set_select_input('#project-page', 'PROJECTS', 'project', data_for_build.id, 4, data_for_build.currency_asking);
+    		}
+    		if(SUPER_PROFILE.auth == true){
+    			 ui_donate_panel = '<span>' + LOCALE_ARRAY_ADDITIONAL.warning_donate[CURRENT_LANG] +' <a href = "#my-fund-page">My funds</a></span>';
     		}else{
-    			if(SUPER_PROFILE.auth == true){
-	    			var warning_link = '<a href = "#my-fund-page">My funds</a>';
-	    		}else{
-	    			var warning_link = '<a href = "#registration">Registration</a>';
-	    		}
-	    		var ui_donate_panel = '<span>' + LOCALE_ARRAY_ADDITIONAL.warning_donate[CURRENT_LANG] +' ' + warning_link + '</span>';
+    			 ui_donate_panel = '<span>Please register for donate. <a href = "#registration">Registration</a></span>';
     		}
     	}
 
@@ -2125,7 +2120,7 @@ var PROJECTS = {
     		var ui_donate_panel = '<div class="ui-grid-a">\
 			                        <div class="ui-block-a">\
 			                            <div>\
-			                                <label>Choose Fund</label><select name="pif">\
+			                                <label>Choose Personal Fund</label><select name="pif">\
 			                                ' + ui_pif_option + '\
 			                                </select>\
 			                            </div>\
@@ -2151,16 +2146,15 @@ var PROJECTS = {
 			                    </div>\
 			                </div>\ ';
     	}else{
+    		var ui_donate_panel = '';
     		if(PIF.pif_array.length == 0){
-    			var ui_donate_panel = '';
+    			
     			PIF.set_select_input('#project-page', 'PROJECTS', 'project', data_for_build.id, 3, data_for_build.currency_asking);
+    		}
+    		if(SUPER_PROFILE.auth == true){
+    			 ui_donate_panel = '<span>' + LOCALE_ARRAY_ADDITIONAL.warning_donate[CURRENT_LANG] +' <a href = "#my-fund-page">My funds</a></span>';
     		}else{
-    			if(SUPER_PROFILE.auth == true){
-	    			var warning_link = '<a href = "#my-fund-page">My funds</a>';
-	    		}else{
-	    			var warning_link = '<a href = "#registration">Registration</a>';
-	    		}
-	    		var ui_donate_panel = '<span>' + LOCALE_ARRAY_ADDITIONAL.warning_donate[CURRENT_LANG] +' ' + warning_link + '</span>';
+    			 ui_donate_panel = '<span>Please register for donate. <a href = "#registration">Registration</a></span>';
     		}
     	}
 
@@ -2310,7 +2304,7 @@ var PROJECTS = {
 						        <h1>\
 						            Список НКО\
 						        </h1>\
-						        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate(\'#project-page?' + return_page + object_id + '\')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#program-nko-help">Ask</a>\
+						        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#program-nko-help">Ask</a>\
 						        <div id="project-nko-help" class="help-popup" data-role="popup" data-history="false">\
 						            <div class="title">\
 						                Description\
@@ -3102,7 +3096,7 @@ var PROGRAMS = {
     		var ui_donate_panel = '<div class="ui-grid-a">\
 			                        <div class="ui-block-a">\
 			                            <div>\
-			                                <label>Choose PIF</label><select name="pif">\
+			                                <label>Choose Personal Fund</label><select name="pif">\
 			                                ' + ui_pif_option + '\
 			                                </select>\
 			                            </div>\
@@ -3128,16 +3122,15 @@ var PROGRAMS = {
 			                    </div>\
 			                </div>\ ';
     	}else{
+    		var ui_donate_panel = '';
     		if(PIF.pif_array.length == 0){
-    			var ui_donate_panel = '';
+    			ui_donate_panel = '';
     			PIF.set_select_input('#program-page', 'PROGRAMS', 'program', data_for_build.id, 2, data_for_build.currency_asking);
+    		}
+    		if(SUPER_PROFILE.auth == true){
+    			ui_donate_panel = '<span>' + LOCALE_ARRAY_ADDITIONAL.warning_donate[CURRENT_LANG] +' <a href = "#my-fund-page">My funds</a></span>';
     		}else{
-    			if(SUPER_PROFILE.auth == true){
-	    			var warning_link = '<a href = "#my-fund-page">My funds</a>';
-	    		}else{
-	    			var warning_link = '<a href = "#registration">Registration</a>';
-	    		}
-	    		var ui_donate_panel = '<span>' + LOCALE_ARRAY_ADDITIONAL.warning_donate[CURRENT_LANG] +' ' + warning_link + '</span>';
+    			ui_donate_panel = '<span>Please register for donate. <a href = "#registration">Registration</a></span>';
     		}
     	}
 
@@ -3286,7 +3279,7 @@ var PROGRAMS = {
 						        <h1>\
 						            Список НКО\
 						        </h1>\
-						        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate(\'#program-page?program=' + object_id + '\')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#program-nko-help">Ask</a>\
+						        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#program-nko-help">Ask</a>\
 						        <div id="program-nko-help" class="help-popup" data-role="popup" data-history="false">\
 						            <div class="title">\
 						                Description\
@@ -3617,13 +3610,14 @@ var REQUESTS = {
 		if(self.activated_easy_filter == 1 || self.activated_hard_filter == 1){
 			self.filter_data(-1, 1);
 		}else{
-
 			if(location.href.indexOf('#requests-page?tags_filter=') > -1){
 				var match_array = location.href.match(/=[a-zA-Z0-9а-яА-Я]*/i);
 				var tag_filter = match_array[0].match(/[^=][a-zA-Z]*/i);
 
 				var url = 'http://gurtom.mobi/request.php?filter=' + encodeURIComponent(tag_filter) + '&ls=' + self.data_last_item;
 				console.log(tag_filter);
+			}else if(location.href.indexOf('#requests-page?my_request=true') > -1){
+				var url = 'http://gurtom.mobi/request.php?my=1&ls=' + self.data_last_item;
 			}else{
 				var url = 'http://gurtom.mobi/request.php?ls=' + self.data_last_item;
 			}
@@ -4062,7 +4056,7 @@ var REQUESTS = {
     		var ui_donate_panel = '<div class="ui-grid-a">\
 			                        <div class="ui-block-a">\
 			                            <div>\
-			                                <label>Choose PIF</label><select name="pif">\
+			                                <label>Choose Personal Fund</label><select name="pif">\
 			                                ' + ui_pif_option + '\
 			                                </select>\
 			                            </div>\
@@ -4088,16 +4082,15 @@ var REQUESTS = {
 			                    </div>\
 			                </div>\ ';
     	}else{
+    		var ui_donate_panel = '';
     		if(PIF.pif_array.length == 0){
-    			var ui_donate_panel = '';
+    			
     			PIF.set_select_input('#request-page', 'REQUESTS', 'request', data_for_build.id, 5, data_for_build.currency_asking);
+    		}
+    		if(SUPER_PROFILE.auth == true){
+    			ui_donate_panel = '<span>' + LOCALE_ARRAY_ADDITIONAL.warning_donate[CURRENT_LANG] +' <a href = "#my-fund-page">My funds</a></span>';
     		}else{
-    			if(SUPER_PROFILE.auth == true){
-	    			var warning_link = '<a href = "#my-fund-page">My funds</a>';
-	    		}else{
-	    			var warning_link = '<a href = "#registration">Registration</a>';
-	    		}
-	    		var ui_donate_panel = '<span>' + LOCALE_ARRAY_ADDITIONAL.warning_donate[CURRENT_LANG] +' ' + warning_link + '</span>';
+    			ui_donate_panel = '<span>Please register for donate. <a href = "#registration">Registration</a></span>';
     		}
     	}
 
@@ -4244,7 +4237,7 @@ var REQUESTS = {
 						        <h1>\
 						            Список НКО\
 						        </h1>\
-						        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate(\'#request-page?request=' + object_id + '\')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#program-nko-help">Ask</a>\
+						        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#program-nko-help">Ask</a>\
 						        <div id="request-nko-help" class="help-popup" data-role="popup" data-history="false">\
 						            <div class="title">\
 						                Description\
@@ -4622,7 +4615,7 @@ var funds = {
         }
 
         var build_string_list = "";
-        var build_string_select = '<label>Choose Fund</label><select id="select-pay-block">';
+        var build_string_select = '<label>Choose Personal Fund</label><select id="select-pay-block">';
         jQuery.each(data,function(i , one_data){
             build_string_list += self.build_fund(one_data);
             build_string_select += self.build_fund_select(one_data);
@@ -5514,7 +5507,7 @@ var WEIGHTED_VOTINGS = {
 					                            								   + parseInt(percents_object.minus_percent) + '%">' + parseInt(data_for_build.vote_no) + '</span>\
 					                        </div>\
 						                </div>\ ' + voting_buttons +  ' <div class="btn-next-page">\
-						                    <a class="ui-btn ui-btn-icon-right" href="#voters-page" onclick = "WEIGHTED_VOTINGS.get_open_voters_list(' + data_for_build.id + ');">' + LOCALE_ARRAY_ADDITIONAL.view_list_public_voters[CURRENT_LANG] + '</a>\
+						                    <a class="ui-btn ui-btn-icon-right" href="#" onclick = "$.mobile.navigate(\'#voters-page?voting=' + data_for_build.id + '\'); WEIGHTED_VOTINGS.get_open_voters_list(' + data_for_build.id + ');">' + LOCALE_ARRAY_ADDITIONAL.view_list_public_voters[CURRENT_LANG] + '</a>\
 						                </div>' + delete_button + '\
 						            </div>\
 						        </div>\
@@ -5772,7 +5765,7 @@ var WEIGHTED_VOTINGS = {
 					        <h1>\
 					            ' + LOCALE_ARRAY_ADDITIONAL.voters[CURRENT_LANG] + '\
 					        </h1>\
-					        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate(\'#weighted-vote-page?vote=' + vote_id + '\')" href="">' + LOCALE_ARRAY_ADDITIONAL.back[CURRENT_LANG] + '</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#voters-help">' + LOCALE_ARRAY_ADDITIONAL.ask[CURRENT_LANG] + '</a>\
+					        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="">' + LOCALE_ARRAY_ADDITIONAL.back[CURRENT_LANG] + '</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#voters-help">' + LOCALE_ARRAY_ADDITIONAL.ask[CURRENT_LANG] + '</a>\
 					        <div id="voters-help" class="help-popup" data-role="popup" data-history="false">\
 					            <div class="title">\
 					                ' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
@@ -5845,7 +5838,7 @@ var WEIGHTED_VOTINGS = {
 				    </div>';
 		
 
-		$.mobile.navigate("#voters-page?voting=" + vote_id);
+		//$.mobile.navigate("#voters-page?voting=" + vote_id);
 		$('#voters-page').html('');
 		$( ui_string ).appendTo( '#voters-page' );
 		$('#voters-page').enhanceWithin();
@@ -5856,20 +5849,28 @@ var WEIGHTED_VOTINGS = {
 var TRUST_LIST = {
 	trust_array: [],
 	trust_last_item: 10,
-	init: function(next_used){
+	init: function(next_used, parameter){
 		var self = this;
 		$.mobile.loading( "show", {  theme: "z"	});
-		if(next_used){
-			if($('#trusted_checkbox').hasClass('ui-checkbox-off')){
+		if(parameter){
+			if(parameter == 's'){
 				var url = 'http://gurtom.mobi/trust.php';					
-			}else{
+			}else if(parameter == 'p_s'){
 				var url = 'http://gurtom.mobi/trust.php?p_s=1';
 			}
 		}else{
-			if($('#trusted_checkbox').hasClass('ui-checkbox-on')){
-				var url = 'http://gurtom.mobi/trust.php';					
+			if(next_used){
+				if($('#trusted_checkbox').hasClass('ui-checkbox-off')){
+					var url = 'http://gurtom.mobi/trust.php';					
+				}else{
+					var url = 'http://gurtom.mobi/trust.php?p_s=1';
+				}
 			}else{
-				var url = 'http://gurtom.mobi/trust.php?p_s=1';
+				if($('#trusted_checkbox').hasClass('ui-checkbox-on')){
+					var url = 'http://gurtom.mobi/trust.php';					
+				}else{
+					var url = 'http://gurtom.mobi/trust.php?p_s=1';
+				}
 			}
 		}
 		if($('#trust-list #searched_string').val() != ''){
@@ -6140,42 +6141,39 @@ var TRUST_LIST = {
 		console.log( 'spheres trust' );
 		console.log( SPHERES.spheres_array );
 		for ( var i = 0; i < SPHERES.spheres.length; i++ ) {
-			if(SPHERES.spheres[i].objects.length == 1){
-				//console.log('equal one');
-				ui_string += '<div class = "content_value">\
-		                        <select onchange = "$.mobile.navigate(\'#trust-list\')" name = "' + SPHERES.spheres[i].selector_name + '">\
-		                            <option style = "display:none">' + SPHERES.spheres[i].name + '</option>';
-		        
-		        for (var j = 0; j < SPHERES.spheres[i].objects[0].sph.length; j++) {
-		        	if(SPHERES.spheres[i].objects[0].sph[j].fav == 1){
-		        		ui_string += '<option value = "' + SPHERES.spheres[i].objects[0].sph[j].idc +  '">' + SPHERES.spheres[i].objects[0].sph[j].sphere + '</option>';
-		        	}else{
-		        		ui_string += '<option value = "' + SPHERES.spheres[i].objects[0].sph[j].idc +  '">' + SPHERES.spheres[i].objects[0].sph[j].sphere + '</option>';
-		        	}
-		        	
-		        }
+			if(SPHERES.spheres[i].objects.length > 0){
+				if(SPHERES.spheres[i].objects[0].org == ''){
+					//console.log('equal one');
+					ui_string += '<div class = "content_value">\
+			                        <select  onchange = "history.back()" name = "' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
+			                            <option>' + SPHERES.spheres[i].name + '</option>';
+			        
+			        for (var j = 0; j < SPHERES.spheres[i].objects[0].sph.length; j++) {
+			        	ui_string += '<option value = "' + SPHERES.spheres[i].objects[0].sph[j].idc +  '">' + SPHERES.spheres[i].objects[0].sph[j].sphere + '</option>';		        	
+			        }
 
-		        ui_string +=  '</select>\
-		                    </div>';
-			}
-
-			if(SPHERES.spheres[i].objects.length > 1){
-				//console.log('equal more than one');
-				var varable = '#' + SPHERES.spheres[i].selector_name + '_content';
-				ui_string += '<div>\
-		                        <select onchange = "$.mobile.navigate(\'#trust-list\')"><option style = "display: none" value="' + SPHERES.spheres[i].name + '">' + SPHERES.spheres[i].name + '</option>';
-		        for (var k = 0; k < SPHERES.spheres[i].objects.length; k++) {			        
-			        for (var j = 0; j < SPHERES.spheres[i].objects[k].sph.length; j++) {
-			        	if(SPHERES.spheres[i].objects[k].sph[j].fav == 1){
-			        		ui_string += '<option value = "' + SPHERES.spheres[i].objects[k].sph[j].idc +  '">' + SPHERES.spheres[i].objects[k].sph[j].sphere + '</option>';
-			        	}else{
-			        		ui_string += '<option value = "' + SPHERES.spheres[i].objects[k].sph[j].idc +  '">' + SPHERES.spheres[i].objects[k].sph[j].sphere + '</option>';
-			        	}
-			        	
-			        } 
-		        }
-		        ui_string +=  '</select>\
-		                    </div>';	        
+			        ui_string +=  '</select>\
+			                    </div>';
+			    }else{
+			    	//console.log('equal more than one');
+					var varable = '#spheres-trust #' + SPHERES.spheres[i].selector_name + '_content';
+					ui_string += '<div onclick = "SPHERES.show_mini_spheres(\'' + varable + '\');">\
+			                        <select disabled class = "container" name="' + SPHERES.spheres[i].selector_name + '"><option value="' + SPHERES.spheres[i].name + '">' + SPHERES.spheres[i].name + '</option></select>\
+			                    </div>';
+			        ui_string += '<div id = "' + SPHERES.spheres[i].selector_name + '_content" style = "display:none;">';
+			        for (var k = 0; k < SPHERES.spheres[i].objects.length; k++) {
+			           ui_string += '<div class = "content_value">\
+			                        <select  onchange = "history.back()"  data-mini="true" name ="' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
+			                            <option>' + SPHERES.spheres[i].objects[k].org + '</option>';
+				        
+				        for (var j = 0; j < SPHERES.spheres[i].objects[k].sph.length; j++) {
+							ui_string += '<option value = "' + SPHERES.spheres[i].objects[k].sph[j].idc +  '">' + SPHERES.spheres[i].objects[k].sph[j].sphere + '</option>';			        	
+				        }
+				        ui_string +=  '</select>\
+			                    </div>'; 
+			        }
+			        ui_string += '</div>';
+			    }				
 			}
 		}
 		$('#spheres-trust #sphere_form').html(ui_string);
@@ -6325,6 +6323,7 @@ var SPHERES = {
 				  		if(location.href.indexOf('#spheres-address') > -1){
 				  			self.set_spheres_and_listeners();				  			
 				  			$('#spheres-address #sphere_form select').selectmenu().selectmenu("refresh", true);
+				  			$('#spheres-address').enhanceWithin();
 				  		}
 				  		if(location.href.indexOf('#spheres-create-vote') > -1){
 				  			self.set_spheres_create_vote();
@@ -6347,6 +6346,7 @@ var SPHERES = {
 	  			self.set_spheres_and_listeners();
 	  			console.log('#spheres-address');
 	  			$('#spheres-address #sphere_form select').selectmenu().selectmenu("refresh", true);
+	  			$('#spheres-address').enhanceWithin();
 	  		}
 	  		if(location.href.indexOf('#spheres-create-vote') > -1){
 	  			self.set_spheres_create_vote();
@@ -6357,7 +6357,7 @@ var SPHERES = {
 	  		
 	  		if(callback_function)
 	  			callback_function();
-		}
+		}		
 	},
 	normalize_array: function(){
 		var self = this;
@@ -7761,7 +7761,7 @@ var VOTINGS = {
 						                        </div>\
 						                    </div>\
 						                </div>\ ' + voting_buttons +  ' <div class="btn-next-page">\
-						                    <a class="ui-btn ui-btn-icon-right" href="#voters-page" onclick = "VOTINGS.get_open_voters_list(' + data_for_build.id + ');">' + LOCALE_ARRAY_ADDITIONAL.view_list_public_voters[CURRENT_LANG] + '</a>\
+						                    <a class="ui-btn ui-btn-icon-right" href="#" onclick = " $.mobile.navigate(\'#voters-page?voting=' + data_for_build.id + '\'); VOTINGS.get_open_voters_list(' + data_for_build.id + ');">' + LOCALE_ARRAY_ADDITIONAL.view_list_public_voters[CURRENT_LANG] + '</a>\
 						                </div>\
 						            </div>\
 						        </div>\
@@ -8089,7 +8089,7 @@ var VOTINGS = {
 					        <h1>\
 					            ' + LOCALE_ARRAY_ADDITIONAL.voters[CURRENT_LANG] + '\
 					        </h1>\
-					        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" href="#vote-page?vote=' + vote_id + '">' + LOCALE_ARRAY_ADDITIONAL.back[CURRENT_LANG] + '</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#voters-help">' + LOCALE_ARRAY_ADDITIONAL.ask[CURRENT_LANG] + '</a>\
+					        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">' + LOCALE_ARRAY_ADDITIONAL.back[CURRENT_LANG] + '</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#voters-help">' + LOCALE_ARRAY_ADDITIONAL.ask[CURRENT_LANG] + '</a>\
 					        <div id="voters-help" class="help-popup" data-role="popup" data-history="false">\
 					            <div class="title">\
 					                ' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
@@ -8160,9 +8160,6 @@ var VOTINGS = {
 		
 		ui_string += '</div>\
 				    </div>';
-		
-
-		$.mobile.navigate("#voters-page?voting=" + vote_id);
 		$('#voters-page').html('');
 		$( ui_string ).appendTo( '#voters-page' );
 		$('#voters-page').enhanceWithin();
@@ -8997,7 +8994,7 @@ var MY_VOTINGS = {
 						                        </div>\
 						                    </div>\
 						                </div>\ ' + voting_buttons +  ' <div class="btn-next-page">\
-						                    <a class="ui-btn ui-btn-icon-right" href="#voters-page" onclick = "MY_VOTINGS.get_open_voters_list(' + data_for_build.id + ');">' + LOCALE_ARRAY_ADDITIONAL.view_list_public_voters[CURRENT_LANG] + '</a>\
+						                    <a class="ui-btn ui-btn-icon-right" href="#" onclick = "$.mobile.navigate(\'#voters-page?voting=' + data_for_build.id + '\'); MY_VOTINGS.get_open_voters_list(' + data_for_build.id + ');">' + LOCALE_ARRAY_ADDITIONAL.view_list_public_voters[CURRENT_LANG] + '</a>\
 						                </div>\
 						            </div>\
 						        </div>\
@@ -9311,7 +9308,7 @@ var MY_VOTINGS = {
 					        <h1>\
 					            ' + LOCALE_ARRAY_ADDITIONAL.voters[CURRENT_LANG] + '\
 					        </h1>\
-					        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" href="#my-vote-page?vote=' + vote_id + '">' + LOCALE_ARRAY_ADDITIONAL.back[CURRENT_LANG] + '</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#voters-help">' + LOCALE_ARRAY_ADDITIONAL.ask[CURRENT_LANG] + '</a>\
+					        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">' + LOCALE_ARRAY_ADDITIONAL.back[CURRENT_LANG] + '</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#voters-help">' + LOCALE_ARRAY_ADDITIONAL.ask[CURRENT_LANG] + '</a>\
 					        <div id="voters-help" class="help-popup" data-role="popup" data-history="false">\
 					            <div class="title">\
 					                ' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
@@ -9382,9 +9379,6 @@ var MY_VOTINGS = {
 		
 		ui_string += '</div>\
 				    </div>';
-		
-
-		$.mobile.navigate("#voters-page?voting=" + vote_id);
 		$('#voters-page').html('');
 		$( ui_string ).appendTo( '#voters-page' );
 		$('#voters-page').enhanceWithin();
