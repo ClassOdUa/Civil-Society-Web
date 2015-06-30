@@ -51,6 +51,7 @@ function lang_activate_el(element){
 window.onload = function(){
 	lang_activate_el();
 	setTimeout(function(){
+		COMMON_OBJECT.init_common_listeners();
 
 		jQuery.each(LOCALE_ARRAY, function(i, one_element) {
 			if($(one_element['selector'])){
@@ -167,8 +168,8 @@ window.onload = function(){
 			if(!$('#trusted_checkbox').hasClass('ui-checkbox-on')){
 				console.log('checkbpx off');
 				$('#trust-list input[name=trusted_checkbox]').checkboxradio().prop('checked', true).checkboxradio( 'refresh' );
-				TRUST_LIST.init(false, 'p_s');
 			}
+			TRUST_LIST.init(false, 'p_s');
 		}
 
 		if(( location.href.indexOf('#edit-address') > -1 || 
@@ -495,8 +496,8 @@ window.onhashchange = function(){
 		if(!$('#trusted_checkbox').hasClass('ui-checkbox-on')){
 			console.log('checkbpx off');
 			$('#trust-list input[name=trusted_checkbox]').checkboxradio().prop('checked', true).checkboxradio( 'refresh' );
-			TRUST_LIST.init(false, 'p_s');
 		}
+		TRUST_LIST.init(false, 'p_s');
 	}
 
 	if(( location.href.indexOf('#edit-address') > -1 || 
@@ -789,47 +790,46 @@ function nko_create_page_data(){
 }
 
 var COMMON_OBJECT = {
+	custom_listeners: function(){
+		if(location.href.indexOf('#votings-page') > -1){
+			
+			if( $(window).scrollTop() == $(document).height() - $(window).height()){
+	          	VOTINGS.reinit();
+	      	}
+	      	
+		}else if(location.href.indexOf('#news-page') > -1){
+			if( $(window).scrollTop() == $(document).height() - $(window).height()){
+	          	NEWS.reinit();
+	      	}
+	      		
+		}else if(location.href.indexOf('#trust-list') > -1){
+			if( $(window).scrollTop() == $(document).height() - $(window).height()){
+	          	TRUST_LIST.reinit();
+	      	}
+		}else if(location.href.indexOf('#my-votings-page') > -1){
+			if( $(window).scrollTop() == $(document).height() - $(window).height()){
+	          	MY_VOTINGS.reinit();
+	      	}
+		}else if(location.href.indexOf('#programs-page') > -1){
+			if( $(window).scrollTop() == $(document).height() - $(window).height()){
+	          	PROGRAMS.reinit();
+	      	}
+		}else if(location.href.indexOf('#projects-page') > -1){
+			if( $(window).scrollTop() == $(document).height() - $(window).height()){
+	          	PROJECTS.reinit();
+	      	}
+		}else if(location.href.indexOf('#requests-page') > -1){
+			if( $(window).scrollTop() == $(document).height() - $(window).height()){
+	          	REQUESTS.reinit();
+	      	}
+		}else if(location.href.indexOf('#weighted-votings-page') > -1){
+			if( $(window).scrollTop() == $(document).height() - $(window).height()){
+	          	WEIGHTED_VOTINGS.reinit();
+	      	}
+		}
+	},
 	init_common_listeners: function(){
-			window.addEventListener("scroll", function(){
-				if(location.href.indexOf('#votings-page') > -1){
-					
-					if( $(window).scrollTop() == $(document).height() - $(window).height()){
-			          	VOTINGS.reinit();
-			      	}
-			      	
-				}else if(location.href.indexOf('#news-page') > -1){
-					
-					//$(window).scroll(function(){
-					if( $(window).scrollTop() == $(document).height() - $(window).height()){
-			          	NEWS.reinit();
-			      	}
-			      		
-				}else if(location.href.indexOf('#trust-list') > -1){
-					if( $(window).scrollTop() == $(document).height() - $(window).height()){
-			          	TRUST_LIST.reinit();
-			      	}
-				}else if(location.href.indexOf('#my-votings-page') > -1){
-					if( $(window).scrollTop() == $(document).height() - $(window).height()){
-			          	MY_VOTINGS.reinit();
-			      	}
-				}else if(location.href.indexOf('#programs-page') > -1){
-					if( $(window).scrollTop() == $(document).height() - $(window).height()){
-			          	PROGRAMS.reinit();
-			      	}
-				}else if(location.href.indexOf('#projects-page') > -1){
-					if( $(window).scrollTop() == $(document).height() - $(window).height()){
-			          	PROJECTS.reinit();
-			      	}
-				}else if(location.href.indexOf('#requests-page') > -1){
-					if( $(window).scrollTop() == $(document).height() - $(window).height()){
-			          	REQUESTS.reinit();
-			      	}
-				}else if(location.href.indexOf('#weighted-votings-page') > -1){
-					if( $(window).scrollTop() == $(document).height() - $(window).height()){
-			          	WEIGHTED_VOTINGS.reinit();
-			      	}
-				}
-			});	
+			window.addEventListener("scroll", COMMON_OBJECT.custom_listeners );	
 	},
 	custom_swipe: function(object){
 		console.log($(object).data('show'));
@@ -1144,7 +1144,7 @@ var HISTORY_PAGE = {
 							        <h1 class="long-title">\
 							            История сбора средств\
 							        </h1>\
-							        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate(\'#project-page?project=' + object_id + '\')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#request-history-help">Ask</a>\
+							        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#request-history-help">Ask</a>\
 							        <div id="request-history-help" class="help-popup" data-role="popup" data-history="false">\
 							            <div class="title">\
 							                Description\
@@ -2163,7 +2163,7 @@ var PROJECTS = {
 			        <h1>\
 			            ' + LOCALE_ARRAY_ADDITIONAL.project_proposition[CURRENT_LANG] + '\
 			        </h1>\
-			        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate(\'#projects-page?program=' + data_for_build.program_id + '\')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#project-help">Ask</a>\
+			        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#project-help">Ask</a>\
 			        <div id="project-help" class="help-popup" data-role="popup" data-history="false">\
 			            <div class="title">\
 			                Description\
@@ -2491,7 +2491,7 @@ var PROJECTS = {
 								        <h1 class="long-title">\
 								            История сбора средств\
 								        </h1>\
-								        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate(\'' + return_page + '\')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#project_proposition-history-help">Ask</a>\
+								        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#project_proposition-history-help">Ask</a>\
 								        <div id="project_proposition-history-help" class="help-popup" data-role="popup" data-history="false">\
 								            <div class="title">\
 								                Description\
@@ -2946,21 +2946,21 @@ var PROGRAMS = {
 				                            ID: <strong>' + one_voting.id + '</strong> : <strong>' + one_voting.title + '</strong>\
 				                        </div>\
 				                        <div class="ui-grid-a">\
-				                            <div class="ui-block-b">\
-				                                <div class="status">\
+				                            <div class="ui-block-a">\
+				                            	<div class="status">\
 				                                    <span>' + LOCALE_ARRAY_ADDITIONAL.successfully_finished[CURRENT_LANG] + '</span>\
 				                                </div>\
-				                            </div>\
-				                            <div class="amount up">\
-				                                <span>' + LOCALE_ARRAY_ADDITIONAL.amount_asking[CURRENT_LANG] + '</span> - <strong>' + one_voting.amount_asking + ' ' + PIF.get_currency_name_by_id( one_voting.currency_asking ) + '</strong>\
-				                            </div>\
-				                            <div class="my-amount">\
-				                                <span>' + LOCALE_ARRAY_ADDITIONAL.my_cash[CURRENT_LANG] + '</span> - <strong>' + one_voting.my_add + ' ' + PIF.get_currency_name_by_id( one_voting.currency_asking ) + '</strong>\
-				                            </div>\
-				                            <div class="contractors">\
-				                                <span>' + LOCALE_ARRAY_ADDITIONAL.count_contractors[CURRENT_LANG] + '</span> - <strong>96</strong>\
-				                            </div>\
-				                        </div>\
+				                            	<div class="amount up">\
+					                                <span>' + LOCALE_ARRAY_ADDITIONAL.amount_asking[CURRENT_LANG] + '</span> - <strong>' + one_voting.amount_asking + ' ' + PIF.get_currency_name_by_id( one_voting.currency_asking ) + '</strong>\
+					                            </div>\
+					                            <div class="my-amount">\
+					                                <span>' + LOCALE_ARRAY_ADDITIONAL.my_cash[CURRENT_LANG] + '</span> - <strong>' + one_voting.my_add + ' ' + PIF.get_currency_name_by_id( one_voting.currency_asking ) + '</strong>\
+					                            </div>\
+					                            <div class="contractors">\
+					                                <span>' + LOCALE_ARRAY_ADDITIONAL.count_contractors[CURRENT_LANG] + '</span> - <strong>96</strong>\
+					                            </div>\
+					                        </div>\
+					                    </div>\
 				                    </div>\
 				                </a>\
 				            </div>';
@@ -3447,7 +3447,7 @@ var PROGRAMS = {
 								        <h1 class="long-title">\
 								            История сбора средств\
 								        </h1>\
-								        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate(\'#program-page\')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#request-history-help">Ask</a>\
+								        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#request-history-help">Ask</a>\
 								        <div id="request-history-help" class="help-popup" data-role="popup" data-history="false">\
 								            <div class="title">\
 								                Description\
@@ -4404,7 +4404,7 @@ var REQUESTS = {
 								        <h1 class="long-title">\
 								            История сбора средств\
 								        </h1>\
-								        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate(\'#request-page\')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#request-history-help">Ask</a>\
+								        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#request-history-help">Ask</a>\
 								        <div id="request-history-help" class="help-popup" data-role="popup" data-history="false">\
 								            <div class="title">\
 								                Description\
@@ -5431,7 +5431,7 @@ var WEIGHTED_VOTINGS = {
     	var ui_string = '';
 		ui_string = '<div data-role="header" data-position="fixed" data-tap-toggle="false">\
 						    <h1>' + LOCALE_ARRAY_ADDITIONAL.weighted_vote[CURRENT_LANG] + '</h1>\
-						        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate(\'#weighted-votings-page?program=' + data_for_build.program_id + '\')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#vote-help">Ask</a>\
+						        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#vote-help">Ask</a>\
 						        <div id="vote-help" class="help-popup" data-role="popup" data-history="false">\
 						            <div class="title">\
 						                ' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
@@ -5880,6 +5880,15 @@ var TRUST_LIST = {
 				url += "?s="  + $('#trust-list #searched_string').val();
 			}
 		}
+		if(location.href.indexOf('sphere=') > -1){
+			var match_array = location.href.match(/sphere=[0-9]*/i);
+			var object_id = match_array[0].match(/[0-9]+/i);
+			if(url.indexOf('?') > -1){
+				url += "&sph="  + object_id;
+			}else{
+				url += "?sph="  + object_id;
+			}
+		}
 		$.ajax({
 		  url: url,
 		  type: "GET",
@@ -6145,7 +6154,7 @@ var TRUST_LIST = {
 				if(SPHERES.spheres[i].objects[0].org == ''){
 					//console.log('equal one');
 					ui_string += '<div class = "content_value">\
-			                        <select  onchange = "history.back()" name = "' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
+			                        <select id = "select_' + i + '"  onchange = "$.mobile.navigate(\'#trust-list?sphere=\'+$(this).val())" name = "' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
 			                            <option>' + SPHERES.spheres[i].name + '</option>';
 			        
 			        for (var j = 0; j < SPHERES.spheres[i].objects[0].sph.length; j++) {
@@ -6163,7 +6172,7 @@ var TRUST_LIST = {
 			        ui_string += '<div id = "' + SPHERES.spheres[i].selector_name + '_content" style = "display:none;">';
 			        for (var k = 0; k < SPHERES.spheres[i].objects.length; k++) {
 			           ui_string += '<div class = "content_value">\
-			                        <select  onchange = "history.back()"  data-mini="true" name ="' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
+			                        <select id = "select_' + i + '" onchange = "$.mobile.navigate(\'#trust-list?sphere=\'+$(this).val())"  data-mini="true" name ="' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
 			                            <option>' + SPHERES.spheres[i].objects[k].org + '</option>';
 				        
 				        for (var j = 0; j < SPHERES.spheres[i].objects[k].sph.length; j++) {
@@ -6511,7 +6520,7 @@ var SPHERES = {
 				if(SPHERES.spheres[i].objects[0].org == ''){
 					//console.log('equal one');
 					ui_string += '<div class = "content_value">\
-			                        <select  onchange = "$.mobile.navigate(\'#filter-page\'); WEIGHTED_VOTINGS.filter_data($(this).val(), 0, \'' + SPHERES.spheres[i].selector_name + '\')" name = "' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
+			                        <select  onchange = "$.mobile.navigate(\'#filter-page\'); VOTINGS.filter_data($(this).val(), 0, \'' + SPHERES.spheres[i].selector_name + '\')" name = "' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
 			                            <option>' + SPHERES.spheres[i].name + '</option>';
 			        
 			        for (var j = 0; j < SPHERES.spheres[i].objects[0].sph.length; j++) {
@@ -6529,7 +6538,7 @@ var SPHERES = {
 			        ui_string += '<div id = "' + SPHERES.spheres[i].selector_name + '_content" style = "display:none;">';
 			        for (var k = 0; k < SPHERES.spheres[i].objects.length; k++) {
 			           ui_string += '<div class = "content_value">\
-			                        <select  onchange = "$.mobile.navigate(\'#filter-page\'); WEIGHTED_VOTINGS.filter_data($(this).val(), 0, \'' + SPHERES.spheres[i].selector_name + '\')" data-mini="true" name ="' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
+			                        <select  onchange = "$.mobile.navigate(\'#filter-page\'); VOTINGS.filter_data($(this).val(), 0, \'' + SPHERES.spheres[i].selector_name + '\')" data-mini="true" name ="' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
 			                            <option>' + SPHERES.spheres[i].objects[k].org + '</option>';
 				        
 				        for (var j = 0; j < SPHERES.spheres[i].objects[k].sph.length; j++) {
@@ -6648,6 +6657,7 @@ var NEWS = {
 	  		//console.log(response);
 	  		self.news_list = JSON.parse( response.responseText );
 	  		self.build_elements();
+	  		console.log(self.news_list);
 	  		$.mobile.loading( "hide" );	
 		  },
 		});
@@ -6701,7 +6711,12 @@ var NEWS = {
 					onclick_event = 'style = "cursor:pointer" onclick = "$.mobile.navigate(\'#weighted-vote-page?vote=' + one_news.link + '\')"';
 					break;
 			}
-			elements_string += '<div ' + onclick_event + ' class="item ui-corner-all news-icon news-icon-num-' + (parseInt(one_news.type)) + '">\
+			if( one_news.icon_num == 0 ){
+				var icon_news = 'news-icon news-icon-' + (parseInt(one_news.icon_type));
+			}else{
+				var icon_news = 'news-icon news-icon-num-' + (parseInt(one_news.icon_num));
+			}
+			elements_string += '<div ' + onclick_event + ' class="item ui-corner-all ' + icon_news + '">\
 					                <div class="img">\
 					                	<object type="image/svg+xml" data="http://' + one_news.img + '">Your browser does not support SVG</object>\
 					                </div>\
@@ -10440,7 +10455,6 @@ console.log(window.location.toString());
 				PROFILE.auth = true;
 				SUPER_PROFILE.auth = true;
 				PROFILE.getProfile();
-				COMMON_OBJECT.init_common_listeners();
 				//TRUST_LIST.init();
 				set_unset_links(1, '.menu-icon-activities', '#my-activities-page');
 				set_unset_links(1, '.menu-icon-options', '#options-page');
@@ -11020,6 +11034,7 @@ console.log(window.location.toString());
 			        	$("#login-form [name=pass]").val("");
 			            self.updateMenu();
 			            PROFILE.profile_obj = false;
+			            PIF.pif_array = [];
 			        	}
 					})
     		},

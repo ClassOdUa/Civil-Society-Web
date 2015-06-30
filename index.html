@@ -5302,7 +5302,7 @@
         <h1>
             Trust list
         </h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#trust-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" href="#decision-making">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#trust-help">Ask</a>
         <div id="trust-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
@@ -5319,8 +5319,8 @@
         <div class="ui-input-search ui-input-has-clear">
             <input onkeyup="TRUST_LIST.init(true)" id = "searched_string" type="search" name="" placeholder="Search by ID" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">Clear text</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />
         </div>
-        <div>
-            <select id = "choose_sphere_trust" onclick = "TRUST_LIST.set_spheres_and_listeners(); $.mobile.navigate('#spheres-trust');" name=""><option style = "display:none" value="Choose vote type">Choose vote type</option>
+        <div id = "choose_sphere_trust" onclick = "TRUST_LIST.set_spheres_and_listeners(); $.mobile.navigate('#spheres-trust');">
+            <select disabled name=""><option style = "display:none" value="Choose vote type">Choose vote type</option>
             </select>
         </div>
         <div id = "trust_list_all" class="trust-list">

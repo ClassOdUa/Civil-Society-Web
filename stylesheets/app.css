@@ -402,37 +402,6 @@ label.ui-btn {
     margin: 0.5em 1.5em; }
     .ui-page-theme-a .ui-select.ui-mini .ui-btn {
       padding: 0.375em 1em; }
-  .ui-page-theme-a .ui-selectmenu.ui-popup {
-    background: #ffffff;
-    border: none;
-    -moz-border-radius: 0;
-    -webkit-border-radius: 0;
-    border-radius: 0;
-    -moz-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.5);
-    -webkit-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.5);
-    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.5); }
-    .ui-page-theme-a .ui-selectmenu.ui-popup .ui-header {
-      background: #efefef;
-      -moz-box-shadow: none;
-      -webkit-box-shadow: none;
-      box-shadow: none;
-      -moz-border-radius: 0;
-      -webkit-border-radius: 0;
-      border-radius: 0; }
-      .ui-page-theme-a .ui-selectmenu.ui-popup .ui-header .ui-title {
-        color: #4d4d4d;
-        font-size: 0.8125em;
-        font-weight: 500;
-        margin: 0 0 0 1em; }
-      .ui-page-theme-a .ui-selectmenu.ui-popup .ui-header .ui-btn {
-        display: none; }
-    .ui-page-theme-a .ui-selectmenu.ui-popup .ui-selectmenu-list .ui-btn {
-      border: none;
-      font-size: 0.8125em;
-      background: none;
-      color: #4d4d4d;
-      font-weight: normal;
-      outline: none; }
   .ui-page-theme-a .date-group, .ui-page-theme-a .select-group {
     margin-bottom: 2em;
     text-align: center;
@@ -531,6 +500,38 @@ label.ui-btn {
         border-left: 5px solid #4d4d4d;
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent; }
+
+.ui-selectmenu.ui-popup {
+  background: #ffffff;
+  border: none;
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+  -moz-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.5);
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.5); }
+  .ui-selectmenu.ui-popup .ui-header {
+    background: #efefef;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+    border-radius: 0; }
+    .ui-selectmenu.ui-popup .ui-header .ui-title {
+      color: #4d4d4d;
+      font-size: 0.8125em;
+      font-weight: 500;
+      margin: 0 0 0 1em; }
+    .ui-selectmenu.ui-popup .ui-header .ui-btn {
+      display: none; }
+  .ui-selectmenu.ui-popup .ui-selectmenu-list .ui-btn {
+    border: none;
+    font-size: 0.8125em;
+    background: none;
+    color: #4d4d4d;
+    font-weight: normal;
+    outline: none; }
 
 #left-panel {
   background: #ffffff; }
@@ -2015,7 +2016,11 @@ label.ui-btn {
       bottom: 0;
       background-color: #4484f6;
       background-position: 50% 50%;
-      background-repeat: no-repeat; }
+      background-repeat: no-repeat;
+      -moz-background-size: contain;
+      -o-background-size: contain;
+      -webkit-background-size: contain;
+      background-size: contain; }
     #news-page .news-list .item.news-icon-num-1:after, #news-page .news-list .item.news-icon-num-2:after, #news-page .news-list .item.news-icon-num-3:after, #news-page .news-list .item.news-icon-num-4:after, #news-page .news-list .item.news-icon-num-5:after, #news-page .news-list .item.news-icon-num-6:after, #news-page .news-list .item.news-icon-num-7:after, #news-page .news-list .item.news-icon-num-8:after, #news-page .news-list .item.news-icon-num-9:after {
       color: #fff;
       text-align: center;
@@ -2023,6 +2028,8 @@ label.ui-btn {
       font-weight: 500;
       padding-top: 1.35em;
       width: 34px; }
+    #news-page .news-list .item.news-icon-num-0:after {
+      content: '0'; }
     #news-page .news-list .item.news-icon-num-1:after {
       content: '1'; }
     #news-page .news-list .item.news-icon-num-2:after {
@@ -2042,31 +2049,23 @@ label.ui-btn {
     #news-page .news-list .item.news-icon-num-9:after {
       content: '9'; }
     #news-page .news-list .item.news-icon-1:after {
-      background-image: url(../images/news-icon-1.png);
-      -moz-background-size: 27px 27px;
-      -o-background-size: 27px 27px;
-      -webkit-background-size: 27px 27px;
-      background-size: 27px 27px; }
+      background-image: url(../images/svg/news-icon-1.svg);
+      -moz-background-size: 32px 32px;
+      -o-background-size: 32px 32px;
+      -webkit-background-size: 32px 32px;
+      background-size: 32px 32px; }
     #news-page .news-list .item.news-icon-2:after {
       background-color: #f69444;
-      background-image: url(../images/news-icon-2.png);
+      background-image: url(../images/svg/news-icon-2.svg); }
+    #news-page .news-list .item.news-icon-3:after {
+      background-color: #f64444;
+      background-image: url(../images/svg/news-icon-3.svg); }
+    #news-page .news-list .item.news-icon-4:after {
+      background-image: url(../images/svg/news-icon-4.svg);
       -moz-background-size: 29px 29px;
       -o-background-size: 29px 29px;
       -webkit-background-size: 29px 29px;
       background-size: 29px 29px; }
-    #news-page .news-list .item.news-icon-3:after {
-      background-color: #f64444;
-      background-image: url(../images/news-icon-3.png);
-      -moz-background-size: 27px 27px;
-      -o-background-size: 27px 27px;
-      -webkit-background-size: 27px 27px;
-      background-size: 27px 27px; }
-    #news-page .news-list .item.news-icon-4:after {
-      background-image: url(../images/news-icon-4.png);
-      -moz-background-size: 24px 22px;
-      -o-background-size: 24px 22px;
-      -webkit-background-size: 24px 22px;
-      background-size: 24px 22px; }
     #news-page .news-list .item.news-icon-5:after {
       background-image: url(../images/news-icon-5.png);
       -moz-background-size: 15px 21px;
@@ -2074,17 +2073,9 @@ label.ui-btn {
       -webkit-background-size: 15px 21px;
       background-size: 15px 21px; }
     #news-page .news-list .item.news-icon-6:after {
-      background-image: url(../images/news-icon-6.png);
-      -moz-background-size: 26px 26px;
-      -o-background-size: 26px 26px;
-      -webkit-background-size: 26px 26px;
-      background-size: 26px 26px; }
+      background-image: url(../images/svg/news-icon-6.svg); }
     #news-page .news-list .item.news-icon-7:after {
-      background-image: url(../images/news-icon-7.png);
-      -moz-background-size: 24px 23px;
-      -o-background-size: 24px 23px;
-      -webkit-background-size: 24px 23px;
-      background-size: 24px 23px; }
+      background-image: url(../images/svg/news-icon-7.svg); }
     #news-page .news-list .item.news-icon-8:after {
       background-image: url(../images/news-icon-8.png);
       -moz-background-size: 22px 22px;
@@ -2092,23 +2083,15 @@ label.ui-btn {
       -webkit-background-size: 22px 22px;
       background-size: 22px 22px; }
     #news-page .news-list .item.news-icon-9:after {
-      background-image: url(../images/news-icon-9.png);
-      -moz-background-size: 27px 27px;
-      -o-background-size: 27px 27px;
-      -webkit-background-size: 27px 27px;
-      background-size: 27px 27px; }
+      background-image: url(../images/svg/news-icon-9.svg); }
     #news-page .news-list .item.news-icon-10:after {
-      background-image: url(../images/news-icon-10.png);
-      -moz-background-size: 21px 37px;
-      -o-background-size: 21px 37px;
-      -webkit-background-size: 21px 37px;
-      background-size: 21px 37px; }
+      background-image: url(../images/svg/news-icon-10.svg);
+      -moz-background-size: 50px 50px;
+      -o-background-size: 50px 50px;
+      -webkit-background-size: 50px 50px;
+      background-size: 50px 50px; }
     #news-page .news-list .item.news-icon-11:after {
-      background-image: url(../images/news-icon-11.png);
-      -moz-background-size: 26px 26px;
-      -o-background-size: 26px 26px;
-      -webkit-background-size: 26px 26px;
-      background-size: 26px 26px; }
+      background-image: url(../images/svg/news-icon-11.svg); }
     #news-page .news-list .item .img {
       display: block;
       float: left;
@@ -2132,10 +2115,7 @@ label.ui-btn {
       #news-page .news-list .item .info .author {
         position: absolute;
         bottom: 0.5em;
-        font-size: 0.65em;
-        width: 100%;
-        background: rgba(255,255,255,0.9);
-        }
+        font-size: 0.65em; }
         #news-page .news-list .item .info .author strong {
           font-weight: 900; }
 
@@ -2441,12 +2421,6 @@ label.ui-btn {
     margin-top: -13px;
     background-position: 50% 50%;
     background-repeat: no-repeat; }
-  #my-activities-page .btn-next-page .ui-btn.menu-icon-profile:before {
-    background-image: url(../images/svg/menu-icon-profile.svg);
-    -moz-background-size: 19px 21px;
-    -o-background-size: 19px 21px;
-    -webkit-background-size: 19px 21px;
-    background-size: 19px 21px; }
   #my-activities-page .btn-next-page .ui-btn.icon-funds:before {
     background-image: url(../images/svg/menu-icon-funds.svg);
     -moz-background-size: 20px 19px;
@@ -2472,7 +2446,7 @@ label.ui-btn {
     -webkit-background-size: 22px 20px;
     background-size: 22px 20px; }
   #my-activities-page .btn-next-page .ui-btn.icon-requests:before {
-    background-image: url(../images/svg/requests.svg);
+    background-image: url(../images/svg/menu-icon-requests.svg);
     -moz-background-size: 22px 19px;
     -o-background-size: 22px 19px;
     -webkit-background-size: 22px 19px;
@@ -2485,5 +2459,5 @@ label.ui-btn {
 .delete_vote_button .special_href {
   background-color: #980000; }
 
-.ui-page-header-fixed {
+.ui-page-theme-a {
   padding-top: 56px !important; }

@@ -43,12 +43,6 @@
             }
         });
 
-        $( window ).hashchange(function() {
-            $("#left-panel .menu li").removeClass("active");
-            var active_page = location.hash;
-            $("[href="+active_page+"]").parent().addClass("active");
-        });
-
         // Disable scrolling content when panel is open
 
         $("#left-panel").on("panelopen", function (event, ui) {
@@ -145,9 +139,9 @@
             if ( GetIEVersion() > 0 ) {
                 filtersPanelInner.show();
             } else {
-                /*$(document).on('swipedown', activePage, function () {
+                $(document).on('swipedown', activePage, function () {
                     //filtersPanelInner.slideDown(500);
-                });*/
+                });
             }
         });
 
