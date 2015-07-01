@@ -1907,46 +1907,58 @@ var PROJECTS = {
 		}else{
 			var nco_button = '';
 		}
+		var ui_donate_panel = '';
+		if(data_for_build.status == 0){
+			if(flag_selected == 1){
+	    		var ui_donate_panel = '<div class="ui-grid-a">\
+				                        <div class="ui-block-a">\
+				                            <div>\
+				                                <label>Choose Personal Fund</label><select name="pif">\
+				                                ' + ui_pif_option + '\
+				                                </select>\
+				                            </div>\
+				                        </div>\
+				                        <div class="ui-block-b">\
+				                            <div class="text-field">\
+				                                <label>Amount of money</label>\
+				                                <div class="ui-input-text">\
+				                                    <input type="text" name="amount" data-enhanced="true" />\
+				                                </div>\
+				                            </div>\
+				                        </div>\
+				                    </div>\
+				                    <div class="ui-grid-solo">\
+				                        <div class="ui-block-a">\
+				                            <button onclick = "PROJECTS.donate(\'project\', ' + data_for_build.id + ', 4)" class="ui-btn ui-corner-all ui-shadow donate-btn">Donate</button>\
+				                        </div>\
+				                        <div class="ui-block-a center">\
+				                            <div class="ui-checkbox">\
+				                                <label id = "anonimous_check" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Anonymous donation</label><input type="checkbox" name="" value="1" data-enhanced="true" />\
+				                            </div>\
+				                        </div>\
+				                    </div>\
+				                </div>\ ';
+	    	}else{
+	    		ui_donate_panel = '';
+	    		if(PIF.pif_array.length == 0){
+	    			PIF.set_select_input('#project-page', 'PROJECTS', 'project', data_for_build.id, 4, data_for_build.currency_asking);
+	    		}
+	    		if(SUPER_PROFILE.auth == true){
+	    			 ui_donate_panel = '<span>' + LOCALE_ARRAY_ADDITIONAL.warning_donate[CURRENT_LANG] +' <a href = "#my-fund-page">My funds</a></span>';
+	    		}else{
+	    			 ui_donate_panel = '<span>Please register for donate. <a href = "#registration">Registration</a></span>';
+	    		}
+	    	}
+		}
 
-    	if(flag_selected == 1){
-    		var ui_donate_panel = '<div class="ui-grid-a">\
-			                        <div class="ui-block-a">\
-			                            <div>\
-			                                <label>Choose Personal Fund</label><select name="pif">\
-			                                ' + ui_pif_option + '\
-			                                </select>\
-			                            </div>\
-			                        </div>\
-			                        <div class="ui-block-b">\
-			                            <div class="text-field">\
-			                                <label>Amount of money</label>\
-			                                <div class="ui-input-text">\
-			                                    <input type="text" name="amount" data-enhanced="true" />\
-			                                </div>\
-			                            </div>\
-			                        </div>\
-			                    </div>\
-			                    <div class="ui-grid-solo">\
-			                        <div class="ui-block-a">\
-			                            <button onclick = "PROJECTS.donate(\'project\', ' + data_for_build.id + ', 4)" class="ui-btn ui-corner-all ui-shadow donate-btn">Donate</button>\
-			                        </div>\
-			                        <div class="ui-block-a center">\
-			                            <div class="ui-checkbox">\
-			                                <label id = "anonimous_check" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Anonymous donation</label><input type="checkbox" name="" value="1" data-enhanced="true" />\
-			                            </div>\
-			                        </div>\
-			                    </div>\
-			                </div>\ ';
+    	if(data_for_build.status == 0){
+    		var status_item = '<div class="status yellow">\
+				                    ' + LOCALE_ARRAY_ADDITIONAL.collect_cash_to[CURRENT_LANG] + ' ' + data_for_build.ts_closed + '\
+				                </div>';		                
     	}else{
-    		var ui_donate_panel = '';
-    		if(PIF.pif_array.length == 0){
-    			PIF.set_select_input('#project-page', 'PROJECTS', 'project', data_for_build.id, 4, data_for_build.currency_asking);
-    		}
-    		if(SUPER_PROFILE.auth == true){
-    			 ui_donate_panel = '<span>' + LOCALE_ARRAY_ADDITIONAL.warning_donate[CURRENT_LANG] +' <a href = "#my-fund-page">My funds</a></span>';
-    		}else{
-    			 ui_donate_panel = '<span>Please register for donate. <a href = "#registration">Registration</a></span>';
-    		}
+    		var status_item = '<div class="status green">\
+				                    ' + LOCALE_ARRAY_ADDITIONAL.successfully_finished[CURRENT_LANG] + '\
+				                </div>';	
     	}
 
     	var ui_string = '';
@@ -1979,9 +1991,7 @@ var PROJECTS = {
 		                <div class="username">\
 		                    ' + LOCALE_ARRAY_ADDITIONAL.by[CURRENT_LANG] + ' @<strong>' + data_for_build.author + '</strong>\
 		                </div>\
-		                <div class="status yellow">\
-		                    ' + LOCALE_ARRAY_ADDITIONAL.collect_cash_to[CURRENT_LANG] + ' 23.08.2015\
-		                </div>\
+		                ' + status_item + '\
 		                <div class="total-amount">\
 		                    <span>' + LOCALE_ARRAY_ADDITIONAL.amount_asking[CURRENT_LANG] + '</span> - <strong>' + data_for_build.amount_asking + ' ' + PIF.get_currency_name_by_id( data_for_build.currency_asking ) + '</strong>\
 		                </div>\
@@ -2115,47 +2125,59 @@ var PROJECTS = {
 		}else{
 			var nco_button = '';
 		}
+		var ui_donate_panel = '';
+		if(data_for_build.status == 0){
+			if(flag_selected == 1){
+	    		var ui_donate_panel = '<div class="ui-grid-a">\
+				                        <div class="ui-block-a">\
+				                            <div>\
+				                                <label>Choose Personal Fund</label><select name="pif">\
+				                                ' + ui_pif_option + '\
+				                                </select>\
+				                            </div>\
+				                        </div>\
+				                        <div class="ui-block-b">\
+				                            <div class="text-field">\
+				                                <label>Amount of money</label>\
+				                                <div class="ui-input-text">\
+				                                    <input type="text" name="amount" data-enhanced="true" />\
+				                                </div>\
+				                            </div>\
+				                        </div>\
+				                    </div>\
+				                    <div class="ui-grid-solo">\
+				                        <div class="ui-block-a">\
+				                            <button onclick = "PROJECTS.donate(\'project\', ' + data_for_build.id + ', 3)" class="ui-btn ui-corner-all ui-shadow donate-btn">Donate</button>\
+				                        </div>\
+				                        <div class="ui-block-a center">\
+				                            <div class="ui-checkbox">\
+				                                <label id = "anonimous_check" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Anonymous donation</label><input type="checkbox" name="" value="1" data-enhanced="true" />\
+				                            </div>\
+				                        </div>\
+				                    </div>\
+				                </div>\ ';
+	    	}else{
+	    		ui_donate_panel = '';
+	    		if(PIF.pif_array.length == 0){
+	    			
+	    			PIF.set_select_input('#project-page', 'PROJECTS', 'project', data_for_build.id, 3, data_for_build.currency_asking);
+	    		}
+	    		if(SUPER_PROFILE.auth == true){
+	    			 ui_donate_panel = '<span>' + LOCALE_ARRAY_ADDITIONAL.warning_donate[CURRENT_LANG] +' <a href = "#my-fund-page">My funds</a></span>';
+	    		}else{
+	    			 ui_donate_panel = '<span>Please register for donate. <a href = "#registration">Registration</a></span>';
+	    		}
+	    	}
+		}
 
-    	if(flag_selected == 1){
-    		var ui_donate_panel = '<div class="ui-grid-a">\
-			                        <div class="ui-block-a">\
-			                            <div>\
-			                                <label>Choose Personal Fund</label><select name="pif">\
-			                                ' + ui_pif_option + '\
-			                                </select>\
-			                            </div>\
-			                        </div>\
-			                        <div class="ui-block-b">\
-			                            <div class="text-field">\
-			                                <label>Amount of money</label>\
-			                                <div class="ui-input-text">\
-			                                    <input type="text" name="amount" data-enhanced="true" />\
-			                                </div>\
-			                            </div>\
-			                        </div>\
-			                    </div>\
-			                    <div class="ui-grid-solo">\
-			                        <div class="ui-block-a">\
-			                            <button onclick = "PROJECTS.donate(\'project\', ' + data_for_build.id + ', 3)" class="ui-btn ui-corner-all ui-shadow donate-btn">Donate</button>\
-			                        </div>\
-			                        <div class="ui-block-a center">\
-			                            <div class="ui-checkbox">\
-			                                <label id = "anonimous_check" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Anonymous donation</label><input type="checkbox" name="" value="1" data-enhanced="true" />\
-			                            </div>\
-			                        </div>\
-			                    </div>\
-			                </div>\ ';
+    	if(data_for_build.status == 0){
+    		var status_item = '<div class="status yellow">\
+				                    ' + LOCALE_ARRAY_ADDITIONAL.collect_cash_to[CURRENT_LANG] + ' ' + data_for_build.ts_closed + '\
+				                </div>';		                
     	}else{
-    		var ui_donate_panel = '';
-    		if(PIF.pif_array.length == 0){
-    			
-    			PIF.set_select_input('#project-page', 'PROJECTS', 'project', data_for_build.id, 3, data_for_build.currency_asking);
-    		}
-    		if(SUPER_PROFILE.auth == true){
-    			 ui_donate_panel = '<span>' + LOCALE_ARRAY_ADDITIONAL.warning_donate[CURRENT_LANG] +' <a href = "#my-fund-page">My funds</a></span>';
-    		}else{
-    			 ui_donate_panel = '<span>Please register for donate. <a href = "#registration">Registration</a></span>';
-    		}
+    		var status_item = '<div class="status green">\
+				                    ' + LOCALE_ARRAY_ADDITIONAL.successfully_finished[CURRENT_LANG] + '\
+				                </div>';	
     	}
 
     	var ui_string = '';
@@ -2188,9 +2210,7 @@ var PROJECTS = {
 		                <div class="username">\
 		                    ' + LOCALE_ARRAY_ADDITIONAL.by[CURRENT_LANG] + ' @<strong>' + data_for_build.author + '</strong>\
 		                </div>\
-		                <div class="status yellow">\
-		                    ' + LOCALE_ARRAY_ADDITIONAL.collect_cash_to[CURRENT_LANG] + ' 23.08.2015\
-		                </div>\
+		                ' + status_item + '\
 		                <div class="total-amount">\
 		                    <span>' + LOCALE_ARRAY_ADDITIONAL.amount_asking[CURRENT_LANG] + '</span> - <strong>' + data_for_build.amount_asking + ' ' + PIF.get_currency_name_by_id( data_for_build.currency_asking ) + '</strong>\
 		                </div>\
@@ -3080,7 +3100,15 @@ var PROGRAMS = {
 		                    </div>\
 		                </li>\ '; 
     	});
-
+    	if(data_for_build.status == 0){
+    		var status_item = '<div class="status yellow">\
+				                    ' + LOCALE_ARRAY_ADDITIONAL.collect_cash_to[CURRENT_LANG] + ' ' + data_for_build.ts_closed + '\
+				                </div>';		                
+    	}else{
+    		var status_item = '<div class="status green">\
+				                    ' + LOCALE_ARRAY_ADDITIONAL.successfully_finished[CURRENT_LANG] + '\
+				                </div>';	
+    	}
     	if(SUPER_PROFILE.id == data_for_build.creator_id){
 			var nco_button = '<div class="nko-btn">\
 			                    <a class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate(\'#nko-page?program=' + data_for_build.id + '\')" href="#">Выбрать НКО</a>\
@@ -3091,48 +3119,49 @@ var PROGRAMS = {
 		}else{
 			var nco_button = '';
 		}
-
-    	if(flag_selected == 1){
-    		var ui_donate_panel = '<div class="ui-grid-a">\
-			                        <div class="ui-block-a">\
-			                            <div>\
-			                                <label>Choose Personal Fund</label><select name="pif">\
-			                                ' + ui_pif_option + '\
-			                                </select>\
-			                            </div>\
-			                        </div>\
-			                        <div class="ui-block-b">\
-			                            <div class="text-field">\
-			                                <label>Amount of money</label>\
-			                                <div class="ui-input-text">\
-			                                    <input type="text" name="amount" data-enhanced="true" />\
-			                                </div>\
-			                            </div>\
-			                        </div>\
-			                    </div>\
-			                    <div class="ui-grid-solo">\
-			                        <div class="ui-block-a">\
-			                            <button onclick = "PROGRAMS.donate(\'program\', ' + data_for_build.id + ', 2)" class="ui-btn ui-corner-all ui-shadow donate-btn">Donate</button>\
-			                        </div>\
-			                        <div class="ui-block-a center">\
-			                            <div class="ui-checkbox">\
-			                                <label id = "anonimous_check" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Anonymous donation</label><input type="checkbox" name="" value="1" data-enhanced="true" />\
-			                            </div>\
-			                        </div>\
-			                    </div>\
-			                </div>\ ';
-    	}else{
-    		var ui_donate_panel = '';
-    		if(PIF.pif_array.length == 0){
-    			ui_donate_panel = '';
-    			PIF.set_select_input('#program-page', 'PROGRAMS', 'program', data_for_build.id, 2, data_for_build.currency_asking);
-    		}
-    		if(SUPER_PROFILE.auth == true){
-    			ui_donate_panel = '<span>' + LOCALE_ARRAY_ADDITIONAL.warning_donate[CURRENT_LANG] +' <a href = "#my-fund-page">My funds</a></span>';
-    		}else{
-    			ui_donate_panel = '<span>Please register for donate. <a href = "#registration">Registration</a></span>';
-    		}
-    	}
+		var ui_donate_panel = '';
+		if(data_for_build.status == 0){
+			if(flag_selected == 1){
+	    		var ui_donate_panel = '<div class="ui-grid-a">\
+				                        <div class="ui-block-a">\
+				                            <div>\
+				                                <label>Choose Personal Fund</label><select name="pif">\
+				                                ' + ui_pif_option + '\
+				                                </select>\
+				                            </div>\
+				                        </div>\
+				                        <div class="ui-block-b">\
+				                            <div class="text-field">\
+				                                <label>Amount of money</label>\
+				                                <div class="ui-input-text">\
+				                                    <input type="text" name="amount" data-enhanced="true" />\
+				                                </div>\
+				                            </div>\
+				                        </div>\
+				                    </div>\
+				                    <div class="ui-grid-solo">\
+				                        <div class="ui-block-a">\
+				                            <button onclick = "PROGRAMS.donate(\'program\', ' + data_for_build.id + ', 2)" class="ui-btn ui-corner-all ui-shadow donate-btn">Donate</button>\
+				                        </div>\
+				                        <div class="ui-block-a center">\
+				                            <div class="ui-checkbox">\
+				                                <label id = "anonimous_check" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Anonymous donation</label><input type="checkbox" name="" value="1" data-enhanced="true" />\
+				                            </div>\
+				                        </div>\
+				                    </div>\
+				                </div>\ ';
+	    	}else{
+	    		if(PIF.pif_array.length == 0){
+	    			ui_donate_panel = '';
+	    			PIF.set_select_input('#program-page', 'PROGRAMS', 'program', data_for_build.id, 2, data_for_build.currency_asking);
+	    		}
+	    		if(SUPER_PROFILE.auth == true){
+	    			ui_donate_panel = '<span>' + LOCALE_ARRAY_ADDITIONAL.warning_donate[CURRENT_LANG] +' <a href = "#my-fund-page">My funds</a></span>';
+	    		}else{
+	    			ui_donate_panel = '<span>Please register for donate. <a href = "#registration">Registration</a></span>';
+	    		}
+	    	}
+		}    	
 
     	var ui_string = '';
 		ui_string += '<div data-role="header" data-position="fixed" data-tap-toggle="false">\
@@ -3164,9 +3193,7 @@ var PROGRAMS = {
 		                <div class="username">\
 		                    ' + LOCALE_ARRAY_ADDITIONAL.by[CURRENT_LANG] + ' @<strong>' + data_for_build.author + '</strong>\
 		                </div>\
-		                <div class="status yellow">\
-		                    ' + LOCALE_ARRAY_ADDITIONAL.collect_cash_to[CURRENT_LANG] + ' 23.08.2015\
-		                </div>\
+		                ' + status_item + '\
 		                <div class="total-amount">\
 		                    <span>' + LOCALE_ARRAY_ADDITIONAL.amount_asking[CURRENT_LANG] + '</span> - <strong>' + data_for_build.amount_asking + ' ' + PIF.get_currency_name_by_id( data_for_build.currency_asking ) + '</strong>\
 		                </div>\
@@ -3910,16 +3937,16 @@ var REQUESTS = {
 				                                <div class="status">\
 				                                    <span>' + LOCALE_ARRAY_ADDITIONAL.successfully_finished[CURRENT_LANG] + '</span>\
 				                                </div>\
-				                            </div>\
-				                            <div class="amount up">\
-				                                <span>' + LOCALE_ARRAY_ADDITIONAL.amount_asking[CURRENT_LANG] + '</span> - <strong>' + one_voting.amount_asking + ' ' + PIF.get_currency_name_by_id( one_voting.currency_asking ) + '</strong>\
-				                            </div>\
-				                            <div class="my-amount">\
-				                                <span>' + LOCALE_ARRAY_ADDITIONAL.my_cash[CURRENT_LANG] + '</span> - <strong>' + one_voting.my_add + ' ' + PIF.get_currency_name_by_id( one_voting.currency_asking ) + '</strong>\
-				                            </div>\
-				                            <div class="contractors">\
-				                                <span>' + LOCALE_ARRAY_ADDITIONAL.count_contractors[CURRENT_LANG] + '</span> - <strong>96</strong>\
-				                            </div>\
+				                                <div class="amount up">\
+					                                <span>' + LOCALE_ARRAY_ADDITIONAL.amount_asking[CURRENT_LANG] + '</span> - <strong>' + one_voting.amount_asking + ' ' + PIF.get_currency_name_by_id( one_voting.currency_asking ) + '</strong>\
+					                            </div>\
+					                            <div class="my-amount">\
+					                                <span>' + LOCALE_ARRAY_ADDITIONAL.my_cash[CURRENT_LANG] + '</span> - <strong>' + one_voting.my_add + ' ' + PIF.get_currency_name_by_id( one_voting.currency_asking ) + '</strong>\
+					                            </div>\
+					                            <div class="contractors">\
+					                                <span>' + LOCALE_ARRAY_ADDITIONAL.count_contractors[CURRENT_LANG] + '</span> - <strong>96</strong>\
+					                            </div>\
+					                            </div>\
 				                        </div>\
 				                    </div>\
 				                </a>\
@@ -4051,47 +4078,59 @@ var REQUESTS = {
 		}else{
 			var nco_button = '';
 		}
+		var ui_donate_panel = '';
+		if(data_for_build.status == 0){
+			if(flag_selected == 1){
+	    		var ui_donate_panel = '<div class="ui-grid-a">\
+				                        <div class="ui-block-a">\
+				                            <div>\
+				                                <label>Choose Personal Fund</label><select name="pif">\
+				                                ' + ui_pif_option + '\
+				                                </select>\
+				                            </div>\
+				                        </div>\
+				                        <div class="ui-block-b">\
+				                            <div class="text-field">\
+				                                <label>Amount of money</label>\
+				                                <div class="ui-input-text">\
+				                                    <input type="text" name="amount" data-enhanced="true" />\
+				                                </div>\
+				                            </div>\
+				                        </div>\
+				                    </div>\
+				                    <div class="ui-grid-solo">\
+				                        <div class="ui-block-a">\
+				                            <button onclick = "REQUESTS.donate(\'request\', ' + data_for_build.id + ', 5)" class="ui-btn ui-corner-all ui-shadow donate-btn">Donate</button>\
+				                        </div>\
+				                        <div class="ui-block-a center">\
+				                            <div class="ui-checkbox">\
+				                                <label id = "anonimous_check" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Anonymous donation</label><input type="checkbox" name="" value="1" data-enhanced="true" />\
+				                            </div>\
+				                        </div>\
+				                    </div>\
+				                </div>\ ';
+	    	}else{
+	    		ui_donate_panel = '';
+	    		if(PIF.pif_array.length == 0){
+	    			
+	    			PIF.set_select_input('#request-page', 'REQUESTS', 'request', data_for_build.id, 5, data_for_build.currency_asking);
+	    		}
+	    		if(SUPER_PROFILE.auth == true){
+	    			ui_donate_panel = '<span>' + LOCALE_ARRAY_ADDITIONAL.warning_donate[CURRENT_LANG] +' <a href = "#my-fund-page">My funds</a></span>';
+	    		}else{
+	    			ui_donate_panel = '<span>Please register for donate. <a href = "#registration">Registration</a></span>';
+	    		}
+	    	}
+		}
 
-    	if(flag_selected == 1){
-    		var ui_donate_panel = '<div class="ui-grid-a">\
-			                        <div class="ui-block-a">\
-			                            <div>\
-			                                <label>Choose Personal Fund</label><select name="pif">\
-			                                ' + ui_pif_option + '\
-			                                </select>\
-			                            </div>\
-			                        </div>\
-			                        <div class="ui-block-b">\
-			                            <div class="text-field">\
-			                                <label>Amount of money</label>\
-			                                <div class="ui-input-text">\
-			                                    <input type="text" name="amount" data-enhanced="true" />\
-			                                </div>\
-			                            </div>\
-			                        </div>\
-			                    </div>\
-			                    <div class="ui-grid-solo">\
-			                        <div class="ui-block-a">\
-			                            <button onclick = "REQUESTS.donate(\'request\', ' + data_for_build.id + ', 5)" class="ui-btn ui-corner-all ui-shadow donate-btn">Donate</button>\
-			                        </div>\
-			                        <div class="ui-block-a center">\
-			                            <div class="ui-checkbox">\
-			                                <label id = "anonimous_check" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Anonymous donation</label><input type="checkbox" name="" value="1" data-enhanced="true" />\
-			                            </div>\
-			                        </div>\
-			                    </div>\
-			                </div>\ ';
+    	if(data_for_build.status == 0){
+    		var status_item = '<div class="status yellow">\
+				                    ' + LOCALE_ARRAY_ADDITIONAL.collect_cash_to[CURRENT_LANG] + ' ' + data_for_build.ts_closed + '\
+				                </div>';		                
     	}else{
-    		var ui_donate_panel = '';
-    		if(PIF.pif_array.length == 0){
-    			
-    			PIF.set_select_input('#request-page', 'REQUESTS', 'request', data_for_build.id, 5, data_for_build.currency_asking);
-    		}
-    		if(SUPER_PROFILE.auth == true){
-    			ui_donate_panel = '<span>' + LOCALE_ARRAY_ADDITIONAL.warning_donate[CURRENT_LANG] +' <a href = "#my-fund-page">My funds</a></span>';
-    		}else{
-    			ui_donate_panel = '<span>Please register for donate. <a href = "#registration">Registration</a></span>';
-    		}
+    		var status_item = '<div class="status green">\
+				                    ' + LOCALE_ARRAY_ADDITIONAL.successfully_finished[CURRENT_LANG] + '\
+				                </div>';	
     	}
 
     	var ui_string = '';
@@ -4127,9 +4166,7 @@ var REQUESTS = {
 		                <div class="username">\
 		                    ' + LOCALE_ARRAY_ADDITIONAL.by[CURRENT_LANG] + ' @<strong>' + data_for_build.creator_id + ' ' + data_for_build.author + '</strong>\
 		                </div>\
-		                <div class="status yellow">\
-		                    ' + LOCALE_ARRAY_ADDITIONAL.collect_cash_to[CURRENT_LANG] + ' 23.08.2015\
-		                </div>\
+		                ' + status_item + '\
 		                <div class="total-amount">\
 		                    <span>' + LOCALE_ARRAY_ADDITIONAL.amount_asking[CURRENT_LANG] + '</span> - <strong>' + data_for_build.amount_asking + ' ' + PIF.get_currency_name_by_id( data_for_build.currency_asking ) + '</strong>\
 		                </div>\
@@ -7514,11 +7551,9 @@ var VOTINGS = {
     	}
 
     	var percents_object = self.get_percents_values(data_for_build.vote_yes, data_for_build.vote_nth, data_for_build.vote_no);
-    	var voting_buttons = '';
-    	var status_vote = '';
-    	if(SUPER_PROFILE.auth == true){
-    		voting_buttons = '<form action="" accept-charset="UTF-8" method="post">\
-						                                <fieldset class="vote-radio-group" data-role="controlgroup" data-type="horizontal">\
+    	var only_buttons = '';
+    	if(finished == 0){
+    		only_buttons = '<fieldset class="vote-radio-group" data-role="controlgroup" data-type="horizontal">\
 						                                    <legend>' + LOCALE_ARRAY_ADDITIONAL.yes_no_i_do_not_know[CURRENT_LANG] + '</legend>\
 						                                    <div  class="ui-radio ' + selected_class_yes + '">\
 						                                        <label data-checked = "' + checked_yes + '" onclick = "VOTINGS.vote_for_voting(' + data_for_build.id + ')" class="ui-btn ui-radio-off btn-yes">' + LOCALE_ARRAY_ADDITIONAL.yes[CURRENT_LANG] + '</label><input type="radio" name="vote" value="yes" data-enhanced="true">\
@@ -7532,7 +7567,13 @@ var VOTINGS = {
 						                                </fieldset>\
 						                                <div class="ui-checkbox' + selected_class_checkbox + '">\
 						                                    <label class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">' + LOCALE_ARRAY_ADDITIONAL.turn_to_open_anonymous[CURRENT_LANG] + '</label><input type="checkbox" name="" value="1" data-enhanced="true" />\
-						                                </div>\
+						                                </div>';
+    	}
+    	var voting_buttons = '';
+    	var status_vote = '';
+    	if(SUPER_PROFILE.auth == true){
+    		voting_buttons = '<form action="" accept-charset="UTF-8" method="post">\
+						                                ' + only_buttons + '\
 						                                <div class="selected-text">\
 						                                    ' + status_current_voting + '\
 						                                </div></form>\ ';
