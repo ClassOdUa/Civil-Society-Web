@@ -1,6 +1,14 @@
 (function($){
     $(function(){
 
+        $.preloadImages = function() {
+            for (var i = 0; i < arguments.length; i++) {
+                $("<img />").attr("src", 'images/svg/' + arguments[i]);
+            }
+        };
+
+        $.preloadImages('icon-vk.svg', 'icon-fb.svg', 'icon-tw.svg', 'icon-gp.svg', 'icon-in.svg', 'icon-ok.svg');
+        
         // Change language
 
         var DEFAULT_LANG = "en";

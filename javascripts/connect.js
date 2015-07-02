@@ -6753,10 +6753,17 @@ var NEWS = {
 			}else{
 				var icon_news = 'news-icon news-icon-num-' + (parseInt(one_news.icon_num));
 			}
-			elements_string += '<div ' + onclick_event + ' class="item ui-corner-all ' + icon_news + '">\
-					                <div class="img">\
+			if(one_news.img.indexOf('svg') > -1){
+				var image_news = '<div class="img">\
 					                	<object type="image/svg+xml" data="http://' + one_news.img + '">Your browser does not support SVG</object>\
-					                </div>\
+					                </div>';
+			}else{
+				var image_news = '<div class="img">\
+					                	<img src="http://' + one_news.img + '"/>\
+					                </div>';
+			}
+			elements_string += '<div ' + onclick_event + ' class="item ui-corner-all ' + icon_news + '">\
+									' + image_news + '\
 					                <div class="info">\
 					                    <div class="date">\
 					                        ' + one_news.dt + '\
