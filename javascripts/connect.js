@@ -9826,7 +9826,7 @@ var ADRESS = {
 	    			xhrFields: {
 				       withCredentials: true
 				    },
-				    async: false,
+				    async: true,
 			        crossDomain: true,
 			        complete: function(response){
 			        	var data = response.responseText;
@@ -9926,7 +9926,7 @@ var ADRESS = {
 	    			xhrFields: {
 				       withCredentials: true
 				    },
-				    async: false,
+				    async: true,
 			        crossDomain: true,
 			        complete: function(response){
 			        	var data = response.responseText;
@@ -10182,6 +10182,7 @@ var ADRESS = {
 								}
 							}				
 							if(location.href.indexOf('#edit-address') > -1){
+								$('#edit-address [href=#address-item-' + 1 + ']').html('Address ' + 1);	
 								for (var i = 1; i < 4; i++) {
 									if(self.address_arr[i-1]){
 										$('#edit-address [href=#address-item-' + i + ']').html(self.address_arr[i-1]['str'] + ' '  +
