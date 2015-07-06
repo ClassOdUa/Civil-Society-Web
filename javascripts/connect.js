@@ -7022,24 +7022,17 @@ var VOTINGS = {
 		if($('#votings-page #searched_string').val() != ""){
 			url += '&filter=' + $('#votings-page #searched_string').val();
 		}
-		switch($('#votings-page [name=sort]').val()){
-			case "Sort by newest":
-				url += '&sort=0';
-				break;
-			case "Sort by stars":
-				url += '&sort=1';
-				break;
-			case "Sort by supported":
-				url += '&sort=2';
-				break;	
+
+		var l_sort = $('#votings-page [name=sort]').val();
+
+		if(l_sort >= 0 && l_sort < 6){
+			url += '&sort=' + l_sort;
 		}
-		switch($('#votings-page [name=sort_direction]').val()){
-			case "up":
-				url += '&direct=0';
-				break;
-			case "down":
-				url += '&direct=1';
-				break;	
+
+		var l_sort_dir = $('#votings-page [name=sort_direction]').val();
+
+		if(l_sort_dir == 0 || l_sort_dir ==1){
+			url += '&direct=' + l_sort_dir;
 		}
 
 		switch($('#votings-page [name=sort]').data('direct')){
