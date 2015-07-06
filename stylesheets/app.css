@@ -625,6 +625,12 @@ label.ui-btn {
         -o-background-size: 19px 21px;
         -webkit-background-size: 19px 21px;
         background-size: 19px 21px; }
+      #left-panel .menu li a.menu-icon-tasks:after {
+        background-image: url(../images/svg/menu-icon-vote.svg);
+        -moz-background-size: 19px 21px;
+        -o-background-size: 19px 21px;
+        -webkit-background-size: 19px 21px;
+        background-size: 19px 21px; }
       #left-panel .menu li a.menu-icon-trust:after {
         background-image: url(../images/svg/menu-icon-trust.svg);
         -moz-background-size: 21px 21px;
@@ -2126,6 +2132,9 @@ label.ui-btn {
     #edit-address .address-item:first-child .btn-next-page:first-child {
       margin-top: 0; }
 
+#help .ui-content {
+  text-align: justify;
+  }
 #address-item-1 .ui-content label, #address-item-2 .ui-content label, #address-item-3 .ui-content label, #geo-page .ui-content label {
   font-weight: 300;
   padding-left: 1em; }
@@ -2427,6 +2436,12 @@ label.ui-btn {
     -o-background-size: 20px 19px;
     -webkit-background-size: 20px 19px;
     background-size: 20px 19px; }
+  #my-activities-page .menu-icon-profile:before {
+    background-image: url(../images/svg/menu-icon-profile.svg);
+    -moz-background-size: 19px 21px;
+    -o-background-size: 19px 21px;
+    -webkit-background-size: 19px 21px;
+    background-size: 19px 21px; }
   #my-activities-page .btn-next-page .ui-btn.icon-votings:before {
     background-image: url(../images/svg/menu-icon-votings.svg);
     -moz-background-size: 19px 21px;
