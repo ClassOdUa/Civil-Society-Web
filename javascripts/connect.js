@@ -7616,6 +7616,34 @@ var VOTINGS = {
 					                    <a class="ui-btn ui-corner-all ui-shadow" onclick="VOTINGS.create_project_request(\'' + data_for_build.id + '\',\'request\')">' + LOCALE_ARRAY_ADDITIONAL.create_request[CURRENT_LANG] + '</a>\
 					                </div>';
     	}
+    	var charts = '';
+    	for (var i = 0; i < 6; i++) {
+    		if(i == 0 || i == 3){
+    			var selector_chart = "ui-block-a";
+    			if(i == 0){
+    				var name_chart = LOCALE_ARRAY_ADDITIONAL.auth_by_email[CURRENT_LANG];
+    			}else{
+    				var name_chart = LOCALE_ARRAY_ADDITIONAL.by_passport[CURRENT_LANG];
+    			}
+    		}    			
+    		if(i == 1 || i == 4){
+    			var selector_chart = "ui-block-b";
+    			if(i == 1){
+    				var name_chart = LOCALE_ARRAY_ADDITIONAL.social_network[CURRENT_LANG];
+    			}else{
+    				var name_chart = LOCALE_ARRAY_ADDITIONAL.community[CURRENT_LANG];
+    			}
+    		}    			
+    		if(i == 2 || i == 5){
+    			var selector_chart = "ui-block-c";
+    			if(i == 2){
+    				var name_chart = LOCALE_ARRAY_ADDITIONAL.by_payment[CURRENT_LANG];
+    			}else{
+    				var name_chart = LOCALE_ARRAY_ADDITIONAL.co_owners[CURRENT_LANG];
+    			}
+    		}    			
+    		charts += self.build_one_chart( selector_chart, i+1, data_for_build['plus' + i], data_for_build['minus' + i], data_for_build['abstained' + i], name_chart);
+    	}
     	var ui_string = '';
 		ui_string = '<div data-role="header" data-position="fixed" data-tap-toggle="false">\
 						    <h1>' + LOCALE_ARRAY_ADDITIONAL.vote[CURRENT_LANG] + '</h1>\
@@ -7699,120 +7727,7 @@ var VOTINGS = {
 					                            								   + parseInt(percents_object.minus_percent) + '%">' + parseInt(data_for_build.vote_no) + '</span>\
 					                        </div>\
 						                    <div class="ui-grid-b charts-wrap">\
-						                        <div class="ui-block-a">\
-						                            <div class="chart">\
-						                                <canvas id="chart-1" width="80" height="80"></canvas>\
-						                                <div class="info">\
-						                                    <div>\
-						                                        ' + LOCALE_ARRAY_ADDITIONAL.yes[CURRENT_LANG] + ':<br>' + data_for_build['plus0'] + '\
-						                                    </div>\
-						                                    <div>\
-						                                        ' + LOCALE_ARRAY_ADDITIONAL.abstain[CURRENT_LANG] + ':<br>' + data_for_build['abstained0'] +  '\
-						                                    </div>\
-						                                    <div>\
-						                                        ' + LOCALE_ARRAY_ADDITIONAL.no[CURRENT_LANG] + ':<br>' + data_for_build['minus0'] +  '\
-						                                    </div>\
-						                                </div>\
-						                            </div>\
-						                            <div class="title">\
-						                                 ' + LOCALE_ARRAY_ADDITIONAL.auth_by_email[CURRENT_LANG] + '\
-						                            </div>\
-						                        </div>\
-						                        <div class="ui-block-b">\
-						                            <div class="chart">\
-						                                <canvas id="chart-2" width="80" height="80"></canvas>\
-						                                <div class="info">\
-						                                    <div>\
-						                                        ' + LOCALE_ARRAY_ADDITIONAL.yes[CURRENT_LANG] + ':<br>' + data_for_build['plus1'] + '\
-						                                    </div>\
-						                                    <div>\
-						                                        ' + LOCALE_ARRAY_ADDITIONAL.abstain[CURRENT_LANG] + ':<br>' + data_for_build['abstained1'] +  '\
-						                                    </div>\
-						                                    <div>\
-						                                        ' + LOCALE_ARRAY_ADDITIONAL.no[CURRENT_LANG] + ':<br>' + data_for_build['minus1'] +  '\
-						                                    </div>\
-						                                </div>\
-						                            </div>\
-						                            <div class="title">\
-						                                ' + LOCALE_ARRAY_ADDITIONAL.social_network[CURRENT_LANG] + '\
-						                            </div>\
-						                        </div>\
-						                        <div class="ui-block-c">\
-						                            <div class="chart">\
-						                                <canvas id="chart-3" width="80" height="80"></canvas>\
-						                                <div class="info">\
-						                                    <div>\
-						                                        ' + LOCALE_ARRAY_ADDITIONAL.yes[CURRENT_LANG] + ':<br>' + data_for_build['plus2'] + '\
-						                                    </div>\
-						                                    <div>\
-						                                        ' + LOCALE_ARRAY_ADDITIONAL.abstain[CURRENT_LANG] + ':<br>' + data_for_build['abstained2'] +  '\
-						                                    </div>\
-						                                    <div>\
-						                                        ' + LOCALE_ARRAY_ADDITIONAL.no[CURRENT_LANG] + ':<br>' + data_for_build['minus2'] +  '\
-						                                    </div>\
-						                                </div>\
-						                            </div>\
-						                            <div class="title">\
-						                               ' + LOCALE_ARRAY_ADDITIONAL.by_payment[CURRENT_LANG] + '\
-						                            </div>\
-						                        </div>\
-						                        <div class="ui-block-a">\
-						                            <div class="chart">\
-						                                <canvas id="chart-4" width="80" height="80"></canvas>\
-						                                <div class="info">\
-						                                    <div>\
-						                                        ' + LOCALE_ARRAY_ADDITIONAL.yes[CURRENT_LANG] + ':<br>' + data_for_build['plus3'] + '\
-						                                    </div>\
-						                                    <div>\
-						                                        ' + LOCALE_ARRAY_ADDITIONAL.abstain[CURRENT_LANG] + ':<br>' + data_for_build['abstained3'] +  '\
-						                                    </div>\
-						                                    <div>\
-						                                        ' + LOCALE_ARRAY_ADDITIONAL.no[CURRENT_LANG] + ':<br>' + data_for_build['minus3'] +  '\
-						                                    </div>\
-						                                </div>\
-						                            </div>\
-						                            <div class="title">\
-						                                ' + LOCALE_ARRAY_ADDITIONAL.by_passport[CURRENT_LANG] + '\
-						                            </div>\
-						                        </div>\
-						                        <div class="ui-block-b">\
-						                            <div class="chart">\
-						                                <canvas id="chart-5" width="80" height="80"></canvas>\
-						                                <div class="info">\
-						                                    <div>\
-						                                        ' + LOCALE_ARRAY_ADDITIONAL.yes[CURRENT_LANG] + ':<br>' + data_for_build['plus4'] + '\
-						                                    </div>\
-						                                    <div>\
-						                                        ' + LOCALE_ARRAY_ADDITIONAL.abstain[CURRENT_LANG] + ':<br>' + data_for_build['abstained4'] +  '\
-						                                    </div>\
-						                                    <div>\
-						                                        ' + LOCALE_ARRAY_ADDITIONAL.no[CURRENT_LANG] + ':<br>' + data_for_build['minus4'] +  '\
-						                                    </div>\
-						                                </div>\
-						                            </div>\
-						                            <div class="title">\
-						                                ' + LOCALE_ARRAY_ADDITIONAL.community[CURRENT_LANG] + '\
-						                            </div>\
-						                        </div>\
-						                        <div class="ui-block-c">\
-						                            <div class="chart">\
-						                                <canvas id="chart-6" width="80" height="80"></canvas>\
-						                                <div class="info">\
-						                                   <div>\
-						                                        ' + LOCALE_ARRAY_ADDITIONAL.yes[CURRENT_LANG] + ':<br>' + data_for_build['plus5'] + '\
-						                                    </div>\
-						                                    <div>\
-						                                        ' + LOCALE_ARRAY_ADDITIONAL.abstain[CURRENT_LANG] + ':<br>' + data_for_build['abstained5'] +  '\
-						                                    </div>\
-						                                    <div>\
-						                                        ' + LOCALE_ARRAY_ADDITIONAL.no[CURRENT_LANG] + ':<br>' + data_for_build['minus5'] +  '\
-						                                    </div>\
-						                                </div>\
-						                            </div>\
-						                            <div class="title">\
-						                                ' + LOCALE_ARRAY_ADDITIONAL.co_owners[CURRENT_LANG] + '\
-						                            </div>\
-						                        </div>\
+						                        ' + charts + '\
 						                    </div>\
 						                </div>\ ' + voting_buttons +  ' <div class="btn-next-page">\
 						                    <a class="ui-btn ui-btn-icon-right" href="#" onclick = " $.mobile.navigate(\'#voters-page?voting=' + data_for_build.id + '\'); VOTINGS.get_open_voters_list(' + data_for_build.id + ');">' + LOCALE_ARRAY_ADDITIONAL.view_list_public_voters[CURRENT_LANG] + '</a>\
@@ -8052,65 +7967,133 @@ var VOTINGS = {
 		  },
 		});
 	},
+	build_one_chart: function(selector, id_chart, plus_vote, minus_vote, abstained_vote, name_chart ){
+		var self = this; 
+		var chart = '';
+		if(plus_vote > 0 || minus_vote > 0 || abstained_vote > 0){
+			chart = '<div class="' + selector + '">\
+                        <div class="chart">\
+                            <canvas id="chart-' + id_chart + '" width="80" height="80"></canvas>\
+                            <div class="info">\
+                                <div>\
+                                    ' + LOCALE_ARRAY_ADDITIONAL.yes[CURRENT_LANG] + ':<br>' + plus_vote + '\
+                                </div>\
+                                <div>\
+                                    ' + LOCALE_ARRAY_ADDITIONAL.abstain[CURRENT_LANG] + ':<br>' + abstained_vote +  '\
+                                </div>\
+                                <div>\
+                                    ' + LOCALE_ARRAY_ADDITIONAL.no[CURRENT_LANG] + ':<br>' + minus_vote +  '\
+                                </div>\
+                            </div>\
+                        </div>\
+                        <div class="title">\
+                             ' + name_chart + '\
+                        </div>\
+                    </div>';
+		}
+		return chart;
+	},
 	build_circle_chart:function(data_values_array, type_trigger){
 		console.log('data_array0: ' );
                    		     console.log(data_values_array[0] );
         if(location.href.indexOf("vote-page") > -1 && type_trigger == 1){
-        	if(document.getElementById("chart-1")){
-        		var ctx1 = document.getElementById("chart-1").getContext("2d");
-		        var ctx2 = document.getElementById("chart-2").getContext("2d");
-		        var ctx3 = document.getElementById("chart-3").getContext("2d");
-		        var ctx4 = document.getElementById("chart-4").getContext("2d");
-		        var ctx5 = document.getElementById("chart-5").getContext("2d");
-		        var ctx6 = document.getElementById("chart-6").getContext("2d");
-		        var chart1 = new Chart(ctx1).Doughnut(data_values_array[0], {
-		            showTooltips: false
-		        });
-		        var chart2 = new Chart(ctx2).Doughnut(data_values_array[1], {
-		            showTooltips: false
-		        });
-		        var chart3 = new Chart(ctx3).Doughnut(data_values_array[2], {
-		            showTooltips: false
-		        });
-		        var chart4 = new Chart(ctx4).Doughnut(data_values_array[3], {
-		            showTooltips: false
-		        });
-		        var chart5 = new Chart(ctx5).Doughnut(data_values_array[4], {
-		            showTooltips: false
-		        });
-		        var chart6 = new Chart(ctx6).Doughnut(data_values_array[5], {
-		            showTooltips: false
-		        });
+        	if(document.getElementById("chart-1") || 
+        	   document.getElementById("chart-2") ||
+        	   document.getElementById("chart-3") ||
+        	   document.getElementById("chart-4") ||
+        	   document.getElementById("chart-5") ||
+        	   document.getElementById("chart-6") ){
+        	   	if(document.getElementById("chart-1")){
+        	   		var ctx1 = document.getElementById("chart-1").getContext("2d");
+	        		var chart1 = new Chart(ctx1).Doughnut(data_values_array[0], {
+			            showTooltips: false
+			        });
+        	   	}
+        		if(document.getElementById("chart-2")){
+			        var ctx2 = document.getElementById("chart-2").getContext("2d");
+			        var chart2 = new Chart(ctx2).Doughnut(data_values_array[1], {
+			            showTooltips: false
+			        });
+			    }
+
+		        if(document.getElementById("chart-3")){
+			        var ctx3 = document.getElementById("chart-3").getContext("2d");
+			        var chart3 = new Chart(ctx3).Doughnut(data_values_array[2], {
+			            showTooltips: false
+			        });
+			    }
+
+		        if(document.getElementById("chart-4")){
+			        var ctx4 = document.getElementById("chart-4").getContext("2d");
+			        var chart4 = new Chart(ctx4).Doughnut(data_values_array[3], {
+			            showTooltips: false
+			        });
+			    }
+
+		        if(document.getElementById("chart-5")){
+			        var ctx5 = document.getElementById("chart-5").getContext("2d");
+			        var chart5 = new Chart(ctx5).Doughnut(data_values_array[4], {
+			            showTooltips: false
+			        });
+			    }
+
+		        if(document.getElementById("chart-6")){
+			        var ctx6 = document.getElementById("chart-6").getContext("2d");        
+			        var chart6 = new Chart(ctx6).Doughnut(data_values_array[5], {
+			            showTooltips: false
+			        });
+			    }
         	}
         }else{
         	$('body').on('pagecontainershow', function(event, ui){
             if (ui.toPage.prop("id") === "vote-page") {
-            	if(document.getElementById("chart-1")){
-            		var ctx1 = document.getElementById("chart-1").getContext("2d");
-	                var ctx2 = document.getElementById("chart-2").getContext("2d");
-	                var ctx3 = document.getElementById("chart-3").getContext("2d");
-	                var ctx4 = document.getElementById("chart-4").getContext("2d");
-	                var ctx5 = document.getElementById("chart-5").getContext("2d");
-	                var ctx6 = document.getElementById("chart-6").getContext("2d");
-	                var chart1 = new Chart(ctx1).Doughnut(data_values_array[0], {
-	                    showTooltips: false
-	                });
-	                var chart2 = new Chart(ctx2).Doughnut(data_values_array[1], {
-	                    showTooltips: false
-	                });
-	                var chart3 = new Chart(ctx3).Doughnut(data_values_array[2], {
-	                    showTooltips: false
-	                });
-	                var chart4 = new Chart(ctx4).Doughnut(data_values_array[3], {
-	                    showTooltips: false
-	                });
-	                var chart5 = new Chart(ctx5).Doughnut(data_values_array[4], {
-	                    showTooltips: false
-	                });
-	                var chart6 = new Chart(ctx6).Doughnut(data_values_array[5], {
-	                    showTooltips: false
-	                });
-            	}
+            	if(document.getElementById("chart-1") || 
+	        	   document.getElementById("chart-2") ||
+	        	   document.getElementById("chart-3") ||
+	        	   document.getElementById("chart-4") ||
+	        	   document.getElementById("chart-5") ||
+	        	   document.getElementById("chart-6") ){
+	        	   	if(document.getElementById("chart-1")){
+	        	   		var ctx1 = document.getElementById("chart-1").getContext("2d");
+		        		var chart1 = new Chart(ctx1).Doughnut(data_values_array[0], {
+				            showTooltips: false
+				        });
+	        	   	}
+	        		if(document.getElementById("chart-2")){
+				        var ctx2 = document.getElementById("chart-2").getContext("2d");
+				        var chart2 = new Chart(ctx2).Doughnut(data_values_array[1], {
+				            showTooltips: false
+				        });
+				    }
+
+			        if(document.getElementById("chart-3")){
+				        var ctx3 = document.getElementById("chart-3").getContext("2d");
+				        var chart3 = new Chart(ctx3).Doughnut(data_values_array[2], {
+				            showTooltips: false
+				        });
+				    }
+
+			        if(document.getElementById("chart-4")){
+				        var ctx4 = document.getElementById("chart-4").getContext("2d");
+				        var chart4 = new Chart(ctx4).Doughnut(data_values_array[3], {
+				            showTooltips: false
+				        });
+				    }
+
+			        if(document.getElementById("chart-5")){
+				        var ctx5 = document.getElementById("chart-5").getContext("2d");
+				        var chart5 = new Chart(ctx5).Doughnut(data_values_array[4], {
+				            showTooltips: false
+				        });
+				    }
+
+			        if(document.getElementById("chart-6")){
+				        var ctx6 = document.getElementById("chart-6").getContext("2d");        
+				        var chart6 = new Chart(ctx6).Doughnut(data_values_array[5], {
+				            showTooltips: false
+				        });
+				    }
+	        	}
             }
         });
         }
