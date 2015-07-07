@@ -141,7 +141,6 @@ window.onload = function(){
 			  location.href.indexOf('#create-item') > -1 ||
 			  location.href.indexOf('#create-vote') > -1 ||
 			  location.href.indexOf('#my-fund-page') > -1 ||
-			  location.href.indexOf('#history-page') > -1 ||
 			  location.href.indexOf('#voters-page') > -1 ||
 			  location.href.indexOf('#profile-page') > -1 ||
 			  location.href.indexOf('#my-votings-page') > -1 ||
@@ -400,7 +399,6 @@ window.onhashchange = function(){
 		  location.href.indexOf('#create-item') > -1 ||
 		  location.href.indexOf('#create-vote') > -1 ||
 		  location.href.indexOf('#my-fund-page') > -1 ||
-		  location.href.indexOf('#history-page') > -1 ||
 		  location.href.indexOf('#voters-page') > -1 ||
 		  location.href.indexOf('#profile-page') > -1 ||
 		  location.href.indexOf('#my-votings-page') > -1 ||
@@ -669,7 +667,7 @@ function ask_login(){
 	if(answer){
 		$.mobile.navigate('#');
 	}else{
-		$.mobile.navigate('#news-page');
+		history.back();
 	}
 }
 
@@ -2495,7 +2493,7 @@ var PROJECTS = {
 			    		for (var i = 0; i < one_fund.cf.length; i++) {
 			    			var currency_name = PIF.get_currency_name_by_id( one_fund.cf[i].currency );
 				    		var cancel_span = '';
-				    		if(one_fund.cf[i].user_id == SUPER_PROFILE.id){
+				    		if(one_fund.cf[i].user_id == SUPER_PROFILE.id && SUPER_PROFILE.auth == true){
 				    			cancel_span = '<span style = "color: red; cursor: pointer;" onclick = "PROJECTS.return_donate(\'' + one_fund.id + '\',\'' + one_fund.cur + '\',\'' + one_fund.cf[i].saldo + '\',\'' + type + '\',\'' + object_id + '\',\'' + return_page + object_id + '\')">Cancel donate</span>';
 				    			my_add += parseInt(one_fund.cf[i].saldo);
 				    		}
@@ -3457,7 +3455,7 @@ var PROGRAMS = {
 			  			for (var i = 0; i < one_fund.cf.length; i++) {
 			  				var currency_name = PIF.get_currency_name_by_id( one_fund.cf[i].currency );
 			    			var cancel_span = '';
-				    		if(one_fund.cf[i].user_id == SUPER_PROFILE.id){
+				    		if(one_fund.cf[i].user_id == SUPER_PROFILE.id && SUPER_PROFILE.auth == true){
 				    			cancel_span = '<span style = "color: red; cursor: pointer;" onclick = "PROGRAMS.return_donate(\'' + one_fund.id + '\',\'' + one_fund.cur + '\',\'' + one_fund.cf[i].saldo + '\',2,\'' + object_id + '\',\'#program-page?program=' + object_id + '\')">Cancel donate</span>';
 				    			//cancel_span = '<span style = "color: red;">Cancel donate</span>';
 				    			my_add += parseInt(one_fund.cf[i].saldo);
@@ -4425,7 +4423,7 @@ var REQUESTS = {
 			    		for (var i = 0; i < one_fund.cf.length; i++) {
 			    			var currency_name = PIF.get_currency_name_by_id( one_fund.cf[i].currency );
 			    			var cancel_span = '';
-			    			if(one_fund.cf[i].user_id == SUPER_PROFILE.id){
+			    			if(one_fund.cf[i].user_id == SUPER_PROFILE.id && SUPER_PROFILE.auth == true){
 				    			cancel_span = '<span style = "color: red; cursor: pointer;" onclick = "REQUESTS.return_donate(\'' + one_fund.id + '\',\'' + one_fund.cur + '\',\'' + one_fund.cf[i].saldo + '\',5,\'' + object_id + '\',\'#request-page?request=' + object_id + '\')">Cancel donate</span>';
 				    			my_add += parseInt(one_fund.cf[i].saldo);
 				    		}
@@ -6338,7 +6336,7 @@ var SPHERES = {
 			  selector_name: "local_self_goverments",
 			  type: 10,
 			  objects: []}*/],
-	initial: function(callback_function){
+	initial: function(callback_function, forced_initial){
 		var self = this;
 		$.mobile.loading( "show", {  theme: "z"	});
 		self.spheres[0].name =  LOCALE_ARRAY_ADDITIONAL.votings_by_sphere[CURRENT_LANG];
@@ -6351,7 +6349,7 @@ var SPHERES = {
 		/*self.spheres[7].name =  LOCALE_ARRAY_ADDITIONAL.candidates_proposal[CURRENT_LANG];
 		self.spheres[8].name =  LOCALE_ARRAY_ADDITIONAL.candidates_parties[CURRENT_LANG];
 		self.spheres[9].name =  LOCALE_ARRAY_ADDITIONAL.local_self_goverments[CURRENT_LANG];*/
-		if(SPHERES.spheres_array.length == 0){
+		if(SPHERES.spheres_array.length == 0 || forced_initial){
 			$.ajax({
 				  url: 'http://gurtom.mobi/filter.php',
 				  type: "GET",
@@ -8334,24 +8332,17 @@ var MY_VOTINGS = {
 		if($('#my-votings-page #searched_string').val() != ""){
 			url += '&filter=' + $('#my-votings-page #searched_string').val();
 		}
-		switch($('#my-votings-page [name=sort]').val()){
-			case "Sort by newest":
-				url += '&sort=0';
-				break;
-			case "Sort by stars":
-				url += '&sort=1';
-				break;
-			case "Sort by supported":
-				url += '&sort=2';
-				break;	
+		
+		var l_sort = $('#votings-page [name=sort]').val();
+
+		if(l_sort >= 0 && l_sort < 6){
+			url += '&sort=' + l_sort;
 		}
-		switch($('#my-votings-page [name=sort_direction]').val()){
-			case "up":
-				url += '&direct=0';
-				break;
-			case "down":
-				url += '&direct=1';
-				break;	
+
+		var l_sort_dir = $('#votings-page [name=sort_direction]').val();
+
+		if(l_sort_dir == 0 || l_sort_dir ==1){
+			url += '&direct=' + l_sort_dir;
 		}
 
 		switch($('#my-votings-page [name=sort]').data('direct')){
@@ -9650,6 +9641,7 @@ var ADRESS = {
 				  complete: function(){			  			
 		  			$.mobile.navigate("#edit-address");
 		  			$.mobile.loading( "hide" );
+		  			SPHERES.initial(false, true);
 
 				  	//if(page > 2 && ADRESS.address_arr.length < 2){
 				  	//	self.getCurrent(0, callback_current());
@@ -9687,7 +9679,8 @@ var ADRESS = {
 						  			$.mobile.loading( "hide" );
 						  		}
 						  	}						  	
-						  	$.mobile.navigate("#edit-address");						
+						  	$.mobile.navigate("#edit-address");
+						  	SPHERES.initial(false, true);						
 						  	//self.getCurrent(0, callback_current(), page);				
 						  	
 						  },
@@ -10522,15 +10515,19 @@ console.log(window.location.toString());
 			switch(parameter){
 				case 0:
 					$(selector).removeAttr("href");
+					$(selector).on("click", function(){
+						alert(LOCALE_ARRAY_ADDITIONAL.please_register[CURRENT_LANG]);
+					});
 					break;
 				case 1:
 					var links_array = $(selector);					
 					for(var i = 0; i < links_array.length; i++){
 						if($(links_array[i]).data('link')){
-							$(links_array[i]).attr('href', $(links_array[i]).data('link'));
+							$(links_array[i]).attr('href', $(links_array[i]).data('link'));							
 						}else{
 							$(links_array[i]).attr('href', href);
-						}						
+						}
+						$(links_array[i]).off("click");						
 					}
 					//console.log('fuck');
 					break;
@@ -10774,7 +10771,12 @@ console.log(window.location.toString());
 					if($('#profile-page #male').hasClass('ui-radio-on')){
 						var g = 0;
 					}else{
-						var g = 1;
+						if($('#profile-page #female').hasClass('ui-radio-on')){
+							var g = 1;
+						}else{
+							var g = 2;
+						}
+						
 					}
 					if(FILE){
 						var av = FILE;
@@ -11094,6 +11096,9 @@ console.log(window.location.toString());
 	    						break;
 	    					case "1":
 	    						$('#profile-page #female').attr('class', 'ui-btn ui-btn-inherit ui-first-child ui-btn-active ui-radio-on');
+	    						break;
+	    					case "2":
+	    						$('#profile-page #other_sex').attr('class', 'ui-btn ui-btn-inherit ui-first-child ui-btn-active ui-radio-on');
 	    						break;
 	    				}
 	    				var match_array = this.birth.match(/[0-9]+/ig);
