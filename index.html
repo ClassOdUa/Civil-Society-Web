@@ -148,7 +148,8 @@
                         <input type="password" required name="password_r" pattern=".{6,}" placeholder="qwerty" data-enhanced="true" />
                     </div>
                 </div>
-                <fieldset class="date-group" data-role="controlgroup" data-type="horizontal">
+
+                <fieldset class="date-group birthday" data-role="controlgroup" data-type="horizontal">
                     <legend>Enter your date of birth</legend>
                     <select name="day">
                         <option value="1">1</option>
@@ -277,8 +278,9 @@
 
                     </select>
                 </fieldset>
+
                 <fieldset class="radio-wrap" data-role="controlgroup" data-type="horizontal">
-                    <legend>Male of Female</legend>
+                    <legend>Gender</legend>
                     <div class="ui-radio">
                         <label id = 'male' class="ui-btn ui-btn-inherit ui-radio-off">Male</label><input type="radio" name="gender" value = "0" data-enhanced="true">
                     </div>
@@ -336,10 +338,8 @@
             </div>
             <div class="info">
                 <div class="name">
-                    
                 </div>
                 <div class="id">
-                    
                 </div>
                 <div class="email">
                     Email: <span></span>
@@ -427,7 +427,7 @@
                 </div>
             </div>
             <fieldset class="radio-wrap gender" data-role="controlgroup" data-type="horizontal">
-                <legend>Male of Female</legend>
+                <legend>Gender</legend>
                 <div class="ui-radio">
                     <label id = 'male' class="ui-btn ui-btn-inherit ui-radio-off">Male</label><input type="radio" name="gender" value = "0" data-enhanced="true">
                 </div>
@@ -863,114 +863,12 @@
     </div>
     <div role="main" class="ui-content">
         <form action="" accept-charset="UTF-8" method="post" onsubmit = "SPHERES.save_and_delete_spheres(); return false;">
-                <fieldset id = "sphere_form">
-                    <!--<legend>Choose sphere</legend>
-                    <div>
-                        <select name="general_offers"><option value="General offers">General offers</option>
-                        <option value="Something 1">Something 1</option>
-                        <option value="Something 2">Something 2</option>
-                        <option value="Something 3">Something 3</option>
-                        <option value="Something 4">Something 4</option>
-                        </select>
-                    </div>
-                    <div>
-                        <select data-mini="true" multiple="multiple" data-native-menu="false">
-                            <option>
-                                Primaries
-                            </option>
-                            <option selected>
-                                Something 1
-                            </option>
-                            <option>
-                                Something 2
-                            </option>
-                            <option selected>
-                                Something 3
-                            </option>
-                            <option>
-                                Something 4
-                            </option>
-                        </select>
-                    </div>
-                    <div>
-                        <select name="local_autorities"><option value="Local authorities">Local authorities</option>
-                        <option value="Something 1">Something 1</option>
-                        <option value="Something 2">Something 2</option>
-                        <option value="Something 3">Something 3</option>
-                        <option value="Something 4">Something 4</option>
-                        </select>
-                    </div>
-                    <div>
-                        <select name="osmd"><option value="OSMD">OSMD</option>
-                        <option value="Something 1">Something 1</option>
-                        <option value="Something 2">Something 2</option>
-                        <option value="Something 3">Something 3</option>
-                        <option value="Something 4">Something 4</option>
-                        </select>
-                    </div>
-                    <div>
-                        <select name="" data-mini="true"><option value="Catalog">Catalog</option>
-                        <option value="Something 1">Something 1</option>
-                        <option value="Something 2">Something 2</option>
-                        <option value="Something 3">Something 3</option>
-                        <option value="Something 4">Something 4</option>
-                        </select>
-                    </div>
-                    <div>
-                        <select name="" data-mini="true"><option value="Catalog">Catalog</option>
-                        <option value="Something 1">Something 1</option>
-                        <option value="Something 2">Something 2</option>
-                        <option value="Something 3">Something 3</option>
-                        <option value="Something 4">Something 4</option>
-                        </select>
-                    </div>
-                    <div>
-                        <select name="public_organization"><option value="Public orrganization">Public orrganization</option>
-                        <option value="Something 1">Something 1</option>
-                        <option value="Something 2">Something 2</option>
-                        <option value="Something 3">Something 3</option>
-                        <option value="Something 4">Something 4</option>
-                        </select>
-                    </div>
-                    <div>
-                        <select name="maidan"><option value="Maidan">Maidan</option>
-                        <option value="Something 1">Something 1</option>
-                        <option value="Something 2">Something 2</option>
-                        <option value="Something 3">Something 3</option>
-                        <option value="Something 4">Something 4</option>
-                        </select>
-                    </div>
-                    <div>
-                        <select name="primaries"><option value="Primaries">Primaries</option>
-                        <option value="Something 1">Something 1</option>
-                        <option value="Something 2">Something 2</option>
-                        <option value="Something 3">Something 3</option>
-                        <option value="Something 4">Something 4</option>
-                        </select>
-                    </div>
-                    <div>
-                        <select multiple="multiple" data-native-menu="false">
-                            <option>
-                                Primaries
-                            </option>
-                            <option value = '11'>
-                                Something 1
-                            </option>
-                            <option>
-                                Something 2
-                            </option>
-                            <option>
-                                Something 3
-                            </option>
-                            <option>
-                                Something 4
-                            </option>
-                        </select>
-                    </div>-->
-                </fieldset>
-                <div class="btn-save">
-                    <input type="submit" value="Save" class="ui-btn ui-btn-corner-all ui-shadow" />
-                </div></form>
+            <fieldset id = "sphere_form">
+            </fieldset>
+            <div class="btn-save">
+                <input type="submit" value="Save" class="ui-btn ui-btn-corner-all ui-shadow" />
+            </div>
+        </form>
     </div>
 </div>
 
@@ -981,34 +879,9 @@
     </div>
     <div role="main" class="ui-content">
         <form action="" accept-charset="UTF-8" method="post" onsubmit = "">
-                <fieldset id = "sphere_form">
-                    <!--<legend>Choose sphere</legend>
-                    <div>
-                        <select name="general_offers" onclick = "$.mobile.navigate('#filter-page'); VOTINGS.filter_data(1)"><option style = "display:none"  value="General offers">General offers</option>
-                        </select>
-                    </div>
-                    <div>
-                        <select name="local_autorities" onclick = "$.mobile.navigate('#filter-page'); VOTINGS.filter_data(2)"><option style = "display:none"  value="Local authorities">Local authorities</option>
-                        </select>
-                    </div>
-                    <div>
-                        <select name="osmd" onclick = "$.mobile.navigate('#filter-page'); VOTINGS.filter_data(3)"><option style = "display:none"  value="OSMD">OSMD</option>
-                        </select>
-                    </div>
-                    <div>
-                        <select name="public_organization" onclick = "$.mobile.navigate('#filter-page'); VOTINGS.filter_data(4)"><option style = "display:none" value="Public orrganization">Public orrganization</option>
-                        </select>
-                    </div>
-                    <div>
-                        <select name="maidan" onclick = "$.mobile.navigate('#filter-page'); VOTINGS.filter_data(5)"><option style = "display:none"  value="Maidan">Maidan</option>
-                        </select>
-                    </div>
-                    <div>
-                        <select name="primaries" onclick = "$.mobile.navigate('#filter-page'); VOTINGS.filter_data(6)"><option style = "display:none"  value="Primaries">Primaries</option>
-                        </select>
-                    </div>-->
-                </fieldset>
-            </form>
+            <fieldset id = "sphere_form">
+            </fieldset>
+        </form>
     </div>
 </div>
 
@@ -1019,114 +892,12 @@
     </div>
     <div id = "sphere_main" role="main" class="ui-content">
         <form action="" accept-charset="UTF-8" method="post" onsubmit = "SPHERES.save_and_delete_spheres(); return false;">
-                <fieldset id = "sphere_form">
-                    <!--<legend>Choose sphere</legend>
-                    <div>
-                        <select name="general_offers"><option value="General offers">General offers</option>
-                        <option value="Something 1">Something 1</option>
-                        <option value="Something 2">Something 2</option>
-                        <option value="Something 3">Something 3</option>
-                        <option value="Something 4">Something 4</option>
-                        </select>
-                    </div>
-                    <div>
-                        <select data-mini="true" multiple="multiple" data-native-menu="false">
-                            <option>
-                                Primaries
-                            </option>
-                            <option selected>
-                                Something 1
-                            </option>
-                            <option>
-                                Something 2
-                            </option>
-                            <option selected>
-                                Something 3
-                            </option>
-                            <option>
-                                Something 4
-                            </option>
-                        </select>
-                    </div>
-                    <div>
-                        <select name="local_autorities"><option value="Local authorities">Local authorities</option>
-                        <option value="Something 1">Something 1</option>
-                        <option value="Something 2">Something 2</option>
-                        <option value="Something 3">Something 3</option>
-                        <option value="Something 4">Something 4</option>
-                        </select>
-                    </div>
-                    <div>
-                        <select name="osmd"><option value="OSMD">OSMD</option>
-                        <option value="Something 1">Something 1</option>
-                        <option value="Something 2">Something 2</option>
-                        <option value="Something 3">Something 3</option>
-                        <option value="Something 4">Something 4</option>
-                        </select>
-                    </div>
-                    <div>
-                        <select name="" data-mini="true"><option value="Catalog">Catalog</option>
-                        <option value="Something 1">Something 1</option>
-                        <option value="Something 2">Something 2</option>
-                        <option value="Something 3">Something 3</option>
-                        <option value="Something 4">Something 4</option>
-                        </select>
-                    </div>
-                    <div>
-                        <select name="" data-mini="true"><option value="Catalog">Catalog</option>
-                        <option value="Something 1">Something 1</option>
-                        <option value="Something 2">Something 2</option>
-                        <option value="Something 3">Something 3</option>
-                        <option value="Something 4">Something 4</option>
-                        </select>
-                    </div>
-                    <div>
-                        <select name="public_organization"><option value="Public orrganization">Public orrganization</option>
-                        <option value="Something 1">Something 1</option>
-                        <option value="Something 2">Something 2</option>
-                        <option value="Something 3">Something 3</option>
-                        <option value="Something 4">Something 4</option>
-                        </select>
-                    </div>
-                    <div>
-                        <select name="maidan"><option value="Maidan">Maidan</option>
-                        <option value="Something 1">Something 1</option>
-                        <option value="Something 2">Something 2</option>
-                        <option value="Something 3">Something 3</option>
-                        <option value="Something 4">Something 4</option>
-                        </select>
-                    </div>
-                    <div>
-                        <select name="primaries"><option value="Primaries">Primaries</option>
-                        <option value="Something 1">Something 1</option>
-                        <option value="Something 2">Something 2</option>
-                        <option value="Something 3">Something 3</option>
-                        <option value="Something 4">Something 4</option>
-                        </select>
-                    </div>
-                    <div>
-                        <select multiple="multiple" data-native-menu="false">
-                            <option>
-                                Primaries
-                            </option>
-                            <option value = '11'>
-                                Something 1
-                            </option>
-                            <option>
-                                Something 2
-                            </option>
-                            <option>
-                                Something 3
-                            </option>
-                            <option>
-                                Something 4
-                            </option>
-                        </select>
-                    </div>-->
-                </fieldset>
-                <div class="btn-save">
-                    <input type="submit" value="Save" class="ui-btn ui-btn-corner-all ui-shadow" />
-                </div></form>
+            <fieldset id = "sphere_form">
+            </fieldset>
+            <div class="btn-save">
+                <input type="submit" value="Save" class="ui-btn ui-btn-corner-all ui-shadow" />
+            </div>
+        </form>
     </div>
 </div>
 
@@ -1147,380 +918,51 @@
     <div class="filters-panel">
         <div class="filters-panel-inner">
             <form action="" accept-charset="UTF-8" method="post">
-                        <div class="ui-input-search ui-input-has-clear">
-                            <input  onkeyup="PROGRAMS.filter_data()" onchange="PROGRAMS.filter_data()" id = "searched_string" type="search" name="" placeholder="Search by ID or name" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">Clear text</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />
+                <div class="ui-input-search ui-input-has-clear">
+                    <input  onkeyup="PROGRAMS.filter_data()" onchange="PROGRAMS.filter_data()" id = "searched_string" type="search" name="" placeholder="Search by ID or name" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">Clear text</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />
+                </div>
+                <div onchange = "PROGRAMS.filter_data()">
+                    <select data-direct = "0" name="sort" placeholder="Sort by newest">
+                        <option value="Sort by id">Sort by id</option>
+                        <option value="Sort by name">Sort by name</option>
+                        <option value="Sort by newest">Sort by newest</option>
+                        <option value="Sort by stars">Sort by title</option>
+                    </select>
+                </div>
+                <div>
+                    <select onchange="PROGRAMS.filter_data()" name="sort_direction">
+                        <option value="down">Sort down</option>
+                        <option value="up">Sort up</option>
+                    </select>
+                </div>
+                <div id = "solo_filter" onclick = "$.mobile.navigate('#filter-page-programs'); PROGRAMS.activated_hard_filter = 1;  $('#programs-page #activated_filter').css('display', 'block'); $('#programs-page #solo_filter').css('display', 'none');" class="ui-grid-solo">
+                    <div class="ui-block-a">
+                        <div class="ui-input-btn ui-btn ui-btn-icon-right filter-normal">
+                            <span>Filter</span><input type="button" value="" data-enhanced="true" />
                         </div>
-                        <div onchange = "PROGRAMS.filter_data()">
-                            <select data-direct = "0" name="sort" placeholder="Sort by newest">
-                            <option value="Sort by id">Sort by id</option>
-                            <option value="Sort by name">Sort by name</option>
-                            <option value="Sort by newest">Sort by newest</option>
-                            <option value="Sort by stars">Sort by title</option>
-                            </select>
+                    </div>
+                </div>
+                <div style = "display: none" id = "activated_filter" class="ui-grid-a">
+                    <div class="ui-block-a">
+                        <div id = "filter_activator" onclick = "PROGRAMS.activated_hard_filter = 1; $.mobile.navigate('#filter-page-programs');" class="ui-input-btn ui-btn ui-btn-icon-right filter-active">
+                            <span>Filter is activated</span><input type="button" value="" data-enhanced="true" />
                         </div>
-                        <div>
-                            <select onchange="PROGRAMS.filter_data()" name="sort_direction"><option value="down">Sort down</option>
-                                <option value="up">Sort up</option>
-                            </select>
+                    </div>
+                    <div class="ui-block-b">
+                        <div class="ui-input-btn ui-btn ui-btn-icon-right filter-clear">
+                             <span>Clear filter</span><input type="button" value="" onclick = "PROGRAMS.init()" data-enhanced="true" />
                         </div>
-                        <div id = "solo_filter" onclick = "$.mobile.navigate('#filter-page-programs'); PROGRAMS.activated_hard_filter = 1;  $('#programs-page #activated_filter').css('display', 'block'); $('#programs-page #solo_filter').css('display', 'none');" class="ui-grid-solo">
-                            <div class="ui-block-a">
-                                <div class="ui-input-btn ui-btn ui-btn-icon-right filter-normal">
-                                    <span>Filter</span><input type="button" value="" data-enhanced="true" />
-                                </div>
-                            </div>
-                        </div>
-                        <div style = "display: none" id = "activated_filter" class="ui-grid-a">
-                            <div class="ui-block-a">
-                                <div id = "filter_activator" onclick = "PROGRAMS.activated_hard_filter = 1; $.mobile.navigate('#filter-page-programs');" class="ui-input-btn ui-btn ui-btn-icon-right filter-active">
-                                    <span>Filter is activated</span><input type="button" value="" data-enhanced="true" />
-                                </div>
-                            </div>
-                            <div class="ui-block-b">
-                                <div class="ui-input-btn ui-btn ui-btn-icon-right filter-clear">
-                                     <span>Clear filter</span><input type="button" value="" onclick = "PROGRAMS.init()" data-enhanced="true" />
-                                </div>
-                            </div>
-                        </div></form>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
     <div role="main" class="ui-content">
         <a class="ui-btn ui-corner-all ui-shadow" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>
         <a style = "display:none" id = "create_link" class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate('#create-item?program=true')" href="#">Create program</a>
         <div id = "programs-list" class="programs-list">
-            <!--<div class="item ui-corner-all icon-program-star fund-raising">
-                <a href="#program-page">
-                    <div class="img">
-                        <img src="uploads/voting-img-1.jpg" />
-                    </div>
-                    <div class="info">
-                        <div class="title">
-                            ID: <strong>43465</strong> : <strong>Пресечение массовых выселений народа масаи</strong>
-                        </div>
-                        <div class="ui-grid-a">
-                            <div class="ui-block-a">
-                                <div class="country">
-                                    Украина, Одесса
-                                </div>
-                            </div>
-                            <div class="ui-block-b">
-                                <div class="status">
-                                    <span>Сбор средств</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="total-amount">
-                            <span>Нужное количество средств</span> - <strong>20000 ₴</strong>
-                        </div>
-                        <div class="amount up">
-                            <span>Собрано на данный момент</span> - <strong>12223 ₴</strong>
-                        </div>
-                        <div class="my-amount">
-                            <span>Мой вклад</span> - <strong>200 ₴</strong>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="item ui-corner-all icon-program-star fund-raising">
-                <a href="#program-page">
-                    <div class="img">
-                        <img src="uploads/voting-img-2.jpg" />
-                    </div>
-                    <div class="info">
-                        <div class="title">
-                            ID: <strong>43465</strong> : <strong>Пресечение массовых выселений народа масаи</strong>
-                        </div>
-                        <div class="ui-grid-a">
-                            <div class="ui-block-a">
-                                <div class="country">
-                                    Украина, Одесса
-                                </div>
-                            </div>
-                            <div class="ui-block-b">
-                                <div class="status">
-                                    <span>Сбор средств</span>
-                                </div>
-                            </div>
-                            <div class="amount down">
-                                <span>Собрано на данный момент</span> - <strong>12223 ₴</strong>
-                            </div>
-                            <div class="my-amount">
-                                <span>Мой вклад</span> - <strong>200 ₴</strong>
-                            </div>
-                            <div class="contractors">
-                                <span>Количество подрядчиков</span> - <strong>96</strong>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="item ui-corner-all icon-program-star">
-                <a href="#program-page">
-                    <div class="img">
-                        <img src="uploads/voting-img-3.jpg" />
-                    </div>
-                    <div class="info">
-                        <div class="title">
-                            ID: <strong>43465</strong> : <strong>Пресечение массовых выселений народа масаи</strong>
-                        </div>
-                        <div class="ui-grid-a">
-                            <div class="ui-block-a">
-                                <div class="country">
-                                    Украина, Одесса
-                                </div>
-                            </div>
-                            <div class="ui-block-b">
-                                <div class="status">
-                                    <span>Определение исполнителя</span>
-                                </div>
-                            </div>
-                            <div class="amount down">
-                                <span>Собрано на данный момент</span> - <strong>12223 ₴</strong>
-                            </div>
-                            <div class="my-amount">
-                                <span>Мой вклад</span> - <strong>200 ₴</strong>
-                            </div>
-                            <div class="contractors">
-                                <span>Количество подрядчиков</span> - <strong>96</strong>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="item ui-corner-all icon-program-star program-completed">
-                <a href="#program-page">
-                    <div class="img">
-                        <img src="uploads/voting-img-4.jpg" />
-                    </div>
-                    <div class="info">
-                        <div class="title">
-                            ID: <strong>43465</strong> : <strong>Пресечение массовых выселений народа масаи</strong>
-                        </div>
-                        <div class="ui-grid-a">
-                            <div class="ui-block-a">
-                                <div class="country">
-                                    Украина, Одесса
-                                </div>
-                            </div>
-                            <div class="ui-block-b">
-                                <div class="status">
-                                    <span>Успешно завершен</span>
-                                </div>
-                            </div>
-                            <div class="amount up">
-                                <span>Собрано на данный момент</span> - <strong>12223 ₴</strong>
-                            </div>
-                            <div class="my-amount">
-                                <span>Мой вклад</span> - <strong>200 ₴</strong>
-                            </div>
-                            <div class="contractors">
-                                <span>Количество подрядчиков</span> - <strong>96</strong>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="item ui-corner-all icon-program-star fund-raising">
-                <a href="#program-page">
-                    <div class="img">
-                        <img src="uploads/voting-img-4.jpg" />
-                    </div>
-                    <div class="info">
-                        <div class="title">
-                            ID: <strong>43465</strong> : <strong>Пресечение массовых выселений народа масаи</strong>
-                        </div>
-                        <div class="ui-grid-a">
-                            <div class="ui-block-a">
-                                <div class="country">
-                                    Украина, Одесса
-                                </div>
-                            </div>
-                            <div class="ui-block-b">
-                                <div class="status">
-                                    <span>Сбор средств</span>
-                                </div>
-                            </div>
-                            <div class="total-amount">
-                                <span>Нужное количество средств</span> - <strong>20000 ₴</strong>
-                            </div>
-                            <div class="amount up">
-                                <span>Собрано на данный момент</span> - <strong>12223 ₴</strong>
-                            </div>
-                            <div class="my-amount">
-                                <span>Мой вклад</span> - <strong>200 ₴</strong>
-                            </div>
-                            <div class="contractors">
-                                <span>Количество подрядчиков</span> - <strong>96</strong>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>-->
         </div>
     </div>
-</div>
-
-<div id="program-page" data-role="page">
-    <!--<div data-role="header" data-position="fixed" data-tap-toggle="false">
-        <h1>
-            Пресечение массовых выселений народа масаи
-        </h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" href="#programs-page">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#program-help">Ask</a>
-        <div id="program-help" class="help-popup" data-role="popup">
-            <div class="title">
-                Description
-            </div>
-            <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in
-            </div>
-        </div>
-    </div>
-    <div role="main" class="ui-content">
-        <div id = "program-item" class="program-item">
-            <div class="img">
-                <img src="uploads/vote-img.jpg" />
-            </div>
-            <div class="program-item-inner">
-                <div class="stars-wrap">
-                    <span></span><span></span><span></span><span></span>
-                </div>
-                <div class="id">
-                    ID: <strong>43465 : Why has the German Grand Prix apparently foundered?</strong>
-                </div>
-                <div class="id">
-                    <span class="bg">ID: <strong>43465 : Why has the German Grand Prix apparently foundered?</strong></span>
-                </div>
-                <div class="username">
-                    <span class="bg">Беницифиар @<strong>username</strong></span>
-                </div>
-                <div class="username">
-                    By @<strong>username</strong>
-                </div>
-                <div class="status yellow">
-                    Сбор средств до 23.08.2015
-                </div>
-                <div class="total-amount">
-                    <span>Нужное количество средств</span> - <strong>20000 ₴</strong>
-                </div>
-                <div class="amount up">
-                    <span>Собрано на данный момент</span> - <strong>12223 ₴</strong>
-                </div>
-                <div class="my-amount">
-                    <span>Мой вклад</span> - <strong>200 ₴</strong>
-                </div>
-                <div class="nko-list">
-                    <div class="title">
-                        Список текущих предложений <strong>НКО</strong>:
-                    </div>
-                    <ol>
-                        <li>
-                            <span>John Appleseed</span>
-                        </li>
-                        <li>
-                            <span>Seed Applejohn</span>
-                        </li>
-                        <li>
-                            <span>Matt Berninger</span>
-                        </li>
-                        <li>
-                            <span>Walter White</span>
-                        </li>
-                    </ol>
-                </div>
-                <div class="nko-btn">
-                    <a class="ui-btn ui-corner-all ui-shadow" href="#">Выбрать НКО</a>
-                </div>
-                <div class="nko-status red">
-                    НКО не выбран
-                </div>
-                <div class="desc">
-                    <div class="text">
-                        Rent Boult then took four early wickets as New Zealand bowled out the Windies for 250 to seal a 143-run win.
-                        Gayle's 33-ball 61, featuring eight sixes, entertained the crowd as the Caribbean side scored at a furious pace.
-                        But they continued to lose wickets at regular intervals and were bowled out in 30.3 overs to spark jubilant scenes in the capital.
-                        New Zealand, semi-finalists for the seventh time, will now face South Africa in Auckland on Tuesday at 01:00 GMT, with both seeking a first World Cup final appearance. Glorious Guptill
-                        Embedding the video player This is the embedded player
-                        Out of media player. Press enter to return or tab to
-                        END - companion banner caption
-                        Cricket World Cup 2015: Martin Guptill leads New Zealand to semis
-                    </div>
-                    <div class="tag-list">
-                        <span>политика</span><span class="active">политика</span><span>политика</span><span>политика</span><span>политика</span><span>политика</span><span>политика</span><span>политика</span><span>политика</span><span>политика</span><span>политика</span><span>политика</span>
-                    </div>
-                </div>
-                <div class="discuss-btn">
-                    <a class="ui-btn ui-corner-all ui-shadow" href="#">Discussion of voting</a>
-                </div>
-                <div class="btn-login-soc">
-                    <button class="ui-btn ui-corner-all ui-shadow share-btn">Share by social Networks</button>
-                    <div class="social-wrap">
-                        <div class="title">
-                            Sign in by social Networks
-                        </div>
-                        <div class="ui-grid-b">
-                            <div class="ui-block-a">
-                                <a class="vk" href="#"></a>
-                            </div>
-                            <div class="ui-block-b">
-                                <a class="fb" href="#"></a>
-                            </div>
-                            <div class="ui-block-c">
-                                <a class="tw" href="#"></a>
-                            </div>
-                            <div class="ui-block-a">
-                                <a class="gp" href="#"></a>
-                            </div>
-                            <div class="ui-block-b">
-                                <a class="in" href="#"></a>
-                            </div>
-                            <div class="ui-block-c">
-                                <a class="ok" href="#"></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="sms-btn">
-                    <a class="ui-btn ui-corner-all ui-shadow" href="#">SMS</a>
-                </div>
-                <hr>
-                <div class="donate-wrap">
-                    <div class="ui-grid-a">
-                        <div class="ui-block-a">
-                            <div>
-                                <label>Choose PIF</label><select name=""><option value="PIF 2345">PIF 2345</option>
-                                <option value="PIF 123">PIF 123</option>
-                                <option value="PIF 6789">PIF 6789</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="ui-block-b">
-                            <div class="text-field">
-                                <label>Amount of money</label>
-                                <div class="ui-input-text">
-                                    <input type="text" name="" data-enhanced="true" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="ui-grid-solo">
-                        <div class="ui-block-a">
-                            <button class="ui-btn ui-corner-all ui-shadow donate-btn">Donate</button>
-                        </div>
-                    </div>
-                </div>
-                <hr>
-                <div class="btn-next-page">
-                    <a class="ui-btn ui-btn-icon-right" href="#">История сбора средств</a>
-                </div>
-                <div class="btn-next-page">
-                    <a class="ui-btn ui-btn-icon-right" href="#">Голосование по программе</a>
-                </div>
-                <div class="btn-next-page">
-                    <a class="ui-btn ui-btn-icon-right" href="#">Проектные предложения</a>
-                </div>
-            </div>
-        </div>
-    </div>-->
 </div>
 
 <div id="filter-page-programs" data-role="page">
@@ -1588,43 +1030,44 @@
     <div class="filters-panel">
         <div class="filters-panel-inner">
             <form action="" accept-charset="UTF-8" method="post">
-                        <div class="ui-input-search ui-input-has-clear">
-                            <input  onkeyup="PROJECTS.filter_data()" onchange="PROJECTS.filter_data()" id = "searched_string" type="search" name="" placeholder="Search by ID or name" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">Clear text</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />
+                <div class="ui-input-search ui-input-has-clear">
+                    <input  onkeyup="PROJECTS.filter_data()" onchange="PROJECTS.filter_data()" id = "searched_string" type="search" name="" placeholder="Search by ID or name" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">Clear text</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />
+                </div>
+                <div onchange = "PROJECTS.filter_data()">
+                    <select data-direct = "0" name="sort" placeholder="Sort by newest">
+                        <option value="Sort by id">Sort by id</option>
+                        <option value="Sort by name">Sort by name</option>
+                        <option value="Sort by date create">Sort by date create</option>
+                        <option value="Sort by date end">Sort by date end</option>
+                        <option value="Sort by stars">Sort by title</option>
+                        <option value="Sort by amount asking">Sort by amount asking</option>  
+                    </select>
+                </div>
+                <div>
+                    <select onchange="PROJECTS.filter_data()" name="sort_direction"><option value="down">Sort down</option>
+                        <option value="up">Sort up</option>
+                    </select>
+                </div>
+                <div id = "solo_filter" onclick = "$.mobile.navigate('#filter-page-projects'); PROJECTS.activated_hard_filter = 1;  $('#projects-page #activated_filter').css('display', 'block'); $('#projects-page #solo_filter').css('display', 'none');" class="ui-grid-solo">
+                    <div class="ui-block-a">
+                        <div class="ui-input-btn ui-btn ui-btn-icon-right filter-normal">
+                            <span>Filter</span><input type="button" value="" data-enhanced="true" />
                         </div>
-                        <div onchange = "PROJECTS.filter_data()">
-                            <select data-direct = "0" name="sort" placeholder="Sort by newest">
-                            <option value="Sort by id">Sort by id</option>
-                            <option value="Sort by name">Sort by name</option>
-                            <option value="Sort by date create">Sort by date create</option>
-                            <option value="Sort by date end">Sort by date end</option>                            
-                            <option value="Sort by stars">Sort by title</option>
-                            <option value="Sort by amount asking">Sort by amount asking</option>  
-                            </select>
+                    </div>
+                </div>
+                <div style = "display: none" id = "activated_filter" class="ui-grid-a">
+                    <div class="ui-block-a">
+                        <div id = "filter_activator" onclick = "PROJECTS.activated_hard_filter = 1; $.mobile.navigate('#filter-page-projects');" class="ui-input-btn ui-btn ui-btn-icon-right filter-active">
+                            <span>Filter is activated</span><input type="button" value="" data-enhanced="true" />
                         </div>
-                        <div>
-                            <select onchange="PROJECTS.filter_data()" name="sort_direction"><option value="down">Sort down</option>
-                                <option value="up">Sort up</option>
-                            </select>
+                    </div>
+                    <div class="ui-block-b">
+                        <div class="ui-input-btn ui-btn ui-btn-icon-right filter-clear">
+                             <span>Clear filter</span><input type="button" value="" onclick = "PROJECTS.init()" data-enhanced="true" />
                         </div>
-                        <div id = "solo_filter" onclick = "$.mobile.navigate('#filter-page-projects'); PROJECTS.activated_hard_filter = 1;  $('#projects-page #activated_filter').css('display', 'block'); $('#projects-page #solo_filter').css('display', 'none');" class="ui-grid-solo">
-                            <div class="ui-block-a">
-                                <div class="ui-input-btn ui-btn ui-btn-icon-right filter-normal">
-                                    <span>Filter</span><input type="button" value="" data-enhanced="true" />
-                                </div>
-                            </div>
-                        </div>
-                        <div style = "display: none" id = "activated_filter" class="ui-grid-a">
-                            <div class="ui-block-a">
-                                <div id = "filter_activator" onclick = "PROJECTS.activated_hard_filter = 1; $.mobile.navigate('#filter-page-projects');" class="ui-input-btn ui-btn ui-btn-icon-right filter-active">
-                                    <span>Filter is activated</span><input type="button" value="" data-enhanced="true" />
-                                </div>
-                            </div>
-                            <div class="ui-block-b">
-                                <div class="ui-input-btn ui-btn ui-btn-icon-right filter-clear">
-                                     <span>Clear filter</span><input type="button" value="" onclick = "PROJECTS.init()" data-enhanced="true" />
-                                </div>
-                            </div>
-                        </div></form>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
     <div role="main" class="ui-content">
@@ -1634,339 +1077,11 @@
         <a style = "display:none" id = "create_proposition_link" class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate('#')" href="#">
         Create project proposion</a>
         <div id = "projects-list" class="projects-list">
-            <!--<div class="item ui-corner-all icon-program-star fund-raising">
-                <a href="#program-page">
-                    <div class="img">
-                        <img src="uploads/voting-img-1.jpg" />
-                    </div>
-                    <div class="info">
-                        <div class="title">
-                            ID: <strong>43465</strong> : <strong>Пресечение массовых выселений народа масаи</strong>
-                        </div>
-                        <div class="ui-grid-a">
-                            <div class="ui-block-a">
-                                <div class="country">
-                                    Украина, Одесса
-                                </div>
-                            </div>
-                            <div class="ui-block-b">
-                                <div class="status">
-                                    <span>Сбор средств</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="total-amount">
-                            <span>Нужное количество средств</span> - <strong>20000 ₴</strong>
-                        </div>
-                        <div class="amount up">
-                            <span>Собрано на данный момент</span> - <strong>12223 ₴</strong>
-                        </div>
-                        <div class="my-amount">
-                            <span>Мой вклад</span> - <strong>200 ₴</strong>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="item ui-corner-all icon-program-star fund-raising">
-                <a href="#program-page">
-                    <div class="img">
-                        <img src="uploads/voting-img-2.jpg" />
-                    </div>
-                    <div class="info">
-                        <div class="title">
-                            ID: <strong>43465</strong> : <strong>Пресечение массовых выселений народа масаи</strong>
-                        </div>
-                        <div class="ui-grid-a">
-                            <div class="ui-block-a">
-                                <div class="country">
-                                    Украина, Одесса
-                                </div>
-                            </div>
-                            <div class="ui-block-b">
-                                <div class="status">
-                                    <span>Сбор средств</span>
-                                </div>
-                            </div>
-                            <div class="amount down">
-                                <span>Собрано на данный момент</span> - <strong>12223 ₴</strong>
-                            </div>
-                            <div class="my-amount">
-                                <span>Мой вклад</span> - <strong>200 ₴</strong>
-                            </div>
-                            <div class="contractors">
-                                <span>Количество подрядчиков</span> - <strong>96</strong>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="item ui-corner-all icon-program-star">
-                <a href="#program-page">
-                    <div class="img">
-                        <img src="uploads/voting-img-3.jpg" />
-                    </div>
-                    <div class="info">
-                        <div class="title">
-                            ID: <strong>43465</strong> : <strong>Пресечение массовых выселений народа масаи</strong>
-                        </div>
-                        <div class="ui-grid-a">
-                            <div class="ui-block-a">
-                                <div class="country">
-                                    Украина, Одесса
-                                </div>
-                            </div>
-                            <div class="ui-block-b">
-                                <div class="status">
-                                    <span>Определение исполнителя</span>
-                                </div>
-                            </div>
-                            <div class="amount down">
-                                <span>Собрано на данный момент</span> - <strong>12223 ₴</strong>
-                            </div>
-                            <div class="my-amount">
-                                <span>Мой вклад</span> - <strong>200 ₴</strong>
-                            </div>
-                            <div class="contractors">
-                                <span>Количество подрядчиков</span> - <strong>96</strong>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="item ui-corner-all icon-program-star program-completed">
-                <a href="#program-page">
-                    <div class="img">
-                        <img src="uploads/voting-img-4.jpg" />
-                    </div>
-                    <div class="info">
-                        <div class="title">
-                            ID: <strong>43465</strong> : <strong>Пресечение массовых выселений народа масаи</strong>
-                        </div>
-                        <div class="ui-grid-a">
-                            <div class="ui-block-a">
-                                <div class="country">
-                                    Украина, Одесса
-                                </div>
-                            </div>
-                            <div class="ui-block-b">
-                                <div class="status">
-                                    <span>Успешно завершен</span>
-                                </div>
-                            </div>
-                            <div class="amount up">
-                                <span>Собрано на данный момент</span> - <strong>12223 ₴</strong>
-                            </div>
-                            <div class="my-amount">
-                                <span>Мой вклад</span> - <strong>200 ₴</strong>
-                            </div>
-                            <div class="contractors">
-                                <span>Количество подрядчиков</span> - <strong>96</strong>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="item ui-corner-all icon-program-star fund-raising">
-                <a href="#program-page">
-                    <div class="img">
-                        <img src="uploads/voting-img-4.jpg" />
-                    </div>
-                    <div class="info">
-                        <div class="title">
-                            ID: <strong>43465</strong> : <strong>Пресечение массовых выселений народа масаи</strong>
-                        </div>
-                        <div class="ui-grid-a">
-                            <div class="ui-block-a">
-                                <div class="country">
-                                    Украина, Одесса
-                                </div>
-                            </div>
-                            <div class="ui-block-b">
-                                <div class="status">
-                                    <span>Сбор средств</span>
-                                </div>
-                            </div>
-                            <div class="total-amount">
-                                <span>Нужное количество средств</span> - <strong>20000 ₴</strong>
-                            </div>
-                            <div class="amount up">
-                                <span>Собрано на данный момент</span> - <strong>12223 ₴</strong>
-                            </div>
-                            <div class="my-amount">
-                                <span>Мой вклад</span> - <strong>200 ₴</strong>
-                            </div>
-                            <div class="contractors">
-                                <span>Количество подрядчиков</span> - <strong>96</strong>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>-->
         </div>
     </div>
 </div>
 
 <div id="project-page" data-role="page">
-    <!--<div data-role="header" data-position="fixed" data-tap-toggle="false">
-        <h1>
-            Пресечение массовых выселений народа масаи
-        </h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" href="#programs-page">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#program-help">Ask</a>
-        <div id="program-help" class="help-popup" data-role="popup">
-            <div class="title">
-                Description
-            </div>
-            <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in
-            </div>
-        </div>
-    </div>
-    <div role="main" class="ui-content">
-        <div id = "project-item" class="program-item">
-            <div class="img">
-                <img src="uploads/vote-img.jpg" />
-            </div>
-            <div class="program-item-inner">
-                <div class="stars-wrap">
-                    <span></span><span></span><span></span><span></span>
-                </div>
-                <div class="id">
-                    ID: <strong>43465 : Why has the German Grand Prix apparently foundered?</strong>
-                </div>
-                <div class="id">
-                    <span class="bg">ID: <strong>43465 : Why has the German Grand Prix apparently foundered?</strong></span>
-                </div>
-                <div class="username">
-                    <span class="bg">Беницифиар @<strong>username</strong></span>
-                </div>
-                <div class="username">
-                    By @<strong>username</strong>
-                </div>
-                <div class="status yellow">
-                    Сбор средств до 23.08.2015
-                </div>
-                <div class="total-amount">
-                    <span>Нужное количество средств</span> - <strong>20000 ₴</strong>
-                </div>
-                <div class="amount up">
-                    <span>Собрано на данный момент</span> - <strong>12223 ₴</strong>
-                </div>
-                <div class="my-amount">
-                    <span>Мой вклад</span> - <strong>200 ₴</strong>
-                </div>
-                <div class="nko-list">
-                    <div class="title">
-                        Список текущих предложений <strong>НКО</strong>:
-                    </div>
-                    <ol>
-                        <li>
-                            <span>John Appleseed</span>
-                        </li>
-                        <li>
-                            <span>Seed Applejohn</span>
-                        </li>
-                        <li>
-                            <span>Matt Berninger</span>
-                        </li>
-                        <li>
-                            <span>Walter White</span>
-                        </li>
-                    </ol>
-                </div>
-                <div class="nko-btn">
-                    <a class="ui-btn ui-corner-all ui-shadow" href="#">Выбрать НКО</a>
-                </div>
-                <div class="nko-status red">
-                    НКО не выбран
-                </div>
-                <div class="desc">
-                    <div class="text">
-                        Rent Boult then took four early wickets as New Zealand bowled out the Windies for 250 to seal a 143-run win.
-                        Gayle's 33-ball 61, featuring eight sixes, entertained the crowd as the Caribbean side scored at a furious pace.
-                        But they continued to lose wickets at regular intervals and were bowled out in 30.3 overs to spark jubilant scenes in the capital.
-                        New Zealand, semi-finalists for the seventh time, will now face South Africa in Auckland on Tuesday at 01:00 GMT, with both seeking a first World Cup final appearance. Glorious Guptill
-                        Embedding the video player This is the embedded player
-                        Out of media player. Press enter to return or tab to
-                        END - companion banner caption
-                        Cricket World Cup 2015: Martin Guptill leads New Zealand to semis
-                    </div>
-                    <div class="tag-list">
-                        <span>политика</span><span class="active">политика</span><span>политика</span><span>политика</span><span>политика</span><span>политика</span><span>политика</span><span>политика</span><span>политика</span><span>политика</span><span>политика</span><span>политика</span>
-                    </div>
-                </div>
-                <div class="discuss-btn">
-                    <a class="ui-btn ui-corner-all ui-shadow" href="#">Discussion of voting</a>
-                </div>
-                <div class="btn-login-soc">
-                    <button class="ui-btn ui-corner-all ui-shadow share-btn">Share by social Networks</button>
-                    <div class="social-wrap">
-                        <div class="title">
-                            Sign in by social Networks
-                        </div>
-                        <div class="ui-grid-b">
-                            <div class="ui-block-a">
-                                <a class="vk" href="#"></a>
-                            </div>
-                            <div class="ui-block-b">
-                                <a class="fb" href="#"></a>
-                            </div>
-                            <div class="ui-block-c">
-                                <a class="tw" href="#"></a>
-                            </div>
-                            <div class="ui-block-a">
-                                <a class="gp" href="#"></a>
-                            </div>
-                            <div class="ui-block-b">
-                                <a class="in" href="#"></a>
-                            </div>
-                            <div class="ui-block-c">
-                                <a class="ok" href="#"></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="sms-btn">
-                    <a class="ui-btn ui-corner-all ui-shadow" href="#">SMS</a>
-                </div>
-                <hr>
-                <div class="donate-wrap">
-                    <div class="ui-grid-a">
-                        <div class="ui-block-a">
-                            <div>
-                                <label>Choose PIF</label><select name=""><option value="PIF 2345">PIF 2345</option>
-                                <option value="PIF 123">PIF 123</option>
-                                <option value="PIF 6789">PIF 6789</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="ui-block-b">
-                            <div class="text-field">
-                                <label>Amount of money</label>
-                                <div class="ui-input-text">
-                                    <input type="text" name="" data-enhanced="true" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="ui-grid-solo">
-                        <div class="ui-block-a">
-                            <button class="ui-btn ui-corner-all ui-shadow donate-btn">Donate</button>
-                        </div>
-                    </div>
-                </div>
-                <hr>
-                <div class="btn-next-page">
-                    <a class="ui-btn ui-btn-icon-right" href="#">История сбора средств</a>
-                </div>
-                <div class="btn-next-page">
-                    <a class="ui-btn ui-btn-icon-right" href="#">Голосование по программе</a>
-                </div>
-                <div class="btn-next-page">
-                    <a class="ui-btn ui-btn-icon-right" href="#">Проектные предложения</a>
-                </div>
-            </div>
-        </div>
-    </div>-->
 </div>
 
 <div id="filter-page-projects" data-role="page">
@@ -2032,383 +1147,56 @@
     <div class="filters-panel">
         <div class="filters-panel-inner">
             <form action="" accept-charset="UTF-8" method="post">
-                        <div class="ui-input-search ui-input-has-clear">
-                            <input  onkeyup="REQUESTS.filter_data()" onchange="REQUESTS.filter_data()" id = "searched_string" type="search" name="" placeholder="Search by ID or name" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">Clear text</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />
+                <div class="ui-input-search ui-input-has-clear">
+                    <input  onkeyup="REQUESTS.filter_data()" onchange="REQUESTS.filter_data()" id = "searched_string" type="search" name="" placeholder="Search by ID or name" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">Clear text</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />
+                </div>
+                <div onchange = "REQUESTS.filter_data()">
+                    <select data-direct = "0" name="sort" placeholder="Sort by newest">
+                        <option value="Sort by id">Sort by id</option>
+                        <option value="Sort by name">Sort by name</option>
+                        <option value="Sort by date create">Sort by date create</option>
+                        <option value="Sort by date end">Sort by date end</option>
+                        <option value="Sort by stars">Sort by title</option>
+                        <option value="Sort by amount asking">Sort by amount asking</option>
+                        <option value="Sort by beneficiary">Sort by beneficiary</option>   
+                    </select>
+                </div>
+                <div>
+                    <select onchange="REQUESTS.filter_data()" name="sort_direction"><option value="down">Sort down</option>
+                        <option value="up">Sort up</option>
+                    </select>
+                </div>
+                <div id = "solo_filter" onclick = "$.mobile.navigate('#filter-page-requests'); REQUESTS.activated_hard_filter = 1;  $('#requests-page #activated_filter').css('display', 'block'); $('#requests-page #solo_filter').css('display', 'none');" class="ui-grid-solo">
+                    <div class="ui-block-a">
+                        <div class="ui-input-btn ui-btn ui-btn-icon-right filter-normal">
+                            <span>Filter</span><input type="button" value="" data-enhanced="true" />
                         </div>
-                        <div onchange = "REQUESTS.filter_data()">
-                            <select data-direct = "0" name="sort" placeholder="Sort by newest">
-                            <option value="Sort by id">Sort by id</option>
-                            <option value="Sort by name">Sort by name</option>
-                            <option value="Sort by date create">Sort by date create</option>
-                            <option value="Sort by date end">Sort by date end</option>                            
-                            <option value="Sort by stars">Sort by title</option>
-                            <option value="Sort by amount asking">Sort by amount asking</option>
-                            <option value="Sort by beneficiary">Sort by beneficiary</option>   
-                            </select>
+                    </div>
+                </div>
+                <div style = "display: none" id = "activated_filter" class="ui-grid-a">
+                    <div class="ui-block-a">
+                        <div id = "filter_activator" onclick = "REQUESTS.activated_hard_filter = 1; $.mobile.navigate('#filter-page-requests');" class="ui-input-btn ui-btn ui-btn-icon-right filter-active">
+                            <span>Filter is activated</span><input type="button" value="" data-enhanced="true" />
                         </div>
-                        <div>
-                            <select onchange="REQUESTS.filter_data()" name="sort_direction"><option value="down">Sort down</option>
-                                <option value="up">Sort up</option>
-                            </select>
+                    </div>
+                    <div class="ui-block-b">
+                        <div class="ui-input-btn ui-btn ui-btn-icon-right filter-clear">
+                             <span>Clear filter</span><input type="button" value="" onclick = "REQUESTS.init()" data-enhanced="true" />
                         </div>
-                        <div id = "solo_filter" onclick = "$.mobile.navigate('#filter-page-requests'); REQUESTS.activated_hard_filter = 1;  $('#requests-page #activated_filter').css('display', 'block'); $('#requests-page #solo_filter').css('display', 'none');" class="ui-grid-solo">
-                            <div class="ui-block-a">
-                                <div class="ui-input-btn ui-btn ui-btn-icon-right filter-normal">
-                                    <span>Filter</span><input type="button" value="" data-enhanced="true" />
-                                </div>
-                            </div>
-                        </div>
-                        <div style = "display: none" id = "activated_filter" class="ui-grid-a">
-                            <div class="ui-block-a">
-                                <div id = "filter_activator" onclick = "REQUESTS.activated_hard_filter = 1; $.mobile.navigate('#filter-page-requests');" class="ui-input-btn ui-btn ui-btn-icon-right filter-active">
-                                    <span>Filter is activated</span><input type="button" value="" data-enhanced="true" />
-                                </div>
-                            </div>
-                            <div class="ui-block-b">
-                                <div class="ui-input-btn ui-btn ui-btn-icon-right filter-clear">
-                                     <span>Clear filter</span><input type="button" value="" onclick = "REQUESTS.init()" data-enhanced="true" />
-                                </div>
-                            </div>
-                        </div></form>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
     <div role="main" class="ui-content">
         <a class="ui-btn ui-corner-all ui-shadow" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>
         <a style = "display:none" id = "create_link" class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate('#create-item?request=true')" href="#">Create request</a>
         <div id = "requests-list" class="requests-list">
-            <!--<div class="item ui-corner-all icon-program-star fund-raising">
-                <a href="#program-page">
-                    <div class="img">
-                        <img src="uploads/voting-img-1.jpg" />
-                    </div>
-                    <div class="info">
-                        <div class="title">
-                            ID: <strong>43465</strong> : <strong>Пресечение массовых выселений народа масаи</strong>
-                        </div>
-                        <div class="ui-grid-a">
-                            <div class="ui-block-a">
-                                <div class="country">
-                                    Украина, Одесса
-                                </div>
-                            </div>
-                            <div class="ui-block-b">
-                                <div class="status">
-                                    <span>Сбор средств</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="total-amount">
-                            <span>Нужное количество средств</span> - <strong>20000 ₴</strong>
-                        </div>
-                        <div class="amount up">
-                            <span>Собрано на данный момент</span> - <strong>12223 ₴</strong>
-                        </div>
-                        <div class="my-amount">
-                            <span>Мой вклад</span> - <strong>200 ₴</strong>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="item ui-corner-all icon-program-star fund-raising">
-                <a href="#program-page">
-                    <div class="img">
-                        <img src="uploads/voting-img-2.jpg" />
-                    </div>
-                    <div class="info">
-                        <div class="title">
-                            ID: <strong>43465</strong> : <strong>Пресечение массовых выселений народа масаи</strong>
-                        </div>
-                        <div class="ui-grid-a">
-                            <div class="ui-block-a">
-                                <div class="country">
-                                    Украина, Одесса
-                                </div>
-                            </div>
-                            <div class="ui-block-b">
-                                <div class="status">
-                                    <span>Сбор средств</span>
-                                </div>
-                            </div>
-                            <div class="amount down">
-                                <span>Собрано на данный момент</span> - <strong>12223 ₴</strong>
-                            </div>
-                            <div class="my-amount">
-                                <span>Мой вклад</span> - <strong>200 ₴</strong>
-                            </div>
-                            <div class="contractors">
-                                <span>Количество подрядчиков</span> - <strong>96</strong>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="item ui-corner-all icon-program-star">
-                <a href="#program-page">
-                    <div class="img">
-                        <img src="uploads/voting-img-3.jpg" />
-                    </div>
-                    <div class="info">
-                        <div class="title">
-                            ID: <strong>43465</strong> : <strong>Пресечение массовых выселений народа масаи</strong>
-                        </div>
-                        <div class="ui-grid-a">
-                            <div class="ui-block-a">
-                                <div class="country">
-                                    Украина, Одесса
-                                </div>
-                            </div>
-                            <div class="ui-block-b">
-                                <div class="status">
-                                    <span>Определение исполнителя</span>
-                                </div>
-                            </div>
-                            <div class="amount down">
-                                <span>Собрано на данный момент</span> - <strong>12223 ₴</strong>
-                            </div>
-                            <div class="my-amount">
-                                <span>Мой вклад</span> - <strong>200 ₴</strong>
-                            </div>
-                            <div class="contractors">
-                                <span>Количество подрядчиков</span> - <strong>96</strong>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="item ui-corner-all icon-program-star program-completed">
-                <a href="#program-page">
-                    <div class="img">
-                        <img src="uploads/voting-img-4.jpg" />
-                    </div>
-                    <div class="info">
-                        <div class="title">
-                            ID: <strong>43465</strong> : <strong>Пресечение массовых выселений народа масаи</strong>
-                        </div>
-                        <div class="ui-grid-a">
-                            <div class="ui-block-a">
-                                <div class="country">
-                                    Украина, Одесса
-                                </div>
-                            </div>
-                            <div class="ui-block-b">
-                                <div class="status">
-                                    <span>Успешно завершен</span>
-                                </div>
-                            </div>
-                            <div class="amount up">
-                                <span>Собрано на данный момент</span> - <strong>12223 ₴</strong>
-                            </div>
-                            <div class="my-amount">
-                                <span>Мой вклад</span> - <strong>200 ₴</strong>
-                            </div>
-                            <div class="contractors">
-                                <span>Количество подрядчиков</span> - <strong>96</strong>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="item ui-corner-all icon-program-star fund-raising">
-                <a href="#program-page">
-                    <div class="img">
-                        <img src="uploads/voting-img-4.jpg" />
-                    </div>
-                    <div class="info">
-                        <div class="title">
-                            ID: <strong>43465</strong> : <strong>Пресечение массовых выселений народа масаи</strong>
-                        </div>
-                        <div class="ui-grid-a">
-                            <div class="ui-block-a">
-                                <div class="country">
-                                    Украина, Одесса
-                                </div>
-                            </div>
-                            <div class="ui-block-b">
-                                <div class="status">
-                                    <span>Сбор средств</span>
-                                </div>
-                            </div>
-                            <div class="total-amount">
-                                <span>Нужное количество средств</span> - <strong>20000 ₴</strong>
-                            </div>
-                            <div class="amount up">
-                                <span>Собрано на данный момент</span> - <strong>12223 ₴</strong>
-                            </div>
-                            <div class="my-amount">
-                                <span>Мой вклад</span> - <strong>200 ₴</strong>
-                            </div>
-                            <div class="contractors">
-                                <span>Количество подрядчиков</span> - <strong>96</strong>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>-->
         </div>
     </div>
 </div>
 
 <div id="request-page" data-role="page">
-    <!--<div data-role="header" data-position="fixed" data-tap-toggle="false">
-        <h1>
-            Пресечение массовых выселений народа масаи
-        </h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" href="#request-page">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#request-help">Ask</a>
-        <div id="program-help" class="help-popup" data-role="popup">
-            <div class="title">
-                Description
-            </div>
-            <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in
-            </div>
-        </div>
-    </div>
-    <div role="main" class="ui-content">
-        <div id = "request-item" class="program-item">
-            <div class="img">
-                <img src="uploads/vote-img.jpg" />
-            </div>
-            <div class="program-item-inner">
-                <div class="stars-wrap">
-                    <span></span><span></span><span></span><span></span>
-                </div>
-                <div class="id">
-                    ID: <strong>43465 : Why has the German Grand Prix apparently foundered?</strong>
-                </div>
-                <div class="id">
-                    <span class="bg">ID: <strong>43465 : Why has the German Grand Prix apparently foundered?</strong></span>
-                </div>
-                <div class="username">
-                    <span class="bg">Беницифиар @<strong>username</strong></span>
-                </div>
-                <div class="username">
-                    By @<strong>username</strong>
-                </div>
-                <div class="status yellow">
-                    Сбор средств до 23.08.2015
-                </div>
-                <div class="total-amount">
-                    <span>Нужное количество средств</span> - <strong>20000 ₴</strong>
-                </div>
-                <div class="amount up">
-                    <span>Собрано на данный момент</span> - <strong>12223 ₴</strong>
-                </div>
-                <div class="my-amount">
-                    <span>Мой вклад</span> - <strong>200 ₴</strong>
-                </div>
-                <div class="nko-list">
-                    <div class="title">
-                        Список текущих предложений <strong>НКО</strong>:
-                    </div>
-                    <ol>
-                        <li>
-                            <span>John Appleseed</span>
-                        </li>
-                        <li>
-                            <span>Seed Applejohn</span>
-                        </li>
-                        <li>
-                            <span>Matt Berninger</span>
-                        </li>
-                        <li>
-                            <span>Walter White</span>
-                        </li>
-                    </ol>
-                </div>
-                <div class="nko-btn">
-                    <a class="ui-btn ui-corner-all ui-shadow" href="#">Выбрать НКО</a>
-                </div>
-                <div class="nko-status red">
-                    НКО не выбран
-                </div>
-                <div class="desc">
-                    <div class="text">
-                        Rent Boult then took four early wickets as New Zealand bowled out the Windies for 250 to seal a 143-run win.
-                        Gayle's 33-ball 61, featuring eight sixes, entertained the crowd as the Caribbean side scored at a furious pace.
-                        But they continued to lose wickets at regular intervals and were bowled out in 30.3 overs to spark jubilant scenes in the capital.
-                        New Zealand, semi-finalists for the seventh time, will now face South Africa in Auckland on Tuesday at 01:00 GMT, with both seeking a first World Cup final appearance. Glorious Guptill
-                        Embedding the video player This is the embedded player
-                        Out of media player. Press enter to return or tab to
-                        END - companion banner caption
-                        Cricket World Cup 2015: Martin Guptill leads New Zealand to semis
-                    </div>
-                    <div class="tag-list">
-                        <span>политика</span><span class="active">политика</span><span>политика</span><span>политика</span><span>политика</span><span>политика</span><span>политика</span><span>политика</span><span>политика</span><span>политика</span><span>политика</span><span>политика</span>
-                    </div>
-                </div>
-                <div class="discuss-btn">
-                    <a class="ui-btn ui-corner-all ui-shadow" href="#">Discussion of voting</a>
-                </div>
-                <div class="btn-login-soc">
-                    <button class="ui-btn ui-corner-all ui-shadow share-btn">Share by social Networks</button>
-                    <div class="social-wrap">
-                        <div class="title">
-                            Sign in by social Networks
-                        </div>
-                        <div class="ui-grid-b">
-                            <div class="ui-block-a">
-                                <a class="vk" href="#"></a>
-                            </div>
-                            <div class="ui-block-b">
-                                <a class="fb" href="#"></a>
-                            </div>
-                            <div class="ui-block-c">
-                                <a class="tw" href="#"></a>
-                            </div>
-                            <div class="ui-block-a">
-                                <a class="gp" href="#"></a>
-                            </div>
-                            <div class="ui-block-b">
-                                <a class="in" href="#"></a>
-                            </div>
-                            <div class="ui-block-c">
-                                <a class="ok" href="#"></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="sms-btn">
-                    <a class="ui-btn ui-corner-all ui-shadow" href="#">SMS</a>
-                </div>
-                <hr>
-                <div class="donate-wrap">
-                    <div class="ui-grid-a">
-                        <div class="ui-block-a">
-                            <div>
-                                <label>Choose PIF</label><select name=""><option value="PIF 2345">PIF 2345</option>
-                                <option value="PIF 123">PIF 123</option>
-                                <option value="PIF 6789">PIF 6789</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="ui-block-b">
-                            <div class="text-field">
-                                <label>Amount of money</label>
-                                <div class="ui-input-text">
-                                    <input type="text" name="" data-enhanced="true" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="ui-grid-solo">
-                        <div class="ui-block-a">
-                            <button class="ui-btn ui-corner-all ui-shadow donate-btn">Donate</button>
-                        </div>
-                    </div>
-                </div>
-                <hr>
-                <div class="btn-next-page">
-                    <a class="ui-btn ui-btn-icon-right" href="#">История сбора средств</a>
-                </div>
-                <div class="btn-next-page">
-                    <a class="ui-btn ui-btn-icon-right" href="#">Голосование по программе</a>
-                </div>
-                <div class="btn-next-page">
-                    <a class="ui-btn ui-btn-icon-right" href="#">Проектные предложения</a>
-                </div>
-            </div>
-        </div>
-    </div>-->
 </div>
 
 <div id="filter-page-requests" data-role="page">
@@ -2476,39 +1264,40 @@
     <div class="filters-panel">
         <div class="filters-panel-inner">
             <form action="" accept-charset="UTF-8" method="post">
-                        <div class="ui-input-search ui-input-has-clear">
-                            <input onkeyup="WEIGHTED_VOTINGS.filter_data()" onchange="WEIGHTED_VOTINGS.filter_data()" id = "searched_string" type="search" name="" placeholder="Search by ID or name" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">Clear text</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />
+                <div class="ui-input-search ui-input-has-clear">
+                    <input onkeyup="WEIGHTED_VOTINGS.filter_data()" onchange="WEIGHTED_VOTINGS.filter_data()" id = "searched_string" type="search" name="" placeholder="Search by ID or name" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">Clear text</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />
+                </div>
+                <div onchange = "WEIGHTED_VOTINGS.filter_data()">
+                    <select data-direct = "0" name="sort" placeholder="Sort by newest"><option value="Sort by newest">Sort by newest</option>
+                    <option value="Sort by stars">Sort by stars</option>
+                    <option value="Sort by supported">Sort by supported</option>
+                    </select>
+                </div>
+                <div>
+                    <select onchange="WEIGHTED_VOTINGS.filter_data()" name="sort_direction"><option value="down">Sort down</option>
+                        <option value="up">Sort up</option>
+                    </select>
+                </div>
+                <div id = "solo_filter" onclick = "$.mobile.navigate('#filter-page'); WEIGHTED_VOTINGS.activated_hard_filter = 1;  $('#weighted-votings-page #activated_filter').css('display', 'block'); $('#weighted-votings-page #solo_filter').css('display', 'none');" class="ui-grid-solo">
+                    <div class="ui-block-a">
+                        <div class="ui-input-btn ui-btn ui-btn-icon-right filter-normal">
+                            <span>Filter</span><input type="button" value="" data-enhanced="true" />
                         </div>
-                        <div onchange = "WEIGHTED_VOTINGS.filter_data()">
-                            <select data-direct = "0" name="sort" placeholder="Sort by newest"><option value="Sort by newest">Sort by newest</option>
-                            <option value="Sort by stars">Sort by stars</option>
-                            <option value="Sort by supported">Sort by supported</option>
-                            </select>
+                    </div>
+                </div>
+                <div style = "display: none" id = "activated_filter" class="ui-grid-a">
+                    <div class="ui-block-a">
+                        <div id = "filter_activator" onclick = "WEIGHTED_VOTINGS.activated_hard_filter = 1; $.mobile.navigate('#filter-page');" class="ui-input-btn ui-btn ui-btn-icon-right filter-active">
+                            <span>Filter is activated</span><input type="button" value="" data-enhanced="true" />
                         </div>
-                        <div>
-                            <select onchange="WEIGHTED_VOTINGS.filter_data()" name="sort_direction"><option value="down">Sort down</option>
-                                <option value="up">Sort up</option>
-                            </select>
+                    </div>
+                    <div class="ui-block-b">
+                        <div class="ui-input-btn ui-btn ui-btn-icon-right filter-clear">
+                             <span>Clear filter</span><input type="button" value="" onclick = "WEIGHTED_VOTINGS.init()" data-enhanced="true" />
                         </div>
-                        <div id = "solo_filter" onclick = "$.mobile.navigate('#filter-page'); WEIGHTED_VOTINGS.activated_hard_filter = 1;  $('#weighted-votings-page #activated_filter').css('display', 'block'); $('#weighted-votings-page #solo_filter').css('display', 'none');" class="ui-grid-solo">
-                            <div class="ui-block-a">
-                                <div class="ui-input-btn ui-btn ui-btn-icon-right filter-normal">
-                                    <span>Filter</span><input type="button" value="" data-enhanced="true" />
-                                </div>
-                            </div>
-                        </div>
-                        <div style = "display: none" id = "activated_filter" class="ui-grid-a">
-                            <div class="ui-block-a">
-                                <div id = "filter_activator" onclick = "WEIGHTED_VOTINGS.activated_hard_filter = 1; $.mobile.navigate('#filter-page');" class="ui-input-btn ui-btn ui-btn-icon-right filter-active">
-                                    <span>Filter is activated</span><input type="button" value="" data-enhanced="true" />
-                                </div>
-                            </div>
-                            <div class="ui-block-b">
-                                <div class="ui-input-btn ui-btn ui-btn-icon-right filter-clear">
-                                     <span>Clear filter</span><input type="button" value="" onclick = "WEIGHTED_VOTINGS.init()" data-enhanced="true" />
-                                </div>
-                            </div>
-                        </div></form>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
     <div role="main" class="ui-content">
@@ -2516,191 +1305,11 @@
         <a style = "display:none" id = "create_voting_link" class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate('#')" href="#">
         Create weighted voting</a>
         <div class="votings-list" id = 'votings_list'>
-            <!--<div class="item ui-corner-all icon-voting-star">
-                <a href="#">
-                    <div class="img">
-                        <img src="uploads/voting-img-1.jpg" />
-                    </div>
-                    <div class="info">
-                        <div class="title">
-                            ID: <strong>43465</strong> : <strong>Пресечение массовых выселений народа масаи</strong>
-                        </div>
-                        <div class="status">
-                            <span>Триває</span> <span>2014-09-03</span> - <span>2014-10-07</span>
-                        </div>
-                        <div class="count">
-                            <span>Голосов поддержки</span> <strong>234</strong>
-                        </div>
-                        <div class="total-count">
-                            <span>Общее количество голосов</span> <strong>2865</strong>
-                        </div>
-                        <div class="voting-line clearfix">
-                            <span class="left" style="width: 46%">46%</span><span class="middle" style="width: 31%">31%</span><span class="right" style="width: 23%">23%</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="item ui-corner-all icon-voting-star voting-completed">
-                <a href="#">
-                    <div class="img">
-                        <img src="uploads/voting-img-2.jpg" />
-                    </div>
-                    <div class="info">
-                        <div class="title">
-                            ID: <strong>43465</strong> : <strong>Пресечение массовых выселений народа масаи</strong>
-                        </div>
-                        <div class="status">
-                            <span>Голосування завершенно</span>
-                        </div>
-                        <div class="count">
-                            <span>Голосов поддержки</span> <strong>234</strong>
-                        </div>
-                        <div class="total-count">
-                            <span>Общее количество голосов</span> <strong>2865</strong>
-                        </div>
-                        <div class="voting-line clearfix">
-                            <span class="left" style="width: 46%">46%</span><span class="middle" style="width: 31%">31%</span><span class="right" style="width: 23%">23%</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="item ui-corner-all icon-voting-star voting-supporters">
-                <div class="img">
-                    <img src="uploads/voting-img-3.jpg" />
-                </div>
-                <div class="info">
-                    <div class="title">
-                        ID: <strong>43465</strong> : <strong>Пресечение массовых выселений народа масаи</strong>
-                    </div>
-                    <div class="status">
-                        <span>Збирає прихильників до</span> <span>2015-01-01</span>
-                    </div>
-                    <div class="count">
-                        <span>Голосов поддержки</span> <strong>234/1500</strong>
-                    </div>
-                    <div class="total-count">
-                        <span>Общее количество голосов</span> <strong>2865</strong>
-                    </div>
-                    <div class="voting-line clearfix">
-                        <span class="left" style="width: 46%">46%</span><span class="middle" style="width: 31%">31%</span><span class="right" style="width: 23%">23%</span>
-                    </div>
-                </div>
-            </div>
-            <div class="item ui-corner-all voting-canceled">
-                <div class="img">
-                    <img src="uploads/voting-img-4.jpg" />
-                </div>
-                <div class="info">
-                    <div class="title">
-                        ID: <strong>43465</strong> : <strong>Пресечение массовых выселений народа масаи</strong>
-                    </div>
-                    <div class="status">
-                        <span>Голосування відхиленно</span>
-                    </div>
-                    <div class="count">
-                        <span>Голосов поддержки</span> <strong>234</strong>
-                    </div>
-                    <div class="total-count">
-                        <span>Общее количество голосов</span> <strong>2865</strong>
-                    </div>
-                    <div class="voting-line clearfix">
-                        <span class="left" style="width: 46%">46%</span><span class="middle" style="width: 31%">31%</span><span class="right" style="width: 23%">23%</span>
-                    </div>
-                </div>
-            </div>-->
         </div>
     </div>
 </div>
 
 <div id="weighted-vote-page" data-role="page">
-    <!--<div data-role="header" data-position="fixed" data-tap-toggle="false">
-        <h1>
-            Пресечение массовых выселений народа масаи
-        </h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" href="#my-votings-page">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#vote-help">Ask</a>
-        <div id="vote-help" class="help-popup" data-role="popup">
-            <div class="title">
-                Description
-            </div>
-            <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in
-            </div>
-        </div>
-    </div>
-    <div role="main" class="ui-content">
-        <div class="vote-item">
-            <div class="img">
-                <img src="uploads/vote-img.jpg" />
-            </div>
-            <div class="vote-item-inner">
-                <div class="stars-wrap">
-                    <span></span><span></span><span></span><span></span>
-                </div>
-                <div class="id">
-                    ID: <strong>43465 : Why has the German Grand Prix apparently foundered?</strong>
-                </div>
-                <div class="username">
-                    By @<strong>username</strong>
-                </div>
-                <div class="address">
-                    Sphere  - OSMD - м.Київ, вул.Хрещатик 1 - Транспорт
-                </div>
-                <div class="num-votes-support">
-                    Number of votes of support
-                    <div class="counter">
-                        <span>23400/50000</span><strong>Support</strong>
-                    </div>
-                </div>
-                <div class="collect">
-                    Collect supporters 2014-09-03 - 2014-10-07
-                </div>
-                <div class="desc">
-                    Rent Boult then took four early wickets as New Zealand bowled out the Windies for 250 to seal a 143-run win.
-                    Gayle's 33-ball 61, featuring eight sixes, entertained the crowd as the Caribbean side scored at a furious pace.
-                    But they continued to lose wickets at regular intervals and were bowled out in 30.3 overs to spark jubilant scenes in the capital.
-                    New Zealand, semi-finalists for the seventh time, will now face South Africa in Auckland on Tuesday at 01:00 GMT, with both seeking a first World Cup final appearance. Glorious Guptill
-                    Embedding the video player This is the embedded player
-                    Out of media player. Press enter to return or tab to
-                    END - companion banner caption
-                    Cricket World Cup 2015: Martin Guptill leads New Zealand to semis
-                </div>
-                <div class="discuss-btn">
-                    <a class="ui-btn ui-corner-all ui-shadow" href="#">Discussion of voting</a>
-                </div>
-                <div class="btn-login-soc">
-                    <button class="ui-btn ui-corner-all ui-shadow share-btn">Share by social Networks</button>
-                    <div class="social-wrap">
-                        <div class="title">
-                            Sign in by social Networks
-                        </div>
-                        <div class="ui-grid-b">
-                            <div class="ui-block-a">
-                                <a class="vk" href="#"></a>
-                            </div>
-                            <div class="ui-block-b">
-                                <a class="fb" href="#"></a>
-                            </div>
-                            <div class="ui-block-c">
-                                <a class="tw" href="#"></a>
-                            </div>
-                            <div class="ui-block-a">
-                                <a class="gp" href="#"></a>
-                            </div>
-                            <div class="ui-block-b">
-                                <a class="in" href="#"></a>
-                            </div>
-                            <div class="ui-block-c">
-                                <a class="ok" href="#"></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="sms-btn">
-                    <a class="ui-btn ui-corner-all ui-shadow" href="#">SMS</a>
-                </div>
-            </div>
-        </div>
-    </div>-->
 </div>
 
 <div id="my-fund-page" data-role="page">
@@ -2933,7 +1542,6 @@
     </div>
 </div>
 
-
 <div id="create-pif-page" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Create Personal Fund</h1>
@@ -2959,7 +1567,6 @@
                 </div></form>
     </div>
 </div>
-
 
 <div id="decision-making" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
@@ -3005,7 +1612,6 @@
     </div>
 </div>
 
-
 <div id="public-proposals" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Public proposals</h1>
@@ -3036,7 +1642,6 @@
     </div>
 </div>
 
-
 <div id="local-self-governments" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Local self-governments</h1>
@@ -3064,7 +1669,6 @@
     </div>
 </div>
 
-
 <div id="co-owners" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Co-owners and co-investors</h1>
@@ -3090,7 +1694,6 @@
         
     </div>
 </div>
-
 
 <div id="parties" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
@@ -3119,7 +1722,6 @@
     </div>
 </div>
 
-
 <div id="primaries" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Primaries, elections, exit-polls</h1>
@@ -3145,7 +1747,6 @@
  
     </div>
 </div>
-
 
 <div id="future" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
@@ -3498,7 +2099,6 @@
     </div>
 </div>
 
-
 <div id="balances-pif-page" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1 class="long-title">Personal Fund History</h1>
@@ -3513,124 +2113,6 @@
         </div>
     </div>
     <div role="main" class="ui-content">
-        <!--<form action="" accept-charset="UTF-8" method="post">
-                <fieldset class="date-group" data-role="controlgroup" data-type="horizontal">
-                    <legend>Enter first date</legend><select name=""><option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                    <option value="13">13</option>
-                    <option value="14">14</option>
-                    <option value="15">15</option>
-                    <option value="16">16</option>
-                    <option value="17">17</option>
-                    <option value="18">18</option>
-                    <option value="19">19</option>
-                    <option value="20">20</option>
-                    <option value="21">21</option>
-                    <option value="22">22</option>
-                    <option value="23">23</option>
-                    <option value="24">24</option>
-                    <option value="25">25</option>
-                    <option value="26">26</option>
-                    <option value="27">27</option>
-                    <option value="28">28</option>
-                    <option value="29">29</option>
-                    <option value="30">30</option>
-                    <option value="31">31</option>
-                    </select><select name=""><option value="January">January</option>
-                    <option value="February">February</option>
-                    <option value="March">March</option>
-                    <option value="April">April</option>
-                    <option value="May">May</option>
-                    <option value="June">June</option>
-                    <option value="July">July</option>
-                    <option value="August">August</option>
-                    <option value="September">September</option>
-                    <option value="October">October</option>
-                    <option value="November">November</option>
-                    <option value="December">December</option>
-                    </select><select name=""><option value="1990">1990</option>
-                    <option value="1991">1991</option>
-                    <option value="1992">1992</option>
-                    <option value="1993">1993</option>
-                    <option value="1994">1994</option>
-                    <option value="1995">1995</option>
-                    <option value="1996">1996</option>
-                    <option value="1997">1997</option>
-                    <option value="1997">1997</option>
-                    <option value="1999">1999</option>
-                    <option value="2000">2000</option>
-                    </select>
-                </fieldset>
-                <fieldset class="date-group" data-role="controlgroup" data-type="horizontal">
-                    <legend>Enter last date</legend><select name=""><option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                    <option value="13">13</option>
-                    <option value="14">14</option>
-                    <option value="15">15</option>
-                    <option value="16">16</option>
-                    <option value="17">17</option>
-                    <option value="18">18</option>
-                    <option value="19">19</option>
-                    <option value="20">20</option>
-                    <option value="21">21</option>
-                    <option value="22">22</option>
-                    <option value="23">23</option>
-                    <option value="24">24</option>
-                    <option value="25">25</option>
-                    <option value="26">26</option>
-                    <option value="27">27</option>
-                    <option value="28">28</option>
-                    <option value="29">29</option>
-                    <option value="30">30</option>
-                    <option value="31">31</option>
-                    </select><select name=""><option value="January">January</option>
-                    <option value="February">February</option>
-                    <option value="March">March</option>
-                    <option value="April">April</option>
-                    <option value="May">May</option>
-                    <option value="June">June</option>
-                    <option value="July">July</option>
-                    <option value="August">August</option>
-                    <option value="September">September</option>
-                    <option value="October">October</option>
-                    <option value="November">November</option>
-                    <option value="December">December</option>
-                    </select><select name=""><option value="1990">1990</option>
-                    <option value="1991">1991</option>
-                    <option value="1992">1992</option>
-                    <option value="1993">1993</option>
-                    <option value="1994">1994</option>
-                    <option value="1995">1995</option>
-                    <option value="1996">1996</option>
-                    <option value="1997">1997</option>
-                    <option value="1997">1997</option>
-                    <option value="1999">1999</option>
-                    <option value="2000">2000</option>
-                    </select>
-                </fieldset>
-                <div class="btn-results">
-                    <input type="submit" value="Показать результаты" class="ui-btn ui-btn-corner-all ui-shadow" />
-                </div></form>-->
         <table>
             <tbody id = "content_table">
                 <tr>
@@ -3744,98 +2226,6 @@
     <div role="main" class="ui-content">
         <a class="ui-btn ui-corner-all ui-shadow" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>
         <div class="votings-list" id = 'votings_list'>
-            <!--<div class="item ui-corner-all icon-voting-star">
-                <a href="#">
-                    <div class="img">
-                        <img src="uploads/voting-img-1.jpg" />
-                    </div>
-                    <div class="info">
-                        <div class="title">
-                            ID: <strong>43465</strong> : <strong>Пресечение массовых выселений народа масаи</strong>
-                        </div>
-                        <div class="status">
-                            <span>Триває</span> <span>2014-09-03</span> - <span>2014-10-07</span>
-                        </div>
-                        <div class="count">
-                            <span>Голосов поддержки</span> <strong>234</strong>
-                        </div>
-                        <div class="total-count">
-                            <span>Общее количество голосов</span> <strong>2865</strong>
-                        </div>
-                        <div class="voting-line clearfix">
-                            <span class="left" style="width: 46%">46%</span><span class="middle" style="width: 31%">31%</span><span class="right" style="width: 23%">23%</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="item ui-corner-all icon-voting-star voting-completed">
-                <a href="#">
-                    <div class="img">
-                        <img src="uploads/voting-img-2.jpg" />
-                    </div>
-                    <div class="info">
-                        <div class="title">
-                            ID: <strong>43465</strong> : <strong>Пресечение массовых выселений народа масаи</strong>
-                        </div>
-                        <div class="status">
-                            <span>Голосування завершенно</span>
-                        </div>
-                        <div class="count">
-                            <span>Голосов поддержки</span> <strong>234</strong>
-                        </div>
-                        <div class="total-count">
-                            <span>Общее количество голосов</span> <strong>2865</strong>
-                        </div>
-                        <div class="voting-line clearfix">
-                            <span class="left" style="width: 46%">46%</span><span class="middle" style="width: 31%">31%</span><span class="right" style="width: 23%">23%</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="item ui-corner-all icon-voting-star voting-supporters">
-                <div class="img">
-                    <img src="uploads/voting-img-3.jpg" />
-                </div>
-                <div class="info">
-                    <div class="title">
-                        ID: <strong>43465</strong> : <strong>Пресечение массовых выселений народа масаи</strong>
-                    </div>
-                    <div class="status">
-                        <span>Збирає прихильників до</span> <span>2015-01-01</span>
-                    </div>
-                    <div class="count">
-                        <span>Голосов поддержки</span> <strong>234/1500</strong>
-                    </div>
-                    <div class="total-count">
-                        <span>Общее количество голосов</span> <strong>2865</strong>
-                    </div>
-                    <div class="voting-line clearfix">
-                        <span class="left" style="width: 46%">46%</span><span class="middle" style="width: 31%">31%</span><span class="right" style="width: 23%">23%</span>
-                    </div>
-                </div>
-            </div>
-            <div class="item ui-corner-all voting-canceled">
-                <div class="img">
-                    <img src="uploads/voting-img-4.jpg" />
-                </div>
-                <div class="info">
-                    <div class="title">
-                        ID: <strong>43465</strong> : <strong>Пресечение массовых выселений народа масаи</strong>
-                    </div>
-                    <div class="status">
-                        <span>Голосування відхиленно</span>
-                    </div>
-                    <div class="count">
-                        <span>Голосов поддержки</span> <strong>234</strong>
-                    </div>
-                    <div class="total-count">
-                        <span>Общее количество голосов</span> <strong>2865</strong>
-                    </div>
-                    <div class="voting-line clearfix">
-                        <span class="left" style="width: 46%">46%</span><span class="middle" style="width: 31%">31%</span><span class="right" style="width: 23%">23%</span>
-                    </div>
-                </div>
-            </div>-->
         </div>
     </div>
 </div>
@@ -3903,337 +2293,10 @@
 </div>
 
 <div id="my-vote-page" data-role="page">
-    <!--<div data-role="header" data-position="fixed" data-tap-toggle="false">
-        <h1>
-            Пресечение массовых выселений народа масаи
-        </h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" href="#my-votings-page">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#vote-help">Ask</a>
-        <div id="vote-help" class="help-popup" data-role="popup">
-            <div class="title">
-                Description
-            </div>
-            <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in
-            </div>
-        </div>
-    </div>
-    <div role="main" class="ui-content">
-        <div class="vote-item">
-            <div class="img">
-                <img src="uploads/vote-img.jpg" />
-            </div>
-            <div class="vote-item-inner">
-                <div class="stars-wrap">
-                    <span></span><span></span><span></span><span></span>
-                </div>
-                <div class="id">
-                    ID: <strong>43465 : Why has the German Grand Prix apparently foundered?</strong>
-                </div>
-                <div class="username">
-                    By @<strong>username</strong>
-                </div>
-                <div class="address">
-                    Sphere  - OSMD - м.Київ, вул.Хрещатик 1 - Транспорт
-                </div>
-                <div class="num-votes-support">
-                    Number of votes of support
-                    <div class="counter">
-                        <span>23400/50000</span><strong>Support</strong>
-                    </div>
-                </div>
-                <div class="collect">
-                    Collect supporters 2014-09-03 - 2014-10-07
-                </div>
-                <div class="desc">
-                    Rent Boult then took four early wickets as New Zealand bowled out the Windies for 250 to seal a 143-run win.
-                    Gayle's 33-ball 61, featuring eight sixes, entertained the crowd as the Caribbean side scored at a furious pace.
-                    But they continued to lose wickets at regular intervals and were bowled out in 30.3 overs to spark jubilant scenes in the capital.
-                    New Zealand, semi-finalists for the seventh time, will now face South Africa in Auckland on Tuesday at 01:00 GMT, with both seeking a first World Cup final appearance. Glorious Guptill
-                    Embedding the video player This is the embedded player
-                    Out of media player. Press enter to return or tab to
-                    END - companion banner caption
-                    Cricket World Cup 2015: Martin Guptill leads New Zealand to semis
-                </div>
-                <div class="discuss-btn">
-                    <a class="ui-btn ui-corner-all ui-shadow" href="#">Discussion of voting</a>
-                </div>
-                <div class="btn-login-soc">
-                    <button class="ui-btn ui-corner-all ui-shadow share-btn">Share by social Networks</button>
-                    <div class="social-wrap">
-                        <div class="title">
-                            Sign in by social Networks
-                        </div>
-                        <div class="ui-grid-b">
-                            <div class="ui-block-a">
-                                <a class="vk" href="#"></a>
-                            </div>
-                            <div class="ui-block-b">
-                                <a class="fb" href="#"></a>
-                            </div>
-                            <div class="ui-block-c">
-                                <a class="tw" href="#"></a>
-                            </div>
-                            <div class="ui-block-a">
-                                <a class="gp" href="#"></a>
-                            </div>
-                            <div class="ui-block-b">
-                                <a class="in" href="#"></a>
-                            </div>
-                            <div class="ui-block-c">
-                                <a class="ok" href="#"></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="sms-btn">
-                    <a class="ui-btn ui-corner-all ui-shadow" href="#">SMS</a>
-                </div>
-            </div>
-        </div>
-    </div>-->
 </div>
-
 
 <div id="vote-page-full" data-role="page">
-    <!--<div data-role="header" data-position="fixed" data-tap-toggle="false">
-        <h1>
-            Пресечение массовых выселений народа масаи
-        </h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" href="#votings-page">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#vote-help">Ask</a>
-        <div id="vote-help" class="help-popup" data-role="popup">
-            <div class="title">
-                Description
-            </div>
-            <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in
-            </div>
-        </div>
-    </div>
-    <div role="main" class="ui-content">
-        <div class="vote-item">
-            <div class="img">
-                <img src="uploads/vote-img.jpg" />
-            </div>
-            <div class="vote-item-inner">
-                <div class="stars-wrap">
-                    <span></span><span></span><span></span><span></span>
-                </div>
-                <div class="id">
-                    ID: <strong>43465 : Why has the German Grand Prix apparently foundered?</strong>
-                </div>
-                <div class="username">
-                    By @<strong>username</strong>
-                </div>
-                <div class="address">
-                    Sphere  - OSMD - м.Київ, вул.Хрещатик 1 - Транспорт
-                </div>
-                <div class="num-votes-support">
-                    Number of votes of support
-                    <div class="counter">
-                        <span>23400</span>
-                    </div>
-                </div>
-                <div class="collect">
-                    Collect supporters 2014-09-03 - 2014-10-07
-                </div>
-                <div class="desc">
-                    Rent Boult then took four early wickets as New Zealand bowled out the Windies for 250 to seal a 143-run win.
-                    Gayle's 33-ball 61, featuring eight sixes, entertained the crowd as the Caribbean side scored at a furious pace.
-                    But they continued to lose wickets at regular intervals and were bowled out in 30.3 overs to spark jubilant scenes in the capital.
-                    New Zealand, semi-finalists for the seventh time, will now face South Africa in Auckland on Tuesday at 01:00 GMT, with both seeking a first World Cup final appearance. Glorious Guptill
-                    Embedding the video player This is the embedded player
-                    Out of media player. Press enter to return or tab to
-                    END - companion banner caption
-                    Cricket World Cup 2015: Martin Guptill leads New Zealand to semis
-                </div>
-                <div class="discuss-btn">
-                    <a class="ui-btn ui-corner-all ui-shadow" href="#">Discussion of voting</a>
-                </div>
-                <div class="btn-login-soc">
-                    <button class="ui-btn ui-corner-all ui-shadow share-btn">Share by social Networks</button>
-                    <div class="social-wrap">
-                        <div class="title">
-                            Sign in by social Networks
-                        </div>
-                        <div class="ui-grid-b">
-                            <div class="ui-block-a">
-                                <a class="vk" href="#"></a>
-                            </div>
-                            <div class="ui-block-b">
-                                <a class="fb" href="#"></a>
-                            </div>
-                            <div class="ui-block-c">
-                                <a class="tw" href="#"></a>
-                            </div>
-                            <div class="ui-block-a">
-                                <a class="gp" href="#"></a>
-                            </div>
-                            <div class="ui-block-b">
-                                <a class="in" href="#"></a>
-                            </div>
-                            <div class="ui-block-c">
-                                <a class="ok" href="#"></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="sms-btn">
-                    <a class="ui-btn ui-corner-all ui-shadow" href="#">SMS</a>
-                </div>
-                <div class="results-wrap">
-                    <div class="results-label">
-                        Results of votes:
-                    </div>
-                    <div class="num-voters">
-                        Number of Voters - 2346
-                    </div>
-                    <div class="voting-line clearfix">
-                        <span class="left" style="width: 46%">46%</span><span class="middle" style="width: 31%">31%</span><span class="right" style="width: 23%">23%</span>
-                    </div>
-                    <div class="ui-grid-b charts-wrap">
-                        <div class="ui-block-a">
-                            <div class="chart">
-                                <canvas id="chart-1" width="80" height="80"></canvas>
-                                <div class="info">
-                                    <div>
-                                        Yes:<br>4322
-                                    </div>
-                                    <div>
-                                        Abstain:<br>129
-                                    </div>
-                                    <div>
-                                        No:<br>4322
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="title">
-                                Group number four
-                            </div>
-                        </div>
-                        <div class="ui-block-b">
-                            <div class="chart">
-                                <canvas id="chart-2" width="80" height="80"></canvas>
-                                <div class="info">
-                                    <div>
-                                        Yes:<br>4322
-                                    </div>
-                                    <div>
-                                        Abstain:<br>129
-                                    </div>
-                                    <div>
-                                        No:<br>4322
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="title">
-                                Group number four
-                            </div>
-                        </div>
-                        <div class="ui-block-c">
-                            <div class="chart">
-                                <canvas id="chart-3" width="80" height="80"></canvas>
-                                <div class="info">
-                                    <div>
-                                        Yes:<br>4322
-                                    </div>
-                                    <div>
-                                        Abstain:<br>129
-                                    </div>
-                                    <div>
-                                        No:<br>4322
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="title">
-                                Group number four
-                            </div>
-                        </div>
-                        <div class="ui-block-a">
-                            <div class="chart">
-                                <canvas id="chart-4" width="80" height="80"></canvas>
-                                <div class="info">
-                                    <div>
-                                        Yes:<br>4322
-                                    </div>
-                                    <div>
-                                        Abstain:<br>129
-                                    </div>
-                                    <div>
-                                        No:<br>4322
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="title">
-                                Group number four
-                            </div>
-                        </div>
-                        <div class="ui-block-b">
-                            <div class="chart">
-                                <canvas id="chart-5" width="80" height="80"></canvas>
-                                <div class="info">
-                                    <div>
-                                        Yes:<br>4322
-                                    </div>
-                                    <div>
-                                        Abstain:<br>129
-                                    </div>
-                                    <div>
-                                        No:<br>4322
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="title">
-                                Group number four
-                            </div>
-                        </div>
-                        <div class="ui-block-c">
-                            <div class="chart">
-                                <canvas id="chart-6" width="80" height="80"></canvas>
-                                <div class="info">
-                                    <div>
-                                        Yes:<br>4322
-                                    </div>
-                                    <div>
-                                        Abstain:<br>129
-                                    </div>
-                                    <div>
-                                        No:<br>4322
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="title">
-                                Group number four
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <form action="" accept-charset="UTF-8" method="post">
-                                <fieldset class="vote-radio-group" data-role="controlgroup" data-type="horizontal">
-                                    <legend>Vote yes, no or i don’t know:</legend>
-                                    <div class="ui-radio">
-                                        <label class="ui-btn ui-radio-off btn-yes">Yes</label><input type="radio" name="vote" value="yes" data-enhanced="true">
-                                    </div>
-                                    <div class="ui-radio">
-                                        <label class="ui-btn ui-radio-off btn-abstain">Abstain</label><input type="radio" name="vote" value="abstain" data-enhanced="true">
-                                    </div>
-                                    <div class="ui-radio">
-                                        <label class="ui-btn ui-radio-off btn-no">No</label><input type="radio" name="vote" value="no" data-enhanced="true">
-                                    </div>
-                                </fieldset>
-                                <div class="ui-checkbox">
-                                    <label class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Turn on open (not anonymous) vote</label><input type="checkbox" name="" value="1" data-enhanced="true" />
-                                </div>
-                                <div class="selected-text">
-                                    You have selected "No" (anonymous)
-                                </div></form>
-                <div class="btn-next-page">
-                    <a class="ui-btn ui-btn-icon-right" href="#voters-page">View the list of public voters</a>
-                </div>
-            </div>
-        </div>
-    </div>-->
 </div>
-
 
 <div id="voters-page" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
@@ -4579,31 +2642,6 @@
     <div role="main" class="ui-content">
         <form action="" accept-charset="UTF-8" method="post" onsubmit = "">
                 <fieldset id = "sphere_form">
-                    <!--<legend>Choose sphere</legend>
-                    <div>
-                        <select name="general_offers" onclick = "$.mobile.navigate('#create-vote'); $('#create-vote [name=sph]').val(1); $('#create_vote_sphere').html('Choose spheres: General offers')"><option style = "display:none"  value="General offers">General offers</option>
-                        </select>
-                    </div>
-                    <div>
-                        <select name="local_autorities" onclick = "$.mobile.navigate('#create-vote'); $('#create-vote [name=sph]').val(2); $('#create_vote_sphere').html('Choose spheres: Local authorities')"><option style = "display:none"  value="Local authorities">Local authorities</option>
-                        </select>
-                    </div>
-                    <div>
-                        <select name="osmd" onclick = "$.mobile.navigate('#create-vote'); $('#create-vote [name=sph]').val(3); $('#create_vote_sphere').html('Choose spheres: OSMD')"><option style = "display:none"  value="OSMD">OSMD</option>
-                        </select>
-                    </div>
-                    <div>
-                        <select name="public_organization" onclick = "$.mobile.navigate('#create-vote'); $('#create-vote [name=sph]').val(4); $('#create_vote_sphere').html('Choose spheres: Public orrganization')"><option style = "display:none" value="Public orrganization">Public orrganization</option>
-                        </select>
-                    </div>
-                    <div>
-                        <select name="maidan" onclick = "$.mobile.navigate('#create-vote'); $('#create-vote [name=sph]').val(5); $('#create_vote_sphere').html('Choose spheres: Maidan')"><option style = "display:none"  value="Maidan">Maidan</option>
-                        </select>
-                    </div>
-                    <div>
-                        <select name="primaries" onclick = "$.mobile.navigate('#create-vote'); $('#create-vote [name=sph]').val(6); $('#create_vote_sphere').html('Choose spheres: Primaries')"><option style = "display:none"  value="Primaries">Primaries</option>
-                        </select>
-                    </div>-->
                 </fieldset>
             </form>
     </div>
@@ -4624,182 +2662,6 @@
     </div>
     <div role="main" class="ui-content">
         <div id = "news_list" class="news-list">
-            <!--<div class="item ui-corner-all news-icon news-icon-1">
-                <div class="img">
-                    <img src="uploads/news-img-1.jpg" />
-                </div>
-                <div class="info">
-                    <div class="date">
-                        10.05.2015 - 23:45
-                    </div>
-                    <div class="title">
-                        England avoid ignominy with soggy nine-wicket
-                    </div>
-                    <div class="author">
-                        <span>news by</span> <strong>@username</strong>
-                    </div>
-                </div>
-            </div>
-            <div class="item ui-corner-all news-icon news-icon-2">
-                <div class="img">
-                    <img src="uploads/news-img-2.jpg" />
-                </div>
-                <div class="info">
-                    <div class="date">
-                        10.05.2015 - 23:45
-                    </div>
-                    <div class="title">
-                        England avoid ignominy with soggy nine-wicket
-                    </div>
-                    <div class="author">
-                        <span>news by</span> <strong>@username</strong>
-                    </div>
-                </div>
-            </div>
-            <div class="item ui-corner-all news-icon news-icon-3">
-                <div class="img">
-                    <img src="uploads/news-img-3.jpg" />
-                </div>
-                <div class="info">
-                    <div class="date">
-                        10.05.2015 - 23:45
-                    </div>
-                    <div class="title">
-                        England avoid ignominy with soggy nine-wicket
-                    </div>
-                    <div class="author">
-                        <span>news by</span> <strong>@username</strong>
-                    </div>
-                </div>
-            </div>
-            <div class="item ui-corner-all news-icon news-icon-4">
-                <div class="img">
-                    <img src="uploads/news-img-4.jpg" />
-                </div>
-                <div class="info">
-                    <div class="date">
-                        10.05.2015 - 23:45
-                    </div>
-                    <div class="title">
-                        England avoid ignominy with soggy nine-wicket
-                    </div>
-                    <div class="author">
-                        <span>news by</span> <strong>@username</strong>
-                    </div>
-                </div>
-            </div>
-            <div class="item ui-corner-all news-icon news-icon-5">
-                <div class="img">
-                    <img src="uploads/news-img-5.jpg" />
-                </div>
-                <div class="info">
-                    <div class="date">
-                        10.05.2015 - 23:45
-                    </div>
-                    <div class="title">
-                        England avoid ignominy with soggy nine-wicket
-                    </div>
-                    <div class="author">
-                        <span>news by</span> <strong>@username</strong>
-                    </div>
-                </div>
-            </div>
-            <div class="item ui-corner-all news-icon news-icon-6">
-                <div class="img">
-                    <img src="uploads/news-img-6.jpg" />
-                </div>
-                <div class="info">
-                    <div class="date">
-                        10.05.2015 - 23:45
-                    </div>
-                    <div class="title">
-                        England avoid ignominy with soggy nine-wicket
-                    </div>
-                    <div class="author">
-                        <span>news by</span> <strong>@username</strong>
-                    </div>
-                </div>
-            </div>
-            <div class="item ui-corner-all news-icon news-icon-7">
-                <div class="img">
-                    <img src="uploads/news-img-7.jpg" />
-                </div>
-                <div class="info">
-                    <div class="date">
-                        10.05.2015 - 23:45
-                    </div>
-                    <div class="title">
-                        England avoid ignominy with soggy nine-wicket
-                    </div>
-                    <div class="author">
-                        <span>news by</span> <strong>@username</strong>
-                    </div>
-                </div>
-            </div>
-            <div class="item ui-corner-all news-icon news-icon-8">
-                <div class="img">
-                    <img src="uploads/news-img-8.jpg" />
-                </div>
-                <div class="info">
-                    <div class="date">
-                        10.05.2015 - 23:45
-                    </div>
-                    <div class="title">
-                        England avoid ignominy with soggy nine-wicket
-                    </div>
-                    <div class="author">
-                        <span>news by</span> <strong>@username</strong>
-                    </div>
-                </div>
-            </div>
-            <div class="item ui-corner-all news-icon news-icon-9">
-                <div class="img">
-                    <img src="uploads/news-img-9.jpg" />
-                </div>
-                <div class="info">
-                    <div class="date">
-                        10.05.2015 - 23:45
-                    </div>
-                    <div class="title">
-                        England avoid ignominy with soggy nine-wicket
-                    </div>
-                    <div class="author">
-                        <span>news by</span> <strong>@username</strong>
-                    </div>
-                </div>
-            </div>
-            <div class="item ui-corner-all news-icon news-icon-10">
-                <div class="img">
-                    <img src="uploads/news-img-10.jpg" />
-                </div>
-                <div class="info">
-                    <div class="date">
-                        10.05.2015 - 23:45
-                    </div>
-                    <div class="title">
-                        England avoid ignominy with soggy nine-wicket
-                    </div>
-                    <div class="author">
-                        <span>news by</span> <strong>@username</strong>
-                    </div>
-                </div>
-            </div>
-            <div class="item ui-corner-all news-icon news-icon-11">
-                <div class="img">
-                    <img src="uploads/news-img-11.jpg" />
-                </div>
-                <div class="info">
-                    <div class="date">
-                        10.05.2015 - 23:45
-                    </div>
-                    <div class="title">
-                        England avoid ignominy with soggy nine-wicket
-                    </div>
-                    <div class="author">
-                        <span>news by</span> <strong>@username</strong>
-                    </div>
-                </div>
-            </div>-->
         </div>
     </div>
 </div>
@@ -4856,120 +2718,6 @@
             </select>
         </div>
         <div id = "trust_list_all" class="trust-list">
-            <!--<div class="item ui-corner-all">
-                <div class="avatar">
-                    <img src="uploads/voter-avatar-3.png" />
-                </div>
-                <div class="osmd-list">
-                    <div>
-                        OSMD: Medicine
-                    </div>
-                    <div>
-                        OSMD: Transport
-                    </div>
-                    <div>
-                        OSMD: Law
-                    </div>
-                    <div>
-                        OSMD: Sport
-                    </div>
-                </div>
-                <div class="ui-grid-a">
-                    <div class="ui-block-a">
-                        <div class="id">
-                            ID:2452
-                        </div>
-                        <div class="name">
-                            Carine Berninger
-                        </div>
-                        <a class="ui-btn ui-corner-all" href="#">Trust vote</a>
-                    </div>
-                    <div class="ui-block-b">
-                        <div>
-                            <img class="ui-corner-all" src="images/trust-icon-vk.png" /><img class="ui-corner-all" src="images/trust-icon-fb.png" /><img class="ui-corner-all" src="images/trust-icon-tw.png" /><img class="ui-corner-all" src="images/trust-icon-ok.png" /><img class="ui-corner-all" src="images/trust-icon-gp.png" /><img class="ui-corner-all" src="images/trust-icon-in.png" />
-                        </div>
-                        <div>
-                            <img class="ui-corner-all" src="images/trust-icon-email.png" /><img class="ui-corner-all" src="images/trust-icon-wallet.png" /><img class="ui-corner-all" src="images/trust-icon-password.png" /><img class="ui-corner-all" src="images/trust-icon-community.png" /><img class="ui-corner-all" src="images/trust-icon-house.png" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="item ui-corner-all">
-                <div class="avatar">
-                    <img src="uploads/voter-avatar-6.png" />
-                </div>
-                <div class="osmd-list">
-                    <div>
-                        OSMD: Medicine
-                    </div>
-                    <div>
-                        OSMD: Transport
-                    </div>
-                    <div>
-                        OSMD: Law
-                    </div>
-                    <div>
-                        OSMD: Sport
-                    </div>
-                </div>
-                <div class="ui-grid-a">
-                    <div class="ui-block-a">
-                        <div class="id">
-                            ID:2452
-                        </div>
-                        <div class="name">
-                            Carine Berninger
-                        </div>
-                        <a class="ui-btn ui-corner-all" href="#">Trust vote</a>
-                    </div>
-                    <div class="ui-block-b">
-                        <div>
-                            <img class="ui-corner-all" src="images/trust-icon-vk.png" /><img class="ui-corner-all" src="images/trust-icon-fb.png" /><img class="ui-corner-all" src="images/trust-icon-tw.png" /><img class="ui-corner-all" src="images/trust-icon-ok.png" /><img class="ui-corner-all" src="images/trust-icon-gp.png" /><img class="ui-corner-all" src="images/trust-icon-in.png" />
-                        </div>
-                        <div>
-                            <img class="ui-corner-all" src="images/trust-icon-email.png" /><img class="ui-corner-all" src="images/trust-icon-wallet.png" /><img class="ui-corner-all" src="images/trust-icon-password.png" /><img class="ui-corner-all" src="images/trust-icon-community.png" /><img class="ui-corner-all" src="images/trust-icon-house.png" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="item ui-corner-all">
-                <div class="avatar">
-                    <img src="uploads/voter-avatar-2.png" />
-                </div>
-                <div class="osmd-list">
-                    <div>
-                        OSMD: Medicine
-                    </div>
-                    <div>
-                        OSMD: Transport
-                    </div>
-                    <div>
-                        OSMD: Law
-                    </div>
-                    <div>
-                        OSMD: Sport
-                    </div>
-                </div>
-                <div class="ui-grid-a">
-                    <div class="ui-block-a">
-                        <div class="id">
-                            ID:2452
-                        </div>
-                        <div class="name">
-                            Carine Berninger
-                        </div>
-                        <a class="ui-btn ui-corner-all" href="#">Trust vote</a>
-                    </div>
-                    <div class="ui-block-b">
-                        <div>
-                            <img class="ui-corner-all" src="images/trust-icon-vk.png" /><img class="ui-corner-all" src="images/trust-icon-fb.png" /><img class="ui-corner-all" src="images/trust-icon-tw.png" /><img class="ui-corner-all" src="images/trust-icon-ok.png" /><img class="ui-corner-all" src="images/trust-icon-gp.png" /><img class="ui-corner-all" src="images/trust-icon-in.png" />
-                        </div>
-                        <div>
-                            <img class="ui-corner-all" src="images/trust-icon-email.png" /><img class="ui-corner-all" src="images/trust-icon-wallet.png" /><img class="ui-corner-all" src="images/trust-icon-password.png" /><img class="ui-corner-all" src="images/trust-icon-community.png" /><img class="ui-corner-all" src="images/trust-icon-house.png" />
-                        </div>
-                    </div>
-                </div>
-            </div>-->
         </div>
     </div>
 </div>
@@ -5034,7 +2782,6 @@
         </li>
     </ul>
 </div>
-
 
 </body>
 </html>
