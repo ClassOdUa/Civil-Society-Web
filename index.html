@@ -958,11 +958,14 @@
         </div>
     </div>
     <div role="main" class="ui-content">
-        <a class="ui-btn ui-corner-all ui-shadow" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>
+        <a  id = "filter_slider"  class="ui-btn ui-corner-all ui-shadow" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>
         <a style = "display:none" id = "create_link" class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate('#create-item?program=true')" href="#">Create program</a>
         <div id = "programs-list" class="programs-list">
         </div>
     </div>
+</div>
+
+<div id="program-page" data-role="page">
 </div>
 
 <div id="filter-page-programs" data-role="page">
@@ -1071,7 +1074,7 @@
         </div>
     </div>
     <div role="main" class="ui-content">
-        <a class="ui-btn ui-corner-all ui-shadow" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>
+        <a  id = "filter_slider"  class="ui-btn ui-corner-all ui-shadow" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>
         <a style = "display:none" id = "create_link" class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate('#create-item?project=true')" href="#">
          Create project</a>
         <a style = "display:none" id = "create_proposition_link" class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate('#')" href="#">
@@ -1189,7 +1192,7 @@
         </div>
     </div>
     <div role="main" class="ui-content">
-        <a class="ui-btn ui-corner-all ui-shadow" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>
+        <a  id = "filter_slider"  class="ui-btn ui-corner-all ui-shadow" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>
         <a style = "display:none" id = "create_link" class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate('#create-item?request=true')" href="#">Create request</a>
         <div id = "requests-list" class="requests-list">
         </div>
@@ -1301,7 +1304,7 @@
         </div>
     </div>
     <div role="main" class="ui-content">
-        <a class="ui-btn ui-corner-all ui-shadow" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>
+        <a  id = "filter_slider" class="ui-btn ui-corner-all ui-shadow" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>
         <a style = "display:none" id = "create_voting_link" class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate('#')" href="#">
         Create weighted voting</a>
         <div class="votings-list" id = 'votings_list'>
@@ -2204,7 +2207,7 @@
                 <div id = "solo_filter" onclick = "$.mobile.navigate('#filter-page'); VOTINGS.activated_hard_filter = 1;  $('#votings-page #activated_filter').css('display', 'block'); $('#votings-page #solo_filter').css('display', 'none');" class="ui-grid-solo">
                     <div class="ui-block-a">
                         <div class="ui-input-btn ui-btn ui-btn-icon-right filter-normal">
-                            <span>Filter</span><input type="button" value="" data-enhanced="true" />
+                            <span >Filter</span><input type="button" value="" data-enhanced="true" />
                         </div>
                     </div>
                 </div>
@@ -2224,7 +2227,7 @@
         </div>
     </div>
     <div role="main" class="ui-content">
-        <a class="ui-btn ui-corner-all ui-shadow" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>
+        <a  id = "filter_slider"  class="ui-btn ui-corner-all ui-shadow" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>
         <div class="votings-list" id = 'votings_list'>
         </div>
     </div>
@@ -2282,7 +2285,7 @@
         </div>
     </div>
     <div role="main" class="ui-content">
-    <a class="ui-btn ui-corner-all ui-shadow" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>        
+    <a  id = "filter_slider"  class="ui-btn ui-corner-all ui-shadow" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>        
         <a class="ui-btn ui-corner-all ui-shadow" href="#create-vote">Создать голосование</a>
         <div class="votings-list" id = 'votings_list'>
         </div>

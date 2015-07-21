@@ -1,4 +1,8 @@
 var LOCALE_ARRAY = [
+{selector: '#main-page .name h1',
+	en: 'Civil<br />Society',
+	ru: 'Гражданское<br />общество',
+	ua: 'Громадянське<br />Суспільство'},
 {selector: '#main-page .ui-title',
 	en: 'Log in',
 	ru: 'Вход',
@@ -15,7 +19,8 @@ var LOCALE_ARRAY = [
 	en: 'Remember me',
 	ru: 'Запомнить меня',
 	ua: 'Запам\'ятати мене'},
-{selector: '#main-page .btn-login .ui-btn.ui-shadow.ui-corner-all',	 en: 'Log In',
+{selector: '#main-page .btn-login .ui-btn.ui-shadow.ui-corner-all',
+	en: 'Log In',
 	ru: 'Войти',
 	ua: 'Ввійти'},
 {selector: '#main-page .ui-btn.ui-btn-inline.ui-corner-all.ui-btn-reg',
@@ -207,13 +212,13 @@ var LOCALE_ARRAY = [
 	ru: 'Мои программы',
 	ua: 'Мої програми'},
 {selector: '#my-activities-page [data-link=#my_project_propositions-page]',
-	en: 'My projects on Call',
-	ru: 'Мои проекты по вызову',
-	ua: 'Мої проекти за викликом'},
+	en: 'My project proposals',
+	ru: 'Мои проектные предложения',
+	ua: 'Мої проектні пропозиції'},
 {selector: '#my-activities-page [data-link=#weighted-votings-page]',
-	en: 'My weighted votings on programs',
-	ru: 'Мои взвешенные голосования по программам',
-	ua: 'Мої зважені голосування за програмами'},
+	en: 'My weighted votings',
+	ru: 'Мои взвешенные голосования',
+	ua: 'Мої зважені голосування'},
 {selector: '#my-activities-page [data-link=#my_project-page]',
 	en: 'My projects',
 	ru: 'Мои проекты',
@@ -258,8 +263,8 @@ var LOCALE_ARRAY = [
 	ua: 'Стрічка новин длозволяє переглянути останню інформацію про важливі для вас речі.'},
 {selector: '#help #help-help .title',
 	en: 'Help for Help :)',
-	ru: 'Помощь раздела Помощь',
-	ua: 'Допомога розділу Допомога'},
+	ru: 'Помощь раздела Помощь :)',
+	ua: 'Допомога розділу Допомога :)'},
 {selector: '#help #help-help .text', 
 	en: 'Just scroll it down to find most help information', 
 	ru: 'Просто крутите вниз в поисках основной информации', 
@@ -267,13 +272,37 @@ var LOCALE_ARRAY = [
 
 {selector: '#help .ui-content',
 	en: '<h2>Civil Society app</h2>is a powerful tool for decision making and implementation. The Civil Society app provides citizens with new possibilities for cooperation and solving various problems, improving their environment, implementing the most relevant, progressive and demanded ideas in communities as well as global initiatives. For this purposes the Civil Society app has next basic functions: income, accumulation and management of the resources, different algorithms for common decision-making, further transformation of resources into outputs and social impact, support of informational environment.<br /><br />An application tools are conventionally divided into 4 modules: decision-making, social investment, social entrepreneurship, and the information environment. Decision-making tools may be used by members of various associations (condominiums, NGOs, political parties, co-investors of program, local communities), local authorities, as well as for primaries, elections and the exit polls. Usually, a person cannot be competent in all areas so most of the Civil Society app\'s tools allow users to act directly or intermediary at their own discretion. For example, during decision-making for concrete question user can vote directly, or delegate his/her voice to the respected expert with the ability to revoke his/her voice at any time before making a decision. There are also next additional services: trust list (to delegate voice with targeting for difference types and spheres), user\'s identification with a help of payment method and BankID (to minimize risk of fakes etc.), and user profile information. App\'s uses Twitter as a platform for discussions with the ability to use other specialised external resources. App\'s has its own unit of account “ICAN” for using in volunteer systems.<br />',
-	ru: 'Помощь раздела Помощь',
+	ru: '<h2>Civil Society app (Гражданское общество)</h2> - это мощный инструмент для принятия и реализации решений гражданским обществом. С его помощью можно кооперироваться с другими людьми и решать  различные проблемы, улучшать свое жизненное пространство, внедрять наиболее актуальные, прогрессивные и востребованные в сообществе идеи, реализовывать глобальные инициативы. Civil Society app охватывает основные ключевые функции для этих задач: поступление, накопление и управление ресурсами, принятие коллективных решений по различным алгоритмам, трансформация ресурсов в конечные продукты и социальное воздействие (Social Impact), поддержка информационной среды.<br />Главная цель команды разработчиков на данном этапе: создание инструмента с таким функционалом, которой позволит пользователям далее максимально самостоятельно развивать этот проект на основе самоуправления.  Созданные инструменты приложения условно делятся на 4 модуля:  принятия решений, социального инвестирования, социального предпринимательства и информационной среды. Механизмы принятия решений могут использоваться членами различных объединений (ОСМД, ОСН, общественные организации, партии, соинвесторы, территориальные сообщества), органами местного самоуправления, а также для проведения территориальных праймериз, выборов и экзит полов. Поскольку человек не может быть компетентен во всех сферах, большинство инструментов Civil Society app позволяют пользователю действовать непосредственно или опосредствованно по собственному усмотрению. Например, пользователь может голосовать при принятии решений непосредственно, или делегировать свой голос авторитетному для себя эксперту, с возможностью отозвать свой голос в любой момент до принятия решения. Дополнительные службы: лист доверия, идентификация достоверности данных пользователя по платежу, BankID, профиль пользователя, справка. В качестве платформы для обсуждений используется Твиттер с возможностью использования других специализированных внешних ресурсов. Реализована расчетная единица ICAN для использования в волонтерских системах, а также для игровых компонентов и геймификации.<br />В настоящее время реализована веб-версия на gurtom.mobi (на стадии тестирования) с локализацией для UA, EN, RU, а также будут реализованы мобильные версии для iOS, Android, Windows mobile. Civil Society app реализуется на открытом коде поэтапно с учетом решения вопросов безопасности. С момента выхода стартовой версии stable разработчики действуют наравне с другими пользователями, используя реализованные инструменты для новых сервисов и проектов. Дальнейшее развитие Civil Society app может осуществляться пользователями в двух направлениях: 1) модификация инструмента последовательными апгрейдами (новые уровни кибербезопасности, новые процедуры, инструменты, сервисы и т.п.); 2) создание собственных (поддержка действующих) внешних проектов с интеграцией инструментов Civil Soceity app по API.<br />Civil Society app направлен на достижение качественно нового уровня сотрудничества людей в цифровую эпоху<br />Этот приложение будет полезно для внедрения активного гражданства (life-long active citizenship), электронной демократии (e-democracy), социального инвестирования (social investment), социального предпринимательства (social entrepreneurship), для реагирования на местные проблемы и глобальные вызовы',
 	ua: 'Допомога розділу Допомога'},
 
 {selector: '#votings-page .ui-title',
 	en: 'Decision-making',
 	ru: 'Принятие решений',
 	ua: 'Прийняття рішень'},
+{selector: '#votings-page #filter_slider',
+	en: 'Filter panel',
+	ru: 'Панель фильтров',
+	ua: 'Панель фільтрів'},
+{selector: '#programs-page #filter_slider',
+	en: 'Filter panel',
+	ru: 'Панель фильтров',
+	ua: 'Панель фільтрів'},
+{selector: '#my-votings-page #filter_slider',
+	en: 'Filter panel',
+	ru: 'Панель фильтров',
+	ua: 'Панель фільтрів'},
+{selector: '#projects-page #filter_slider',
+	en: 'Filter panel',
+	ru: 'Панель фильтров',
+	ua: 'Панель фільтрів'},
+{selector: '#requests-page #filter_slider',
+	en: 'Filter panel',
+	ru: 'Панель фильтров',
+	ua: 'Панель фільтрів'},
+{selector: '#weighted-votings-page #filter_slider',
+	en: 'Filter panel',
+	ru: 'Панель фильтров',
+	ua: 'Панель фільтрів'},
 {selector: '#votings-page .count > span',
 	en: 'Suported',
 	ru: 'Голосов поддержки',
@@ -327,9 +356,9 @@ var LOCALE_ARRAY = [
 	ru: 'Сохранить',
 	ua: 'Зберегти'},
 {selector: '#profile-page .ui-title',
-	en: 'Edit Profile',
-	ru: 'Настройка Профиля',
-	ua: 'Налаштування Профілю'},
+	en: 'Profile',
+	ru: 'Профиль',
+	ua: 'Профіль'},
 {selector: '#profile-page .ui-btn-right.ui-btn.ui-icon-check.ui-btn-icon-right',
 	en: 'Save',
 	ru: 'Сохранить',
@@ -350,6 +379,7 @@ var LOCALE_ARRAY = [
 	en: 'Sign in by social Networks to increace your authorisation status', 
 	ru: 'Войдите через Социальные сети для повышения вашего статуса авторизации', 
 	ua: 'Увійдіть за допомогою Соціальних мереж для підвищення вашого статусу авторизації'},
+
 {selector: '#profile-page #change-password > label',
 	en: 'Change password here',
 	ru: 'Сменить пароль здесь',
@@ -558,7 +588,7 @@ var LOCALE_ARRAY = [
 	en: 'My tasks',
 	ru: 'Мои задачи',
 	ua: 'Мої задачі'},
-{selector: '#left-panel .menu-icon-options',
+{selector: '.menu-icon-options',
 	en: 'Options',
 	ru: 'Настройки',
 	ua: 'Настройки'},
@@ -694,6 +724,13 @@ var LOCALE_ARRAY = [
 	en: 'Edit Address',
 	ru: 'Редактировать адрес',
 	ua: 'Редагувати адресу'},
+{selector: '#public-proposals .ui-header .ui-title',
+	en: 'Public proposals',
+	ru: 'Общественные предложения',
+	ua: 'Громадські пропозиції'},
+	
+	
+	
 {selector: '#address-item-1 .ui-title',
 	en: 'Edit Address1',
 	ru: 'Редактировать адрес1',
@@ -1026,6 +1063,7 @@ var LOCALE_ARRAY = [
 	en: 'First name',
 	ru: 'Имя',
 	ua: 'Ім\'я'},
+		
 ];
 
 var LOCALE_ARRAY_ADDITIONAL = { 
@@ -1191,8 +1229,8 @@ news_by: {
 	ua: "Опубліковано"},
 support: {
 	en: "Support",
-	ru: "По поддержке",
-	ua: "По підтримці"},
+	ru: "Поддержать",
+	ua: "Підтримати"},
 not_support: {
 	en: "Not support",
 	ru: "Не поддержано",
@@ -1252,9 +1290,9 @@ yes: {
 	ru: "Да",
 	ua: "Так"},
 abstain: {
-	en: "Reformulate",
-	ru: "Переформулировать",
-	ua: "Переформулювати"},
+	en: "Abstain",
+	ru: "Воздержался",
+	ua: "Утримався"},
 no: {
 	en: "No",
 	ru: "Нет",
@@ -1281,6 +1319,7 @@ anonymus: {
 	ua: "Анонім"},
 
 /*NOT TRANSLATED 18.06.2015*/
+
 help_voting_period_finished: {
 	en: "help_voting_period_finished",
 	ru: "help_voting_period_finished",
@@ -1332,7 +1371,7 @@ co_owners: {
 view_list_public_voters: {
 	en: "View the list of public voters",
 	ru: "Просмотреть список голосовавших открыто",
-	ua: "Перешлянути список проголосувавших відкрито"},
+	ua: "Переглянути список проголосувавших відкрито"},
 voters: {
 	en: "Voters",
 	ru: "Голосовавших",
@@ -1533,4 +1572,8 @@ local_self_goverments: {
 	en: "Local self-governments", 
 	ru: "Голосования по вопросам огрганов местного самоуправления", 
 	ua: "Голосування з питань органів місцевого самоврядування"},
+only_for_donators: {
+	en: "This option avaialable only for donators", 
+	ru: "Эта опция доступна только для пожертвователей", 
+	ua: "Ця опція доступна тільки для пожертвувачів"},
 };
