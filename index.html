@@ -1330,39 +1330,6 @@
     </div>
     <div role="main" class="ui-content">
         <div class="fund-list">
-            <div class="item ui-corner-all">
-                <div>
-                    <strong>PIF</strong> <span>2245678</span>
-                </div>
-                <div>
-                    <strong>Тип валюты:</strong> <span>UAH (украинская гривна)</span>
-                </div>
-                <div>
-                    <strong>Остаток на счету:</strong> <span>2 346 UAH</span>
-                </div>
-            </div>
-            <div class="item ui-corner-all">
-                <div>
-                    <strong>PIF</strong> <span>2245678</span>
-                </div>
-                <div>
-                    <strong>Тип валюты:</strong> <span>UAH (украинская гривна)</span>
-                </div>
-                <div>
-                    <strong>Остаток на счету:</strong> <span>2 346 UAH</span>
-                </div>
-            </div>
-            <div class="item ui-corner-all">
-                <div>
-                    <strong>PIF</strong> <span>2245678</span>
-                </div>
-                <div>
-                    <strong>Тип валюты:</strong> <span>UAH (украинская гривна)</span>
-                </div>
-                <div>
-                    <strong>Остаток на счету:</strong> <span>2 346 UAH</span>
-                </div>
-            </div>
         </div>
         <div class="section-wrap">
             <div class="section-title">
@@ -1412,23 +1379,23 @@
     <div role="main" class="ui-content">
         <form action="" accept-charset="UTF-8" onsubmit = "return false;" method="post">
                 <div class="select-field">
-                    <label>Выбрать PIF</label><select id = "select_pif" name="fund_id"><option value="PIF ID232 Остаток 0">PIF ID232 Остаток 0</option>
+                    <label id = "choose-fund-label">Выбрать PIF</label><select id = "select_pif" name="fund_id"><option value="PIF ID232 Остаток 0">PIF ID232 Остаток 0</option>
                     </select>
                 </div>
                 <div class="text-field">
-                    <label>Укажите ID получателя</label>
+                    <label id = "choose-user-label">Укажите ID получателя</label>
                     <div class="ui-input-text">
                         <input  type="text" name="user_id" placeholder="1246" data-enhanced="true" />
                     </div>
                 </div>
                 <div class="text-field">
-                    <label>Укажите сумму перевода</label>
+                    <label id = "set-amount-label">Укажите сумму перевода</label>
                     <div class="ui-input-text">
                         <input type="text" name="amount" placeholder="3000" data-enhanced="true" />
                     </div>
                 </div>
                 <div class="btn-create">
-                    <input onclick = "funds.set_cash()" type="submit" value="Перевести" class="ui-btn ui-btn-corner-all ui-shadow" />
+                    <input id = "transaction-label" onclick = "funds.set_cash()" type="submit" value="Перевести" class="ui-btn ui-btn-corner-all ui-shadow" />
                 </div></form>
     </div>
 </div>
@@ -1913,28 +1880,28 @@
             </div>
         </div>
         <div class="text-field">
-            <label>Description*</label><textarea name="descr" rows="" cols="" class="" data-role="none"></textarea>
+            <label id = "description-label">Description*</label><textarea name="descr" rows="" cols="" class="" data-role="none"></textarea>
         </div>
         <div class="text-field">
-            <label>Separate hashtags with commas</label>
+            <label id = "tags-label">Separate hashtags with commas</label>
             <div class="ui-input-text">
                 <input type="text" name="tags" placeholder="politic, human, sport, world" data-enhanced="true" />
             </div>
         </div>
         <div id = "curr" class="select-field">
-            <label>Choose currency</label><select name="curr"></select>
+            <label id = "curr-label">Choose currency</label><select name="curr"></select>
         </div>
         <div id = "amount" class="text-field">
-            <label>The required amount of funds</label>
+            <label id = "amount-label">The required amount of funds</label>
             <div class="ui-input-text">
                 <input type="text" name="amount" placeholder="10000" data-enhanced="true" />
             </div>
         </div>
         <div class="ui-input-file">
-            <input style = "cursor:pointer" onclick = "$('#create-item [name=picture]').click()" name="" data-enhanced="true" /><span>Upload avatar of this item*</span>
+            <input style = "cursor:pointer" onclick = "$('#create-item [name=picture]').click()" name="" data-enhanced="true" /><span id = "photo-label">Upload avatar of this item*</span>
         </div>
         <fieldset id = "start" class="date-group" data-role="controlgroup" data-type="horizontal">
-            <legend>Enter first date</legend><select name="start_date"><option value="1">1</option>
+            <legend id = "first-date-label">Enter first date</legend><select name="start_date"><option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
             <option value="4">4</option>
@@ -1991,7 +1958,7 @@
             </select>
         </fieldset>
         <fieldset id = "dtex" class="date-group" data-role="controlgroup" data-type="horizontal">
-            <legend>Enter last date</legend><select name="dtex_date"><option value="1">1</option>
+            <legend id = "last-date-label">Enter last date</legend><select name="dtex_date"><option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
             <option value="4">4</option>
@@ -2048,24 +2015,24 @@
             </select>
         </fieldset>
         <div id = "program_id" class="text-field">
-            <label>Type ID of program</label>
+            <label id = "id-program-label">Type ID of program</label>
             <div class="ui-input-text">
                 <input type="text" name="program_id" placeholder="10000" data-enhanced="true" />
             </div>
         </div>
         <div id = "ben" class="text-field">
-            <label>Type name of beneficiar</label>
+            <label id = "beneficiar-label">Type name of beneficiar</label>
             <div class="ui-input-text">
                 <input type="text" name="ben" placeholder="Beneficiar" data-enhanced="true" />
             </div>
         </div>
 
         <div class="btn-nko">
-            <input type="submit" onclick = "$.mobile.navigate('#create-item-nko-page')" value="Выбрать НКО" class="ui-btn ui-btn-corner-all ui-shadow" />
+            <input id = "choose-nco-label" type="submit" onclick = "$.mobile.navigate('#create-item-nko-page')" value="Выбрать НКО" class="ui-btn ui-btn-corner-all ui-shadow" />
             <input type = "hidden" name = "nco" value = "">
         </div>
         <div class="btn-create">
-            <input id = "submit" onclick = "$('#additional_photo_form').submit()" type="submit" value="Create" class="ui-btn ui-btn-corner-all ui-shadow" />
+            <input id = "create-label" id = "submit" onclick = "$('#additional_photo_form').submit()" type="submit" value="Create" class="ui-btn ui-btn-corner-all ui-shadow" />
         </div></form>
 
         <div style = "display:none">

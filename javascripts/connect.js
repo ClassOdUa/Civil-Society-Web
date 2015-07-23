@@ -103,6 +103,7 @@ window.onload = function(){
 
 		if(location.href.indexOf('#weighted-votings-page') > -1 || location.href.indexOf('#weighted-vote-page?vote=') > -1){
 			WEIGHTED_VOTINGS.init();
+			$('#weighted-votings-page select').selectmenu().selectmenu("refresh", true);
 		}
 
 		if(location.href.indexOf('#news-page') > -1){
@@ -113,16 +114,19 @@ window.onload = function(){
 		if(location.href.indexOf('#programs-page') > -1){
 			console.log('load programs');
 			PROGRAMS.init();
+			$('#programs-page select').selectmenu().selectmenu("refresh", true);
 		}
 
 		if(location.href.indexOf('#projects-page') > -1){
 			console.log('load projects');
 			PROJECTS.init();
+			$('#projects-page select').selectmenu().selectmenu("refresh", true);
 		}
 
 		if(location.href.indexOf('#requests-page') > -1){
 			console.log('load requests');
 			REQUESTS.init();
+			$('#requests-page select').selectmenu().selectmenu("refresh", true);
 		}
 
 		if(location.href.indexOf('#create-item-nko-page') > -1){
@@ -458,6 +462,7 @@ window.onhashchange = function(){
 		&& PROGRAMS.activated_easy_filter != 1){
 		console.log('load programs');
 		PROGRAMS.init();
+		$('#programs-page select').selectmenu().selectmenu("refresh", true);
 	}
 
 	if(location.href.indexOf('#projects-page') > -1
@@ -472,6 +477,7 @@ window.onhashchange = function(){
 		&& REQUESTS.activated_easy_filter != 1){
 		console.log('load requests');
 		REQUESTS.init();
+		$('#requests-page select').selectmenu().selectmenu("refresh", true);
 	}
 
 	if(location.href.indexOf('#my-fund-page') > -1 && location.href.indexOf('&ui-state=dialog') == -1){
@@ -490,6 +496,7 @@ window.onhashchange = function(){
 
 	if(location.href.indexOf('#weighted-votings-page') > -1 || location.href.indexOf('#vote-page?vote=') > -1){
 		WEIGHTED_VOTINGS.init();
+		$('#weighted-votings-page select').selectmenu().selectmenu("refresh", true);
 	}
 
 	if(location.href.indexOf('#trust-list') > -1 && SUPER_PROFILE.auth == true){
@@ -1142,7 +1149,7 @@ var HISTORY_PAGE = {
 
 		    	ui_funds += '<div data-role="header" data-position="fixed" data-tap-toggle="false">\
 							        <h1 class="long-title">\
-							            История сбора средств\
+							            ' + LOCALE_ARRAY_ADDITIONAL.history_donation[CURRENT_LANG] + '\
 							        </h1>\
 							        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#request-history-help">Ask</a>\
 							        <div id="request-history-help" class="help-popup" data-role="popup" data-history="false">\
@@ -1161,21 +1168,21 @@ var HISTORY_PAGE = {
 							                    <div class="my-amount">\
 							                        <strong>\
 							                        	' + my_add + '\
-							                         ' + main_currency + '</strong><span>Мой вклад</span>\
+							                         ' + main_currency + '</strong><span>' + LOCALE_ARRAY_ADDITIONAL.my_cash[CURRENT_LANG] + '</span>\
 							                    </div>\
 							                </div>\
 							                <div class="ui-block-b">\
 							                    <div class="amount up">\
 							                        <strong>\
 							                        ' + amount_current + '\
-							                         ' + main_currency + '</strong><span>Собранно на данный момент</span>\
+							                         ' + main_currency + '</strong><span>' + LOCALE_ARRAY_ADDITIONAL.amount_current[CURRENT_LANG] + '</span>\
 							                    </div>\
 							                </div>\
 							                <div class="ui-block-c">\
 							                    <div class="total-amount">\
 							                        <strong>\
 							                        ' + amount_asking + '\
-							                        ' + main_currency + '</strong><span>Нужное количество</span>\
+							                        ' + main_currency + '</strong><span>' + LOCALE_ARRAY_ADDITIONAL.amount_asking[CURRENT_LANG] + '</span>\
 							                    </div>\
 							                </div>\
 							            </div>\
@@ -1183,13 +1190,13 @@ var HISTORY_PAGE = {
 							                <thead>\
 							                    <tr>\
 							                        <td>\
-							                            Дата и время\
+							                            ' + LOCALE_ARRAY_ADDITIONAL.date_and_time[CURRENT_LANG] + '\
 							                        </td>\
 							                        <td>\
-							                            ФИО\
+							                            ' + LOCALE_ARRAY_ADDITIONAL.fio[CURRENT_LANG] + '\
 							                        </td>\
 							                        <td>\
-							                            Сумма\
+							                            ' + LOCALE_ARRAY_ADDITIONAL.amount_of_money[CURRENT_LANG] + '\
 							                        </td>\
 							                    </tr>\
 							                </thead>\
@@ -1334,14 +1341,14 @@ var PIF = {
 		    		var ui_donate_panel = '<div class="ui-grid-a">\
 					                        <div class="ui-block-a">\
 					                            <div>\
-					                                <label>Choose Personal Fund</label><select name="pif">\
+					                                <label>' + LOCALE_ARRAY_ADDITIONAL.choose_personal_fund[CURRENT_LANG] + '</label><select name="pif">\
 					                                ' + ui_pif_option + '\
 					                                </select>\
 					                            </div>\
 					                        </div>\
 					                        <div class="ui-block-b">\
 					                            <div class="text-field">\
-					                                <label>Amount of money</label>\
+					                                <label>' + LOCALE_ARRAY_ADDITIONAL.amount_of_money[CURRENT_LANG] + '</label>\
 					                                <div class="ui-input-text">\
 					                                    <input type="text" name="amount" data-enhanced="true" />\
 					                                </div>\
@@ -1350,11 +1357,11 @@ var PIF = {
 					                    </div>\
 					                    <div class="ui-grid-solo">\
 					                        <div class="ui-block-a">\
-					                            <button onclick = "' + object_name + '.donate(\'' + special_type + '\', ' + id_object + ', ' + code_type_object + ')" class="ui-btn ui-corner-all ui-shadow donate-btn">Donate</button>\
+					                            <button onclick = "' + object_name + '.donate(\'' + special_type + '\', ' + id_object + ', ' + code_type_object + ')" class="ui-btn ui-corner-all ui-shadow donate-btn">' + LOCALE_ARRAY_ADDITIONAL.donate[CURRENT_LANG] + '</button>\
 					                        </div>\
 					                        <div class="ui-block-a center">\
 					                            <div class="ui-checkbox">\
-					                                <label id = "anonimous_check" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Anonymous donation</label><input type="checkbox" name="" value="1" data-enhanced="true" />\
+					                                <label id = "anonimous_check" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">' + LOCALE_ARRAY_ADDITIONAL.anonymous_donation[CURRENT_LANG] + '</label><input type="checkbox" name="" value="1" data-enhanced="true" />\
 					                            </div>\
 					                        </div>\
 					                    </div>\
@@ -1390,7 +1397,7 @@ var PROJECTS = {
 		self.data_last_item = 10;
 		$('#projects-page #searched_string').val('');
 		
-		$('#projects-page #ui_title').html('Projects');
+		$('#projects-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.projects[CURRENT_LANG]);
 		$('#projects-page #create_link').attr('style','display: none');
 		$('#projects-page #create_propositions_link').attr('style','display: none');
 		$('#projects-page #create_proposition_link').attr('style', 'display: none');
@@ -1406,7 +1413,7 @@ var PROJECTS = {
 			var match_array = location.href.match(/#projects-page\?program=[0-9]*/i);
 			var object_id = match_array[0].match(/[0-9]+/i);
 			var url = 'http://gurtom.mobi/project_propositions.php?program_id=' + object_id;
-			$('#projects-page #ui_title').html('Projects propositions');
+			$('#projects-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.projects_propositions[CURRENT_LANG]);
 			var return_to = '#program-page?program=' + object_id;
 			$('#projects-page #menu_link').attr('style', 'display:block');
 			$('#projects-page #create_proposition_link').attr('style', 'display:block');
@@ -1414,13 +1421,13 @@ var PROJECTS = {
 			$('#projects-page #my_activities_link').attr('style', 'display:none');
 		}else if(location.href.indexOf('#projects-page?my_project=true') > -1){
 			var url = 'http://gurtom.mobi/project.php?my=1';
-			$('#projects-page #ui_title').html('My projects');
+			$('#projects-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.my_projects[CURRENT_LANG]);
 			$('#projects-page #create_link').attr('style','display: block');
 			$('#projects-page #menu_link').attr('style', 'display:none');
 			$('#projects-page #my_activities_link').attr('style', 'display:block');
 		}else if(location.href.indexOf('#projects-page?my_project_propositions=true') > -1){
 			var url = 'http://gurtom.mobi/project_propositions.php?my=1';
-			$('#projects-page #ui_title').html('My projects propositions');
+			$('#projects-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.my_projects_propositions[CURRENT_LANG]);
 			$('#projects-page #menu_link').attr('style', 'display:none');
 			$('#projects-page #my_activities_link').attr('style', 'display:block');
 		}else{
@@ -1899,10 +1906,10 @@ var PROJECTS = {
 
     	if(SUPER_PROFILE.id == data_for_build.creator_id){
 			var nco_button = '<div class="nko-btn">\
-			                    <a class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate(\'#nko-page?project=' + data_for_build.id + '\')" href="#">Выбрать НКО</a>\
+			                    <a class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate(\'#nko-page?project=' + data_for_build.id + '\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.choose_nco[CURRENT_LANG] + '</a>\
 			                </div>\
 			                <div class="nko-status red">\
-			                    НКО не выбран\
+			                    ' + LOCALE_ARRAY_ADDITIONAL.nco_not_selected[CURRENT_LANG] + '\
 			                </div>';
 		}else{
 			var nco_button = '';
@@ -1913,14 +1920,14 @@ var PROJECTS = {
 	    		var ui_donate_panel = '<div class="ui-grid-a">\
 				                        <div class="ui-block-a">\
 				                            <div>\
-				                                <label>Choose Personal Fund</label><select name="pif">\
+				                                <label>' + LOCALE_ARRAY_ADDITIONAL.choose_personal_fund[CURRENT_LANG] + '</label><select name="pif">\
 				                                ' + ui_pif_option + '\
 				                                </select>\
 				                            </div>\
 				                        </div>\
 				                        <div class="ui-block-b">\
 				                            <div class="text-field">\
-				                                <label>Amount of money</label>\
+				                                <label>' + LOCALE_ARRAY_ADDITIONAL.amount_of_money[CURRENT_LANG] + '</label>\
 				                                <div class="ui-input-text">\
 				                                    <input type="text" name="amount" data-enhanced="true" />\
 				                                </div>\
@@ -1929,11 +1936,11 @@ var PROJECTS = {
 				                    </div>\
 				                    <div class="ui-grid-solo">\
 				                        <div class="ui-block-a">\
-				                            <button onclick = "PROJECTS.donate(\'project\', ' + data_for_build.id + ', 4)" class="ui-btn ui-corner-all ui-shadow donate-btn">Donate</button>\
+				                            <button onclick = "PROJECTS.donate(\'project\', ' + data_for_build.id + ', 4)" class="ui-btn ui-corner-all ui-shadow donate-btn">' + LOCALE_ARRAY_ADDITIONAL.donate[CURRENT_LANG] + '</button>\
 				                        </div>\
 				                        <div class="ui-block-a center">\
 				                            <div class="ui-checkbox">\
-				                                <label id = "anonimous_check" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Anonymous donation</label><input type="checkbox" name="" value="1" data-enhanced="true" />\
+				                                <label id = "anonimous_check" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">' + LOCALE_ARRAY_ADDITIONAL.anonymous_donation[CURRENT_LANG] + '</label><input type="checkbox" name="" value="1" data-enhanced="true" />\
 				                            </div>\
 				                        </div>\
 				                    </div>\
@@ -2054,7 +2061,7 @@ var PROJECTS = {
 		                    ' + ui_donate_panel + '\
 		                <hr>\
 		                <div class="btn-next-page">\
-		                    <a class="ui-btn ui-btn-icon-right" href="#" onclick = "$.mobile.navigate(\'#history-page?item=project&id=' + data_for_build.id + '\');">История сбора средств</a>\
+		                    <a class="ui-btn ui-btn-icon-right" href="#" onclick = "$.mobile.navigate(\'#history-page?item=project&id=' + data_for_build.id + '\');">' + LOCALE_ARRAY_ADDITIONAL.history_donation[CURRENT_LANG] + '</a>\
 		                </div>\
 		            </div>\
 		        </div>\
@@ -2117,10 +2124,10 @@ var PROJECTS = {
 
     	if(SUPER_PROFILE.id == data_for_build.creator_id){
 			var nco_button = '<div class="nko-btn">\
-			                    <a class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate(\'#nko-page?project_proposition=' + data_for_build.id + '\')" href="#">Выбрать НКО</a>\
+			                    <a class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate(\'#nko-page?project_proposition=' + data_for_build.id + '\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.choose_nco[CURRENT_LANG] + '</a>\
 			                </div>\
 			                <div class="nko-status red">\
-			                    НКО не выбран\
+			                    ' + LOCALE_ARRAY_ADDITIONAL.nco_not_selected[CURRENT_LANG] + '\
 			                </div>';
 		}else{
 			var nco_button = '';
@@ -2131,14 +2138,14 @@ var PROJECTS = {
 	    		var ui_donate_panel = '<div class="ui-grid-a">\
 				                        <div class="ui-block-a">\
 				                            <div>\
-				                                <label>Choose Personal Fund</label><select name="pif">\
+				                                <label>' + LOCALE_ARRAY_ADDITIONAL.choose_personal_fund[CURRENT_LANG] + '</label><select name="pif">\
 				                                ' + ui_pif_option + '\
 				                                </select>\
 				                            </div>\
 				                        </div>\
 				                        <div class="ui-block-b">\
 				                            <div class="text-field">\
-				                                <label>Amount of money</label>\
+				                                <label>' + LOCALE_ARRAY_ADDITIONAL.amount_of_money[CURRENT_LANG] + '</label>\
 				                                <div class="ui-input-text">\
 				                                    <input type="text" name="amount" data-enhanced="true" />\
 				                                </div>\
@@ -2147,11 +2154,11 @@ var PROJECTS = {
 				                    </div>\
 				                    <div class="ui-grid-solo">\
 				                        <div class="ui-block-a">\
-				                            <button onclick = "PROJECTS.donate(\'project\', ' + data_for_build.id + ', 3)" class="ui-btn ui-corner-all ui-shadow donate-btn">Donate</button>\
+				                            <button onclick = "PROJECTS.donate(\'project\', ' + data_for_build.id + ', 3)" class="ui-btn ui-corner-all ui-shadow donate-btn">' + LOCALE_ARRAY_ADDITIONAL.donate[CURRENT_LANG] + '</button>\
 				                        </div>\
 				                        <div class="ui-block-a center">\
 				                            <div class="ui-checkbox">\
-				                                <label id = "anonimous_check" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Anonymous donation</label><input type="checkbox" name="" value="1" data-enhanced="true" />\
+				                                <label id = "anonimous_check" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">' + LOCALE_ARRAY_ADDITIONAL.anonymous_donation[CURRENT_LANG] + '</label><input type="checkbox" name="" value="1" data-enhanced="true" />\
 				                            </div>\
 				                        </div>\
 				                    </div>\
@@ -2273,7 +2280,7 @@ var PROJECTS = {
 		                    ' + ui_donate_panel + '\
 		                <hr>\
 		                <div class="btn-next-page">\
-		                    <a class="ui-btn ui-btn-icon-right" href="#" onclick = "$.mobile.navigate(\'#history-page?item=project_proposition&id=' + data_for_build.id + '\');">История сбора средств</a>\
+		                    <a class="ui-btn ui-btn-icon-right" href="#" onclick = "$.mobile.navigate(\'#history-page?item=project_proposition&id=' + data_for_build.id + '\');">' + LOCALE_ARRAY_ADDITIONAL.history_donation[CURRENT_LANG] + '</a>\
 		                </div>\
 		            </div>\
 		        </div>\
@@ -2496,7 +2503,7 @@ var PROJECTS = {
 			    			var currency_name = PIF.get_currency_name_by_id( one_fund.cf[i].currency );
 				    		var cancel_span = '';
 				    		if(one_fund.cf[i].user_id == SUPER_PROFILE.id && SUPER_PROFILE.auth == true){
-				    			cancel_span = '<span style = "color: red; cursor: pointer;" onclick = "PROJECTS.return_donate(\'' + one_fund.id + '\',\'' + one_fund.cur + '\',\'' + one_fund.cf[i].saldo + '\',\'' + type + '\',\'' + object_id + '\',\'' + return_page + object_id + '\')">Cancel donate</span>';
+				    			cancel_span = '<span style = "color: red; cursor: pointer;" onclick = "PROJECTS.return_donate(\'' + one_fund.id + '\',\'' + one_fund.cur + '\',\'' + one_fund.cf[i].saldo + '\',\'' + type + '\',\'' + object_id + '\',\'' + return_page + object_id + '\')">' + LOCALE_ARRAY_ADDITIONAL.cancel_donate[CURRENT_LANG] + '</span>';
 				    			my_add += parseInt(one_fund.cf[i].saldo);
 				    		}
 			    			ui_cf += '<tr>\
@@ -2509,7 +2516,7 @@ var PROJECTS = {
 
 			    	ui_funds += '<div data-role="header" data-position="fixed" data-tap-toggle="false">\
 								        <h1 class="long-title">\
-								            История сбора средств\
+								            ' + LOCALE_ARRAY_ADDITIONAL.history_donation[CURRENT_LANG] + '\
 								        </h1>\
 								        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#project_proposition-history-help">Ask</a>\
 								        <div id="project_proposition-history-help" class="help-popup" data-role="popup" data-history="false">\
@@ -2528,21 +2535,21 @@ var PROJECTS = {
 								                    <div class="my-amount">\
 								                        <strong>\
 								                        	' + my_add + '\
-								                         ' + main_currency + '</strong><span>Мой вклад</span>\
+								                         ' + main_currency + '</strong><span>' + LOCALE_ARRAY_ADDITIONAL.my_cash[CURRENT_LANG] + '</span>\
 								                    </div>\
 								                </div>\
 								                <div class="ui-block-b">\
 								                    <div class="amount up">\
 								                        <strong>\
 								                        ' + funds_list[0].amount_current + '\
-								                         ' + main_currency + '</strong><span>Собранно на данный момент</span>\
+								                         ' + main_currency + '</strong><span>' + LOCALE_ARRAY_ADDITIONAL.amount_current[CURRENT_LANG] + '</span>\
 								                    </div>\
 								                </div>\
 								                <div class="ui-block-c">\
 								                    <div class="total-amount">\
 								                        <strong>\
 								                        ' + funds_list[0].amount_asking + '\
-								                        ' + main_currency + '</strong><span>Нужное количество</span>\
+								                        ' + main_currency + '</strong><span>' + LOCALE_ARRAY_ADDITIONAL.amount_asking[CURRENT_LANG] + '</span>\
 								                    </div>\
 								                </div>\
 								            </div>\
@@ -2550,13 +2557,13 @@ var PROJECTS = {
 								                <thead>\
 								                    <tr>\
 								                        <td>\
-								                            Дата и время\
+								                            ' + LOCALE_ARRAY_ADDITIONAL.date_and_time[CURRENT_LANG] + '\
 								                        </td>\
 								                        <td>\
-								                            ФИО\
+								                            ' + LOCALE_ARRAY_ADDITIONAL.fio[CURRENT_LANG] + '\
 								                        </td>\
 								                        <td>\
-								                            Сумма\
+								                            ' + LOCALE_ARRAY_ADDITIONAL.amount_of_money[CURRENT_LANG] + '\
 								                        </td>\
 								                    </tr>\
 								                </thead>\
@@ -2625,7 +2632,7 @@ var PROGRAMS = {
 		self.data_last_item = 10;
 		$('#programs-page #searched_string').val('');
 
-		$('#programs-page #ui_title').html('Programs');
+		$('#programs-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.programs[CURRENT_LANG]);
 		$('#programs-page #create_link').attr('style','display: none');
 
 		if(location.href.indexOf('#programs-page?tags_filter=') > -1){
@@ -2637,7 +2644,7 @@ var PROGRAMS = {
 			$('#programs-page #my_activities_link').attr('style', 'display:none');
 		}else if(location.href.indexOf('#programs-page?my_program=true') > -1){
 			var url = 'http://gurtom.mobi/program.php?my=1';
-			$('#programs-page #ui_title').html('My programs');
+			$('#programs-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.my_programs[CURRENT_LANG]);
 			$('#programs-page #create_link').attr('style','display: block');
 			$('#programs-page #menu_link').attr('style', 'display:none');
 			$('#programs-page #my_activities_link').attr('style', 'display:block');
@@ -3111,10 +3118,10 @@ var PROGRAMS = {
     	}
     	if(SUPER_PROFILE.id == data_for_build.creator_id){
 			var nco_button = '<div class="nko-btn">\
-			                    <a class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate(\'#nko-page?program=' + data_for_build.id + '\')" href="#">Выбрать НКО</a>\
+			                    <a class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate(\'#nko-page?program=' + data_for_build.id + '\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.choose_nco[CURRENT_LANG] + '</a>\
 			                </div>\
 			                <div class="nko-status red">\
-			                    НКО не выбран\
+			                    ' + LOCALE_ARRAY_ADDITIONAL.nco_not_selected[CURRENT_LANG] + '\
 			                </div>';
 		}else{
 			var nco_button = '';
@@ -3125,14 +3132,14 @@ var PROGRAMS = {
 	    		var ui_donate_panel = '<div class="ui-grid-a">\
 				                        <div class="ui-block-a">\
 				                            <div>\
-				                                <label>Choose Personal Fund</label><select name="pif">\
+				                                <label>' + LOCALE_ARRAY_ADDITIONAL.choose_personal_fund[CURRENT_LANG] + '</label><select name="pif">\
 				                                ' + ui_pif_option + '\
 				                                </select>\
 				                            </div>\
 				                        </div>\
 				                        <div class="ui-block-b">\
 				                            <div class="text-field">\
-				                                <label>Amount of money</label>\
+				                                <label>' + LOCALE_ARRAY_ADDITIONAL.amount_of_money[CURRENT_LANG] + '</label>\
 				                                <div class="ui-input-text">\
 				                                    <input type="text" name="amount" data-enhanced="true" />\
 				                                </div>\
@@ -3141,11 +3148,11 @@ var PROGRAMS = {
 				                    </div>\
 				                    <div class="ui-grid-solo">\
 				                        <div class="ui-block-a">\
-				                            <button onclick = "PROGRAMS.donate(\'program\', ' + data_for_build.id + ', 2)" class="ui-btn ui-corner-all ui-shadow donate-btn">Donate</button>\
+				                            <button onclick = "PROGRAMS.donate(\'program\', ' + data_for_build.id + ', 2)" class="ui-btn ui-corner-all ui-shadow donate-btn">' + LOCALE_ARRAY_ADDITIONAL.donate[CURRENT_LANG] + '</button>\
 				                        </div>\
 				                        <div class="ui-block-a center">\
 				                            <div class="ui-checkbox">\
-				                                <label id = "anonimous_check" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Anonymous donation</label><input type="checkbox" name="" value="1" data-enhanced="true" />\
+				                                <label id = "anonimous_check" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">' + LOCALE_ARRAY_ADDITIONAL.anonymous_donation[CURRENT_LANG] + '</label><input type="checkbox" name="" value="1" data-enhanced="true" />\
 				                            </div>\
 				                        </div>\
 				                    </div>\
@@ -3263,7 +3270,7 @@ var PROGRAMS = {
 		                </div>\
 		                <hr>\
 		                <div class="btn-next-page">\
-		                    <a class="ui-btn ui-btn-icon-right" href="#" onclick = "$.mobile.navigate(\'#history-page?item=program&id=' + data_for_build.id + '\');">История сбора средств</a>\
+		                    <a class="ui-btn ui-btn-icon-right" href="#" onclick = "$.mobile.navigate(\'#history-page?item=program&id=' + data_for_build.id + '\');">' + LOCALE_ARRAY_ADDITIONAL.history_donation[CURRENT_LANG] + '</a>\
 		                </div>\
 		                <div class="btn-next-page">\
 		                    <a class="ui-btn ui-btn-icon-right" onclick = "' + weighted_votings_link +  '" href="#">Голосование по программе</a>\
@@ -3464,8 +3471,8 @@ var PROGRAMS = {
 			  				var currency_name = PIF.get_currency_name_by_id( one_fund.cf[i].currency );
 			    			var cancel_span = '';
 				    		if(one_fund.cf[i].user_id == SUPER_PROFILE.id && SUPER_PROFILE.auth == true){
-				    			cancel_span = '<span style = "color: red; cursor: pointer;" onclick = "PROGRAMS.return_donate(\'' + one_fund.id + '\',\'' + one_fund.cur + '\',\'' + one_fund.cf[i].saldo + '\',2,\'' + object_id + '\',\'#program-page?program=' + object_id + '\')">Cancel donate</span>';
-				    			//cancel_span = '<span style = "color: red;">Cancel donate</span>';
+				    			cancel_span = '<span style = "color: red; cursor: pointer;" onclick = "PROGRAMS.return_donate(\'' + one_fund.id + '\',\'' + one_fund.cur + '\',\'' + one_fund.cf[i].saldo + '\',2,\'' + object_id + '\',\'#program-page?program=' + object_id + '\')">' + LOCALE_ARRAY_ADDITIONAL.cancel_donate[CURRENT_LANG] + '</span>';
+				    			//cancel_span = '<span style = "color: red;">' + LOCALE_ARRAY_ADDITIONAL.cancel_donate[CURRENT_LANG] + '</span>';
 				    			my_add += parseInt(one_fund.cf[i].saldo);
 				    		}
 			    			ui_cf += '<tr>\
@@ -3478,7 +3485,7 @@ var PROGRAMS = {
 
 			    	ui_funds += '<div data-role="header" data-position="fixed" data-tap-toggle="false">\
 								        <h1 class="long-title">\
-								            История сбора средств\
+								            ' + LOCALE_ARRAY_ADDITIONAL.history_donation[CURRENT_LANG] + '\
 								        </h1>\
 								        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#request-history-help">Ask</a>\
 								        <div id="request-history-help" class="help-popup" data-role="popup" data-history="false">\
@@ -3497,21 +3504,21 @@ var PROGRAMS = {
 								                    <div class="my-amount">\
 								                        <strong>\
 								                        	' + my_add + '\
-								                         ' + main_currency + '</strong><span>Мой вклад</span>\
+								                         ' + main_currency + '</strong><span>' + LOCALE_ARRAY_ADDITIONAL.my_cash[CURRENT_LANG] + '</span>\
 								                    </div>\
 								                </div>\
 								                <div class="ui-block-b">\
 								                    <div class="amount up">\
 								                        <strong>\
 								                        ' + funds_list[0].amount_current + '\
-								                         ' + main_currency + '</strong><span>Собранно на данный момент</span>\
+								                         ' + main_currency + '</strong><span>' + LOCALE_ARRAY_ADDITIONAL.amount_current[CURRENT_LANG] + '</span>\
 								                    </div>\
 								                </div>\
 								                <div class="ui-block-c">\
 								                    <div class="total-amount">\
 								                        <strong>\
 								                        ' + funds_list[0].amount_asking + '\
-								                        ' + main_currency + '</strong><span>Нужное количество</span>\
+								                        ' + main_currency + '</strong><span>' + LOCALE_ARRAY_ADDITIONAL.amount_asking[CURRENT_LANG] + '</span>\
 								                    </div>\
 								                </div>\
 								            </div>\
@@ -3519,13 +3526,13 @@ var PROGRAMS = {
 								                <thead>\
 								                    <tr>\
 								                        <td>\
-								                            Дата и время\
+								                            ' + LOCALE_ARRAY_ADDITIONAL.date_and_time[CURRENT_LANG] + '\
 								                        </td>\
 								                        <td>\
-								                            ФИО\
+								                            ' + LOCALE_ARRAY_ADDITIONAL.fio[CURRENT_LANG] + '\
 								                        </td>\
 								                        <td>\
-								                            Сумма\
+								                            ' + LOCALE_ARRAY_ADDITIONAL.amount_of_money[CURRENT_LANG] + '\
 								                        </td>\
 								                    </tr>\
 								                </thead>\
@@ -3595,7 +3602,7 @@ var REQUESTS = {
 		self.data_last_item = 10;
 		$('#requests-page #searched_string').val('');
 
-		$('#requests-page #ui_title').html('Requests');
+		$('#requests-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.requests[CURRENT_LANG]);
 		$('#requests-page #create_link').attr('style','display: none');
 		$('#requests-page #menu_link').attr('style', 'display:block');
 		$('#requests-page #my_activities_link').attr('style', 'display:none');
@@ -3607,7 +3614,7 @@ var REQUESTS = {
 			console.log(tag_filter);
 		}else if(location.href.indexOf('#requests-page?my_request=true') > -1){
 			var url = 'http://gurtom.mobi/request.php?my=1';
-			$('#requests-page #ui_title').html('My requests');
+			$('#requests-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.my_requests[CURRENT_LANG]);
 			$('#requests-page #create_link').attr('style','display: block');
 			$('#requests-page #menu_link').attr('style', 'display:none');
 			$('#requests-page #my_activities_link').attr('style', 'display:block');
@@ -4076,10 +4083,10 @@ var REQUESTS = {
 
 		if(SUPER_PROFILE.id == data_for_build.creator_id){
 			var nco_button = '<div class="nko-btn">\
-			                    <a class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate(\'#nko-page?request=' + data_for_build.id + '\')" href="#">Выбрать НКО</a>\
+			                    <a class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate(\'#nko-page?request=' + data_for_build.id + '\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.choose_nco[CURRENT_LANG] + '</a>\
 			                </div>\
 			                <div class="nko-status red">\
-			                    НКО не выбран\
+			                    ' + LOCALE_ARRAY_ADDITIONAL.nco_not_selected[CURRENT_LANG] + '\
 			                </div>';
 		}else{
 			var nco_button = '';
@@ -4090,14 +4097,14 @@ var REQUESTS = {
 	    		var ui_donate_panel = '<div class="ui-grid-a">\
 				                        <div class="ui-block-a">\
 				                            <div>\
-				                                <label>Choose Personal Fund</label><select name="pif">\
+				                                <label>' + LOCALE_ARRAY_ADDITIONAL.choose_personal_fund[CURRENT_LANG] + '</label><select name="pif">\
 				                                ' + ui_pif_option + '\
 				                                </select>\
 				                            </div>\
 				                        </div>\
 				                        <div class="ui-block-b">\
 				                            <div class="text-field">\
-				                                <label>Amount of money</label>\
+				                                <label>' + LOCALE_ARRAY_ADDITIONAL.amount_of_money[CURRENT_LANG] + '</label>\
 				                                <div class="ui-input-text">\
 				                                    <input type="text" name="amount" data-enhanced="true" />\
 				                                </div>\
@@ -4106,11 +4113,11 @@ var REQUESTS = {
 				                    </div>\
 				                    <div class="ui-grid-solo">\
 				                        <div class="ui-block-a">\
-				                            <button onclick = "REQUESTS.donate(\'request\', ' + data_for_build.id + ', 5)" class="ui-btn ui-corner-all ui-shadow donate-btn">Donate</button>\
+				                            <button onclick = "REQUESTS.donate(\'request\', ' + data_for_build.id + ', 5)" class="ui-btn ui-corner-all ui-shadow donate-btn">' + LOCALE_ARRAY_ADDITIONAL.donate[CURRENT_LANG] + '</button>\
 				                        </div>\
 				                        <div class="ui-block-a center">\
 				                            <div class="ui-checkbox">\
-				                                <label id = "anonimous_check" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Anonymous donation</label><input type="checkbox" name="" value="1" data-enhanced="true" />\
+				                                <label id = "anonimous_check" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">' + LOCALE_ARRAY_ADDITIONAL.anonymous_donation[CURRENT_LANG] + '</label><input type="checkbox" name="" value="1" data-enhanced="true" />\
 				                            </div>\
 				                        </div>\
 				                    </div>\
@@ -4236,7 +4243,7 @@ var REQUESTS = {
 		                </div>\
 		                <hr>\
 		                <div class="btn-next-page">\
-		                    <a class="ui-btn ui-btn-icon-right" href="#" onclick = "$.mobile.navigate(\'#history-page?item=request&id=' + data_for_build.id + '\'); ">История сбора средств</a>\
+		                    <a class="ui-btn ui-btn-icon-right" href="#" onclick = "$.mobile.navigate(\'#history-page?item=request&id=' + data_for_build.id + '\'); ">' + LOCALE_ARRAY_ADDITIONAL.history_donation[CURRENT_LANG] + '</a>\
 		                </div>\
 		            </div>\
 		        </div>\
@@ -4432,7 +4439,7 @@ var REQUESTS = {
 			    			var currency_name = PIF.get_currency_name_by_id( one_fund.cf[i].currency );
 			    			var cancel_span = '';
 			    			if(one_fund.cf[i].user_id == SUPER_PROFILE.id && SUPER_PROFILE.auth == true){
-				    			cancel_span = '<span style = "color: red; cursor: pointer;" onclick = "REQUESTS.return_donate(\'' + one_fund.id + '\',\'' + one_fund.cur + '\',\'' + one_fund.cf[i].saldo + '\',5,\'' + object_id + '\',\'#request-page?request=' + object_id + '\')">Cancel donate</span>';
+				    			cancel_span = '<span style = "color: red; cursor: pointer;" onclick = "REQUESTS.return_donate(\'' + one_fund.id + '\',\'' + one_fund.cur + '\',\'' + one_fund.cf[i].saldo + '\',5,\'' + object_id + '\',\'#request-page?request=' + object_id + '\')">' + LOCALE_ARRAY_ADDITIONAL.cancel_donate[CURRENT_LANG] + '</span>';
 				    			my_add += parseInt(one_fund.cf[i].saldo);
 				    		}
 			    			ui_cf += '<tr>\
@@ -4445,7 +4452,7 @@ var REQUESTS = {
 
 			    	ui_funds += '<div data-role="header" data-position="fixed" data-tap-toggle="false">\
 								        <h1 class="long-title">\
-								            История сбора средств\
+								            ' + LOCALE_ARRAY_ADDITIONAL.history_donation[CURRENT_LANG] + '\
 								        </h1>\
 								        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#request-history-help">Ask</a>\
 								        <div id="request-history-help" class="help-popup" data-role="popup" data-history="false">\
@@ -4464,21 +4471,21 @@ var REQUESTS = {
 								                    <div class="my-amount">\
 								                        <strong>\
 								                        	' + my_add + '\
-								                         ' + main_currency + '</strong><span>Мой вклад</span>\
+								                         ' + main_currency + '</strong><span>' + LOCALE_ARRAY_ADDITIONAL.my_cash[CURRENT_LANG] + '</span>\
 								                    </div>\
 								                </div>\
 								                <div class="ui-block-b">\
 								                    <div class="amount up">\
 								                        <strong>\
 								                        ' + funds_list[0].amount_current + '\
-								                         ' + main_currency + '</strong><span>Собранно на данный момент</span>\
+								                         ' + main_currency + '</strong><span>' + LOCALE_ARRAY_ADDITIONAL.amount_current[CURRENT_LANG] + '</span>\
 								                    </div>\
 								                </div>\
 								                <div class="ui-block-c">\
 								                    <div class="total-amount">\
 								                        <strong>\
 								                        ' + funds_list[0].amount_asking + '\
-								                        ' + main_currency + '</strong><span>Нужное количество</span>\
+								                        ' + main_currency + '</strong><span>' + LOCALE_ARRAY_ADDITIONAL.amount_asking[CURRENT_LANG] + '</span>\
 								                    </div>\
 								                </div>\
 								            </div>\
@@ -4486,13 +4493,13 @@ var REQUESTS = {
 								                <thead>\
 								                    <tr>\
 								                        <td>\
-								                            Дата и время\
+								                            ' + LOCALE_ARRAY_ADDITIONAL.date_and_time[CURRENT_LANG] + '\
 								                        </td>\
 								                        <td>\
-								                            ФИО\
+								                            ' + LOCALE_ARRAY_ADDITIONAL.fio[CURRENT_LANG] + '\
 								                        </td>\
 								                        <td>\
-								                            Сумма\
+								                            ' + LOCALE_ARRAY_ADDITIONAL.amount_of_money[CURRENT_LANG] + '\
 								                        </td>\
 								                    </tr>\
 								                </thead>\
@@ -4658,7 +4665,7 @@ var funds = {
         }
 
         var build_string_list = "";
-        var build_string_select = '<label>Choose Personal Fund</label><select id="select-pay-block">';
+        var build_string_select = '<label>' + LOCALE_ARRAY_ADDITIONAL.choose_personal_fund[CURRENT_LANG] + '</label><select id="select-pay-block">';
         jQuery.each(data,function(i , one_data){
             build_string_list += self.build_fund(one_data);
             build_string_select += self.build_fund_select(one_data);
@@ -4850,16 +4857,16 @@ var WEIGHTED_VOTINGS = {
 				var match_array = location.href.match(/#weighted-votings-page\?program=[0-9]*/i);
 				var object_id = match_array[0].match(/[0-9]+/i);
 				var url = 'http://gurtom.mobi/weighted_votings.php?program_id=' + object_id;
-				$('#weighted-votings-page #ui_title').html('Weighted votings');
+				$('#weighted-votings-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.weighted_votings[CURRENT_LANG]);
 				$('#weighted-votings-page #create_voting_link').attr('style','display: block');
 				$('#weighted-votings-page #create_voting_link').attr('onclick', "$.mobile.navigate(\'#create-item?weighted_voting=true&item=" + object_id + "\')");
 			}else{
 				if(location.href.indexOf('#weighted-votings-page?my=1') > -1){
-					$('#weighted-votings-page #ui_title').html('My weighted votings');
+					$('#weighted-votings-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.my_weighted_votings[CURRENT_LANG]);
 					$('#weighted-votings-page #create_voting_link').attr('style','display: none');
 					var url = 'http://gurtom.mobi/weighted_votings.php?my=1';
 				}else if(location.href.indexOf('#weighted-votings-page?my=2') > -1){
-					$('#weighted-votings-page #ui_title').html('Weighted votings');
+					$('#weighted-votings-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.weighted_votings[CURRENT_LANG]);
 					$('#weighted-votings-page #create_voting_link').attr('style','display: block');
 					var url = 'http://gurtom.mobi/weighted_votings.php?my=2';
 				}
