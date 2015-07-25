@@ -99,6 +99,7 @@ window.onload = function(){
 
 		if((location.href.indexOf('#my-votings-page') > -1 || location.href.indexOf('#my-vote-page?vote=') > -1) && SUPER_PROFILE.auth == true){
 			MY_VOTINGS.init();
+			$('#my-votings-page select').selectmenu().selectmenu("refresh", true);
 		}
 
 		if(location.href.indexOf('#weighted-votings-page') > -1 || location.href.indexOf('#weighted-vote-page?vote=') > -1){
@@ -672,7 +673,7 @@ function eraseCookie(name) {
 }
 
 function ask_login(){
-	var answer = confirm('Only registred Useres are able to use this function. Do you want to proceed with registration?');
+	var answer = confirm(LOCALE_ARRAY_ADDITIONAL.only_registered_users_able[CURRENT_LANG]);
 	if(answer){
 		$.mobile.navigate('#');
 	}else{
@@ -770,7 +771,7 @@ function nko_create_page_data(){
 			});
 			var ui_string = '<div data-role="header" data-position="fixed" data-tap-toggle="false">\
 						        <h1>\
-						            Список НКО\
+						            ' + LOCALE_ARRAY_ADDITIONAL.nco_list_title[CURRENT_LANG] + '\
 						        </h1>\
 						        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#program-nko-help">Ask</a>\
 						        <div id="project-nko-help" class="help-popup" data-role="popup" data-history="false">\
@@ -785,7 +786,7 @@ function nko_create_page_data(){
 						    <div role="main" class="ui-content">\
 						        <div class="select-nko-wrap">\
 						            <div class="title">\
-						                Выберете <strong>НКО</strong> из текущих предложений:\
+						                ' + LOCALE_ARRAY_ADDITIONAL.choose_nco_list[CURRENT_LANG] + ':\
 						            </div>\
 						            <ol>' + nko_parts + '\
 						            </ol>\
@@ -2010,7 +2011,7 @@ var PROJECTS = {
 		                </div>\
 		                <div class="nko-list">\
 		                    <div class="title">\
-		                        Список текущих предложений <strong>НКО</strong>:\
+		                        ' + LOCALE_ARRAY_ADDITIONAL.nco_list_locale[CURRENT_LANG] + ':\
 		                    </div>\
 		                    <ol>\
 		                        ' + nko_parts + '\
@@ -2229,7 +2230,7 @@ var PROJECTS = {
 		                </div>\
 		                <div class="nko-list">\
 		                    <div class="title">\
-		                        Список текущих предложений <strong>НКО</strong>:\
+		                        ' + LOCALE_ARRAY_ADDITIONAL.nco_list_locale[CURRENT_LANG] + ':\
 		                    </div>\
 		                    <ol>\
 		                        ' + nko_parts + '\
@@ -2329,7 +2330,7 @@ var PROJECTS = {
 	    	});
 			var ui_string = '<div data-role="header" data-position="fixed" data-tap-toggle="false">\
 						        <h1>\
-						            Список НКО\
+						            ' + LOCALE_ARRAY_ADDITIONAL.nco_list_title[CURRENT_LANG] + '\
 						        </h1>\
 						        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#program-nko-help">Ask</a>\
 						        <div id="project-nko-help" class="help-popup" data-role="popup" data-history="false">\
@@ -2344,12 +2345,12 @@ var PROJECTS = {
 						    <div role="main" class="ui-content">\
 						        <div class="select-nko-wrap">\
 						            <div class="title">\
-						                Выберете <strong>НКО</strong> из текущих предложений:\
+						                ' + LOCALE_ARRAY_ADDITIONAL.choose_nco_list[CURRENT_LANG] + ':\
 						            </div>\
 						            <ol>' + nko_parts + '\
 						            </ol>\
 						            <div class="btn-save">\
-						                <input type="submit" value="Сохранить" />\
+						                <input type="submit" value="' + LOCALE_ARRAY_ADDITIONAL.save_nco[CURRENT_LANG] + '" />\
 						            </div>\
 						        </div>\
 						    </div>';
@@ -2457,7 +2458,7 @@ var PROJECTS = {
 		        		$('#' + selector + '-page select').selectmenu().selectmenu("refresh", true);
 		        		console.log("donate ok");
 	        		}else{
-	        			alert('There are no enough resources or fund is closed');
+	        			alert(LOCALE_ARRAY_ADDITIONAL.fund_closed[CURRENT_LANG]);
 	        		}
 	        		
 	        	}
@@ -3218,7 +3219,7 @@ var PROGRAMS = {
 		                </div>\
 		                <div class="nko-list">\
 		                    <div class="title">\
-		                        Список текущих предложений <strong>НКО</strong>:\
+		                        ' + LOCALE_ARRAY_ADDITIONAL.nco_list_locale[CURRENT_LANG] + ':\
 		                    </div>\
 		                    <ol>\
 		                        ' + nko_parts + '\
@@ -3317,7 +3318,7 @@ var PROGRAMS = {
 	    	});
 			var ui_string = '<div data-role="header" data-position="fixed" data-tap-toggle="false">\
 						        <h1>\
-						            Список НКО\
+						            ' + LOCALE_ARRAY_ADDITIONAL.nco_list_title[CURRENT_LANG] + '\
 						        </h1>\
 						        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#program-nko-help">Ask</a>\
 						        <div id="program-nko-help" class="help-popup" data-role="popup" data-history="false">\
@@ -3332,12 +3333,12 @@ var PROGRAMS = {
 						    <div role="main" class="ui-content">\
 						        <div class="select-nko-wrap">\
 						            <div class="title">\
-						                Выберете <strong>НКО</strong> из текущих предложений:\
+						                ' + LOCALE_ARRAY_ADDITIONAL.choose_nco_list[CURRENT_LANG] + ':\
 						            </div>\
 						            <ol>' + nko_parts + '\
 						            </ol>\
 						            <div class="btn-save">\
-						                <input type="submit" value="Сохранить" />\
+						                <input type="submit" value="' + LOCALE_ARRAY_ADDITIONAL.save_nco[CURRENT_LANG] + '" />\
 						            </div>\
 						        </div>\
 						    </div>';
@@ -3436,7 +3437,7 @@ var PROGRAMS = {
 		        		$('#' + selector + '-page select').selectmenu().selectmenu("refresh", true);
 		        		console.log("donate ok");
 	        		}else{
-	        			alert('There are no enough resources or fund is closed');
+	        			alert(LOCALE_ARRAY_ADDITIONAL.fund_closed[CURRENT_LANG]);
 	        		}
 	        	}
 	        }
@@ -4174,7 +4175,7 @@ var REQUESTS = {
 		                    ID: <strong>' + data_for_build.id + ' : ' + data_for_build.title + '</strong>\
 		                </div>\
 		                <div class="benitsifiar">\
-		                    <span class="bg">Беницифиар @<strong>' + data_for_build.beneficiary + '</strong></span>\
+		                    <span class="bg">' + LOCALE_ARRAY_ADDITIONAL.beneficiary[CURRENT_LANG] + ' @<strong>' + data_for_build.beneficiary + '</strong></span>\
 		                </div>\
 		                <div class="username">\
 		                    ' + LOCALE_ARRAY_ADDITIONAL.by[CURRENT_LANG] + ' @<strong>' + data_for_build.creator_id + ' ' + data_for_build.author + '</strong>\
@@ -4191,7 +4192,7 @@ var REQUESTS = {
 		                </div>\
 		                <div class="nko-list">\
 		                    <div class="title">\
-		                        Список текущих предложений <strong>НКО</strong>:\
+		                        ' + LOCALE_ARRAY_ADDITIONAL.nco_list_locale[CURRENT_LANG] + ':\
 		                    </div>\
 		                    <ol>\
 		                       ' + nko_parts + '\
@@ -4285,7 +4286,7 @@ var REQUESTS = {
 	    	});
 			var ui_string = '<div data-role="header" data-position="fixed" data-tap-toggle="false">\
 						        <h1>\
-						            Список НКО\
+						            ' + LOCALE_ARRAY_ADDITIONAL.nco_list_title[CURRENT_LANG] + '\
 						        </h1>\
 						        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#program-nko-help">Ask</a>\
 						        <div id="request-nko-help" class="help-popup" data-role="popup" data-history="false">\
@@ -4300,12 +4301,12 @@ var REQUESTS = {
 						    <div role="main" class="ui-content">\
 						        <div class="select-nko-wrap">\
 						            <div class="title">\
-						                Выберете <strong>НКО</strong> из текущих предложений:\
+						                ' + LOCALE_ARRAY_ADDITIONAL.choose_nco_list[CURRENT_LANG] + ':\
 						            </div>\
 						            <ol>' + nko_parts + '\
 						            </ol>\
 						            <div class="btn-save">\
-						                <input type="submit" value="Сохранить" />\
+						                <input type="submit" value="' + LOCALE_ARRAY_ADDITIONAL.save_nco[CURRENT_LANG] + '" />\
 						            </div>\
 						        </div>\
 						    </div>';
@@ -4404,7 +4405,7 @@ var REQUESTS = {
 		        		$('#' + selector + '-page select').selectmenu().selectmenu("refresh", true);
 	        			console.log("donate ok");
 	        		}else{
-	        			alert('There are no enough resources or fund is closed');
+	        			alert(LOCALE_ARRAY_ADDITIONAL.fund_closed[CURRENT_LANG]);
 	        		}	        		
 	        	}
 	            //alert('okay');
@@ -4629,6 +4630,9 @@ var funds = {
         
     },
     set_pay_button : function(button_html){
+    	if(button_html.indexOf('Unable') > -1){
+    		button_html = LOCALE_ARRAY_ADDITIONAL.unable_to_donate[CURRENT_LANG];
+    	}
          $("#my-fund-page .center").html(button_html);
     },
     create_fund : function(currency){
@@ -4678,7 +4682,7 @@ var funds = {
         $("#select-pay-block").change(function(){
             self.update_pay_button($(this).val());
         });
-        var create_select = '<label>Выберите тип валюты</label><select name="">';
+        var create_select = '<label>' + LOCALE_ARRAY_ADDITIONAL.choose_type_currency[CURRENT_LANG] + '</label><select name="">';
         jQuery.each(self.currency,function(i , one_data){
             create_select += '<option value="'+i+'">'+one_data+'</option>';
         });
@@ -5384,31 +5388,31 @@ var WEIGHTED_VOTINGS = {
 		switch(parseInt(data_for_build.user_vote)){
 			case 1:
 				selected_class_yes = 'ui-btn-active ui-radio-on';
-				status_current_voting = 'You Vote YES';
+				status_current_voting = LOCALE_ARRAY_ADDITIONAL.you_vote_yes[CURRENT_LANG];
 				checked_yes = 0;
 				break;
 			case 3:
 				selected_class_abstain = ' ui-btn-active ui-radio-on ';
-				status_current_voting = 'You Vote ABSTAINED';
+				status_current_voting = LOCALE_ARRAY_ADDITIONAL.you_vote_abstained[CURRENT_LANG];
 				checked_abstain = 0;
 				break;
 			case 2:
 				selected_class_no = ' ui-btn-active ui-radio-on ';
-				status_current_voting = 'You Vote NO';
+				status_current_voting = LOCALE_ARRAY_ADDITIONAL.you_vote_no[CURRENT_LANG];
 				checked_no = 0;
 				break;
 			default:
-				status_current_voting = 'You didn\'t vote';
+				status_current_voting = LOCALE_ARRAY_ADDITIONAL.you_did_not_vote[CURRENT_LANG];
 		}
 
     	if(data_for_build.user_vote_open == "1"){
     		selected_class_checkbox = ' ui-checkbox-on ';
     		if(parseInt(data_for_build.user_vote) > 0){
-    			status_current_voting += ' Open';
+    			status_current_voting += LOCALE_ARRAY_ADDITIONAL.open_vote[CURRENT_LANG];
     		}
     	}else{
     		if(parseInt(data_for_build.user_vote) > 0){
-    			status_current_voting += ' is anonymous';
+    			status_current_voting += LOCALE_ARRAY_ADDITIONAL.is_anonymous[CURRENT_LANG];
     		}    		
     	}
 
@@ -5723,16 +5727,16 @@ var WEIGHTED_VOTINGS = {
 			var status_current_voting = '';
 			if($('#weighted-vote-page .ui-btn.btn-yes').hasClass('ui-radio-on') == 1 && $('#weighted-vote-page .ui-btn.btn-yes').data('checked') == '1'){
 				var vote = 1;
-				status_current_voting = 'You Vote YES';
+				status_current_voting = LOCALE_ARRAY_ADDITIONAL.you_vote_yes[CURRENT_LANG];
 				$('#weighted-vote-page .ui-btn.btn-no').data('checked', 0);
 			}else if($('#weighted-vote-page .ui-btn.btn-abstain').hasClass('ui-radio-on') == 1 && $('#weighted-vote-page .ui-btn.btn-abstain').data('checked') == '1'){
 				var vote = 3;
 				$('#weighted-vote-page .ui-btn.btn-no').data('checked', 0);
-				status_current_voting = 'You Vote ABSTAINED';
+				status_current_voting = LOCALE_ARRAY_ADDITIONAL.you_vote_abstained[CURRENT_LANG];
 			}else if($('#weighted-vote-page .ui-btn.btn-no').hasClass('ui-radio-on') == 1 && $('#weighted-vote-page .ui-btn.btn-no').data('checked') == '1'){
 				var vote = 2;
 				$('#weighted-vote-page .ui-btn.btn-no').data('checked', 0);
-				status_current_voting = 'You Vote NO';
+				status_current_voting = LOCALE_ARRAY_ADDITIONAL.you_vote_no[CURRENT_LANG];
 			}else{
 				$('#weighted-vote-page .ui-btn.btn-yes').removeClass("ui-btn-active ui-radio-on");
 	    		$('#weighted-vote-page .ui-btn.btn-yes').addClass("ui-radio-off");
@@ -5743,18 +5747,18 @@ var WEIGHTED_VOTINGS = {
 	    		$('#weighted-vote-page .ui-btn.btn-no').removeClass("ui-btn-active ui-radio-on");
 	    		$('#weighted-vote-page .ui-btn.btn-no').addClass("ui-radio-off");
 	    		$('#weighted-vote-page .ui-btn.btn-no').data('checked', 1);
-	    		status_current_voting = 'You didn\'t vote';
+	    		status_current_voting = LOCALE_ARRAY_ADDITIONAL.you_did_not_vote[CURRENT_LANG];
 				var vote = 0;
 			}
 			if($('#weighted-vote-page .ui-btn.ui-btn-inherit.ui-btn-icon-left').hasClass('ui-checkbox-on')){
 				var open_name = 1;
 				if(vote != 0){
-					status_current_voting += ' Open';
+					status_current_voting += LOCALE_ARRAY_ADDITIONAL.open_vote[CURRENT_LANG];
 				}
 			}else{
 				var open_name = 0;
 				if(vote != 0){
-					status_current_voting += ' is anonymous';
+					status_current_voting += LOCALE_ARRAY_ADDITIONAL.is_anonymous[CURRENT_LANG];
 				}
 			}
 			$('#weighted-vote-page .selected-text').html( status_current_voting );
@@ -5828,7 +5832,7 @@ var WEIGHTED_VOTINGS = {
 					    <div role="main" class="ui-content">\
 					        <form action="" accept-charset="UTF-8" method="post">\
 					                <div class="ui-input-search ui-input-has-clear">\
-					                    <input id = "filter_input" onkeyup="WEIGHTED_VOTINGS.get_open_voters_list(\'' + vote_id + '\', this)" type="search" name="" placeholder="Search" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">' + LOCALE_ARRAY_ADDITIONAL.clear_text[CURRENT_LANG] + '</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />\
+					                    <input id = "filter_input" onkeyup="WEIGHTED_VOTINGS.get_open_voters_list(\'' + vote_id + '\', this)" type="search" name="" placeholder="' + LOCALE_ARRAY_ADDITIONAL.search_voters[CURRENT_LANG]  + '" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">' + LOCALE_ARRAY_ADDITIONAL.clear_text[CURRENT_LANG] + '</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />\
 					                </div></form>\
 					        <div class="ui-grid-b voters-list">\
 						        <div class="ui-block-a">\
@@ -6010,6 +6014,7 @@ var TRUST_LIST = {
 					                </div>\
 					                <div class="osmd-list">';
 			var type_sphere = '';
+			SPHERES.set_locale_names();
 			for (var i = 0; i < one_trust.t_l.length; i++) {
 				for (var k = 0; k < SPHERES.spheres.length; k++) {
 					if(SPHERES.spheres[k].type == parseInt( one_trust.t_l[i].type ) ){
@@ -6352,9 +6357,8 @@ var SPHERES = {
 			  selector_name: "local_self_goverments",
 			  type: 10,
 			  objects: []}*/],
-	initial: function(callback_function, forced_initial){
+	set_locale_names: function(){
 		var self = this;
-		$.mobile.loading( "show", {  theme: "z"	});
 		self.spheres[0].name =  LOCALE_ARRAY_ADDITIONAL.votings_by_sphere[CURRENT_LANG];
 		self.spheres[1].name =  LOCALE_ARRAY_ADDITIONAL.local_self_goverments_indicative[CURRENT_LANG];
 		self.spheres[2].name =  LOCALE_ARRAY_ADDITIONAL.co_owners[CURRENT_LANG];
@@ -6365,6 +6369,11 @@ var SPHERES = {
 		/*self.spheres[7].name =  LOCALE_ARRAY_ADDITIONAL.candidates_proposal[CURRENT_LANG];
 		self.spheres[8].name =  LOCALE_ARRAY_ADDITIONAL.candidates_parties[CURRENT_LANG];
 		self.spheres[9].name =  LOCALE_ARRAY_ADDITIONAL.local_self_goverments[CURRENT_LANG];*/
+	},
+	initial: function(callback_function, forced_initial){
+		var self = this;
+		$.mobile.loading( "show", {  theme: "z"	});
+		self.set_locale_names();
 		if(SPHERES.spheres_array.length == 0 || forced_initial){
 			$.ajax({
 				  url: 'http://gurtom.mobi/filter.php',
@@ -7536,31 +7545,31 @@ var VOTINGS = {
 		switch(parseInt(data_for_build.user_vote)){
 			case 1:
 				selected_class_yes = 'ui-btn-active ui-radio-on';
-				status_current_voting = 'You Vote YES';
+				status_current_voting = LOCALE_ARRAY_ADDITIONAL.you_vote_yes[CURRENT_LANG];
 				checked_yes = 0;
 				break;
 			case 3:
 				selected_class_abstain = ' ui-btn-active ui-radio-on ';
-				status_current_voting = 'You Vote ABSTAINED';
+				status_current_voting = LOCALE_ARRAY_ADDITIONAL.you_vote_abstained[CURRENT_LANG];
 				checked_abstain = 0;
 				break;
 			case 2:
 				selected_class_no = ' ui-btn-active ui-radio-on ';
-				status_current_voting = 'You Vote NO';
+				status_current_voting = LOCALE_ARRAY_ADDITIONAL.you_vote_no[CURRENT_LANG];
 				checked_no = 0;
 				break;
 			default:
-				status_current_voting = 'You didn\'t vote';
+				status_current_voting = LOCALE_ARRAY_ADDITIONAL.you_did_not_vote[CURRENT_LANG];
 		}
 
     	if(data_for_build.user_vote_open == "1"){
     		selected_class_checkbox = ' ui-checkbox-on ';
     		if(parseInt(data_for_build.user_vote) > 0){
-    			status_current_voting += ' Open';
+    			status_current_voting += LOCALE_ARRAY_ADDITIONAL.open_vote[CURRENT_LANG];
     		}
     	}else{
     		if(parseInt(data_for_build.user_vote) > 0){
-    			status_current_voting += ' is anonymous';
+    			status_current_voting += LOCALE_ARRAY_ADDITIONAL.is_anonymous[CURRENT_LANG];
     		}    		
     	}
 
@@ -7915,16 +7924,16 @@ var VOTINGS = {
 			var status_current_voting = '';
 			if($('#vote-page .ui-btn.btn-yes').hasClass('ui-radio-on') == 1 && $('#vote-page .ui-btn.btn-yes').data('checked') == '1'){
 				var vote = 1;
-				status_current_voting = 'You Vote YES';
+				status_current_voting = LOCALE_ARRAY_ADDITIONAL.you_vote_yes[CURRENT_LANG];
 				$('#vote-page .ui-btn.btn-no').data('checked', 0);
 			}else if($('#vote-page .ui-btn.btn-abstain').hasClass('ui-radio-on') == 1 && $('#vote-page .ui-btn.btn-abstain').data('checked') == '1'){
 				var vote = 3;
 				$('#vote-page .ui-btn.btn-no').data('checked', 0);
-				status_current_voting = 'You Vote ABSTAINED';
+				status_current_voting = LOCALE_ARRAY_ADDITIONAL.you_vote_abstained[CURRENT_LANG];
 			}else if($('#vote-page .ui-btn.btn-no').hasClass('ui-radio-on') == 1 && $('#vote-page .ui-btn.btn-no').data('checked') == '1'){
 				var vote = 2;
 				$('#vote-page .ui-btn.btn-no').data('checked', 0);
-				status_current_voting = 'You Vote NO';
+				status_current_voting = LOCALE_ARRAY_ADDITIONAL.you_vote_no[CURRENT_LANG];
 			}else{
 				$('#vote-page .ui-btn.btn-yes').removeClass("ui-btn-active ui-radio-on");
 	    		$('#vote-page .ui-btn.btn-yes').addClass("ui-radio-off");
@@ -7935,18 +7944,18 @@ var VOTINGS = {
 	    		$('#vote-page .ui-btn.btn-no').removeClass("ui-btn-active ui-radio-on");
 	    		$('#vote-page .ui-btn.btn-no').addClass("ui-radio-off");
 	    		$('#vote-page .ui-btn.btn-no').data('checked', 1);
-	    		status_current_voting = 'You didn\'t vote';
+	    		status_current_voting = LOCALE_ARRAY_ADDITIONAL.you_did_not_vote[CURRENT_LANG];
 				var vote = 0;
 			}
 			if($('#vote-page .ui-btn.ui-btn-inherit.ui-btn-icon-left').hasClass('ui-checkbox-on')){
 				var open_name = 1;
 				if(vote != 0){
-					status_current_voting += ' Open';
+					status_current_voting += LOCALE_ARRAY_ADDITIONAL.open_vote[CURRENT_LANG];
 				}
 			}else{
 				var open_name = 0;
 				if(vote != 0){
-					status_current_voting += ' is anonymous';
+					status_current_voting += LOCALE_ARRAY_ADDITIONAL.is_anonymous[CURRENT_LANG];
 				}
 			}
 			$('#vote-page .selected-text').html( status_current_voting );
@@ -8155,7 +8164,7 @@ var VOTINGS = {
 					    <div role="main" class="ui-content">\
 					        <form action="" accept-charset="UTF-8" method="post">\
 					                <div class="ui-input-search ui-input-has-clear">\
-					                    <input type="search" name="" placeholder="Search" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">' + LOCALE_ARRAY_ADDITIONAL.clear_text[CURRENT_LANG] + '</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />\
+					                    <input type="search" name="" placeholder="' + LOCALE_ARRAY_ADDITIONAL.search_voters[CURRENT_LANG] + '" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">' + LOCALE_ARRAY_ADDITIONAL.clear_text[CURRENT_LANG] + '</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />\
 					                </div></form>\
 					        <div class="ui-grid-b voters-list">\
 						        <div class="ui-block-a">\
@@ -8221,11 +8230,11 @@ var VOTINGS = {
 		switch(type){
 			case 'project':
 				var url = 'http://gurtom.mobi/vote_add_project.php?id=' + vote_id;
-				var answer = confirm('Do you want to create project?');
+				var answer = confirm(LOCALE_ARRAY_ADDITIONAL.do_you_want_to_create_project[CURRENT_LANG]);
 				break;
 			case 'request':
 				var url = 'http://gurtom.mobi/vote_add_request.php?id=' + vote_id;
-				var answer = confirm('Do you want to create request?');
+				var answer = confirm(LOCALE_ARRAY_ADDITIONAL.do_you_want_to_create_request[CURRENT_LANG]);
 				break;
 		}
 		if(answer == 1){
@@ -8752,31 +8761,31 @@ var MY_VOTINGS = {
 		switch(parseInt(data_for_build.user_vote)){
 			case 1:
 				selected_class_yes = 'ui-btn-active ui-radio-on';
-				status_current_voting = 'You Vote YES';
+				status_current_voting = LOCALE_ARRAY_ADDITIONAL.you_vote_yes[CURRENT_LANG];
 				checked_yes = 0;
 				break;
 			case 3:
 				selected_class_abstain = ' ui-btn-active ui-radio-on ';
-				status_current_voting = 'You Vote ABSTAINED';
+				status_current_voting = LOCALE_ARRAY_ADDITIONAL.you_vote_abstained[CURRENT_LANG];
 				checked_abstain = 0;
 				break;
 			case 2:
 				selected_class_no = ' ui-btn-active ui-radio-on ';
-				status_current_voting = 'You Vote NO';
+				status_current_voting = LOCALE_ARRAY_ADDITIONAL.you_vote_no[CURRENT_LANG];
 				checked_no = 0;
 				break;
 			default:
-				status_current_voting = 'You didn\'t vote';
+				status_current_voting = LOCALE_ARRAY_ADDITIONAL.you_did_not_vote[CURRENT_LANG];
 		}
 
     	if(data_for_build.user_vote_open == "1"){
     		selected_class_checkbox = ' ui-checkbox-on ';
     		if(parseInt(data_for_build.user_vote) > 0){
-    			status_current_voting += ' Open';
+    			status_current_voting += LOCALE_ARRAY_ADDITIONAL.open_vote[CURRENT_LANG];
     		}
     	}else{
     		if(parseInt(data_for_build.user_vote) > 0){
-    			status_current_voting += ' is anonymous';
+    			status_current_voting += LOCALE_ARRAY_ADDITIONAL.is_anonymous[CURRENT_LANG];
     		}    		
     	}
 
@@ -9124,16 +9133,16 @@ var MY_VOTINGS = {
 			var status_current_voting = '';
 			if($('#my-vote-page .ui-btn.btn-yes').hasClass('ui-radio-on') == 1 && $('#my-vote-page .ui-btn.btn-yes').data('checked') == '1'){
 				var vote = 1;
-				status_current_voting = 'You Vote YES';
+				status_current_voting = LOCALE_ARRAY_ADDITIONAL.you_vote_yes[CURRENT_LANG];
 				$('#my-vote-page .ui-btn.btn-no').data('checked', 0);
 			}else if($('#my-vote-page .ui-btn.btn-abstain').hasClass('ui-radio-on') == 1 && $('#my-vote-page .ui-btn.btn-abstain').data('checked') == '1'){
 				var vote = 3;
 				$('#my-vote-page .ui-btn.btn-no').data('checked', 0);
-				status_current_voting = 'You Vote ABSTAINED';
+				status_current_voting = LOCALE_ARRAY_ADDITIONAL.you_vote_abstained[CURRENT_LANG];
 			}else if($('#my-vote-page .ui-btn.btn-no').hasClass('ui-radio-on') == 1 && $('#my-vote-page .ui-btn.btn-no').data('checked') == '1'){
 				var vote = 2;
 				$('#my-vote-page .ui-btn.btn-no').data('checked', 0);
-				status_current_voting = 'You Vote NO';
+				status_current_voting = LOCALE_ARRAY_ADDITIONAL.you_vote_no[CURRENT_LANG];
 			}else{
 				$('#my-vote-page .ui-btn.btn-yes').removeClass("ui-btn-active ui-radio-on");
 	    		$('#my-vote-page .ui-btn.btn-yes').addClass("ui-radio-off");
@@ -9144,18 +9153,18 @@ var MY_VOTINGS = {
 	    		$('#my-vote-page .ui-btn.btn-no').removeClass("ui-btn-active ui-radio-on");
 	    		$('#my-vote-page .ui-btn.btn-no').addClass("ui-radio-off");
 	    		$('#my-vote-page .ui-btn.btn-no').data('checked', 1);
-	    		status_current_voting = 'You didn\'t vote';
+	    		status_current_voting = LOCALE_ARRAY_ADDITIONAL.you_did_not_vote[CURRENT_LANG];
 				var vote = 0;
 			}
 			if($('#my-vote-page .ui-btn.ui-btn-inherit.ui-btn-icon-left').hasClass('ui-checkbox-on')){
 				var open_name = 1;
 				if(vote != 0){
-					status_current_voting += ' Open';
+					status_current_voting += LOCALE_ARRAY_ADDITIONAL.open_vote[CURRENT_LANG];
 				}
 			}else{
 				var open_name = 0;
 				if(vote != 0){
-					status_current_voting += ' is anonymous';
+					status_current_voting += LOCALE_ARRAY_ADDITIONAL.is_anonymous[CURRENT_LANG];
 				}
 			}
 			$('#my-vote-page .selected-text').html( status_current_voting );
@@ -9350,7 +9359,7 @@ var MY_VOTINGS = {
 					    <div role="main" class="ui-content">\
 					        <form action="" accept-charset="UTF-8" method="post">\
 					                <div class="ui-input-search ui-input-has-clear">\
-					                    <input type="search" name="" placeholder="Search" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">' + LOCALE_ARRAY_ADDITIONAL.clear_text[CURRENT_LANG] + '</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />\
+					                    <input type="search" name="" placeholder="' + LOCALE_ARRAY_ADDITIONAL.search_voters[CURRENT_LANG] + '" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">' + LOCALE_ARRAY_ADDITIONAL.clear_text[CURRENT_LANG] + '</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />\
 					                </div></form>\
 					        <div class="ui-grid-b voters-list">\
 						        <div class="ui-block-a">\
@@ -9672,7 +9681,7 @@ var ADRESS = {
 			},
 			clear_address_info: function(page){
 				var self = this;
-				$('#edit-address [href=#address-item-' + page + ']').html('Address ' + page);
+				$('#edit-address [href=#address-item-' + page + ']').html(LOCALE_ARRAY_ADDITIONAL.address[CURRENT_LANG] + page);
 				
 				//
 
@@ -10083,11 +10092,15 @@ var ADRESS = {
 					})
 			},
 			enable:function(page, name,choose){
+			var self = this;				
 				$('#address-item-' + page + ' [name="'+name+'"]').attr("disabled",false);
-				if(!choose)$('#address-item-' + page + ' [name="'+name+'"]').parent().find("span").html('Choose '+ name);
+				if(!choose)$('#address-item-' + page + ' [name="'+name+'"]').parent().find("span").html(LOCALE_ARRAY_ADDITIONAL.choose[CURRENT_LANG] + self.set_locale_names( name ));
 			},
 			getCurrent:function(not_refresh, callback_redirect, page){
 				var self = this;
+				var lang_address = CURRENT_LANG;
+				if(CURRENT_LANG == 'ua')
+					lang_address = 'uk';
 				if(self.address_arr.length > 0 && location.href.indexOf('#address-item') > -1){
 					if(page && self.address_arr[page-1]){
 						self.set_one_address(page, not_refresh, callback_redirect);						
@@ -10101,14 +10114,14 @@ var ADRESS = {
 							if(self.address_arr[i-1]){
 								$('#edit-address [href=#address-item-' + i + ']').html(self.address_arr[i-1]['str'] + ' '  +
 			          																   self.address_arr[i-1]['bld'] + ', ' + 
-			          																   self.address_arr[i-1]['city_' + CURRENT_LANG]);
+			          																   self.address_arr[i-1]['city_' + lang_address]);
 							}else{
-								$('#edit-address [href=#address-item-' + i + ']').html('Address ' + i);	
+								$('#edit-address [href=#address-item-' + i + ']').html(LOCALE_ARRAY_ADDITIONAL.address[CURRENT_LANG] + i);	
 							}														
 						}
 						if(i < 3){
 							for (var j = i; j < 4; j++) {
-								$('#edit-address [href=#address-item-' + j + ']').html('Address ' + j);						
+								$('#edit-address [href=#address-item-' + j + ']').html(LOCALE_ARRAY_ADDITIONAL.address[CURRENT_LANG] + j);						
 							}								
 						}										
 					}
@@ -10140,7 +10153,9 @@ var ADRESS = {
 				            }
 
 				          	self.address_arr = address_arr;
-				          	
+				          	var lang_address = CURRENT_LANG;
+							if(CURRENT_LANG == 'ua')
+								lang_address = 'uk';
 				          	
 				          	if(page && self.address_arr[page-1]){
 								self.set_one_address(page, not_refresh, callback_redirect);						
@@ -10150,19 +10165,19 @@ var ADRESS = {
 								}
 							}				
 							if(location.href.indexOf('#edit-address') > -1){
-								$('#edit-address [href=#address-item-' + 1 + ']').html('Address ' + 1);	
+								$('#edit-address [href=#address-item-' + 1 + ']').html(LOCALE_ARRAY_ADDITIONAL.address[CURRENT_LANG] + 1);	
 								for (var i = 1; i < 4; i++) {
 									if(self.address_arr[i-1]){
 										$('#edit-address [href=#address-item-' + i + ']').html(self.address_arr[i-1]['str'] + ' '  +
 					          																   self.address_arr[i-1]['bld'] + ', ' + 
-					          																   self.address_arr[i-1]['city_' + CURRENT_LANG]);
+					          																   self.address_arr[i-1]['city_' + lang_address]);
 									}else{
-										$('#edit-address [href=#address-item-' + i + ']').html('Address ' + i);	
+										$('#edit-address [href=#address-item-' + i + ']').html(LOCALE_ARRAY_ADDITIONAL.address[CURRENT_LANG] + i);	
 									}							
 								}
 								if(i < 3){
 									for (var j = i; j < 4; j++) {
-										$('#edit-address [href=#address-item-' + j + ']').html('Address ' + j);						
+										$('#edit-address [href=#address-item-' + j + ']').html(LOCALE_ARRAY_ADDITIONAL.address[CURRENT_LANG] + j);						
 									}								
 								}					
 							}
@@ -10251,35 +10266,54 @@ var ADRESS = {
 			},
 			disable:function(page, name){
 				if(name == "state"){
-					$('#address-item-' + page + ' [name="state"]').parent().find("span").html('Set country');
-					$('#address-item-' + page + ' [name="state"]').html("<option disabled>Set country</option>");
+					$('#address-item-' + page + ' [name="state"]').parent().find("span").html(LOCALE_ARRAY_ADDITIONAL.set[CURRENT_LANG] + ' ' + LOCALE_ARRAY_ADDITIONAL.country[CURRENT_LANG]);
+					$('#address-item-' + page + ' [name="state"]').html("<option disabled>" + LOCALE_ARRAY_ADDITIONAL.set[CURRENT_LANG] + " " + LOCALE_ARRAY_ADDITIONAL.country[CURRENT_LANG] + "</option>");
 					$('#address-item-' + page + ' [name="state"]').attr("disabled","disabled");
 					$('#address-item-' + page + ' [name="state"]').val("");
 
 					name = "county";
 				}
 				if(name == "county"){
-					$('#address-item-' + page + ' [name="county"]').parent().find("span").html('Set state');
-					$('#address-item-' + page + ' [name="county"]').html("<option disabled>Set state</option>");
+					$('#address-item-' + page + ' [name="county"]').parent().find("span").html(LOCALE_ARRAY_ADDITIONAL.set[CURRENT_LANG] + ' ' + LOCALE_ARRAY_ADDITIONAL.state[CURRENT_LANG]);
+					$('#address-item-' + page + ' [name="county"]').html("<option disabled>" + LOCALE_ARRAY_ADDITIONAL.set[CURRENT_LANG] + " " + LOCALE_ARRAY_ADDITIONAL.state[CURRENT_LANG] + "</option>");
 					$('#address-item-' + page + ' [name="county"]').attr("disabled","disabled");
 					$('#address-item-' + page + ' [name="county"]').val("");
 
 					name = "city";
 				}
 				if(name == "city"){
-					$('#address-item-' + page + ' [name="city"]').parent().find("span").html('Set county');
-					$('#address-item-' + page + ' [name="city"]').html("<option disabled>Set county</option>");
+					$('#address-item-' + page + ' [name="city"]').parent().find("span").html(LOCALE_ARRAY_ADDITIONAL.set[CURRENT_LANG] + ' ' + LOCALE_ARRAY_ADDITIONAL.county[CURRENT_LANG]);
+					$('#address-item-' + page + ' [name="city"]').html("<option disabled>" + LOCALE_ARRAY_ADDITIONAL.set[CURRENT_LANG] + " " + LOCALE_ARRAY_ADDITIONAL.county[CURRENT_LANG] + "</option>");
 					$('#address-item-' + page + ' [name="city"]').attr("disabled","disabled");
 					$('#address-item-' + page + ' [name="city"]').val("");
 
 					name = "index";
 				}
 				if(name == "index"){
-					$('#address-item-' + page + ' [name="index"]').parent().find("span").html('Set city');
-					$('#address-item-' + page + ' [name="index"]').html("<option disabled>Set city</option>");
+					$('#address-item-' + page + ' [name="index"]').parent().find("span").html(LOCALE_ARRAY_ADDITIONAL.set[CURRENT_LANG] + ' ' + LOCALE_ARRAY_ADDITIONAL.city[CURRENT_LANG]);
+					$('#address-item-' + page + ' [name="index"]').html("<option disabled>" + LOCALE_ARRAY_ADDITIONAL.set[CURRENT_LANG] + " " + LOCALE_ARRAY_ADDITIONAL.city[CURRENT_LANG] + "</option>");
 					$('#address-item-' + page + ' [name="index"]').attr("disabled","disabled");
 					$('#address-item-' + page + ' [name="index"]').val("");
 
+				}
+			},
+			set_locale_names: function( name ){
+				switch( name ){
+					case 'country':
+						return LOCALE_ARRAY_ADDITIONAL.country[CURRENT_LANG];
+						break;
+					case 'state':
+						return LOCALE_ARRAY_ADDITIONAL.state[CURRENT_LANG];
+						break;
+					case 'county':
+						return LOCALE_ARRAY_ADDITIONAL.county[CURRENT_LANG];
+						break;
+					case 'city':
+						return LOCALE_ARRAY_ADDITIONAL.city[CURRENT_LANG];
+						break;
+					case 'index':
+						return LOCALE_ARRAY_ADDITIONAL.index[CURRENT_LANG];
+						break;
 				}
 			}
 		};
@@ -10546,7 +10580,7 @@ console.log(window.location.toString());
 			      client.send(formData);  /* Send to server */ 
 			   }
 			     
-			   client.onreadystatechange = function() 
+			   client.onreadycountychange = function() 
 			   {
 			      if (client.readyState == 4 && client.status == 200) 
 			      {
