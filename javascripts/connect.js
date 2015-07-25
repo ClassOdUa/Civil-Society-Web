@@ -11097,26 +11097,26 @@ console.log(window.location.toString());
 	    				//$(".user-info .avatar").css("background-image","url('"+this.avatar+"')");
 	    				$(".user-info .id").html("ID: "+this.ID);
 	    				$(".user-info .name").html(this.first_name + " " + this.last_name);
-	    				var ribbons = '<img class="ribbons ui-corner-all" src="images/trust-icon-email.png">';
+	    				var ribbons = '<img style = "margin: 3px;" class="ui-corner-all" src="images/trust-icon-email.png">';
 	    				if(this.go != "0"){
-	    					ribbons += '<img style = "margin: 10px;" class="ui-corner-all" src="images/trust-icon-community.png">';
+	    					ribbons += '<img style = "margin: 3px;" class="ui-corner-all" src="images/trust-icon-community.png">';
 	    				} else {
-	    					ribbons += '<a href="#community"><img style = "margin: 10px; filter: alpha(Opacity=30); opacity: 0.3;"  src="images/trust-icon-community.png"></a>';
+	    					ribbons += '<a href="#community"><img style = "margin: 3px; filter: alpha(Opacity=30); opacity: 0.3;"  src="images/trust-icon-community.png"></a>';
 	    				}
 	    				if(this.osmd != "0"){
-	    					ribbons += '<img style = "margin: 10px;" class="ui-corner-all" src="images/trust-icon-house.png">';
+	    					ribbons += '<img style = "margin: 3px;" class="ui-corner-all" src="images/trust-icon-house.png">';
 	    				} else {
-							ribbons += '<a href="#house"><img style = "margin: 10px; filter: alpha(Opacity=30); opacity: 0.3;"  class="ui-corner-all" src="images/trust-icon-house.png"></a>';
+							ribbons += '<a href="#house"><img style = "margin: 3px; filter: alpha(Opacity=30); opacity: 0.3;"  class="ui-corner-all" src="images/trust-icon-house.png"></a>';
 	    				}
 	    				if(this.payment != "0"){
-	    					ribbons += '<img style = "margin: 10px;" class="ui-corner-all" src="images/trust-icon-wallet.png">';
+	    					ribbons += '<img style = "margin: 3px;" class="ui-corner-all" src="images/trust-icon-wallet.png">';
 	    				} else {
-	    					ribbons += '<a href="#wallet"><img style = "margin: 10px; filter: alpha(Opacity=30); opacity: 0.3;" class="ui-corner-all" src="images/trust-icon-wallet.png"></a>';
+	    					ribbons += '<a href="#wallet"><img style = "margin: 3px; filter: alpha(Opacity=30); opacity: 0.3;" class="ui-corner-all" src="images/trust-icon-wallet.png"></a>';
 	    				}
 	    				if(this.bankid != "0"){
-	    					ribbons += '<img class="ribbons ui-corner-all" src="images/trust-icon-password.png">';
+	    					ribbons += '<img style = "margin: 3px;" class="ui-corner-all" src="images/trust-icon-password.png">';
 	    				} else {
-	    					ribbons += '<a href="#auth"><img style = "margin: 10px; filter: alpha(Opacity=30); opacity: 0.3;" class="ui-corner-all" src="images/trust-icon-password.png"></a>';
+    						ribbons += '<a href="#bankid"><img style = "margin: 3px; filter: alpha(Opacity=30); opacity: 0.3;" class="ui-corner-all" src="images/trust-icon-password.png"></a>';
 	    				}
 
 	    				$('#profile-page #ribbons').html( ribbons );
