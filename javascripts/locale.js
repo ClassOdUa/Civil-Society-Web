@@ -366,7 +366,11 @@ var LOCALE_ARRAY = [
 {selector: '#filter-page-requests .ui-grid-a .ui-block-b span',
 	en: 'Clear Filter',
 	ru: 'Очистить Фильтр',
-	ua: 'Очистить Фильтр'},	
+	ua: 'Очистить Фильтр'},
+{selector: '#balances-pif-page .ui-title',
+	en: 'Personal Fund History',
+	ru: 'История персональных фондов',
+	ua: 'Iсторiя персональних фондiв'},	
 {selector: '#transaction-page .ui-title',
 	en: 'Direct user donation',
 	ru: 'Направление пользовательского пожертвования',
@@ -2124,7 +2128,7 @@ you_vote_no: {
 	ua: 'Ви проголосували НI'},
 you_vote_abstained: {
 	en: 'You Vote ABSTAINED', 
-	ru: 'Вы удержались', 
+	ru: 'Вы воздержались', 
 	ua: 'Ви втримались'},
 you_did_not_vote: {
 	en: 'You didn\'t vote', 
@@ -2174,4 +2178,24 @@ index: {
 	en: 'Index',
 	ru: 'Индекс',
 	ua: 'Індекс'},
+create_nco: {
+	en: 'Create NCO',
+	ru: 'Создать НКО',
+	ua: 'Створити НКО'},
+personal_fund: {
+	en: 'Personal fund',
+	ru: 'Персональный фонд',
+	ua: 'Персональний фонд'},
+donation: {
+	en: 'Donation',
+	ru: 'Пожертвование',
+	ua: 'Пожертвування'},
+enter_amount: {
+	en: 'Enter amount',
+	ru: 'Введите сумму',
+	ua: 'Введiть суму'},
+please_enter_valid_amount:{
+	en: 'Enter valid amount',
+	ru: 'Введите правильную сумму',
+	ua: 'Введiть правильну суму'},
 };

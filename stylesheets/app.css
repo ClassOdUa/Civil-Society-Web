@@ -227,10 +227,12 @@ label.ui-btn {
         right: 1.2em;
         padding: 0; }
     .ui-page-theme-a .ui-header .ui-icon-help {
-      top: 0.85em;
-      right: 1.5em;
-      background: none;
-      border: none; }
+          top: 0;
+    border: none;
+    padding-right: 1.5em;
+    padding-top: 1.75em;
+    right: 0;
+    background: rgba(68,132,246,0.8);}
       .ui-page-theme-a .ui-header .ui-icon-help:after {
         width: 14px;
         height: 14px;
@@ -2119,9 +2121,13 @@ label.ui-btn {
         font-size: 0.65em;
         margin-bottom: 0.4em; }
       #news-page .news-list .item .info .author {
-        position: absolute;
-        bottom: 0.5em;
-        font-size: 0.65em; }
+            position: absolute;
+            bottom: 0em;
+            font-size: 0.65em;
+            padding-bottom: 0.5em;
+            background: rgba(255,255,255,0.8);
+            width: 100%;
+          }
         #news-page .news-list .item .info .author strong {
           font-weight: 900; }
 

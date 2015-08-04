@@ -108,7 +108,7 @@
 <div id="registration" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Registration</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><!--<a class="ui-btn ui-btn-right ui-icon-check ui-btn-icon-right" href="#">Save</a>-->
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><!--<a class="ui-btn ui-btn-right ui-icon-check ui-btn-icon-right" href="#">Save</a>-->
     </div>
     <div role="main" class="ui-content">
         <form action="" accept-charset="UTF-8" id="register-form" method="post">
@@ -309,7 +309,7 @@
 <div id="forgot-password" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Forgot password</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a>
     </div>
     <div role="main" class="ui-content">
         <form action="" accept-charset="UTF-8" method="post">
@@ -582,7 +582,7 @@
 <div id="edit-address" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Edit Address</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a>
     </div>
     <div role="main" class="ui-content">
         <div class="address-item">
@@ -610,7 +610,7 @@
 <div id="address-item-1" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Edit Address 1</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a class="ui-btn ui-btn-right ui-icon-check ui-btn-icon-right" href="#">Save</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a>
     </div>
     <div role="main" class="ui-content">
         <a id = "findgps-1" class="ui-btn ui-corner-all ui-shadow" href="#">Find an address using GPS</a><form accept-charset="UTF-8" onsubmit = 'ADRESS.save_address(1); return false;'>
@@ -677,7 +677,7 @@
 <div id="address-item-2" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Edit Address 2</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a class="ui-btn ui-btn-right ui-icon-check ui-btn-icon-right" href="#">Save</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a>
     </div>
     <div role="main" class="ui-content">
         <a id = "findgps-2" class="ui-btn ui-corner-all ui-shadow" href="#">Find an address using GPS</a><form accept-charset="UTF-8" onsubmit = 'ADRESS.save_address(2); return false;'>
@@ -744,7 +744,7 @@
 <div id="address-item-3" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Edit Address 3</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a class="ui-btn ui-btn-right ui-icon-check ui-btn-icon-right" href="#">Save</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a>
     </div>
     <div role="main" class="ui-content">
         <a id = "findgps-3" class="ui-btn ui-corner-all ui-shadow" href="#">Find an address using GPS</a><form accept-charset="UTF-8" onsubmit = 'ADRESS.save_address(3); return false;'>
@@ -812,7 +812,7 @@
 <div id="geo-page" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Geo position</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a class="ui-btn ui-btn-right ui-icon-check ui-btn-icon-right" href="#">Save</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a class="ui-btn ui-btn-right ui-icon-check ui-btn-icon-right" href="#">Save</a>
     </div>
     <div role="main" class="ui-content"><form action="" accept-charset="UTF-8" method="post">
                 <div>
@@ -859,7 +859,7 @@
 <div id="spheres-address" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Spheres</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a>
     </div>
     <div role="main" class="ui-content">
         <form action="" accept-charset="UTF-8" method="post" onsubmit = "SPHERES.save_and_delete_spheres(); return false;">
@@ -875,7 +875,7 @@
 <div id="spheres-filters" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Spheres</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a>
     </div>
     <div role="main" class="ui-content">
         <form action="" accept-charset="UTF-8" method="post" onsubmit = "">
@@ -888,7 +888,7 @@
 <div id="spheres-trust-vote" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Spheres</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a>
     </div>
     <div id = "sphere_main" role="main" class="ui-content">
         <form action="" accept-charset="UTF-8" method="post" onsubmit = "SPHERES.save_and_delete_spheres(); return false;">
@@ -904,8 +904,8 @@
 <div id="programs-page" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1 id = "ui_title">Programs</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a>
-        <a id = "my_activities_link" style = "display:none" class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#programs-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a>
+        <a id = "my_activities_link" style = "display:none" class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#programs-help">Ask</a>
         <div id="programs-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
@@ -971,7 +971,7 @@
 <div id="filter-page-programs" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Filter</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#filter-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#filter-help">Ask</a>
         <div id="filter-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
@@ -1019,8 +1019,8 @@
 <div id="projects-page" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1 id = "ui_title">Projects</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a>
-        <a id = "my_activities_link" style = "display:none" class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#programs-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a>
+        <a id = "my_activities_link" style = "display:none" class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#programs-help">Ask</a>
         <div id="programs-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
@@ -1090,7 +1090,7 @@
 <div id="filter-page-projects" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Filter</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#filter-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#filter-help">Ask</a>
         <div id="filter-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
@@ -1136,8 +1136,8 @@
 <div id="requests-page" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1 id = "ui_title">Requests</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a>
-        <a id = "my_activities_link" style = "display:none" class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#programs-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a>
+        <a id = "my_activities_link" style = "display:none" class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#programs-help">Ask</a>
         <div id="programs-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
@@ -1205,7 +1205,7 @@
 <div id="filter-page-requests" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Filter</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#filter-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#filter-help">Ask</a>
         <div id="filter-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
@@ -1253,7 +1253,7 @@
 <div id="weighted-votings-page" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1 id = "ui_title">Weighted Votings</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a>
         <a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#voting-help">Ask</a>
         <div id="voting-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
@@ -1318,7 +1318,7 @@
 <div id="my-fund-page" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1 class="long-title">Personal Funds</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#my-fund-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#my-fund-help">Ask</a>
         <div id="my-fund-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
@@ -1399,7 +1399,7 @@
 <div id="transaction-page" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Direct user donation</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#transaction-page-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#transaction-page-help">Ask</a>
         <div id="transaction-page-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
@@ -1436,7 +1436,7 @@
 <div id="nko-page" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>NCO List</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#program-nko-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#program-nko-help">Ask</a>
         <div id="program-nko-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
@@ -1463,7 +1463,7 @@
 <div id="history-page" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1 class="long-title">Donation History</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#program-history-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#program-history-help">Ask</a>
         <div id="program-history-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
@@ -1516,7 +1516,7 @@
 <div id="create-pif-page" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Create Personal Fund</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#create-pif-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#create-pif-help">Ask</a>
         <div id="create-pif-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
@@ -1586,7 +1586,7 @@
 <div id="public-proposals" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Public proposals</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#public-proposals-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#public-proposals-help">Ask</a>
         <div id="public-proposals-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
@@ -1616,7 +1616,7 @@
 <div id="local-self-governments" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Local self-governments</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#local-self-governments-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#local-self-governments-help">Ask</a>
         <div id="local-self-governments-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
@@ -1643,7 +1643,7 @@
 <div id="co-owners" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Co-owners and co-investors</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#co-owners-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#co-owners-help">Ask</a>
         <div id="co-owners-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
@@ -1669,7 +1669,7 @@
 <div id="parties" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Political parties, NGOs volunteering groups</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#parties-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#parties-help">Ask</a>
         <div id="parties-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
@@ -1696,7 +1696,7 @@
 <div id="primaries" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Primaries, elections, exit-polls</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#primaries-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#primaries-help">Ask</a>
         <div id="primaries-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
@@ -1854,7 +1854,7 @@
 <div id="create-item" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1 id = "title_item">Create</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#create-item-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#create-item-help">Ask</a>
         <div id="create-item-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
@@ -2051,7 +2051,7 @@
 <div id="create-item-nko-page" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>NCO List</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#program-nko-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#program-nko-help">Ask</a>
         <div id="program-nko-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
@@ -2073,7 +2073,7 @@
 <div id="balances-pif-page" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1 class="long-title">Personal Fund History</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#balances-pif-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#balances-pif-help">Ask</a>
         <div id="balances-pif-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
@@ -2139,7 +2139,7 @@
 <div id="votings-page" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Votings by spheres</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#votings-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#votings-help">Ask</a>
         <div id="votings-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
@@ -2204,7 +2204,7 @@
 <div id="my-votings-page" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>My Votes</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#my-votings-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#my-votings-help">Ask</a>
         <div id="my-votings-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
@@ -2272,7 +2272,7 @@
 <div id="voters-page" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Voters</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#voters-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#voters-help">Ask</a>
         <div id="voters-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
@@ -2297,7 +2297,7 @@
 <div id="filter-page" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Filter</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#filter-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#filter-help">Ask</a>
         <div id="filter-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
@@ -2345,7 +2345,7 @@
 <div id="create-vote" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Create vote</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#create-vote-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#create-vote-help">Ask</a>
         <div id="create-vote-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
@@ -2608,7 +2608,7 @@
 <div id="spheres-create-vote" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Spheres</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a>
     </div>
     <div role="main" class="ui-content">
         <form action="" accept-charset="UTF-8" method="post" onsubmit = "">
@@ -2640,7 +2640,7 @@
 <div id="options-page" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Options</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a>
         <a class="ui-btn ui-btn-right ui-icon-check ui-btn-icon-right" href="#" onclick = "alert(LOCALE_ARRAY_ADDITIONAL.saved_successfull[CURRENT_LANG]);">Save</a>
     </div>
     <div role="main" class="ui-content">
@@ -2666,7 +2666,7 @@
 <div id="community" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>community</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a>
     </div>
     <div role="main" class="ui-content">
         <p>Описание как получается автризация по ГО</p>
@@ -2676,7 +2676,7 @@
 <div id="house" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Co-owners</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a>
     </div>
     <div role="main" class="ui-content">
         <p>Описание как получается автризация по Co-owners</p>
@@ -2686,7 +2686,7 @@
 <div id="wallet" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Authorisation by payment</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a>
     </div>
     <div role="main" class="ui-content">
         <p>Форма авторизации</p>
@@ -2696,7 +2696,7 @@
 <div id="bankid" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>BankID</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a>
     </div>
     <div role="main" class="ui-content">
         <a class="ui-btn ui-btn-icon-right" href="/sn/bankid.php"></a>
@@ -2739,7 +2739,7 @@
 <div id="spheres-trust" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Spheres</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a>
     </div>
     <div role="main" class="ui-content">
         <form action="" accept-charset="UTF-8" method="post" onsubmit = "TRUST_LIST.save_and_delete_spheres(); return false;">

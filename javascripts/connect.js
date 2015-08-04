@@ -2,9 +2,17 @@ var DEFAULT_LANG = "en";
 var CURRENT_LANG = false;
 var FILE;
 var UI_STATE_DIALOG = 0;
+var mainURL = 'http://gurtom.mobi';
+var HISTORY_INNER = [location.href];
 
 $.mobile.defaultPageTransition = 'none';
-
+function inner_back(){
+	HISTORY_INNER.pop();
+	var back_href = HISTORY_INNER.pop();
+	if(back_href){
+		location.href = back_href;
+		}
+}
 function lang_activate_el(element){
     var lang = false;
     if(!CURRENT_LANG){
@@ -69,6 +77,11 @@ window.onload = function(){
 			 location.href.indexOf('#spheres-trust-vote') > -1 ||
 			 location.href.indexOf('#spheres-filters') > -1)){
 				SPHERES.initial();
+		}
+
+		if(location.href.indexOf('#balances-pif-page') > -1){
+			console.log('#balances-pif-page');
+			funds.current_fund_history();
 		}
 
 		$('#profile-page .avatar').click(function(){
@@ -193,15 +206,15 @@ window.onload = function(){
 		}
 
 		if(location.href.indexOf('#registration') > -1){
-			$("#captcha").attr("src", "http://gurtom.mobi/l/tools/showCaptcha.php");
+			$("#captcha").attr("src", mainURL + "/l/tools/showCaptcha.php");
 		}
 	}, 300);
 
 	//PIF.get_pif_array();
 
-	$('#picture_form').ajaxForm({url: 'http://gurtom.mobi/i/up.php', type: 'post', success: function(response) {
+	$('#picture_form').ajaxForm({url: mainURL + '/i/up.php', type: 'post', success: function(response) {
 		$.ajax({
-			url:"http://gurtom.mobi/profile.php",
+			url: mainURL + "/profile.php",
 			type:"GET",
 	        crossDomain: true,
 			xhrFields: {
@@ -214,14 +227,14 @@ window.onload = function(){
         	}else{
         		var profile_obj = jQuery.parseJSON(data)[0];
 	            $('#profile-page #avatar').attr('src', 'http://' + profile_obj.avatar);
-	        	console.log('http://gurtom.mobi/' + profile_obj.avatar);
+	        	console.log( mainURL + '/' + profile_obj.avatar);
         	}			            
         }});
     }});
 
 
 
-	$('#picture_form_create_vote').ajaxForm({url: 'http://gurtom.mobi/i/up.php', type: 'post', success: function(response) {
+	$('#picture_form_create_vote').ajaxForm({url: mainURL + '/i/up.php', type: 'post', success: function(response) {
 		var error = 0;
 		if(response){
 			if(response.indexOf('File is larger than the specified amount set') > -1){
@@ -294,7 +307,7 @@ window.onload = function(){
 			}
 
 		    $.ajax({
-				url: "http://gurtom.mobi/mc_add.php",
+				url: mainURL + "/mc_add.php",
 		        type: "POST",
 		        data: {"img": img,
 		    		   "sph": $('#create-vote [name=sph]').val(),
@@ -325,12 +338,12 @@ window.onload = function(){
 		        }
 			});
 
-	        console.log('http://gurtom.mobi' + response.responseText);
+	        console.log(mainURL + response.responseText);
 		}
 	    
     }});
 
-    $('#additional_photo_form').ajaxForm({url: 'http://gurtom.mobi/i/up.php', type: 'post', success: function(response) {
+    $('#additional_photo_form').ajaxForm({url: mainURL + '/i/up.php', type: 'post', success: function(response) {
 		var error = 0;
 		if(response){
 			if(response.indexOf('File is larger than the specified amount set') > -1){
@@ -396,12 +409,16 @@ window.onload = function(){
 	}
 };
 
+$(window).on( "pageshow", function(){
+	lang_activate_el();
+});
+
 window.onhashchange = function(){
 	lang_activate_el();
 	if(UI_STATE_DIALOG == 0 && location.href.indexOf('ui-state=dialog') > -1){
 		UI_STATE_DIALOG = 1;
 	}
-
+	HISTORY_INNER.push(location.href);
 	if( ( location.href.indexOf('#trust-list') > -1 ||
 		  location.href.indexOf('#create-item') > -1 ||
 		  location.href.indexOf('#create-vote') > -1 ||
@@ -540,7 +557,7 @@ window.onhashchange = function(){
 	}
 
 	if(location.href.indexOf('#registration') > -1){
-		$("#captcha").attr("src", "http://gurtom.mobi/l/tools/showCaptcha.php");
+		$("#captcha").attr("src", mainURL + "/l/tools/showCaptcha.php");
 	}
 
 	if(location.href.indexOf('network_status=EmailNotMuch') > -1){
@@ -749,7 +766,7 @@ function nko_create_page_data(){
 	var data_for_build;
 
 	$.ajax({
-	  	url: "http://gurtom.mobi/nco.php",
+	  	url:  mainURL + "/nco.php",
 	  	type: "GET",
 	  	xhrFields: {
        		withCredentials: true
@@ -773,7 +790,7 @@ function nko_create_page_data(){
 						        <h1>\
 						            ' + LOCALE_ARRAY_ADDITIONAL.nco_list_title[CURRENT_LANG] + '\
 						        </h1>\
-						        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#program-nko-help">Ask</a>\
+						        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#program-nko-help">Ask</a>\
 						        <div id="project-nko-help" class="help-popup" data-role="popup" data-history="false">\
 						            <div class="title">\
 						                Description\
@@ -971,7 +988,7 @@ var CREATE_ITEM = {
 				 + $('#create-item [name=dtex_month]').val() + "-" 
 				 + $('#create-item [name=dtex_date]').val();
 		$.ajax({
-			url: "http://gurtom.mobi/project_add.php",
+			url:  mainURL + "/project_add.php",
 	        type: "POST",
 	        data: {"img": img,
 	    		   "descr": $('#create-item [name=descr]').val(),
@@ -998,7 +1015,7 @@ var CREATE_ITEM = {
 	},
 	send_program: function(img){
 		$.ajax({
-			url: "http://gurtom.mobi/program_add.php",
+			url:  mainURL + "/program_add.php",
 	        type: "POST",
 	        data: {"img": img,
 	    		   "descr": $('#create-item [name=descr]').val(),
@@ -1027,7 +1044,7 @@ var CREATE_ITEM = {
 				 + $('#create-item [name=dtex_month]').val() + "-" 
 				 + $('#create-item [name=dtex_date]').val();
 		$.ajax({
-			url: "http://gurtom.mobi/request_add.php",
+			url:  mainURL + "/request_add.php",
 	        type: "POST",
 	        data: {"img": img,
 	    		   "descr": $('#create-item [name=descr]').val(),
@@ -1061,7 +1078,7 @@ var CREATE_ITEM = {
 				 + $('#create-item [name=dtex_month]').val() + "-" 
 				 + $('#create-item [name=dtex_date]').val();
 		$.ajax({
-			url: "http://gurtom.mobi/weighted_voting_add.php",
+			url:  mainURL + "/weighted_voting_add.php",
 	        type: "POST",
 	        data: {"img": img,
 	    		   "descr": $('#create-item [name=descr]').val(),
@@ -1090,7 +1107,7 @@ var CREATE_ITEM = {
 				 + $('#create-item [name=dtex_month]').val() + "-" 
 				 + $('#create-item [name=dtex_date]').val();
 		$.ajax({
-			url: "http://gurtom.mobi/project_propositions_add.php",
+			url:  mainURL + "/project_propositions_add.php",
 	        type: "POST",
 	        data: {"img": img,
 	    		   "descr": $('#create-item [name=descr]').val(),
@@ -1123,7 +1140,7 @@ var HISTORY_PAGE = {
 		var self = this;
 		$.mobile.loading( "show", {  theme: "z"	});
 		$.ajax({
-		  url: 'http://gurtom.mobi/fund_public_cf.php?type=4&id=' + object_id,
+		  url: mainURL + '/fund_public_cf.php?type=4&id=' + object_id,
 		  type: "GET",
 		  xhrFields: {
 	       withCredentials: true
@@ -1152,7 +1169,7 @@ var HISTORY_PAGE = {
 							        <h1 class="long-title">\
 							            ' + LOCALE_ARRAY_ADDITIONAL.history_donation[CURRENT_LANG] + '\
 							        </h1>\
-							        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#request-history-help">Ask</a>\
+							        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#request-history-help">Ask</a>\
 							        <div id="request-history-help" class="help-popup" data-role="popup" data-history="false">\
 							            <div class="title">\
 							                Description\
@@ -1280,7 +1297,7 @@ var PIF = {
 			console.log(funds.arr);
 			console.log('pif here');
 			$.ajax({
-			  	url: "http://gurtom.mobi/fund_user.php",
+			  	url:  mainURL + "/fund_user.php",
 			  	type: "GET",
 			  	xhrFields: {
 		       		withCredentials: true
@@ -1406,14 +1423,14 @@ var PROJECTS = {
 		if(location.href.indexOf('#projects-page?tags_filter=') > -1){
 			var match_array = location.href.match(/=[a-zA-Z0-9а-яА-Я]*/i);
 			var tag_filter = match_array[0].match(/[^=][a-zA-Z]*/i);
-			var url = 'http://gurtom.mobi/project.php?filter=' + encodeURIComponent(tag_filter);
+			var url = mainURL + '/project.php?filter=' + encodeURIComponent(tag_filter);
 			$('#projects-page #menu_link').attr('style', 'display:block');
 			$('#projects-page #my_activities_link').attr('style', 'display:none');
 			console.log(tag_filter);
 		}else if(location.href.indexOf('#projects-page?program=') > -1){
 			var match_array = location.href.match(/#projects-page\?program=[0-9]*/i);
 			var object_id = match_array[0].match(/[0-9]+/i);
-			var url = 'http://gurtom.mobi/project_propositions.php?program_id=' + object_id;
+			var url = mainURL + '/project_propositions.php?program_id=' + object_id;
 			$('#projects-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.projects_propositions[CURRENT_LANG]);
 			var return_to = '#program-page?program=' + object_id;
 			$('#projects-page #menu_link').attr('style', 'display:block');
@@ -1421,18 +1438,18 @@ var PROJECTS = {
 			$('#projects-page #create_proposition_link').attr('onclick', '$.mobile.navigate(\'#create-item?project_proposition=true&item=' + object_id + '\')');
 			$('#projects-page #my_activities_link').attr('style', 'display:none');
 		}else if(location.href.indexOf('#projects-page?my_project=true') > -1){
-			var url = 'http://gurtom.mobi/project.php?my=1';
+			var url = mainURL + '/project.php?my=1';
 			$('#projects-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.my_projects[CURRENT_LANG]);
 			$('#projects-page #create_link').attr('style','display: block');
 			$('#projects-page #menu_link').attr('style', 'display:none');
 			$('#projects-page #my_activities_link').attr('style', 'display:block');
 		}else if(location.href.indexOf('#projects-page?my_project_propositions=true') > -1){
-			var url = 'http://gurtom.mobi/project_propositions.php?my=1';
+			var url = mainURL + '/project_propositions.php?my=1';
 			$('#projects-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.my_projects_propositions[CURRENT_LANG]);
 			$('#projects-page #menu_link').attr('style', 'display:none');
 			$('#projects-page #my_activities_link').attr('style', 'display:block');
 		}else{
-			var url = 'http://gurtom.mobi/project.php';
+			var url = mainURL + '/project.php';
 			$('#programs-page #menu_link').attr('style', 'display:block');
 			$('#programs-page #my_activities_link').attr('style', 'display:none');
 		}
@@ -1474,19 +1491,19 @@ var PROJECTS = {
 				var match_array = location.href.match(/=[a-zA-Z0-9а-яА-Я]*/i);
 				var tag_filter = match_array[0].match(/[^=][a-zA-Z]*/i);
 
-				var url = 'http://gurtom.mobi/project.php?filter=' + encodeURIComponent(tag_filter) + '&ls=' + self.data_last_item;
+				var url = mainURL + '/project.php?filter=' + encodeURIComponent(tag_filter) + '&ls=' + self.data_last_item;
 				console.log(tag_filter);
 			}else if(location.href.indexOf('#projects-page?program=') > -1){
 				var match_array = location.href.match(/#projects-page\?program=[0-9]*/i);
 				var object_id = match_array[0].match(/[0-9]+/i);
-				var url = 'http://gurtom.mobi/project_propositions.php?program_id=' + object_id + '&ls=' + self.data_last_item;;
+				var url = mainURL + '/project_propositions.php?program_id=' + object_id + '&ls=' + self.data_last_item;;
 				var return_to = '#program-page?program=' + object_id + '&ls=' + self.data_last_item;;
 			}else if(location.href.indexOf('#projects-page?my_project=true') > -1){
-				var url = 'http://gurtom.mobi/project.php?my=1&ls=' + self.data_last_item;;
+				var url = mainURL + '/project.php?my=1&ls=' + self.data_last_item;;
 			}else if(location.href.indexOf('#projects-page?my_project_propositions=true') > -1){
-				var url = 'http://gurtom.mobi/project_propositions.php?my=1&ls=' + self.data_last_item;
+				var url = mainURL + '/project_propositions.php?my=1&ls=' + self.data_last_item;
 			}else{
-				var url = 'http://gurtom.mobi/project.php?ls=' + self.data_last_item;
+				var url = mainURL + '/project.php?ls=' + self.data_last_item;
 			}
 
 			$.ajax({
@@ -1518,7 +1535,7 @@ var PROJECTS = {
 
 		$.mobile.loading( "show", {  theme: "z"	});
 
-		var url = 'http://gurtom.mobi/project.php';
+		var url = mainURL + '/project.php';
 
 		switch($('#projects-page [name=sort]').val()){
 			case "Sort by id":
@@ -1655,7 +1672,7 @@ var PROJECTS = {
                 allStar.removeClass('active');
                 
                 $.ajax({
-				  url: "http://gurtom.mobi/stars_add.php?id=" + vote_id + "&stars=0&obj=" + obj_type,
+				  url:  mainURL + "/stars_add.php?id=" + vote_id + "&stars=0&obj=" + obj_type,
 				  type: "GET",
 				  xhrFields: {
 			       withCredentials: true
@@ -1669,7 +1686,7 @@ var PROJECTS = {
             }
 
             $.ajax({
-			  url: "http://gurtom.mobi/stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=" + obj_type,
+			  url:  mainURL + "/stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=" + obj_type,
 			  type: "GET",
 			  xhrFields: {
 		       withCredentials: true
@@ -1897,15 +1914,27 @@ var PROJECTS = {
     	});
 
     	var nko_parts = '';
+    	var nco_create_flag = 0;
 		jQuery.each(data_for_build.nco_list, function(i, one_nko) {
-			nko_parts += '<li>\
-		                    <div>\
-		                        <strong>' + one_nko.reg_name + '</strong> (<strong>ID</strong>:<span>' + one_nko.id + '</span>)<span class="phone">' + one_nko.reg_phone + '</span><span class="doc">' + one_nko.reg_doc + '</span><span class="addr">' + one_nko.reg_address + '</span>\
-		                    </div>\
-		                </li>\ '; 
+			if( data_for_build.nco_id == '0' ){
+					nko_parts += '<li>\
+				                    <div>\
+				                        <strong>' + one_nko.reg_name + '</strong> (<strong>ID</strong>:<span>' + one_nko.id + '</span>)<span class="phone">' + one_nko.reg_phone + '</span><span class="doc">' + one_nko.reg_doc + '</span><span class="addr">' + one_nko.reg_address + '</span>\
+				                    </div>\
+				                </li>\ ';
+			}else{
+				if( data_for_build.nco_id == one_nko.id){
+					nko_parts += '<li>\
+				                    <div>\
+				                        <strong>' + one_nko.reg_name + '</strong> (<strong>ID</strong>:<span>' + one_nko.id + '</span>)<span class="phone">' + one_nko.reg_phone + '</span><span class="doc">' + one_nko.reg_doc + '</span><span class="addr">' + one_nko.reg_address + '</span>\
+				                    </div>\
+				                </li>\ ';
+				    nco_create_flag = 1;
+				}
+			}
     	});
 
-    	if(SUPER_PROFILE.id == data_for_build.creator_id){
+    	if(SUPER_PROFILE.id == data_for_build.creator_id && data_for_build.nco_acceptance == '0' ){
 			var nco_button = '<div class="nko-btn">\
 			                    <a class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate(\'#nko-page?project=' + data_for_build.id + '\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.choose_nco[CURRENT_LANG] + '</a>\
 			                </div>\
@@ -1915,6 +1944,16 @@ var PROJECTS = {
 		}else{
 			var nco_button = '';
 		}
+		var nco_create_button = '';
+		/*if(SUPER_PROFILE.id == data_for_build.creator_id && data_for_build.nco_acceptance == '0' ){
+			if( data_for_build.nco_list.length == 0 || ( data_for_build.nco_list.length > 0 && nco_create_flag == 0 ) ){
+				nco_create_button = '<div class="nko-btn">\
+			                    <a class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate(\'#nko-page?project_proposition=' + data_for_build.id + '\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.create_nco[CURRENT_LANG] + '</a>\
+			                </div>';
+			}
+		}else{
+			nco_create_button = '';
+		}*/
 		var ui_donate_panel = '';
 		if(data_for_build.status == 0){
 			if(flag_selected == 1){
@@ -1974,7 +2013,7 @@ var PROJECTS = {
 			        <h1>\
 			            ' + LOCALE_ARRAY_ADDITIONAL.project[CURRENT_LANG] + '\
 			        </h1>\
-			        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#project-help">Ask</a>\
+			        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#project-help">Ask</a>\
 			        <div id="project-help" class="help-popup" data-role="popup" data-history="false">\
 			            <div class="title">\
 			                Description\
@@ -2018,6 +2057,7 @@ var PROJECTS = {
 		                    </ol>\
 		                </div>\
 		                ' + nco_button + '\
+		                ' + nco_create_button + '\
 		                <div class="desc">\
 		                    <div class="text">\
 		                        ' + data_for_build.description + '\
@@ -2114,16 +2154,28 @@ var PROJECTS = {
     		}
     	});
 
+    	var nco_create_flag = 0;
     	var nko_parts = '';
 		jQuery.each(data_for_build.nco_list, function(i, one_nko) {
-			nko_parts += '<li>\
-		                    <div>\
-		                        <strong>' + one_nko.reg_name + '</strong> (<strong>ID</strong>:<span>' + one_nko.id + '</span>)<span class="phone">' + one_nko.reg_phone + '</span><span class="doc">' + one_nko.reg_doc + '</span><span class="addr">' + one_nko.reg_address + '</span>\
-		                    </div>\
-		                </li>\ '; 
+			if( data_for_build.nco_id == '0' ){
+					nko_parts += '<li>\
+				                    <div>\
+				                        <strong>' + one_nko.reg_name + '</strong> (<strong>ID</strong>:<span>' + one_nko.id + '</span>)<span class="phone">' + one_nko.reg_phone + '</span><span class="doc">' + one_nko.reg_doc + '</span><span class="addr">' + one_nko.reg_address + '</span>\
+				                    </div>\
+				                </li>\ ';
+			}else{
+				if( data_for_build.nco_id == one_nko.id){
+					nko_parts += '<li>\
+				                    <div>\
+				                        <strong>' + one_nko.reg_name + '</strong> (<strong>ID</strong>:<span>' + one_nko.id + '</span>)<span class="phone">' + one_nko.reg_phone + '</span><span class="doc">' + one_nko.reg_doc + '</span><span class="addr">' + one_nko.reg_address + '</span>\
+				                    </div>\
+				                </li>\ ';
+				    nco_create_flag = 1;
+				}
+			} 
     	});
 
-    	if(SUPER_PROFILE.id == data_for_build.creator_id){
+    	if(SUPER_PROFILE.id == data_for_build.creator_id && data_for_build.nco_acceptance == '0' ){
 			var nco_button = '<div class="nko-btn">\
 			                    <a class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate(\'#nko-page?project_proposition=' + data_for_build.id + '\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.choose_nco[CURRENT_LANG] + '</a>\
 			                </div>\
@@ -2133,6 +2185,16 @@ var PROJECTS = {
 		}else{
 			var nco_button = '';
 		}
+		var nco_create_button = '';
+		/*if(SUPER_PROFILE.id == data_for_build.creator_id && data_for_build.nco_acceptance == '0' ){
+			if( data_for_build.nco_list.length == 0 || ( data_for_build.nco_list.length > 0 && nco_create_flag == 0 ) ){
+				nco_create_button = '<div class="nko-btn">\
+			                    <a class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate(\'#nko-page?project_proposition=' + data_for_build.id + '\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.create_nco[CURRENT_LANG] + '</a>\
+			                </div>';
+			}
+		}else{
+			nco_create_button = '';
+		}*/
 		var ui_donate_panel = '';
 		if(data_for_build.status == 0){
 			if(flag_selected == 1){
@@ -2193,7 +2255,7 @@ var PROJECTS = {
 			        <h1>\
 			            ' + LOCALE_ARRAY_ADDITIONAL.project_proposition[CURRENT_LANG] + '\
 			        </h1>\
-			        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#project-help">Ask</a>\
+			        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#project-help">Ask</a>\
 			        <div id="project-help" class="help-popup" data-role="popup" data-history="false">\
 			            <div class="title">\
 			                Description\
@@ -2237,6 +2299,7 @@ var PROJECTS = {
 		                    </ol>\
 		                </div>\
 		                ' + nco_button + '\
+		                ' + nco_create_button + '\
 		                <div class="desc">\
 		                    <div class="text">\
 		                        ' + data_for_build.description + '\
@@ -2332,7 +2395,7 @@ var PROJECTS = {
 						        <h1>\
 						            ' + LOCALE_ARRAY_ADDITIONAL.nco_list_title[CURRENT_LANG] + '\
 						        </h1>\
-						        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#program-nko-help">Ask</a>\
+						        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#program-nko-help">Ask</a>\
 						        <div id="project-nko-help" class="help-popup" data-role="popup" data-history="false">\
 						            <div class="title">\
 						                Description\
@@ -2359,7 +2422,7 @@ var PROJECTS = {
 	},
 	set_nco: function(object_type, object_id, nco_id){
 		$.ajax({
-			url: "http://gurtom.mobi/nco_choice.php",
+			url:  mainURL + "/nco_choice.php",
 	        type: "POST",
 	        data: {"type": object_type,
 	    		   "id": object_id,
@@ -2376,9 +2439,9 @@ var PROJECTS = {
 		});
 	},
 	get_one_element: function(data_id, type_trigger, project_proposition){
-		var url = 'http://gurtom.mobi/project.php?id=' + data_id;
+		var url = mainURL + '/project.php?id=' + data_id;
 		if(project_proposition){
-			url = 'http://gurtom.mobi/project_propositions.php?id=' + data_id;			
+			url = mainURL + '/project_propositions.php?id=' + data_id;			
 		}
 		var self = this;
 		var return_element;
@@ -2434,7 +2497,7 @@ var PROJECTS = {
 		}
 		
 		$.ajax({
-			url: "http://gurtom.mobi/fund_add_by_type.php",
+			url:  mainURL + "/fund_add_by_type.php",
 	        type: "POST",
 	        data: {"fund_id": fund_id,
 	    		   "currency": currency,
@@ -2484,7 +2547,7 @@ var PROJECTS = {
 			var my_add = 0;
 			$.mobile.loading( "show", {  theme: "z"	});
 			$.ajax({
-			  url: 'http://gurtom.mobi/fund_public_cf.php?type=' + type + '&id=' + object_id,
+			  url: mainURL + '/fund_public_cf.php?type=' + type + '&id=' + object_id,
 			  type: "GET",
 			  xhrFields: {
 		       withCredentials: true
@@ -2519,7 +2582,7 @@ var PROJECTS = {
 								        <h1 class="long-title">\
 								            ' + LOCALE_ARRAY_ADDITIONAL.history_donation[CURRENT_LANG] + '\
 								        </h1>\
-								        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#project_proposition-history-help">Ask</a>\
+								        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#project_proposition-history-help">Ask</a>\
 								        <div id="project_proposition-history-help" class="help-popup" data-role="popup" data-history="false">\
 								            <div class="title">\
 								                Description\
@@ -2582,7 +2645,7 @@ var PROJECTS = {
 	}, 
 	return_donate: function(fund_id, currency, amount, type, type_id, return_page){
 		$.ajax({
-			url: "http://gurtom.mobi/fund_return_by_type.php",
+			url:  mainURL + "/fund_return_by_type.php",
 	        type: "POST",
 	        data: {"fund_id": fund_id,
 	    		   "currency": currency,
@@ -2604,7 +2667,7 @@ var PROJECTS = {
 	},
 	/*delete_voting: function(voting_id, return_page){
 		$.ajax({
-		  url: 'http://gurtom.mobi/mc_rm.php?id=' + voting_id,
+		  url: mainURL + '/mc_rm.php?id=' + voting_id,
 		  type: "GET",
 		  xhrFields: {
 	       withCredentials: true
@@ -2639,18 +2702,18 @@ var PROGRAMS = {
 		if(location.href.indexOf('#programs-page?tags_filter=') > -1){
 			var match_array = location.href.match(/=[a-zA-Z0-9а-яА-Я]*/i);
 			var tag_filter = match_array[0].match(/[^=][a-zA-Z]*/i);
-			var url = 'http://gurtom.mobi/program.php?filter=' + encodeURIComponent(tag_filter);
+			var url = mainURL + '/program.php?filter=' + encodeURIComponent(tag_filter);
 			console.log(tag_filter);
 			$('#programs-page #menu_link').attr('style', 'display:block');
 			$('#programs-page #my_activities_link').attr('style', 'display:none');
 		}else if(location.href.indexOf('#programs-page?my_program=true') > -1){
-			var url = 'http://gurtom.mobi/program.php?my=1';
+			var url = mainURL + '/program.php?my=1';
 			$('#programs-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.my_programs[CURRENT_LANG]);
 			$('#programs-page #create_link').attr('style','display: block');
 			$('#programs-page #menu_link').attr('style', 'display:none');
 			$('#programs-page #my_activities_link').attr('style', 'display:block');
 		}else{
-			var url = 'http://gurtom.mobi/program.php';
+			var url = mainURL + '/program.php';
 			$('#programs-page #menu_link').attr('style', 'display:block');
 			$('#programs-page #my_activities_link').attr('style', 'display:none');
 		}
@@ -2691,12 +2754,12 @@ var PROGRAMS = {
 				var match_array = location.href.match(/=[a-zA-Z0-9а-яА-Я]*/i);
 				var tag_filter = match_array[0].match(/[^=][a-zA-Z]*/i);
 
-				var url = 'http://gurtom.mobi/program.php?filter=' + encodeURIComponent(tag_filter) + '&ls=' + self.data_last_item;
+				var url = mainURL + '/program.php?filter=' + encodeURIComponent(tag_filter) + '&ls=' + self.data_last_item;
 				console.log(tag_filter);
 			}else if(location.href.indexOf('#programs-page?my_program=true') > -1){
-				var url = 'http://gurtom.mobi/program.php?my=1&ls=' + self.data_last_item;
+				var url = mainURL + '/program.php?my=1&ls=' + self.data_last_item;
 			}else{
-				var url = 'http://gurtom.mobi/program.php?ls=' + self.data_last_item;
+				var url = mainURL + '/program.php?ls=' + self.data_last_item;
 			}
 
 			$.mobile.loading( "show", {  theme: "z"	});
@@ -2739,7 +2802,7 @@ var PROGRAMS = {
 		}*/
 		$.mobile.loading( "show", {  theme: "z"	});
 
-		var url = 'http://gurtom.mobi/program.php';
+		var url = mainURL + '/program.php';
 
 		switch($('#programs-page [name=sort]').val()){
 			case "Sort by id":
@@ -2824,7 +2887,7 @@ var PROGRAMS = {
 	},
 	/*support_voting: function(vote_id){
 		$.ajax({
-		  url: 'http://gurtom.mobi/like_add.php?id=' + vote_id,
+		  url: mainURL + '/like_add.php?id=' + vote_id,
 		  type: "GET",
 		  xhrFields: {
 	       withCredentials: true
@@ -2890,7 +2953,7 @@ var PROGRAMS = {
             if (star.hasClass('active') && !star.next().hasClass('active')) {
                 allStar.removeClass('active');
                 $.ajax({
-				  url: "http://gurtom.mobi/stars_add.php?id=" + vote_id + "&stars=0&obj=2",
+				  url:  mainURL + "/stars_add.php?id=" + vote_id + "&stars=0&obj=2",
 				  type: "GET",
 				  xhrFields: {
 			       withCredentials: true
@@ -2904,7 +2967,7 @@ var PROGRAMS = {
             }
 
             $.ajax({
-			  url: "http://gurtom.mobi/stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=2",
+			  url:  mainURL + "/stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=2",
 			  type: "GET",
 			  xhrFields: {
 		       withCredentials: true
@@ -3101,12 +3164,24 @@ var PROGRAMS = {
     	});
 
     	var nko_parts = '';
+    	var nco_create_flag = 0;
 		jQuery.each(data_for_build.nco_list, function(i, one_nko) {
-			nko_parts += '<li>\
-		                    <div>\
-		                        <strong>' + one_nko.reg_name + '</strong> (<strong>ID</strong>:<span>' + one_nko.id + '</span>)<span class="phone">' + one_nko.reg_phone + '</span><span class="doc">' + one_nko.reg_doc + '</span><span class="addr">' + one_nko.reg_address + '</span>\
-		                    </div>\
-		                </li>\ '; 
+			if( data_for_build.nco_id == '0' ){
+					nko_parts += '<li>\
+				                    <div>\
+				                        <strong>' + one_nko.reg_name + '</strong> (<strong>ID</strong>:<span>' + one_nko.id + '</span>)<span class="phone">' + one_nko.reg_phone + '</span><span class="doc">' + one_nko.reg_doc + '</span><span class="addr">' + one_nko.reg_address + '</span>\
+				                    </div>\
+				                </li>\ ';
+			}else{
+				if( data_for_build.nco_id == one_nko.id){
+					nko_parts += '<li>\
+				                    <div>\
+				                        <strong>' + one_nko.reg_name + '</strong> (<strong>ID</strong>:<span>' + one_nko.id + '</span>)<span class="phone">' + one_nko.reg_phone + '</span><span class="doc">' + one_nko.reg_doc + '</span><span class="addr">' + one_nko.reg_address + '</span>\
+				                    </div>\
+				                </li>\ ';
+				    nco_create_flag = 1;
+				}
+			} 
     	});
     	if(data_for_build.status == 0){
     		var status_item = '<div class="status yellow">\
@@ -3117,7 +3192,7 @@ var PROGRAMS = {
 				                    ' + LOCALE_ARRAY_ADDITIONAL.successfully_finished[CURRENT_LANG] + '\
 				                </div>';	
     	}
-    	if(SUPER_PROFILE.id == data_for_build.creator_id){
+    	if(SUPER_PROFILE.id == data_for_build.creator_id && data_for_build.nco_acceptance == '0' ){
 			var nco_button = '<div class="nko-btn">\
 			                    <a class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate(\'#nko-page?program=' + data_for_build.id + '\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.choose_nco[CURRENT_LANG] + '</a>\
 			                </div>\
@@ -3127,6 +3202,16 @@ var PROGRAMS = {
 		}else{
 			var nco_button = '';
 		}
+		var nco_create_button = '';
+		/*if(SUPER_PROFILE.id == data_for_build.creator_id && data_for_build.nco_acceptance == '0' ){
+			if( data_for_build.nco_list.length == 0 || ( data_for_build.nco_list.length > 0 && nco_create_flag == 0 ) ){
+				nco_create_button = '<div class="nko-btn">\
+			                    <a class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate(\'#nko-page?project_proposition=' + data_for_build.id + '\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.create_nco[CURRENT_LANG] + '</a>\
+			                </div>';
+			}
+		}else{
+			nco_create_button = '';
+		}*/
 		var ui_donate_panel = '';
 		if(data_for_build.status == 0){
 			if(flag_selected == 1){
@@ -3182,7 +3267,7 @@ var PROGRAMS = {
 			        <h1>\
 			            ' + LOCALE_ARRAY_ADDITIONAL.program[CURRENT_LANG] + '\
 			        </h1>\
-			        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#program-help">Ask</a>\
+			        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#program-help">Ask</a>\
 			        <div id="program-help" class="help-popup" data-role="popup" data-history="false">\
 			            <div class="title">\
 			                Description\
@@ -3226,6 +3311,7 @@ var PROGRAMS = {
 		                    </ol>\
 		                </div>\
 		                ' + nco_button + '\
+		                ' + nco_create_button + '\
 		                <div class="desc">\
 		                    <div class="text">\
 		                        ' + data_for_build.description + '\
@@ -3320,7 +3406,7 @@ var PROGRAMS = {
 						        <h1>\
 						            ' + LOCALE_ARRAY_ADDITIONAL.nco_list_title[CURRENT_LANG] + '\
 						        </h1>\
-						        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#program-nko-help">Ask</a>\
+						        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#program-nko-help">Ask</a>\
 						        <div id="program-nko-help" class="help-popup" data-role="popup" data-history="false">\
 						            <div class="title">\
 						                Description\
@@ -3347,7 +3433,7 @@ var PROGRAMS = {
 	},
 	set_nco: function(object_type, object_id, nco_id){
 		$.ajax({
-			url: "http://gurtom.mobi/nco_choice.php",
+			url:  mainURL + "/nco_choice.php",
 	        type: "POST",
 	        data: {"type": object_type,
 	    		   "id": object_id,
@@ -3367,7 +3453,7 @@ var PROGRAMS = {
 		var self = this;
 		var return_element;
 		$.ajax({
-			  url: 'http://gurtom.mobi/program.php?id=' + data_id,
+			  url: mainURL + '/program.php?id=' + data_id,
 			  type: "GET",
 			  xhrFields: {
 		       withCredentials: true
@@ -3414,7 +3500,7 @@ var PROGRAMS = {
 		}
 		
 		$.ajax({
-			url: "http://gurtom.mobi/fund_add_by_type.php",
+			url:  mainURL + "/fund_add_by_type.php",
 	        type: "POST",
 	        data: {"fund_id": fund_id,
 	    		   "currency": currency,
@@ -3451,7 +3537,7 @@ var PROGRAMS = {
 			var my_add = 0;
 			$.mobile.loading( "show", {  theme: "z"	});
 			$.ajax({
-			  url: 'http://gurtom.mobi/fund_public_cf.php?type=2&id=' + object_id,
+			  url: mainURL + '/fund_public_cf.php?type=2&id=' + object_id,
 			  type: "GET",
 			  xhrFields: {
 		       withCredentials: true
@@ -3488,7 +3574,7 @@ var PROGRAMS = {
 								        <h1 class="long-title">\
 								            ' + LOCALE_ARRAY_ADDITIONAL.history_donation[CURRENT_LANG] + '\
 								        </h1>\
-								        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#request-history-help">Ask</a>\
+								        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#request-history-help">Ask</a>\
 								        <div id="request-history-help" class="help-popup" data-role="popup" data-history="false">\
 								            <div class="title">\
 								                Description\
@@ -3551,7 +3637,7 @@ var PROGRAMS = {
 	},
 	return_donate: function(fund_id, currency, amount, type, type_id, return_page){
 		$.ajax({
-			url: "http://gurtom.mobi/fund_return_by_type.php",
+			url:  mainURL + "/fund_return_by_type.php",
 	        type: "POST",
 	        data: {"fund_id": fund_id,
 	    		   "currency": currency,
@@ -3573,7 +3659,7 @@ var PROGRAMS = {
 	}	
 	/*delete_voting: function(voting_id, return_page){
 		$.ajax({
-		  url: 'http://gurtom.mobi/mc_rm.php?id=' + voting_id,
+		  url: mainURL + '/mc_rm.php?id=' + voting_id,
 		  type: "GET",
 		  xhrFields: {
 	       withCredentials: true
@@ -3611,16 +3697,16 @@ var REQUESTS = {
 		if(location.href.indexOf('#requests-page?tags_filter=') > -1){
 			var match_array = location.href.match(/=[a-zA-Z0-9а-яА-Я]*/i);
 			var tag_filter = match_array[0].match(/[^=][a-zA-Z]*/i);
-			var url = 'http://gurtom.mobi/request.php?filter=' + encodeURIComponent(tag_filter);
+			var url = mainURL + '/request.php?filter=' + encodeURIComponent(tag_filter);
 			console.log(tag_filter);
 		}else if(location.href.indexOf('#requests-page?my_request=true') > -1){
-			var url = 'http://gurtom.mobi/request.php?my=1';
+			var url = mainURL + '/request.php?my=1';
 			$('#requests-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.my_requests[CURRENT_LANG]);
 			$('#requests-page #create_link').attr('style','display: block');
 			$('#requests-page #menu_link').attr('style', 'display:none');
 			$('#requests-page #my_activities_link').attr('style', 'display:block');
 		}else{
-			var url = 'http://gurtom.mobi/request.php';
+			var url = mainURL + '/request.php';
 		}
 
 		$.mobile.loading( "show", {  theme: "z"	});
@@ -3655,12 +3741,12 @@ var REQUESTS = {
 				var match_array = location.href.match(/=[a-zA-Z0-9а-яА-Я]*/i);
 				var tag_filter = match_array[0].match(/[^=][a-zA-Z]*/i);
 
-				var url = 'http://gurtom.mobi/request.php?filter=' + encodeURIComponent(tag_filter) + '&ls=' + self.data_last_item;
+				var url = mainURL + '/request.php?filter=' + encodeURIComponent(tag_filter) + '&ls=' + self.data_last_item;
 				console.log(tag_filter);
 			}else if(location.href.indexOf('#requests-page?my_request=true') > -1){
-				var url = 'http://gurtom.mobi/request.php?my=1&ls=' + self.data_last_item;
+				var url = mainURL + '/request.php?my=1&ls=' + self.data_last_item;
 			}else{
-				var url = 'http://gurtom.mobi/request.php?ls=' + self.data_last_item;
+				var url = mainURL + '/request.php?ls=' + self.data_last_item;
 			}
 
 			$.mobile.loading( "show", {  theme: "z"	});
@@ -3703,7 +3789,7 @@ var REQUESTS = {
 		}*/
 		$.mobile.loading( "show", {  theme: "z"	});
 
-		var url = 'http://gurtom.mobi/request.php';
+		var url = mainURL + '/request.php';
 
 		switch($('#requests-page [name=sort]').val()){
 			case "Sort by id":
@@ -3797,7 +3883,7 @@ var REQUESTS = {
 	},
 	/*support_voting: function(vote_id){
 		$.ajax({
-		  url: 'http://gurtom.mobi/like_add.php?id=' + vote_id,
+		  url: mainURL + '/like_add.php?id=' + vote_id,
 		  type: "GET",
 		  xhrFields: {
 	       withCredentials: true
@@ -3863,7 +3949,7 @@ var REQUESTS = {
             if (star.hasClass('active') && !star.next().hasClass('active')) {
                 allStar.removeClass('active');
                 $.ajax({
-				  url: "http://gurtom.mobi/stars_add.php?id=" + vote_id + "&stars=0&obj=5",
+				  url:  mainURL + "/stars_add.php?id=" + vote_id + "&stars=0&obj=5",
 				  type: "GET",
 				  xhrFields: {
 			       withCredentials: true
@@ -3877,7 +3963,7 @@ var REQUESTS = {
             }
 
             $.ajax({
-			  url: "http://gurtom.mobi/stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=5",
+			  url:  mainURL + "/stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=5",
 			  type: "GET",
 			  xhrFields: {
 		       withCredentials: true
@@ -4074,15 +4160,27 @@ var REQUESTS = {
     	});
 
     	var nko_parts = '';
+    	var nco_create_flag = 0;
 		jQuery.each(data_for_build.nco_list, function(i, one_nko) {
-			nko_parts += '<li>\
-		                    <div>\
-		                        <strong>' + one_nko.reg_name + '</strong> (<strong>ID</strong>:<span>' + one_nko.id + '</span>)<span class="phone">' + one_nko.reg_phone + '</span><span class="doc">' + one_nko.reg_doc + '</span><span class="addr">' + one_nko.reg_address + '</span>\
-		                    </div>\
-		                </li>\ '; 
+			if( data_for_build.nco_id == '0' ){
+					nko_parts += '<li>\
+				                    <div>\
+				                        <strong>' + one_nko.reg_name + '</strong> (<strong>ID</strong>:<span>' + one_nko.id + '</span>)<span class="phone">' + one_nko.reg_phone + '</span><span class="doc">' + one_nko.reg_doc + '</span><span class="addr">' + one_nko.reg_address + '</span>\
+				                    </div>\
+				                </li>\ ';
+			}else{
+				if( data_for_build.nco_id == one_nko.id){
+					nko_parts += '<li>\
+				                    <div>\
+				                        <strong>' + one_nko.reg_name + '</strong> (<strong>ID</strong>:<span>' + one_nko.id + '</span>)<span class="phone">' + one_nko.reg_phone + '</span><span class="doc">' + one_nko.reg_doc + '</span><span class="addr">' + one_nko.reg_address + '</span>\
+				                    </div>\
+				                </li>\ ';
+				    nco_create_flag = 1;
+				}
+			} 
     	});
 
-		if(SUPER_PROFILE.id == data_for_build.creator_id){
+		if(SUPER_PROFILE.id == data_for_build.creator_id && data_for_build.nco_acceptance == '0' ){
 			var nco_button = '<div class="nko-btn">\
 			                    <a class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate(\'#nko-page?request=' + data_for_build.id + '\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.choose_nco[CURRENT_LANG] + '</a>\
 			                </div>\
@@ -4092,6 +4190,16 @@ var REQUESTS = {
 		}else{
 			var nco_button = '';
 		}
+		var nco_create_button = '';
+		/*if(SUPER_PROFILE.id == data_for_build.creator_id && data_for_build.nco_acceptance == '0' ){
+			if( data_for_build.nco_list.length == 0 || ( data_for_build.nco_list.length > 0 && nco_create_flag == 0 ) ){
+				nco_create_button = '<div class="nko-btn">\
+			                    <a class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate(\'#nko-page?project_proposition=' + data_for_build.id + '\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.create_nco[CURRENT_LANG] + '</a>\
+			                </div>';
+			}
+		}else{
+			nco_create_button = '';
+		}*/
 		var ui_donate_panel = '';
 		if(data_for_build.status == 0){
 			if(flag_selected == 1){
@@ -4152,7 +4260,7 @@ var REQUESTS = {
 			        <h1>\
 			            ' + LOCALE_ARRAY_ADDITIONAL.request[CURRENT_LANG] + '\
 			        </h1>\
-			        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#request-help">Ask</a>\
+			        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#request-help">Ask</a>\
 			        <div id="request-help" class="help-popup" data-role="popup" data-history="false">\
 			            <div class="title">\
 			                Description\
@@ -4199,6 +4307,7 @@ var REQUESTS = {
 		                    </ol>\
 		                </div>\
 		                ' + nco_button + '\
+		                ' + nco_create_button + '\
 		                <div class="desc">\
 		                    <div class="text">\
 		                        ' + data_for_build.description + '\
@@ -4288,7 +4397,7 @@ var REQUESTS = {
 						        <h1>\
 						            ' + LOCALE_ARRAY_ADDITIONAL.nco_list_title[CURRENT_LANG] + '\
 						        </h1>\
-						        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#program-nko-help">Ask</a>\
+						        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#program-nko-help">Ask</a>\
 						        <div id="request-nko-help" class="help-popup" data-role="popup" data-history="false">\
 						            <div class="title">\
 						                Description\
@@ -4315,7 +4424,7 @@ var REQUESTS = {
 	},
 	set_nco: function(object_type, object_id, nco_id){
 		$.ajax({
-			url: "http://gurtom.mobi/nco_choice.php",
+			url:  mainURL + "/nco_choice.php",
 	        type: "POST",
 	        data: {"type": object_type,
 	    		   "id": object_id,
@@ -4335,7 +4444,7 @@ var REQUESTS = {
 		var self = this;
 		var return_element;
 		$.ajax({
-			  url: 'http://gurtom.mobi/request.php?id=' + data_id,
+			  url: mainURL + '/request.php?id=' + data_id,
 			  type: "GET",
 			  xhrFields: {
 		       withCredentials: true
@@ -4382,7 +4491,7 @@ var REQUESTS = {
 		}
 		
 		$.ajax({
-			url: "http://gurtom.mobi/fund_add_by_type.php",
+			url:  mainURL + "/fund_add_by_type.php",
 	        type: "POST",
 	        data: {"fund_id": fund_id,
 	    		   "currency": currency,
@@ -4420,7 +4529,7 @@ var REQUESTS = {
 			var my_add = 0;
 			$.mobile.loading( "show", {  theme: "z"	});
 			$.ajax({
-			  url: 'http://gurtom.mobi/fund_public_cf.php?type=5&id=' + object_id,
+			  url: mainURL + '/fund_public_cf.php?type=5&id=' + object_id,
 			  type: "GET",
 			  xhrFields: {
 		       withCredentials: true
@@ -4455,7 +4564,7 @@ var REQUESTS = {
 								        <h1 class="long-title">\
 								            ' + LOCALE_ARRAY_ADDITIONAL.history_donation[CURRENT_LANG] + '\
 								        </h1>\
-								        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#request-history-help">Ask</a>\
+								        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#request-history-help">Ask</a>\
 								        <div id="request-history-help" class="help-popup" data-role="popup" data-history="false">\
 								            <div class="title">\
 								                Description\
@@ -4518,7 +4627,7 @@ var REQUESTS = {
 	},
 	return_donate: function(fund_id, currency, amount, type, type_id, return_page){
 		$.ajax({
-			url: "http://gurtom.mobi/fund_return_by_type.php",
+			url:  mainURL + "/fund_return_by_type.php",
 	        type: "POST",
 	        data: {"fund_id": fund_id,
 	    		   "currency": currency,
@@ -4540,7 +4649,7 @@ var REQUESTS = {
 	}	
 	/*delete_voting: function(voting_id, return_page){
 		$.ajax({
-		  url: 'http://gurtom.mobi/mc_rm.php?id=' + voting_id,
+		  url: mainURL + '/mc_rm.php?id=' + voting_id,
 		  type: "GET",
 		  xhrFields: {
 	       withCredentials: true
@@ -4564,7 +4673,7 @@ var funds = {
     init : function(callback_function){
     	var self = this;
         $.ajax({
-            url: "http://gurtom.mobi/fund_user.php",
+            url:  mainURL + "/fund_user.php",
             type: "GET",
             crossDomain: true,
             xhrFields: {
@@ -4613,7 +4722,7 @@ var funds = {
     update_pay_button : function(id){
         var self = this;
         $.ajax({
-            url: "http://gurtom.mobi/sn/donation.php?fund_id="+id,
+            url:  mainURL + "/sn/donation.php?fund_id="+id,
             type: "GET",
             crossDomain: true,
             xhrFields: {
@@ -4639,7 +4748,7 @@ var funds = {
     	var self = this;
     	if(confirm(LOCALE_ARRAY_ADDITIONAL.create_fund_question[CURRENT_LANG])){
     		$.ajax({
-	            url: "http://gurtom.mobi/fund_user_add.php?currency="+currency,
+	            url:  mainURL + "/fund_user_add.php?currency="+currency,
 	            type: "GET",
 	            crossDomain: true,
 	            xhrFields: {
@@ -4699,7 +4808,7 @@ var funds = {
     	if(location.href.indexOf('#balances-pif-page?fund=') > -1){
 			var match_array = location.href.match(/=[a-zA-Z0-9а-яА-Я]*/i);
 			var fund_id = match_array[0].match(/[^=][0-9]*/i);
-			var url = 'http://gurtom.mobi/fund_user_cf.php?fund_id=' + fund_id;
+			var url = mainURL + '/fund_user_cf.php?fund_id=' + fund_id;
 
 			$.ajax({
 			  url: url,
@@ -4721,22 +4830,22 @@ var funds = {
 					  		jQuery.each(fund_array, function(i, one_fund) {
 								switch(one_fund.type){
 									case '0':
-										var general_span = '<span>(Пожертвование - Personal Fund ' + fund_id + ')</span>';
+										var general_span = '<span>(' + LOCALE_ARRAY_ADDITIONAL.donation[CURRENT_LANG] + ' - ' + LOCALE_ARRAY_ADDITIONAL.personal_fund[CURRENT_LANG] + ' ' + fund_id + ')</span>';
 										break;
 									case '1':
-										var general_span = '<span>(Пожертвование - Personal Fund ' + fund_id + ')</span>';
+										var general_span = '<span>(' + LOCALE_ARRAY_ADDITIONAL.donation[CURRENT_LANG] + ' - ' + LOCALE_ARRAY_ADDITIONAL.personal_fund[CURRENT_LANG] + ' ' + fund_id + ')</span>';
 										break;
 									case '2':
-										var general_span = '<span>(Personal Fund ' + fund_id + ' - Программа ' + one_fund.fund_id + ')</span>';
+										var general_span = '<span>(' + LOCALE_ARRAY_ADDITIONAL.personal_fund[CURRENT_LANG] + ' ' + fund_id + ' - Программа ' + one_fund.fund_id + ')</span>';
 										break;
 									case '3':
-										var general_span = '<span>(Personal Fund ' + fund_id + ' - Проектное предложение ' + one_fund.fund_id + ')</span>';
+										var general_span = '<span>(' + LOCALE_ARRAY_ADDITIONAL.personal_fund[CURRENT_LANG] + ' ' + fund_id + ' - Проектное предложение ' + one_fund.fund_id + ')</span>';
 										break;
 									case '4':
-										var general_span = '<span>(Personal Fund ' + fund_id + ' - Проект ' + one_fund.fund_id + ')</span>';
+										var general_span = '<span>(' + LOCALE_ARRAY_ADDITIONAL.personal_fund[CURRENT_LANG] + ' ' + fund_id + ' - Проект ' + one_fund.fund_id + ')</span>';
 										break;
 									case '5':
-										var general_span = '<span>(Personal Fund  ' + fund_id + ' - Заявка ' + one_fund.fund_id + ')</span>';
+										var general_span = '<span>(' + LOCALE_ARRAY_ADDITIONAL.personal_fund[CURRENT_LANG] + '  ' + fund_id + ' - Заявка ' + one_fund.fund_id + ')</span>';
 										break;
 								}
 								switch(one_fund.cur){
@@ -4754,7 +4863,7 @@ var funds = {
 					    				break;
 					    		}
 					    		if(one_fund.r){
-					    			var additional_span = '<span style = "cursor: pointer;" class = "yellow" onclick = "funds.cancel_fund(\'' + one_fund.fund_id + '\',\'' + one_fund.cur + '\',\'' + one_fund.type + '\',\'' + one_fund.id + '\');">Отменить</span> ';
+					    			var additional_span = '<span style = "cursor: pointer;" class = "yellow" onclick = "funds.cancel_fund(\'' + one_fund.fund_id + '\',\'' + one_fund.cur + '\',\'' + one_fund.type + '\',\'' + one_fund.id + '\');">' + LOCALE_ARRAY_ADDITIONAL.cancel_donate[CURRENT_LANG] + '</span> ';
 					    		}else{
 					    			var additional_span = '';
 					    		}
@@ -4769,7 +4878,7 @@ var funds = {
 								                    </td>\
 								                    <td>\
 								                        <div class="price">\
-								                          ' +  one_fund.amount + ' ' + currency_name + '\
+								                          <span data-id-amount = "' + one_fund.id + '">' +  one_fund.amount + '</span> ' + currency_name + '\
 								                        </div>\
 								                    </td>\
 								                </tr>';
@@ -4781,19 +4890,25 @@ var funds = {
 		}
     }, 
     cancel_fund: function(fund_id, currency, type, id){
-    	var amount = prompt("Введите сумму", "");
+    	var amount = prompt(LOCALE_ARRAY_ADDITIONAL.enter_amount[CURRENT_LANG], "");
     	if(amount){
-    		$.ajax({
-			  url: 'http://gurtom.mobi/fund_return_by_type.php?fund_id=' + fund_id + '&currency=' + currency + '&amount=' + amount + '&type=' + type + '&id=' + id,
-			  type: "GET",
-			  xhrFields: {
-		       withCredentials: true
-		      },
-		      crossDomain: true,
-			  complete: function( response ){
-			  		
-			  }
-			});
+    		var parsed_int = parseInt( $('#balances-pif-page [data-id-amount=' + id + ']').html() ) * -1;
+    		if(amount > parsed_int ) {
+    			alert(LOCALE_ARRAY_ADDITIONAL.please_enter_valid_amount[CURRENT_LANG]);
+    		}else{
+    			console.log( parsed_int );
+    			$.ajax({
+				  url: mainURL + '/fund_return_by_type.php?fund_id=' + fund_id + '&currency=' + currency + '&amount=' + amount + '&type=' + type + '&id=' + id,
+				  type: "GET",
+				  xhrFields: {
+			       withCredentials: true
+			      },
+			      crossDomain: true,
+				  complete: function( response ){
+				  		$('#balances-pif-page [data-id-amount=' + id + ']').html( parsed_int - amount );
+				  }
+				});
+    		}
     	}
     },
     set_pif_options_transaction_page: function(page){
@@ -4813,7 +4928,7 @@ var funds = {
     set_cash: function(){
     	if(confirm(LOCALE_ARRAY_ADDITIONAL.transaction_question[CURRENT_LANG])){
     		$.ajax({
-				url: "http://gurtom.mobi/fund_user_user.php",
+				url:  mainURL + "/fund_user_user.php",
 		        type: "POST",
 		        data: {"fund_id": $('#transaction-page [name=fund_id]').val(),
 		    		   "currency": $('#transaction-page [name=fund_id] option[value=' + $('#transaction-page [name=fund_id]').val() + ']').data('currency'),
@@ -4860,7 +4975,7 @@ var WEIGHTED_VOTINGS = {
 			if(location.href.indexOf('#weighted-votings-page?program=') > -1){
 				var match_array = location.href.match(/#weighted-votings-page\?program=[0-9]*/i);
 				var object_id = match_array[0].match(/[0-9]+/i);
-				var url = 'http://gurtom.mobi/weighted_votings.php?program_id=' + object_id;
+				var url = mainURL + '/weighted_votings.php?program_id=' + object_id;
 				$('#weighted-votings-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.weighted_votings[CURRENT_LANG]);
 				$('#weighted-votings-page #create_voting_link').attr('style','display: block');
 				$('#weighted-votings-page #create_voting_link').attr('onclick', "$.mobile.navigate(\'#create-item?weighted_voting=true&item=" + object_id + "\')");
@@ -4868,17 +4983,17 @@ var WEIGHTED_VOTINGS = {
 				if(location.href.indexOf('#weighted-votings-page?my=1') > -1){
 					$('#weighted-votings-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.my_weighted_votings[CURRENT_LANG]);
 					$('#weighted-votings-page #create_voting_link').attr('style','display: none');
-					var url = 'http://gurtom.mobi/weighted_votings.php?my=1';
+					var url = mainURL + '/weighted_votings.php?my=1';
 				}else if(location.href.indexOf('#weighted-votings-page?my=2') > -1){
 					$('#weighted-votings-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.weighted_votings[CURRENT_LANG]);
 					$('#weighted-votings-page #create_voting_link').attr('style','display: block');
-					var url = 'http://gurtom.mobi/weighted_votings.php?my=2';
+					var url = mainURL + '/weighted_votings.php?my=2';
 				}
 			}
 			if(location.href.indexOf('#weighted-vote-page?vote=') > -1){
 				var match_array = location.href.match(/#weighted-vote-page\?vote=[0-9]*/i);
 				var object_id = match_array[0].match(/[0-9]+/i);
-				var url = 'http://gurtom.mobi/weighted_votings.php?id=' + object_id;
+				var url = mainURL + '/weighted_votings.php?id=' + object_id;
 			}
 
 			$.ajax({
@@ -4921,7 +5036,7 @@ var WEIGHTED_VOTINGS = {
 		}
 		$.mobile.loading( "show", {  theme: "z"	});
 
-		var url = 'http://gurtom.mobi/weighted_votings.php?';
+		var url = mainURL + '/weighted_votings.php?';
 
 		switch($('#weighted-votings-page [name=sort]').val()){
 			case "Sort by newest":
@@ -5007,14 +5122,14 @@ var WEIGHTED_VOTINGS = {
 			if(location.href.indexOf('#weighted-votings-page?program=') > -1){
 				var match_array = location.href.match(/#weighted-votings-page\?program=[0-9]*/i);
 				var object_id = match_array[0].match(/[0-9]+/i);
-				var url = 'http://gurtom.mobi/weighted_votings.php?program_id=' + object_id + '&ls=' + self.voting_last_item;
+				var url = mainURL + '/weighted_votings.php?program_id=' + object_id + '&ls=' + self.voting_last_item;
 				$('#weighted-votings-page #ui_title').html('Weighted votings');
 				$('#weighted-votings-page #create_link').attr('style','display: none');
 				var return_to = '#program-page?program=' + object_id;
 			}else{
 				$('#weighted-votings-page #ui_title').html('My weighted votings');
 				$('#weighted-votings-page #create_link').attr('style','display: block');
-				var url = 'http://gurtom.mobi/weighted_votings.php?my=1&ls=' + self.voting_last_item;
+				var url = mainURL + '/weighted_votings.php?my=1&ls=' + self.voting_last_item;
 			}
 
 			$.mobile.loading( "show", {  theme: "z"	});
@@ -5084,7 +5199,7 @@ var WEIGHTED_VOTINGS = {
             if (star.hasClass('active') && !star.next().hasClass('active')) {
                 allStar.removeClass('active');
                 $.ajax({
-				  url: "http://gurtom.mobi/stars_add.php?id=" + vote_id + "&stars=0&obj=6",
+				  url:  mainURL + "/stars_add.php?id=" + vote_id + "&stars=0&obj=6",
 				  type: "GET",
 				  xhrFields: {
 			       withCredentials: true
@@ -5098,7 +5213,7 @@ var WEIGHTED_VOTINGS = {
             }
 
             $.ajax({
-			  url: "http://gurtom.mobi/stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=6",
+			  url:  mainURL + "/stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=6",
 			  type: "GET",
 			  xhrFields: {
 		       withCredentials: true
@@ -5287,7 +5402,7 @@ var WEIGHTED_VOTINGS = {
     	var ui_string = '';
 		ui_string += '<div data-role="header" data-position="fixed" data-tap-toggle="false">\
 							        <h1>' + LOCALE_ARRAY_ADDITIONAL.weighted_vote[CURRENT_LANG] + '</h1>\
-							        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#vote-help">Ask</a>\
+							        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#vote-help">Ask</a>\
 							        <div id="vote-help" class="help-popup" data-role="popup" data-history="false">\
 							            <div class="title">\
 							                ' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
@@ -5485,7 +5600,7 @@ var WEIGHTED_VOTINGS = {
     	var ui_string = '';
 		ui_string = '<div data-role="header" data-position="fixed" data-tap-toggle="false">\
 						    <h1>' + LOCALE_ARRAY_ADDITIONAL.weighted_vote[CURRENT_LANG] + '</h1>\
-						        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#vote-help">Ask</a>\
+						        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#vote-help">Ask</a>\
 						        <div id="vote-help" class="help-popup" data-role="popup" data-history="false">\
 						            <div class="title">\
 						                ' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
@@ -5670,7 +5785,7 @@ var WEIGHTED_VOTINGS = {
 		var self = this;
 		var return_element;
 		$.ajax({
-			  url: 'http://gurtom.mobi/weighted_votings.php?id=' + vote_id,
+			  url: mainURL + '/weighted_votings.php?id=' + vote_id,
 			  type: "GET",
 			  xhrFields: {
 		       withCredentials: true
@@ -5763,7 +5878,7 @@ var WEIGHTED_VOTINGS = {
 			}
 			$('#weighted-vote-page .selected-text').html( status_current_voting );
 			$.ajax({
-			  url: 'http://gurtom.mobi/weighted_vote_add.php?wv_id=' + object_id + '&vote=' + vote + '&open=' + open_name,
+			  url: mainURL + '/weighted_vote_add.php?wv_id=' + object_id + '&vote=' + vote + '&open=' + open_name,
 			  type: "GET",
 			  xhrFields: {
 		       withCredentials: true
@@ -5778,7 +5893,7 @@ var WEIGHTED_VOTINGS = {
 	},
 	delete_voting: function(voting_id, return_page){
 		$.ajax({
-		  url: 'http://gurtom.mobi/weighted_voting_rm.php?wv_id=' + voting_id,
+		  url: mainURL + '/weighted_voting_rm.php?wv_id=' + voting_id,
 		  type: "GET",
 		  xhrFields: {
 	       withCredentials: true
@@ -5798,7 +5913,7 @@ var WEIGHTED_VOTINGS = {
 			filter_id = '&idu=' + $(idu_input).val();
 		}
 		$.ajax({
-		  url: 'http://gurtom.mobi/weighted_vote_open.php?id=' + vote_id + filter_id,
+		  url: mainURL + '/weighted_vote_open.php?id=' + vote_id + filter_id,
 		  type: "GET",
 		  xhrFields: {
 	       withCredentials: true
@@ -5819,7 +5934,7 @@ var WEIGHTED_VOTINGS = {
 					        <h1>\
 					            ' + LOCALE_ARRAY_ADDITIONAL.voters[CURRENT_LANG] + '\
 					        </h1>\
-					        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="">' + LOCALE_ARRAY_ADDITIONAL.back[CURRENT_LANG] + '</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#voters-help">' + LOCALE_ARRAY_ADDITIONAL.ask[CURRENT_LANG] + '</a>\
+					        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="">' + LOCALE_ARRAY_ADDITIONAL.back[CURRENT_LANG] + '</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#voters-help">' + LOCALE_ARRAY_ADDITIONAL.ask[CURRENT_LANG] + '</a>\
 					        <div id="voters-help" class="help-popup" data-role="popup" data-history="false">\
 					            <div class="title">\
 					                ' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
@@ -5908,22 +6023,22 @@ var TRUST_LIST = {
 		$.mobile.loading( "show", {  theme: "z"	});
 		if(parameter){
 			if(parameter == 's'){
-				var url = 'http://gurtom.mobi/trust.php';					
+				var url = mainURL + '/trust.php';					
 			}else if(parameter == 'p_s'){
-				var url = 'http://gurtom.mobi/trust.php?p_s=1';
+				var url = mainURL + '/trust.php?p_s=1';
 			}
 		}else{
 			if(next_used){
 				if($('#trusted_checkbox').hasClass('ui-checkbox-off')){
-					var url = 'http://gurtom.mobi/trust.php';					
+					var url = mainURL + '/trust.php';					
 				}else{
-					var url = 'http://gurtom.mobi/trust.php?p_s=1';
+					var url = mainURL + '/trust.php?p_s=1';
 				}
 			}else{
 				if($('#trusted_checkbox').hasClass('ui-checkbox-on')){
-					var url = 'http://gurtom.mobi/trust.php';					
+					var url = mainURL + '/trust.php';					
 				}else{
-					var url = 'http://gurtom.mobi/trust.php?p_s=1';
+					var url = mainURL + '/trust.php?p_s=1';
 				}
 			}
 		}
@@ -5966,9 +6081,9 @@ var TRUST_LIST = {
 		var self = this;
 		$.mobile.loading( "show", {  theme: "z"	});
 		if($('#trusted_checkbox').hasClass('ui-checkbox-on')){
-			var url = 'http://gurtom.mobi/trust.php?p_s=1&ls=' + self.trust_last_item;			
+			var url = mainURL + '/trust.php?p_s=1&ls=' + self.trust_last_item;			
 		}else{
-			var url = 'http://gurtom.mobi/trust.php?ls=' + self.trust_last_item;
+			var url = mainURL + '/trust.php?ls=' + self.trust_last_item;
 		}
 		if($('#trust-list #searched_string').val() != ''){
 				url += "&s="  + $('#trust-list #searched_string').val();
@@ -6288,7 +6403,7 @@ var TRUST_LIST = {
 	delete_sphere: function(id_sphere_trust){
 		$.mobile.loading( "show", {  theme: "z"	});
 		$.ajax({
-		  url: ' http://gurtom.mobi/trust_rm.php?tid=' + id_sphere_trust,
+		  url: mainURL + '/trust_rm.php?tid=' + id_sphere_trust,
 		  type: "GET",
 		  xhrFields: {
 	       withCredentials: true
@@ -6302,7 +6417,7 @@ var TRUST_LIST = {
 	save_sphere: function(id_user, id_sphere){
 		$.mobile.loading( "show", {  theme: "z"	});
 		$.ajax({
-		  url: 'http://gurtom.mobi/trust_add.php?t=' + id_user + '&s=' + id_sphere,
+		  url: mainURL + '/trust_add.php?t=' + id_user + '&s=' + id_sphere,
 		  type: "GET",
 		  xhrFields: {
 	       withCredentials: true
@@ -6376,7 +6491,7 @@ var SPHERES = {
 		self.set_locale_names();
 		if(SPHERES.spheres_array.length == 0 || forced_initial){
 			$.ajax({
-				  url: 'http://gurtom.mobi/filter.php',
+				  url: mainURL + '/filter.php',
 				  type: "GET",
 				  xhrFields: {
 			       withCredentials: true
@@ -6532,7 +6647,7 @@ var SPHERES = {
 	delete_sphere: function(id_sphere){
 		$.mobile.loading( "show", {  theme: "z"	});
 		$.ajax({
-		  url: 'http://gurtom.mobi/filter_fav_add.php?id=' + id_sphere + '&rm=1',
+		  url: mainURL + '/filter_fav_add.php?id=' + id_sphere + '&rm=1',
 		  type: "GET",
 		  xhrFields: {
 	       withCredentials: true
@@ -6546,7 +6661,7 @@ var SPHERES = {
 	save_sphere: function(id_sphere){
 		$.mobile.loading( "show", {  theme: "z"	});
 		$.ajax({
-		  url: 'http://gurtom.mobi/filter_fav_add.php?id=' + id_sphere,
+		  url: mainURL + '/filter_fav_add.php?id=' + id_sphere,
 		  type: "GET",
 		  xhrFields: {
 	       withCredentials: true
@@ -6707,7 +6822,7 @@ var NEWS = {
 		var self = this;
 		$.mobile.loading( "show", {  theme: "z"	});
 		$.ajax({
-		  url: 'http://gurtom.mobi/news.php',
+		  url: mainURL + '/news.php',
 		  type: "GET",
 		  xhrFields: {
 	       withCredentials: true
@@ -6726,7 +6841,7 @@ var NEWS = {
 		var self = this;
 		$.mobile.loading( "show", {  theme: "z"	});
 		$.ajax({
-		  url: 'http://gurtom.mobi/news.php?ls=' + self.news_last_item,
+		  url: mainURL + '/news.php?ls=' + self.news_last_item,
 		  type: "GET",
 		  xhrFields: {
 	       withCredentials: true
@@ -6990,14 +7105,14 @@ var VOTINGS = {
 		if(location.href.indexOf('#votings-page?program=') > -1){
 			var match_array = location.href.match(/#votings-page\?program=[0-9]*/i);
 			var object_id = match_array[0].match(/[0-9]+/i);
-			var url = 'http://gurtom.mobi/weighted_votings.php?program_id=' + object_id;
+			var url = mainURL + '/weighted_votings.php?program_id=' + object_id;
 		}else{
 			if(location.href.indexOf('#votings-page?type=') > -1){
 				var match_array = location.href.match(/#votings-page\?type=[0-9]*/i);
 				var object_id = match_array[0].match(/[0-9]+/i);
-				var url = 'http://gurtom.mobi/mc.php?type=' + object_id;
+				var url = mainURL + '/mc.php?type=' + object_id;
 			}else{
-				var url = 'http://gurtom.mobi/mc.php?sph=0';
+				var url = mainURL + '/mc.php?sph=0';
 			}			
 		}
 
@@ -7040,7 +7155,7 @@ var VOTINGS = {
 		}
 		$.mobile.loading( "show", {  theme: "z"	});
 
-		var url = 'http://gurtom.mobi/mc.php?sph=0';
+		var url = mainURL + '/mc.php?sph=0';
 
 		if($('#votings-page #searched_string').val() != ""){
 			url += '&filter=' + $('#votings-page #searched_string').val();
@@ -7123,9 +7238,9 @@ var VOTINGS = {
 			if(location.href.indexOf('#votings-page?type=') > -1){
 				var match_array = location.href.match(/#votings-page\?type=[0-9]*/i);
 				var object_id = match_array[0].match(/[0-9]+/i);
-				var url = 'http://gurtom.mobi/mc.php?type=' + object_id + '&sph=0&ls=' + self.voting_last_item;
+				var url = mainURL + '/mc.php?type=' + object_id + '&sph=0&ls=' + self.voting_last_item;
 			}else{
-				var url = 'http://gurtom.mobi/mc.php?sph=0&ls=' + self.voting_last_item;
+				var url = mainURL + '/mc.php?sph=0&ls=' + self.voting_last_item;
 			}
 
 			$.ajax({
@@ -7153,7 +7268,7 @@ var VOTINGS = {
 	},
 	support_voting: function(vote_id, page){
 		$.ajax({
-		  url: 'http://gurtom.mobi/like_add.php?id=' + vote_id,
+		  url: mainURL + '/like_add.php?id=' + vote_id,
 		  type: "GET",
 		  xhrFields: {
 	       withCredentials: true
@@ -7222,7 +7337,7 @@ var VOTINGS = {
             if (star.hasClass('active') && !star.next().hasClass('active')) {
                 allStar.removeClass('active');
                 $.ajax({
-				  url: "http://gurtom.mobi/stars_add.php?id=" + vote_id + "&stars=0&obj=1",
+				  url:  mainURL + "/stars_add.php?id=" + vote_id + "&stars=0&obj=1",
 				  type: "GET",
 				  xhrFields: {
 			       withCredentials: true
@@ -7236,7 +7351,7 @@ var VOTINGS = {
             }
 
             $.ajax({
-			  url: "http://gurtom.mobi/stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=1",
+			  url:  mainURL + "/stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=1",
 			  type: "GET",
 			  xhrFields: {
 		       withCredentials: true
@@ -7405,9 +7520,16 @@ var VOTINGS = {
 			                    <span>' + LOCALE_ARRAY_ADDITIONAL.collect_supporters[CURRENT_LANG] + data_for_build.start + ' - ' + data_for_build.sprtf +
 			               '</span></div>\ ';
     	}else{
-    		status_vote = '<div class="status red" >\
+    		if(canceled != 0){
+    			status_vote = '<div class="status red" >\
 		                        <span>' + LOCALE_ARRAY_ADDITIONAL.voting_canceled[CURRENT_LANG] + '</span>\
 		                    </div>\ ';
+    		}else{
+    			status_vote = '<div class="status yellow">\
+			                    <span>' + LOCALE_ARRAY_ADDITIONAL.collect_supporters[CURRENT_LANG] + data_for_build.start + ' - ' + data_for_build.sprtf +
+			               '</span></div>\ ';
+    		}
+    		
     	}
 
     	switch(data_for_build.stars){
@@ -7442,7 +7564,7 @@ var VOTINGS = {
     	var ui_string = '';
 		ui_string += '<div data-role="header" data-position="fixed" data-tap-toggle="false">\
 							        <h1>' + LOCALE_ARRAY_ADDITIONAL.vote[CURRENT_LANG] + '</h1>\
-							        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#vote-help">Ask</a>\
+							        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#vote-help">Ask</a>\
 							        <div id="vote-help" class="help-popup" data-role="popup" data-history="false">\
 							            <div class="title">\
 							                ' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
@@ -7672,7 +7794,7 @@ var VOTINGS = {
     	var ui_string = '';
 		ui_string = '<div data-role="header" data-position="fixed" data-tap-toggle="false">\
 						    <h1>' + LOCALE_ARRAY_ADDITIONAL.vote[CURRENT_LANG] + '</h1>\
-						        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#vote-help">Ask</a>\
+						        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#vote-help">Ask</a>\
 						        <div id="vote-help" class="help-popup" data-role="popup" data-history="false">\
 						            <div class="title">\
 						                ' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
@@ -7831,20 +7953,21 @@ var VOTINGS = {
     		data_for_build = self.get_one_element(object_id, type_trigger);
     		return false;
     	}
-    	switch(data_for_build.status){
-			case '0':
-				self.current_vote_page_collect_supports( data_for_build, 0, type_trigger);
-				break;
-			case '1':
-				self.current_vote_page_voting_period(  data_for_build, 0, type_trigger)
-				break;
-			case '2':
-				self.current_vote_page_voting_period( data_for_build, 1, type_trigger)
-				break;
-			case '3':
-				self.current_vote_page_collect_supports( data_for_build, 1, type_trigger);
-				break;
-		}
+
+    		switch(data_for_build.status){
+				case '0':
+					self.current_vote_page_collect_supports( data_for_build, 0, type_trigger);
+					break;
+				case '1':
+					self.current_vote_page_voting_period(  data_for_build, 0, type_trigger)
+					break;
+				case '2':
+					self.current_vote_page_voting_period( data_for_build, 1, type_trigger)
+					break;
+				case '3':
+					self.current_vote_page_collect_supports( data_for_build, 1, type_trigger);
+					break;
+			}
 
 		$('#vote-page .btn-login-soc button').on('click', function(e){
             $(this).next().fadeToggle(300);
@@ -7862,7 +7985,7 @@ var VOTINGS = {
 		var self = this;
 		var return_element;
 		$.ajax({
-			  url: 'http://gurtom.mobi/mc.php?sph=0&id=' + vote_id,
+			  url: mainURL + '/mc.php?sph=0&id=' + vote_id,
 			  type: "GET",
 			  xhrFields: {
 		       withCredentials: true
@@ -7871,19 +7994,25 @@ var VOTINGS = {
 			  complete: function( response ){
 			  		return_element = JSON.parse( response.responseText );
 			  		data_for_build = return_element[0];
-			  		switch(data_for_build.status){
-						case '0':
-							self.current_vote_page_collect_supports( data_for_build, 0, type_trigger);
-							break;
-						case '1':
-							self.current_vote_page_voting_period(  data_for_build, 0, type_trigger)
-							break;
-						case '2':
-							self.current_vote_page_voting_period( data_for_build, 1, type_trigger)
-							break;
-						case '3':
-							self.current_vote_page_collect_supports( data_for_build, 1, type_trigger);
-							break;
+			  		if(data_for_build){
+    					console.log(data_for_build);
+				  		switch(data_for_build.status){
+							case '0':
+								self.current_vote_page_collect_supports( data_for_build, 0, type_trigger);
+								break;
+							case '1':
+								self.current_vote_page_voting_period(  data_for_build, 0, type_trigger)
+								break;
+							case '2':
+								self.current_vote_page_voting_period( data_for_build, 1, type_trigger)
+								break;
+							case '3':
+								self.current_vote_page_collect_supports( data_for_build, 1, type_trigger);
+								break;
+						}
+					}else{
+						$.mobile.navigate('#votings-page');
+						return false;
 					}
 
 					$('#vote-page .btn-login-soc button').on('click', function(e){
@@ -7960,7 +8089,7 @@ var VOTINGS = {
 			}
 			$('#vote-page .selected-text').html( status_current_voting );
 			$.ajax({
-			  url: 'http://gurtom.mobi/vote_add.php?id=' + object_id + '&vote=' + vote + '&open=' + open_name,
+			  url: mainURL + '/vote_add.php?id=' + object_id + '&vote=' + vote + '&open=' + open_name,
 			  type: "GET",
 			  xhrFields: {
 		       withCredentials: true
@@ -7980,7 +8109,7 @@ var VOTINGS = {
 	},
 	delete_voting: function(voting_id, return_page){
 		$.ajax({
-		  url: 'http://gurtom.mobi/mc_rm.php?id=' + voting_id,
+		  url: mainURL + '/mc_rm.php?id=' + voting_id,
 		  type: "GET",
 		  xhrFields: {
 	       withCredentials: true
@@ -8130,7 +8259,7 @@ var VOTINGS = {
 		var self = this;
 		$.mobile.loading( "show", {  theme: "z"	});
 		$.ajax({
-		  url: 'http://gurtom.mobi/vote_open.php?id=' + vote_id,
+		  url: mainURL + '/vote_open.php?id=' + vote_id,
 		  type: "GET",
 		  xhrFields: {
 	       withCredentials: true
@@ -8151,7 +8280,7 @@ var VOTINGS = {
 					        <h1>\
 					            ' + LOCALE_ARRAY_ADDITIONAL.voters[CURRENT_LANG] + '\
 					        </h1>\
-					        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">' + LOCALE_ARRAY_ADDITIONAL.back[CURRENT_LANG] + '</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#voters-help">' + LOCALE_ARRAY_ADDITIONAL.ask[CURRENT_LANG] + '</a>\
+					        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">' + LOCALE_ARRAY_ADDITIONAL.back[CURRENT_LANG] + '</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#voters-help">' + LOCALE_ARRAY_ADDITIONAL.ask[CURRENT_LANG] + '</a>\
 					        <div id="voters-help" class="help-popup" data-role="popup" data-history="false">\
 					            <div class="title">\
 					                ' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
@@ -8229,11 +8358,11 @@ var VOTINGS = {
 	create_project_request: function(vote_id, type){
 		switch(type){
 			case 'project':
-				var url = 'http://gurtom.mobi/vote_add_project.php?id=' + vote_id;
+				var url = mainURL + '/vote_add_project.php?id=' + vote_id;
 				var answer = confirm(LOCALE_ARRAY_ADDITIONAL.do_you_want_to_create_project[CURRENT_LANG]);
 				break;
 			case 'request':
-				var url = 'http://gurtom.mobi/vote_add_request.php?id=' + vote_id;
+				var url = mainURL + '/vote_add_request.php?id=' + vote_id;
 				var answer = confirm(LOCALE_ARRAY_ADDITIONAL.do_you_want_to_create_request[CURRENT_LANG]);
 				break;
 		}
@@ -8272,7 +8401,7 @@ var MY_VOTINGS = {
 
 		$.mobile.loading( "show", {  theme: "z"	});
 		$.ajax({
-		  url: 'http://gurtom.mobi/user_votes_list.php?sph=0',
+		  url: mainURL + '/user_votes_list.php?sph=0',
 		  type: "GET",
 		  xhrFields: {
 	       withCredentials: true
@@ -8297,7 +8426,7 @@ var MY_VOTINGS = {
 		var self = this;
 			$.mobile.loading( "show", {  theme: "z"	});
 			$.ajax({
-			  url: 'http://gurtom.mobi/user_votes_list.php?sph=0&ls=' + self.voting_last_item,
+			  url: mainURL + '/user_votes_list.php?sph=0&ls=' + self.voting_last_item,
 			  type: "GET",
 			  xhrFields: {
 		       withCredentials: true
@@ -8335,7 +8464,7 @@ var MY_VOTINGS = {
 		}
 		$.mobile.loading( "show", {  theme: "z"	});
 
-		var url = 'http://gurtom.mobi/user_votes_list.php?sph=0';
+		var url = mainURL + '/user_votes_list.php?sph=0';
 
 		if($('#my-votings-page #searched_string').val() != ""){
 			url += '&filter=' + $('#my-votings-page #searched_string').val();
@@ -8443,7 +8572,7 @@ var MY_VOTINGS = {
 	},
 	support_voting: function(vote_id){
 		$.ajax({
-		  url: 'http://gurtom.mobi/like_add.php?id=' + vote_id,
+		  url: mainURL + '/like_add.php?id=' + vote_id,
 		  type: "GET",
 		  xhrFields: {
 	       withCredentials: true
@@ -8610,7 +8739,7 @@ var MY_VOTINGS = {
     		var delete_button = '';
     	}
 
-    	if(canceled == 0){
+    	if(canceled == 0 && SUPER_PROFILE.auth == true){
     		if(data_for_build.sprt_my == 1){
     			support_button = '<strong data-my_supported = "1" style = "cursor: pointer" id = "my_support" onclick = "MY_VOTINGS.support_voting(' + data_for_build.id + ')">Not support</strong>';
     		}else{
@@ -8620,9 +8749,15 @@ var MY_VOTINGS = {
 			                    <span>' + LOCALE_ARRAY_ADDITIONAL.collect_supporters[CURRENT_LANG] + data_for_build.start + ' - ' + data_for_build.sprtf +
 			               '</span></div>\ ';
     	}else{
-    		status_vote = '<div class="status red" >\
+    		if(canceled != 0){
+    			status_vote = '<div class="status red" >\
 		                        <span>' + LOCALE_ARRAY_ADDITIONAL.voting_canceled[CURRENT_LANG] + '</span>\
 		                    </div>\ ';
+    		}else{
+    			status_vote = '<div class="status yellow">\
+			                    <span>' + LOCALE_ARRAY_ADDITIONAL.collect_supporters[CURRENT_LANG] + data_for_build.start + ' - ' + data_for_build.sprtf +
+			               '</span></div>\ ';
+    		}
     	}
 
     	switch(data_for_build.stars){
@@ -8657,7 +8792,7 @@ var MY_VOTINGS = {
     	var ui_string = '';
 		ui_string += '<div data-role="header" data-position="fixed" data-tap-toggle="false">\
 							        <h1>' + LOCALE_ARRAY_ADDITIONAL.my_vote[CURRENT_LANG] + '</h1>\
-							        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#vote-help">Ask</a>\
+							        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#vote-help">Ask</a>\
 							        <div id="vote-help" class="help-popup" data-role="popup" data-history="false">\
 							            <div class="title">\
 							                ' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
@@ -8881,7 +9016,7 @@ var MY_VOTINGS = {
     	var ui_string = '';
 		ui_string = '<div data-role="header" data-position="fixed" data-tap-toggle="false">\
 						    <h1>' + LOCALE_ARRAY_ADDITIONAL.my_vote[CURRENT_LANG] + '</h1>\
-						        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#vote-help">Ask</a>\
+						        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#vote-help">Ask</a>\
 						        <div id="vote-help" class="help-popup" data-role="popup" data-history="false">\
 						            <div class="title">\
 						                ' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
@@ -9071,7 +9206,7 @@ var MY_VOTINGS = {
 		var self = this;
 		var return_element;
 		$.ajax({
-			  url: 'http://gurtom.mobi/mc.php?sph=0&id=' + vote_id,
+			  url: mainURL + '/mc.php?sph=0&id=' + vote_id,
 			  type: "GET",
 			  xhrFields: {
 		       withCredentials: true
@@ -9169,7 +9304,7 @@ var MY_VOTINGS = {
 			}
 			$('#my-vote-page .selected-text').html( status_current_voting );
 			$.ajax({
-			  url: 'http://gurtom.mobi/vote_add.php?id=' + object_id + '&vote=' + vote + '&open=' + open_name,
+			  url: mainURL + '/vote_add.php?id=' + object_id + '&vote=' + vote + '&open=' + open_name,
 			  type: "GET",
 			  xhrFields: {
 		       withCredentials: true
@@ -9325,7 +9460,7 @@ var MY_VOTINGS = {
 		var self = this;
 		$.mobile.loading( "show", {  theme: "z"	});
 		$.ajax({
-		  url: 'http://gurtom.mobi/vote_open.php?id=' + vote_id,
+		  url: mainURL + '/vote_open.php?id=' + vote_id,
 		  type: "GET",
 		  xhrFields: {
 	       withCredentials: true
@@ -9346,7 +9481,7 @@ var MY_VOTINGS = {
 					        <h1>\
 					            ' + LOCALE_ARRAY_ADDITIONAL.voters[CURRENT_LANG] + '\
 					        </h1>\
-					        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "history.back()" href="#">' + LOCALE_ARRAY_ADDITIONAL.back[CURRENT_LANG] + '</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#voters-help">' + LOCALE_ARRAY_ADDITIONAL.ask[CURRENT_LANG] + '</a>\
+					        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">' + LOCALE_ARRAY_ADDITIONAL.back[CURRENT_LANG] + '</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#voters-help">' + LOCALE_ARRAY_ADDITIONAL.ask[CURRENT_LANG] + '</a>\
 					        <div id="voters-help" class="help-popup" data-role="popup" data-history="false">\
 					            <div class="title">\
 					                ' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
@@ -9516,6 +9651,15 @@ var ADRESS = {
 					self.gpsSet(page, country,state,county,city,street,house);
 				});
 			},
+			getGPSByType:function(results,type){
+				for(var i in results){
+					var item = results[i];
+					if(item.types.indexOf(type) > -1){
+						return item.long_name;
+					}
+				}
+				return "";
+			},
 			setListener:function(page){
 				var self = this;
 				self.clear_listeners(page);
@@ -9566,13 +9710,15 @@ var ADRESS = {
 		    					geocoder.geocode({'latLng': latLng,'language': 'en'},function(results, status) {
 							       if (status == google.maps.GeocoderStatus.OK) {
 							         console.log(results);
-							         var country = results[0].address_components[6].long_name;
-							         var state = results[0].address_components[5].long_name;
-							         var county = results[0].address_components[4].long_name;
-							         var city = results[0].address_components[3].long_name;
+							         var address = results[0].address_components;
+
+							         var country = self.getGPSByType(address,"country");
+							         var state = self.getGPSByType(address,"administrative_area_level_1");
+							         var county = self.getGPSByType(address,"administrative_area_level_3");
+							         var city = self.getGPSByType(address,"locality");
 							         //console.log('build: ' + results[0].address_components[0].long_name);
-							         var street = results[0].address_components[1].long_name;
-							         var build = results[0].address_components[0].long_name;
+							         var street = self.getGPSByType(address,"route");
+							         var build = self.getGPSByType(address,"street_number");
 							         ADRESS.gpsSet(page, country,state,county,city,street,build);
 							       }
 
@@ -9617,7 +9763,7 @@ var ADRESS = {
 				}
 
 				$.ajax({
-				  url: 'http://gurtom.mobi/user_address_add.php?ida=' + ida
+				  url: mainURL + '/user_address_add.php?ida=' + ida
 				  											+ ('&c=' + $('#address-item-' + page + ' [name=city]').val()).replace("'", "`")
 				  											+ ('&str=' + $('#address-item-' + page + ' [name=street]').val()).replace("'", "`")
 				  											+ '&bld=' + $('#address-item-' + page + ' [name=house]').val()
@@ -9656,7 +9802,7 @@ var ADRESS = {
 				if(ADRESS.address_arr[page-1]){
 					if(ADRESS.address_arr[page-1]['ida']){
 						$.ajax({
-						  url: 'http://gurtom.mobi/user_address_rm.php?ida=' + ADRESS.address_arr[page-1]['ida'],
+						  url: mainURL + '/user_address_rm.php?ida=' + ADRESS.address_arr[page-1]['ida'],
 						  type: "GET",
 						  xhrFields: {
 					       withCredentials: true
@@ -9798,7 +9944,7 @@ var ADRESS = {
 			            }
 				}else{
 					$.ajax({
-	    			url:"http://gurtom.mobi/list_adr_country.php",
+	    			url: mainURL + "/list_adr_country.php",
 	    			type:"GET",
 	    			xhrFields: {
 				       withCredentials: true
@@ -9898,7 +10044,7 @@ var ADRESS = {
 			            }
 				}else{
 					$.ajax({
-	    			url:"http://gurtom.mobi/list_adr_state.php?idc="+idc,
+	    			url: mainURL + "/list_adr_state.php?idc="+idc,
 	    			type:"GET",
 	    			xhrFields: {
 				       withCredentials: true
@@ -9955,7 +10101,7 @@ var ADRESS = {
 			getCounty:function(page, idc,ids,cb){
 				var self = this;
 				$.ajax({
-	    			url:"http://gurtom.mobi/list_adr_county.php?idc="+idc+"&ids="+ids,
+	    			url: mainURL + "/list_adr_county.php?idc="+idc+"&ids="+ids,
 	    			type:"GET",
 	    			xhrFields: {
 				       withCredentials: true
@@ -10010,7 +10156,7 @@ var ADRESS = {
 			getCity:function(page, idc,ids,idr,cb){
 				var self = this;
 				$.ajax({
-	    			url:"http://gurtom.mobi/list_adr_city.php?idc="+idc+"&ids="+ids+"&idr="+idr,
+	    			url: mainURL + "/list_adr_city.php?idc="+idc+"&ids="+ids+"&idr="+idr,
 	    			type:"GET",
 	    			xhrFields: {
 				       withCredentials: true
@@ -10065,7 +10211,7 @@ var ADRESS = {
 			getIndex:function(page, idcity,cb){
 				var self = this;
 				$.ajax({
-	    			url:"http://gurtom.mobi/list_adr_zip.php?id="+idcity,
+	    			url: mainURL + "/list_adr_zip.php?id="+idcity,
 	    			type:"GET",
 	    			xhrFields: {
 				       withCredentials: true
@@ -10127,7 +10273,7 @@ var ADRESS = {
 					}
 				}else{
 					$.ajax({
-		    			url:"http://gurtom.mobi/user_address.php",
+		    			url: mainURL + "/user_address.php",
 		    			type:"GET",
 				        crossDomain: true,
 		    			xhrFields: {
@@ -10402,7 +10548,7 @@ console.log(window.location.toString());
     	if(location.href.search(/m=[\w&id=]+/i) > -1){
 			var matches = location.href.match(/m=[\w&id=]+/i);
 			$.ajax({
-			  url: 'http://gurtom.mobi/l/index.php?' + matches[0],
+			  url: mainURL + '/l/index.php?' + matches[0],
 			  type: "GET",
 			  xhrFields: {
 		       withCredentials: true
@@ -10459,7 +10605,7 @@ console.log(window.location.toString());
 
 			//lang_activate_el("body");
 			$.ajax({
-				url:"http://gurtom.mobi/profile.php",
+				url: mainURL + "/profile.php",
 				type:"GET",
 		        crossDomain: true,
 				xhrFields: {
@@ -10485,7 +10631,7 @@ console.log(window.location.toString());
 		        }
 			});
 			/*$.ajax({
-	    			url:"http://gurtom.mobi/list_adr_country.php",
+	    			url: mainURL + "/list_adr_country.php",
 	    			type:"GET",
 	    			xhrFields: {
 				       withCredentials: true
@@ -10574,7 +10720,7 @@ console.log(window.location.toString());
 			     
 			      var formData = new FormData();
 			      formData.append("av", FILE);			      
-			      client.open("post", "http://gurtom.mobi/i/up.php", true);
+			      client.open("post",  mainURL + "/i/up.php", true);
 			      client.setRequestHeader('Accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8');
 			      client.setRequestHeader("Content-Type", "multipart/form-data");
 			      client.send(formData);  /* Send to server */ 
@@ -10618,7 +10764,7 @@ console.log(window.location.toString());
 			      /* Add the file */ 
 			      formData.append("av", FILE);
 
-			      client.open("post", "http://gurtom.mobi/l/index.php?m=2", true);
+			      client.open("post",  mainURL + "/l/index.php?m=2", true);
 			      client.setRequestHeader("Content-Type", "multipart/form-data");
 			      client.send(formData);  /* Send to server */ 
 			   }
@@ -10640,54 +10786,54 @@ console.log(window.location.toString());
 		var SOCIAL = {
 			vk:{
 				auth: false,
-				activate: "http://gurtom.mobi/sn/vk.php",
-				deactivate: " http://gurtom.mobi/sn/sn_rm.php?sn=5",
-				sn: "http://gurtom.mobi/sn/vk_sn.php",
+				activate:  mainURL + "/sn/vk.php",
+				deactivate: mainURL + "/sn/sn_rm.php?sn=5",
+				sn:  mainURL + "/sn/vk_sn.php",
 				element: "a.vk",
 				ind: "5",
 				prefix_elem: "vk"
 			},
 			fb:{
 				auth: false,
-				activate: "http://gurtom.mobi/sn/fb.php",
-				deactivate: " http://gurtom.mobi/sn/sn_rm.php?sn=1",
-				sn: "http://gurtom.mobi/sn/fb_sn.php",
+				activate:  mainURL + "/sn/fb.php",
+				deactivate: mainURL + "/sn/sn_rm.php?sn=1",
+				sn:  mainURL + "/sn/fb_sn.php",
 				element: "a.fb",
 				ind: "1",
 				prefix_elem: "fb"
 			},
 			tw:{
 				auth: false,
-				activate: "http://gurtom.mobi/sn/tw.php",
-				deactivate: " http://gurtom.mobi/sn/sn_rm.php?sn=3",
-				sn: "http://gurtom.mobi/sn/tw_sn.php",
+				activate:  mainURL + "/sn/tw.php",
+				deactivate: mainURL + "/sn/sn_rm.php?sn=3",
+				sn:  mainURL + "/sn/tw_sn.php",
 				element: "a.tw",
 				ind: "3",
 				prefix_elem: "tw"
 			},
 			gp:{
 				auth: true,
-				activate: "http://gurtom.mobi/sn/gp.php",
-				deactivate: " http://gurtom.mobi/sn/sn_rm.php?sn=2",
-				sn: "http://gurtom.mobi/sn/gp_sn.php",
+				activate:  mainURL + "/sn/gp.php",
+				deactivate: mainURL + "/sn/sn_rm.php?sn=2",
+				sn:  mainURL + "/sn/gp_sn.php",
 				element: "a.gp",
 				ind: "2",
 				prefix_elem: "gp"
 			},
 			in:{
 				auth: false,
-				activate: "http://gurtom.mobi/sn/in.php",
-				deactivate: " http://gurtom.mobi/sn/sn_rm.php?sn=4",
-				sn: "http://gurtom.mobi/sn/in_sn.php",
+				activate:  mainURL + "/sn/in.php",
+				deactivate: mainURL + "/sn/sn_rm.php?sn=4",
+				sn:  mainURL + "/sn/in_sn.php",
 				element: "a.in",
 				ind: "4",
 				prefix_elem: "in"
 			},
 			ok:{
 				auth: false,
-				activate: "http://gurtom.mobi/sn/ok.php",
-				deactivate: " http://gurtom.mobi/sn/sn_rm.php?sn=6",
-				sn: "http://gurtom.mobi/sn/ok_sn.php",
+				activate:  mainURL + "/sn/ok.php",
+				deactivate: mainURL + "/sn/sn_rm.php?sn=6",
+				sn:  mainURL + "/sn/ok_sn.php",
 				element: "a.ok",
 				ind: "6",
 				prefix_elem: "ok"
@@ -10737,7 +10883,7 @@ console.log(window.location.toString());
 								}									
 								
 								$.ajax({
-								  url: 'http://gurtom.mobi/sn/sn_rm.php?sn=' + $(this).data("index"),
+								  url: mainURL + '/sn/sn_rm.php?sn=' + $(this).data("index"),
 								  type: "GET",
 								  xhrFields: {
 							       withCredentials: true
@@ -10805,7 +10951,7 @@ console.log(window.location.toString());
 					var url = $('#profile-page [name=url]').val();
 					
 					$.ajax({
-						url: "http://gurtom.mobi/l/index.php?m=2",
+						url:  mainURL + "/l/index.php?m=2",
 				        type: "POST",
 				        data: {"db": db,
 				    		   "g": g,
@@ -10843,7 +10989,7 @@ console.log(window.location.toString());
 					}
 					if(wrong_enter == 0){
 						$.ajax({
-							url: "http://gurtom.mobi/l/index.php?m=2",
+							url:  mainURL + "/l/index.php?m=2",
 					        type: "POST",
 					        data: {"user_password_old": $('#profile-page [name=user_password_old]').val(),
 					    		   "user_password_new": $('#profile-page [name=user_password_new]').val(),
@@ -10880,7 +11026,7 @@ console.log(window.location.toString());
 				user_rememberme:remember
 			};
 			$.ajax({
-				url: "http://gurtom.mobi/l/index.php?m=0",
+				url:  mainURL + "/l/index.php?m=0",
 		        type: "POST",
 		        data: data,
 		        crossDomain: true,
@@ -10910,7 +11056,7 @@ console.log(window.location.toString());
     			request_password_reset: "Reset my password"
     		}
     		$.ajax({
-    			url:"http://gurtom.mobi/l/index.php?m=3",
+    			url: mainURL + "/l/index.php?m=3",
     			type: "POST",
     			data: data,
     			xhrFields: {
@@ -10961,7 +11107,7 @@ console.log(window.location.toString());
 	    		}
 
     		$.ajax({
-				url: "http://gurtom.mobi/l/index.php?m=1",
+				url:  mainURL + "/l/index.php?m=1",
 		        type: "POST",
 		        data: data,
     			xhrFields: {
@@ -10972,7 +11118,7 @@ console.log(window.location.toString());
 		        	var resp = data.responseText;
 		            if(resp.indexOf("Captcha was wrong!")!==-1){
 		            	alert(LOCALE_ARRAY_ADDITIONAL.wrong_captcha[CURRENT_LANG]);
-		            	update_img("#register-form .captcha img","http://gurtom.mobi/l/tools/showCaptcha.php");
+		            	update_img("#register-form .captcha img", mainURL + "/l/tools/showCaptcha.php");
 		            }
 		            else if(resp.indexOf("Please click the VERIFICATION LINK within that mail.")!==-1){
 		            	alert(LOCALE_ARRAY_ADDITIONAL.account_created[CURRENT_LANG]);
@@ -11035,7 +11181,7 @@ console.log(window.location.toString());
 		            }else{
 		            	console.log('nothing');
 		            	$.ajax({
-							url:"http://gurtom.mobi/profile.php",
+							url: mainURL + "/profile.php",
 							type:"GET",
 					        crossDomain: true,
 							xhrFields: {
@@ -11084,7 +11230,7 @@ console.log(window.location.toString());
     			var self = this;
     			auth(false);
     			$.ajax({
-	    			url:"http://gurtom.mobi/l/index.php?logout=1&logout=1",
+	    			url: mainURL + "/l/index.php?logout=1&logout=1",
 	    			type:"GET",
 			        crossDomain: true,
 	    			xhrFields: {
