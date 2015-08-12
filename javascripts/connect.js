@@ -2258,10 +2258,10 @@ var PROJECTS = {
 			        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#project-help">Ask</a>\
 			        <div id="project-help" class="help-popup" data-role="popup" data-history="false">\
 			            <div class="title">\
-			                Description\
+			                ' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
 			            </div>\
 			            <div class="text">\
-			                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in\
+			                ' + LOCALE_ARRAY_ADDITIONAL.help_project_proposition[CURRENT_LANG] + '\
 			            </div>\
 			        </div>\
 			    </div>\
