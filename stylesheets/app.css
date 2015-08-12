@@ -227,10 +227,10 @@ label.ui-btn {
         right: 1.2em;
         padding: 0; }
     .ui-page-theme-a .ui-header .ui-icon-help {
-          top: 0;
+          top: -1px;
     border: none;
     padding-right: 1.5em;
-    padding-top: 1.75em;
+    height:100%;
     right: 0;
     background: rgba(68,132,246,0.8);}
       .ui-page-theme-a .ui-header .ui-icon-help:after {

@@ -2222,4 +2222,8 @@ please_enter_valid_amount:{
 	en: 'Enter valid amount',
 	ru: 'Введите правильную сумму',
 	ua: 'Введiть правильну суму'},
+votings_on_program:{
+	en: 'Votings on program',
+	ru: 'Голосования по программе',
+	ua: 'Голосування по програмi'},
 };

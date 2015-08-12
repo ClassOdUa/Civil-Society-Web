@@ -3090,15 +3090,15 @@ var PROGRAMS = {
 	switch_page_for_build:function(object_id, type_trigger){
 		var self = this;
 		var data_for_build;
-		jQuery.each(self.data_array, function(i, one_data) {
+		/*jQuery.each(self.data_array, function(i, one_data) {
 			if(parseInt(one_data.id) == parseInt(object_id)){
 				data_for_build = one_data;
 			}
-    	});
-    	if(!data_for_build){
+    	});*/
+    	//if(!data_for_build){
     		self.get_one_element(object_id, type_trigger);
     		return false;
-    	}
+    	//}
     	switch(data_for_build.status){
 			case '0':
 				self.current_collect_cash( data_for_build, 0, type_trigger);
@@ -3328,13 +3328,13 @@ var PROGRAMS = {
 		                    <div class="social-wrap">\
 		                        <div class="ui-grid-b">\
 		                            <div class="ui-block-a">\
-		                                <a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href)  + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + 'http://' + data_for_build.img + '"></a>\
+		                                <a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href)  + '&title=' + encodeURIComponent(data_for_build.title) + '&image=' + 'http://' + data_for_build.img + '"></a>\
 		                            </div>\
 		                            <div class="ui-block-b">\
-		                                <a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href)  + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
+		                                <a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href)  + '&t=' + encodeURIComponent(data_for_build.title) + '"></a>\
 		                            </div>\
 		                            <div class="ui-block-c">\
-		                                <a target="_blank" class="tw" href="http://twitter.com/share?url=' + encodeURIComponent(location.href)  + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
+		                                <a target="_blank" class="tw" href="http://twitter.com/share?url=' + encodeURIComponent(location.href)  + '&text=' + encodeURIComponent(data_for_build.title) + '"></a>\
 		                            </div>\
 		                            <div class="ui-block-a">\
 		                                <a target="_blank" class="gp" href="https://plus.google.com/share?url=' + encodeURIComponent(location.href)  + '"></a>\
@@ -3343,7 +3343,7 @@ var PROGRAMS = {
 		                                <a target="_blank" class="in" href="https://www.linkedin.com/cws/share?url=' + encodeURIComponent(location.href)  + '"></a>\
 		                            </div>\
 		                            <div class="ui-block-c">\
-		                                <a target="_blank" class="ok" href="http://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href)  + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
+		                                <a target="_blank" class="ok" href="http://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href)  + '&st.comments=' + encodeURIComponent(data_for_build.title) + '"></a>\
 		                            </div>\
 		                        </div>\
 		                    </div>\
@@ -3360,10 +3360,10 @@ var PROGRAMS = {
 		                    <a class="ui-btn ui-btn-icon-right" href="#" onclick = "$.mobile.navigate(\'#history-page?item=program&id=' + data_for_build.id + '\');">' + LOCALE_ARRAY_ADDITIONAL.history_donation[CURRENT_LANG] + '</a>\
 		                </div>\
 		                <div class="btn-next-page">\
-		                    <a class="ui-btn ui-btn-icon-right" onclick = "' + weighted_votings_link +  '" href="#">Голосование по программе</a>\
+		                    <a id = "weighted_voting_link" class="ui-btn ui-btn-icon-right" onclick = "' + weighted_votings_link +  '" href="#">' + LOCALE_ARRAY_ADDITIONAL.votings_on_program[CURRENT_LANG] + '</a>\
 		                </div>\
 		                <div class="btn-next-page">\
-		                    <a class="ui-btn ui-btn-icon-right" onclick = "$.mobile.navigate(\'#projects-page?program=' + data_for_build.id + '\')" href="#">Проектные предложения</a>\
+		                    <a class="ui-btn ui-btn-icon-right" onclick = "$.mobile.navigate(\'#projects-page?program=' + data_for_build.id + '\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.projects_propositions[CURRENT_LANG] + '</a>\
 		                </div>\
 		            </div>\
 		        </div>\
@@ -3521,6 +3521,8 @@ var PROGRAMS = {
 		        		$('#' + selector + '-page #amount_up').html( parseInt( $('#' + selector + '-page #amount_up').html() ) + parseInt( amount ));
 		        		$('#' + selector + '-page #my_amount_current').html( parseInt( $('#' + selector + '-page #my_amount_current').html() ) + parseInt( amount ) );
 		        		$('#' + selector + '-page select').selectmenu().selectmenu("refresh", true);
+		        		PIF.get_pif_array(true);
+		        		$('#weighted_voting_link').attr('onclick',  '$.mobile.navigate(\'#weighted-votings-page?program=' + object_id + '\')');
 		        		console.log("donate ok");
 	        		}else{
 	        			alert(LOCALE_ARRAY_ADDITIONAL.fund_closed[CURRENT_LANG]);
@@ -3652,6 +3654,7 @@ var PROGRAMS = {
         		alert(LOCALE_ARRAY_ADDITIONAL.return_donate_successfull[CURRENT_LANG]);
         		console.log(return_page);
         		PIF.get_pif_array(true);
+        		$('#weighted_voting_link').attr('onclick',  'alert(\'' + LOCALE_ARRAY_ADDITIONAL.only_for_donators[CURRENT_LANG] + '\');');
         		$.mobile.navigate(return_page);
 	            //alert('okay');
 	        }
@@ -11240,6 +11243,7 @@ console.log(window.location.toString());
 			        	self.auth = false;
 			        	$("#login-form [name=login]").val("");
 			        	$("#login-form [name=pass]").val("");
+			        	$('#menu_avatar #avatar').attr('src', '');
 			            self.updateMenu();
 			            PROFILE.profile_obj = false;
 			            PIF.pif_array = [];
