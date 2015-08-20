@@ -8,6 +8,7 @@
         <title>Civil Society App</title>
         <link href="http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="vendor/jquery.mobile-1.4.5/jquery.mobile.structure-1.4.5.min.css?t=1">
+        <link rel="stylesheet" href="/leaflet/leaflet.css" />
         <link rel="stylesheet" href="vendor/jquery-te-1.4.0/jquery-te-1.4.0.css?t=1">
         <link rel="stylesheet" href="stylesheets/app.css?t=1">
         <script src="vendor/jquery-1.11.2.min.js?t=1"></script>
@@ -20,6 +21,7 @@
         <script src="javascripts/jquery.form.min.js?t=1"></script>
         <script src="javascripts/connect.js?t=1"></script>
         <script src="javascripts/purl.js?t=1"></script>
+        <script src="/leaflet/leaflet.js"></script>
         <script src="http://maps.google.com/maps/api/js?sensor=false&language=en"></script>
     </head>
     <body>
@@ -43,15 +45,16 @@
         </div>
     </div>
     <div role="main" class="ui-content">
-        <div id="logo">
-            <img src="images/logo.png" />
-        </div>
-        <div class="name">
-            <h1>
-                Civil<br> Society
-            </h1>
-        </div>
-        <form action="" accept-charset="UTF-8" id="login-form" method="post">
+        <div id="login">
+            <div id="logo">
+                <img src="images/logo.png" />
+            </div>
+            <div class="name">
+                <h1>
+                    Civil<br> Society
+                </h1>
+            </div>
+            <form action="" accept-charset="UTF-8" id="login-form" method="post">
                 <div class="ui-grid-a">
                     <div class="ui-block-a">
                         <div class="ui-input-text">
@@ -69,46 +72,48 @@
                 </div>
                 <div class="btn-login">
                     <button type="submit" class="ui-btn ui-corner-all ui-shadow">LOG IN</button>
-                </div></form>
-        <div class="center">
-            <a class="ui-btn ui-btn-inline ui-corner-all ui-btn-reg" href="#registration">Registration</a><a class="ui-btn ui-btn-inline ui-corner-all ui-btn-pass" href="#forgot-password">Forgot password?</a>
-        </div>
-        <div class="btn-login-soc">
-            <button class="ui-btn ui-corner-all ui-shadow">LOG IN BY SOCIAL NETWORKS</button>
-            <div class="social-wrap">
-                <div class="title">
-                    Sign in by social Networks
                 </div>
-                <div class="ui-grid-b">
-                    <div class="ui-block-a">
-                        <a class="vk" onclick = "location.href = 'http://gurtom.mobi/sn/vk.php'" href=""></a>
+            </form>
+            <div class="center">
+                <a class="ui-btn ui-btn-inline ui-corner-all ui-btn-reg" href="#registration">Registration</a><a class="ui-btn ui-btn-inline ui-corner-all ui-btn-pass" href="#forgot-password">Forgot password?</a>
+            </div>
+            <div class="btn-login-soc">
+                <button class="ui-btn ui-corner-all ui-shadow">LOG IN BY SOCIAL NETWORKS</button>
+                <div class="social-wrap">
+                    <div class="title">
+                        Sign in by social Networks
                     </div>
-                    <div class="ui-block-b">
-                        <a class="fb" onclick = "location.href = 'http://gurtom.mobi/sn/fb.php'" href=""></a>
-                    </div>
-                    <div class="ui-block-c">
-                        <a class="tw" onclick = "location.href = 'http://gurtom.mobi/sn/tw.php'" href=""></a>
-                    </div>
-                    <div class="ui-block-a">
-                        <a class="gp" onclick = "location.href = 'http://gurtom.mobi/sn/gp.php'" href=""></a>
-                    </div>
-                    <div class="ui-block-b">
-                        <a class="in" onclick = "location.href = 'http://gurtom.mobi/sn/in.php'" href=""></a>
-                    </div>
-                    <div class="ui-block-c">
-                        <a class="ok" onclick = "location.href = 'http://gurtom.mobi/sn/ok.php'" href=""></a>
+                    <div class="ui-grid-b">
+                        <div class="ui-block-a">
+                            <a class="vk" onclick = "location.href = 'http://gurtom.mobi/sn/vk.php'" href=""></a>
+                        </div>
+                        <div class="ui-block-b">
+                            <a class="fb" onclick = "location.href = 'http://gurtom.mobi/sn/fb.php'" href=""></a>
+                        </div>
+                        <div class="ui-block-c">
+                            <a class="tw" onclick = "location.href = 'http://gurtom.mobi/sn/tw.php'" href=""></a>
+                        </div>
+                        <div class="ui-block-a">
+                            <a class="gp" onclick = "location.href = 'http://gurtom.mobi/sn/gp.php'" href=""></a>
+                        </div>
+                        <div class="ui-block-b">
+                            <a class="in" onclick = "location.href = 'http://gurtom.mobi/sn/in.php'" href=""></a>
+                        </div>
+                        <div class="ui-block-c">
+                            <a class="ok" onclick = "location.href = 'http://gurtom.mobi/sn/ok.php'" href=""></a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div style="width:60%; height:50%; " id="map"></div>
     </div>
 </div>
-
 
 <div id="registration" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Registration</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><!--<a class="ui-btn ui-btn-right ui-icon-check ui-btn-icon-right" href="#">Save</a>-->
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#')" href='#'>Back</a><!--<a class="ui-btn ui-btn-right ui-icon-check ui-btn-icon-right" href="#">Save</a>-->
     </div>
     <div role="main" class="ui-content">
         <form action="" accept-charset="UTF-8" id="register-form" method="post">
@@ -305,11 +310,10 @@
     </div>
 </div>
 
-
 <div id="forgot-password" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Forgot password</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#')" href="#">Back</a>
     </div>
     <div role="main" class="ui-content">
         <form action="" accept-charset="UTF-8" method="post">
@@ -324,7 +328,6 @@
                 </div></form>
     </div>
 </div>
-
 
 <div id="profile-page" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
@@ -350,9 +353,7 @@
             </div>
         </div>
         <div class="add-address">
-            <div class="title">
-                Add up to three address to recieve <br> acces to voting of your regions
-            </div>
+            <div class="title"></div>
             <a class="ui-btn ui-btn-icon-right" href="#edit-address">Address</a>
         </div>
 		<div class="pass-btn">
@@ -578,11 +579,10 @@
     </div>
 </div>
 
-
 <div id="edit-address" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Edit Address</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#profile-page')" href="#">Back</a>
     </div>
     <div role="main" class="ui-content">
         <div class="address-item">
@@ -606,11 +606,10 @@
     </div>
 </div>
 
-
 <div id="address-item-1" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Edit Address 1</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#edit-address')" href="#edit-address">Back</a>
     </div>
     <div role="main" class="ui-content">
         <a id = "findgps-1" class="ui-btn ui-corner-all ui-shadow" href="#">Find an address using GPS</a><form accept-charset="UTF-8" onsubmit = 'ADRESS.save_address(1); return false;'>
@@ -677,7 +676,7 @@
 <div id="address-item-2" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Edit Address 2</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#edit-address')" href="#edit-address">Back</a>
     </div>
     <div role="main" class="ui-content">
         <a id = "findgps-2" class="ui-btn ui-corner-all ui-shadow" href="#">Find an address using GPS</a><form accept-charset="UTF-8" onsubmit = 'ADRESS.save_address(2); return false;'>
@@ -744,7 +743,7 @@
 <div id="address-item-3" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Edit Address 3</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#edit-address')" href="#edit-address">Back</a>
     </div>
     <div role="main" class="ui-content">
         <a id = "findgps-3" class="ui-btn ui-corner-all ui-shadow" href="#">Find an address using GPS</a><form accept-charset="UTF-8" onsubmit = 'ADRESS.save_address(3); return false;'>
@@ -807,54 +806,16 @@
         <button id = "delete_address" style = "display:none" class="ui-btn ui-corner-all ui-shadow btn-delete">Delete address</button>
     </div>
 </div>
-
-
-<div id="geo-page" data-role="page">
+<!-- 
+<div id="map-page" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
-        <h1>Geo position</h1>
+        <h1>Map</h1>
         <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a class="ui-btn ui-btn-right ui-icon-check ui-btn-icon-right" href="#">Save</a>
     </div>
     <div role="main" class="ui-content"><form action="" accept-charset="UTF-8" method="post">
-                <div>
-                    <label>Country</label><select name=""><option value="Ukraine">Ukraine</option>
-                    <option value="Ukraine">Ukraine</option>
-                    <option value="Ukraine">Ukraine</option>
-                    </select>
-                </div>
-                <div>
-                    <label>State</label><select name=""><option value="Odeska oblast">Odeska oblast</option>
-                    <option value="Odeska oblast">Odeska oblast</option>
-                    <option value="Odeska oblast">Odeska oblast</option>
-                    </select>
-                </div>
-                <div>
-                    <label>County</label><select name=""><option value="Ovidiopolsky">Ovidiopolsky</option>
-                    <option value="Ovidiopolsky">Ovidiopolsky</option>
-                    <option value="Ovidiopolsky">Ovidiopolsky</option>
-                    </select>
-                </div>
-                <div>
-                    <label>City</label><select name=""><option value="Odesa">Odesa</option>
-                    <option value="Kiev">Kiev</option>
-                    <option value="Odesa">Odesa</option>
-                    </select>
-                </div>
-                <div class="text-field">
-                    <label>Street</label>
-                    <div class="ui-input-text">
-                        <input type="text" name="" data-enhanced="true" />
-                    </div>
-                </div>
-                <div class="text-field">
-                    <label>Number of House</label>
-                    <div class="ui-input-text">
-                        <input type="text" name="" data-enhanced="true" />
-                    </div>
-                </div>
-                <button class="ui-btn ui-corner-all ui-shadow btn-save">Save address</button></form>
+        <div style="position: absolute; width: 90%; height: 90%;" id="map"></div>
     </div>
-</div>
-
+</div> -->
 
 <div id="spheres-address" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
@@ -911,7 +872,7 @@
                 Description
             </div>
             <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in
+                help text
             </div>
         </div>
     </div>
@@ -977,7 +938,7 @@
                 Description
             </div>
             <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in
+                help text
             </div>
         </div>
     </div>
@@ -1026,7 +987,7 @@
                 Description
             </div>
             <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in
+                help text
             </div>
         </div>
     </div>
@@ -1096,7 +1057,7 @@
                 Description
             </div>
             <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in
+                help text
             </div>
         </div>
     </div>
@@ -1143,7 +1104,7 @@
                 Description
             </div>
             <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in
+                help text
             </div>
         </div>
     </div>
@@ -1211,7 +1172,7 @@
                 Description
             </div>
             <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in
+                help text
             </div>
         </div>
     </div>
@@ -1260,7 +1221,7 @@
                 Description
             </div>
             <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in
+                help text
             </div>
         </div>
     </div>
@@ -1318,13 +1279,13 @@
 <div id="my-fund-page" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1 class="long-title">Personal Funds</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#my-fund-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#social-investments')" href="#social-investment">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#my-fund-help">Ask</a>
         <div id="my-fund-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
             </div>
             <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in
+                help text
             </div>
         </div>
     </div>
@@ -1399,13 +1360,13 @@
 <div id="transaction-page" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Direct user donation</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#transaction-page-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#my-fund-page')" href="#my-fund-page">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#transaction-page-help">Ask</a>
         <div id="transaction-page-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
             </div>
             <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in
+                help text
             </div>
         </div>
     </div>
@@ -1442,7 +1403,7 @@
                 Description
             </div>
             <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in
+                help text
             </div>
         </div>
     </div>
@@ -1469,7 +1430,7 @@
                 Description
             </div>
             <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in
+                help text
             </div>
         </div>
     </div>
@@ -1488,6 +1449,7 @@
                 </div>
                 <div class="ui-block-c">
                     <div class="total-amount">
+
                         <strong></strong><span>Нужное количество</span>
                     </div>
                 </div>
@@ -1513,32 +1475,6 @@
     </div>
 </div>
 
-<div id="create-pif-page" data-role="page">
-    <div data-role="header" data-position="fixed" data-tap-toggle="false">
-        <h1>Create Personal Fund</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#create-pif-help">Ask</a>
-        <div id="create-pif-help" class="help-popup" data-role="popup" data-history="false">
-            <div class="title">
-                Description
-            </div>
-            <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in
-            </div>
-        </div>
-    </div>
-    <div role="main" class="ui-content">
-        <form action="" accept-charset="UTF-8" method="post">
-                <div class="select-field">
-                    <label>Выберите тип валюты</label>
-                    <select name=""><option value="UAH (украинская гривня)">UAH (украинская гривня)</option>
-                    </select>
-                </div>
-                <div class="button-fixed">
-                    <input type="submit" value="Сохранить" />
-                </div></form>
-    </div>
-</div>
-
 <div id="decision-making" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Decision-making</h1>
@@ -1548,7 +1484,7 @@
                 Description
             </div>
             <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in
+                help text
             </div>
         </div>
     </div>
@@ -1586,28 +1522,28 @@
 <div id="public-proposals" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Public proposals</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#public-proposals-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#decision-making')" href="#decision-making">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#public-proposals-help">Ask</a>
         <div id="public-proposals-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
             </div>
             <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in
+                help text
             </div>
         </div>
     </div>
     <div role="main" class="ui-content">
         
         <div class="btn-next-page">
-			<a class="ui-btn ui-btn-icon-right icon-votings" data-link = "#votings-page?type=1" href="#votings-page?type=1">Votings by spheres</a>
+			<a class="ui-btn ui-btn-icon-right icon-votings" id="vote_by_sphere" data-link = "#votings-page?type=1" href="#votings-page?type=1">Votings by spheres</a>
         </div>
         
         <div class="btn-next-page">
-            <a class="ui-btn ui-btn-icon-right icon-votings" data-link = "#future" href="#future">Maidan</a>
+            <a class="ui-btn ui-btn-icon-right icon-votings" id="maidan" data-link = "#future" href="#future">Maidan</a>
         </div>
 
         <div class="btn-next-page">
-            <a class="ui-btn ui-btn-icon-right icon-votings" data-link = "#future" href="#future">Candidates` rating</a>
+            <a class="ui-btn ui-btn-icon-right icon-votings" id="rating" data-link = "#future" href="#future">Candidates rating</a>
         </div>
         
     </div>
@@ -1616,24 +1552,22 @@
 <div id="local-self-governments" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Local self-governments</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#local-self-governments-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#decision-making')" href="#decision-making">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#local-self-governments-help">Ask</a>
         <div id="local-self-governments-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
-                Description
+                help title
             </div>
-            <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in
-            </div>
+            <div class="text">help text</div>
         </div>
     </div>
     <div role="main" class="ui-content">
         
         <div class="btn-next-page">
-			<a class="ui-btn ui-btn-icon-right icon-votings" data-link = "#votings-page?type=2" href="#votings-page?type=2">Indicative voting</a>
+			<a class="ui-btn ui-btn-icon-right icon-votings" id="indicative-voting" data-link = "#votings-page?type=2" href="#votings-page?type=2">Indicative voting</a>
         </div>
         
         <div class="btn-next-page">
-            <a class="ui-btn ui-btn-icon-right icon-votings" data-link = "#future" href="#future">Decision votings</a>
+            <a class="ui-btn ui-btn-icon-right icon-votings" id="decision-voting" data-link = "#future" href="#future">Decision votings</a>
         </div>
 
 
@@ -1643,13 +1577,13 @@
 <div id="co-owners" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Co-owners and co-investors</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#co-owners-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#decision-making')" href="#decision-making">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#co-owners-help">Ask</a>
         <div id="co-owners-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
             </div>
             <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in
+                help text
             </div>
         </div>
     </div>
@@ -1669,13 +1603,13 @@
 <div id="parties" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Political parties, NGOs volunteering groups</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#parties-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#decision-making')" href="#decision-making">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#parties-help">Ask</a>
         <div id="parties-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
             </div>
             <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in
+                help text
             </div>
         </div>
     </div>
@@ -1696,13 +1630,13 @@
 <div id="primaries" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Primaries, elections, exit-polls</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#primaries-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#decision-making')" href="#decision-making">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#primaries-help">Ask</a>
         <div id="primaries-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
             </div>
             <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in
+                help text
             </div>
         </div>
     </div>
@@ -1722,13 +1656,13 @@
 <div id="future" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Future</h1>
-        <a class="ui-btn ui-btn-left ui-icon-bars ui-btn-corner-all ui-btn-icon-notext" href="#left-panel">Menu</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#future-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-bars ui-btn-corner-all ui-btn-icon-notext" onclick = "inner_back()" href="#">Menu</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#future-help">Ask</a>
         <div id="future-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
             </div>
             <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in
+                help text
             </div>
         </div>
     </div>
@@ -1748,14 +1682,121 @@
                 Description
             </div>
             <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in
+                help text
             </div>
         </div>
     </div>
     <div role="main" class="ui-content">
         
         <p>This option will be activated in future releases</p>
+    
+    </div>
+</div>
+
+<div id="test" data-role="page">
+    <div data-role="header" data-position="fixed" data-tap-toggle="false">
+        <h1>TEST</h1>
+        <a class="ui-btn ui-btn-left ui-icon-bars ui-btn-corner-all ui-btn-icon-notext" href="#my-activities-page">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#test-help">Ask</a>
+        <div id="test-help" class="help-popup" data-role="popup" data-history="false">
+            <div class="title">
+                Description
+            </div>
+            <div class="text">
+                help text
+            </div>
+        </div>
+    </div>
+    <div role="main" class="ui-content">
         
+        <div data-role="collapsibleset">
+            <div data-role="collapsible">
+                <h3>Level 1 Record 1</h3>
+                <div data-role="collapsible">
+                    <h3>Level 2 Record 1</h3>
+                    <div data-role="collapsible">
+                        <h3>Level 3 Record 1</h3>
+                        <ul data-role="listview">
+                            <li><a href="#">Last level list item 1</a></li>
+                            <li><a href="#">Last level list item 2</a></li>
+                            <li><a href="#">Last level list item 3</a></li>
+                            <li><a href="#">Last level list item 4</a></li>
+                            <li><a href="#">Last level list item 5</a></li>
+                        </ul>
+                    </div>
+                    <div data-role="collapsible">
+                        <h3>Level 3 Record 2</h3>
+                        <ul data-role="listview">
+                            <li><a href="#">Last level list item 1</a></li>
+                            <li><a href="#">Last level list item 2</a></li>
+                            <li><a href="#">Last level list item 3</a></li>
+                            <li><a href="#">Last level list item 4</a></li>
+                            <li><a href="#">Last level list item 5</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div data-role="collapsible">
+                    <h3>Level 2 Record 2</h3>
+                    <div data-role="collapsible">
+                        <h3>Level 3 Record 1</h3>
+                        <ul data-role="listview">
+                            <li><a href="#">Last level list item 1</a></li>
+                            <li><a href="#">Last level list item 2</a></li>
+                            <li><a href="#">Last level list item 3</a></li>
+                            <li><a href="#">Last level list item 4</a></li>
+                            <li><a href="#">Last level list item 5</a></li>
+                        </ul>
+                    </div>
+                    <div data-role="collapsible">
+                        <h3>Level 3 Record 2</h3>
+                        <div data-role="collapsible">
+                            <h3>Level 4 Record 1</h3>
+                            <div data-role="collapsible">
+                                <h3>Level 5 Record 1</h3>
+                                <ul data-role="listview">
+                                    <li><a href="#">Last level list item 1</a></li>
+                                    <li><a href="#">Last level list item 2</a></li>
+                                    <li><a href="#">Last level list item 3</a></li>
+                                    <li><a href="#">Last level list item 4</a></li>
+                                    <li><a href="#">Last level list item 5</a></li>
+                                </ul>
+                            </div>
+                            <div data-role="collapsible">
+                                <h3>Level 5 Record 2</h3>
+                                <ul data-role="listview">
+                                    <li><a href="#">Last level list item 1</a></li>
+                                    <li><a href="#">Last level list item 2</a></li>
+                                    <li><a href="#">Last level list item 3</a></li>
+                                    <li><a href="#">Last level list item 4</a></li>
+                                    <li><a href="#">Last level list item 5</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div data-role="collapsible">
+                            <h3>Level 4 Record 2</h3>
+                            <ul data-role="listview">
+                                <li><a href="#">Last level list item 1</a></li>
+                                <li><a href="#">Last level list item 2</a></li>
+                                <li><a href="#">Last level list item 3</a></li>
+                                <li><a href="#">Last level list item 4</a></li>
+                                <li><a href="#">Last level list item 5</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div data-role="collapsible">
+                        <h3>Level 3 Record 3</h3>
+                        <ul data-role="listview">
+                            <li><a href="#">Last level list item 1</a></li>
+                            <li><a href="#">Last level list item 2</a></li>
+                            <li><a href="#">Last level list item 3</a></li>
+                            <li><a href="#">Last level list item 4</a></li>
+                            <li><a href="#">Last level list item 5</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
     </div>
 </div>
 
@@ -1768,7 +1809,7 @@
                 Description
             </div>
             <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in
+                help text
             </div>
         </div>
     </div>
@@ -1795,6 +1836,21 @@
     </div>
 </div>
 
+<div id="my-tasks-page" data-role="page">
+    <div data-role="header" data-position="fixed" data-tap-toggle="false">
+        <h1>My tasks</h1>
+        <a class="ui-btn ui-btn-left ui-icon-bars ui-btn-corner-all ui-btn-icon-notext" href="#left-panel">Menu</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#my-tasks-help">Ask</a>
+        <div id="my-tasks-help" class="help-popup" data-role="popup" data-history="false">
+            <div class="title"></div>
+            <div class="text"></div>
+        </div>
+    </div>
+    <div role="main" class="ui-content">
+        <div id="tasklist" class="task-list">
+        </div>
+    </div>
+</div>
+
 <div id="social-investment" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Social Investment</h1>
@@ -1804,7 +1860,7 @@
                 Description
             </div>
             <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in
+                help text
             </div>
         </div>
     </div>
@@ -1830,7 +1886,7 @@
                 Description
             </div>
             <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in
+                help text
             </div>
         </div>
     </div>
@@ -1841,7 +1897,7 @@
         </div>
         
         <div class="btn-next-page">
-            <a class="ui-btn ui-btn-icon-right icon-projects" onclick = "$.mobile.navigate('#projects-page?my_project_propositions=false')" data-link = "#project_propositions-page" href="#">Projects on Call</a>
+            <a class="ui-btn ui-btn-icon-right icon-projects" onclick = "$.mobile.navigate('http://gurtom.mobi/#projects-page?program=0')" data-link = "http://gurtom.mobi/#projects-page?program=0" href="#">Projects on Call</a>
         </div>
         
         <div class="btn-next-page">
@@ -1860,7 +1916,7 @@
                 Description
             </div>
             <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in
+                help text
             </div>
         </div>
     </div>
@@ -2057,7 +2113,7 @@
                 Description
             </div>
             <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in
+                help text
             </div>
         </div>
     </div>
@@ -2067,27 +2123,6 @@
                 Choose <strong>NCO</strong> from list below:
             </div>
         </div>
-    </div>
-</div>
-
-<div id="balances-pif-page" data-role="page">
-    <div data-role="header" data-position="fixed" data-tap-toggle="false">
-        <h1 class="long-title">Personal Fund History</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#balances-pif-help">Ask</a>
-        <div id="balances-pif-help" class="help-popup" data-role="popup" data-history="false">
-            <div class="title">
-                Description
-            </div>
-            <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in
-            </div>
-        </div>
-    </div>
-    <div role="main" class="ui-content">
-        <table>
-            <tbody id = "content_table">
-            </tbody>
-        </table>
     </div>
 </div>
 
@@ -2159,7 +2194,7 @@
 <div id="my-votings-page" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>My Votes</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#my-votings-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#my-activities-page')" href="#my-activities-page">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#my-votings-help">Ask</a>
         <div id="my-votings-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
@@ -2233,7 +2268,7 @@
                 Description
             </div>
             <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in
+                help text
             </div>
         </div>
     </div>
@@ -2258,7 +2293,7 @@
                 Description
             </div>
             <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in
+                help text
             </div>
         </div>
     </div>
@@ -2306,7 +2341,7 @@
                 Description
             </div>
             <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in
+                help text
             </div>
         </div>
     </div>
@@ -2582,7 +2617,7 @@
                 Description
             </div>
             <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in
+                help text
             </div>
         </div>
     </div>
@@ -2595,7 +2630,7 @@
 <div id="options-page" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Options</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#profile-page')" href="#profile-page">Back</a>
         <a class="ui-btn ui-btn-right ui-icon-check ui-btn-icon-right" href="#" onclick = "alert(LOCALE_ARRAY_ADDITIONAL.saved_successfull[CURRENT_LANG]);">Save</a>
     </div>
     <div role="main" class="ui-content">
@@ -2617,11 +2652,10 @@
     </div>
 </div>
 
-
 <div id="community" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>community</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#profile-page')" href="#profile-page">Back</a>
     </div>
     <div role="main" class="ui-content">
         <p>Описание как получается автризация по ГО</p>
@@ -2631,7 +2665,7 @@
 <div id="house" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Co-owners</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#profile-page')" href="#profile-page">Back</a>
     </div>
     <div role="main" class="ui-content">
         <p>Описание как получается автризация по Co-owners</p>
@@ -2641,7 +2675,7 @@
 <div id="wallet" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Authorisation by payment</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#profile-page')" href="#profile-page">Back</a>
     </div>
     <div role="main" class="ui-content">
         <p>Форма авторизации</p>
@@ -2651,27 +2685,25 @@
 <div id="bankid" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>BankID</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#profile-page')" href="#profile-page">Back</a>
     </div>
     <div role="main" class="ui-content">
-        <a class="ui-btn ui-btn-icon-right" href="/sn/bankid.php"></a>
+        <a class="ui-btn ui-btn-corner-all ui-btn-icon-right" href="/sn/bankid.php"></a>
     </div>
 </div>
-
-
 
 <div id="trust-list" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>
             Trust list
         </h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" href="#decision-making">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#trust-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#decision-making')" href="#decision-making">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#trust-help">Ask</a>
         <div id="trust-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
             </div>
             <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in
+                help text
             </div>
         </div>
     </div>
@@ -2703,6 +2735,53 @@
         </form>
     </div>
 </div>
+
+<!-- <div id="balances-pif-page" data-role="page">
+    <div data-role="header" data-position="fixed" data-tap-toggle="false">
+        <h1 class="long-title">Personal Fund History</h1>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#balances-pif-help">Ask</a>
+        <div id="balances-pif-help" class="help-popup" data-role="popup" data-history="false">
+            <div class="title">
+                Description
+            </div>
+            <div class="text">
+                help text
+            </div>
+        </div>
+    </div>
+    <div role="main" class="ui-content">
+        <table>
+            <tbody id = "content_table">
+            </tbody>
+        </table>
+    </div>
+</div> -->
+
+<!-- <div id="create-pif-page" data-role="page">
+    <div data-role="header" data-position="fixed" data-tap-toggle="false">
+        <h1>Create Personal Fund</h1>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#create-pif-help">Ask</a>
+        <div id="create-pif-help" class="help-popup" data-role="popup" data-history="false">
+            <div class="title">
+                Description
+            </div>
+            <div class="text">
+                help text
+            </div>
+        </div>
+    </div>
+    <div role="main" class="ui-content">
+        <form action="" accept-charset="UTF-8" method="post">
+                <div class="select-field">
+                    <label>Выберите тип валюты</label>
+                    <select name=""><option value="UAH (украинская гривня)">UAH (украинская гривня)</option>
+                    </select>
+                </div>
+                <div class="button-fixed">
+                    <input type="submit" value="Сохранить" />
+                </div></form>
+    </div>
+</div> -->
 
 <div class="auth-panel" data-role="panel" id="left-panel" data-position="left" data-position-fixed="true" data-display="overlay">
     <div class="panel-head">

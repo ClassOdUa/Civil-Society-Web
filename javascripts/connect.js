@@ -4,6 +4,9 @@ var FILE;
 var UI_STATE_DIALOG = 0;
 var mainURL = 'http://gurtom.mobi';
 var HISTORY_INNER = [location.href];
+var g_lat = 0;
+var g_lng = 0;
+
 
 $.mobile.defaultPageTransition = 'none';
 function inner_back(){
@@ -60,7 +63,9 @@ window.onload = function(){
 	lang_activate_el();
 	setTimeout(function(){
 		COMMON_OBJECT.init_common_listeners();
-
+		
+		MAP.init();
+		
 		jQuery.each(LOCALE_ARRAY, function(i, one_element) {
 			if($(one_element['selector'])){
 				if(one_element['value']){
@@ -124,6 +129,23 @@ window.onload = function(){
 			console.log('load news');
 			NEWS.init();
 		}
+
+		if(location.href.indexOf('#my-tasks-page') > -1){
+			console.log('load tasks');
+			TASKS.init();
+		}
+
+/*		if(location.href.indexOf('#map-page') > -1){
+			console.log('load map');
+			MAP.init();
+		}*/
+
+
+/*		if(location.href.indexOf('#') > -1){
+			console.log('load map');
+			MAP.init();
+		}*/
+
 
 		if(location.href.indexOf('#programs-page') > -1){
 			console.log('load programs');
@@ -226,7 +248,7 @@ window.onload = function(){
         		alert(LOCALE_ARRAY_ADDITIONAL.bad_size[CURRENT_LANG]);
         	}else{
         		var profile_obj = jQuery.parseJSON(data)[0];
-	            $('#profile-page #avatar').attr('src', 'http://' + profile_obj.avatar);
+	            $('#profile-page #avatar').attr('src', mainURL + profile_obj.avatar);
 	        	console.log( mainURL + '/' + profile_obj.avatar);
         	}			            
         }});
@@ -473,6 +495,10 @@ window.onhashchange = function(){
 
 	if(location.href.indexOf('#news-page') > -1){
 		NEWS.init();
+	}
+
+	if(location.href.indexOf('#my-tasks-page') > -1){
+		TASKS.init();
 	}
 
 	if(location.href.indexOf('#programs-page') > -1
@@ -826,7 +852,7 @@ var COMMON_OBJECT = {
 			if( $(window).scrollTop() == $(document).height() - $(window).height()){
 	          	NEWS.reinit();
 	      	}
-	      		
+
 		}else if(location.href.indexOf('#trust-list') > -1){
 			if( $(window).scrollTop() == $(document).height() - $(window).height()){
 	          	TRUST_LIST.reinit();
@@ -886,6 +912,24 @@ var SUPER_PROFILE = {
 	gender: 0,
 	id: 0
 };
+
+var NCO_OBJECT = {
+	offer_accept_nco: function(object_type, object_id, page){
+		$.ajax({
+			url:  mainURL + "/nco_bid.php",
+	        type: "POST",
+	        data: {"type": object_type,
+	    		   "id": object_id},
+	        crossDomain: true,
+	        xhrFields: {
+		       withCredentials: true
+		    },
+	        complete: function(data){
+	        	$(page + ' #create_nco_button').css('display', 'none');
+	        }
+		});
+	}
+}
 
 
 var CREATE_ITEM = {
@@ -984,154 +1028,234 @@ var CREATE_ITEM = {
 		}
 	},
 	send_project: function(img){
+		var self = this;
 		var dtex = $('#create-item [name=dtex_year]').val() + "-" 
 				 + $('#create-item [name=dtex_month]').val() + "-" 
 				 + $('#create-item [name=dtex_date]').val();
-		$.ajax({
-			url:  mainURL + "/project_add.php",
-	        type: "POST",
-	        data: {"img": img,
-	    		   "descr": $('#create-item [name=descr]').val(),
-	    		   "title": $('#create-item [name=title ]').val(),
-	    		   "dtex": dtex, 
-	    		   "tags": $('#create-item [name=tags]').val(),
-	    		   "nco": $('#create-item [name=nco]').val(),
-	    		   "curr": $('#create-item [name=curr]').val(),
-	    		   "amount": $('#create-item [name=amount]').val()},
-	        crossDomain: true,
-	        xhrFields: {
-		       withCredentials: true
-		    },
-	        complete: function(response){
-	        	if(response && response.responseText.indexOf('error') == -1){
-	        		alert(LOCALE_ARRAY_ADDITIONAL.saved_successfull[CURRENT_LANG]);
-	        		var id = JSON.parse(response.responseText);
-		        	id = id[0].id;
-		        	$.mobile.navigate("#project-page?project=" + id);
-	        	}
-	        	//$.mobile.navigate("#vote-page?vote=" + id);
-	        }
-		});
+		var validation_row = [];
+		validation_row[ validation_row.length ] = { type: 0, value: $('#create-item [name=nco]').val(), error: LOCALE_ARRAY_ADDITIONAL.nco_not_selected[CURRENT_LANG] };
+		validation_row[ validation_row.length ] = { type: 0, value: $('#create-item [name=amount]').val(), error: LOCALE_ARRAY_ADDITIONAL.no_amount[CURRENT_LANG] };
+		validation_row[ validation_row.length ] = { type: 0, value: $('#create-item [name=tags]').val(), error: LOCALE_ARRAY_ADDITIONAL.no_tags[CURRENT_LANG] };
+		validation_row[ validation_row.length ] = { type: 0, value: $('#create-item [name=descr]').val(), error: LOCALE_ARRAY_ADDITIONAL.no_description[CURRENT_LANG] };
+    	validation_row[ validation_row.length ] = { type: 0, value: $('#create-item [name=title]').val(), error: LOCALE_ARRAY_ADDITIONAL.no_title[CURRENT_LANG] };    	
+
+    	var validation_error = self.validation( validation_row );
+    	if( validation_error == 0 ){
+    		$.ajax({
+				url:  mainURL + "/project_add.php",
+		        type: "POST",
+		        data: {"img": img,
+		    		   "descr": $('#create-item [name=descr]').val(),
+		    		   "title": $('#create-item [name=title ]').val(),
+		    		   "dtex": dtex, 
+		    		   "tags": $('#create-item [name=tags]').val(),
+		    		   "nco": $('#create-item [name=nco]').val(),
+		    		   "curr": $('#create-item [name=curr]').val(),
+		    		   "amount": $('#create-item [name=amount]').val()},
+		        crossDomain: true,
+		        xhrFields: {
+			       withCredentials: true
+			    },
+		        complete: function(response){
+		        	if(response && response.responseText.indexOf('error') == -1){
+		        		alert(LOCALE_ARRAY_ADDITIONAL.saved_successfull[CURRENT_LANG]);
+		        		var id = JSON.parse(response.responseText);
+			        	id = id[0].id;
+			        	$.mobile.navigate("#project-page?project=" + id);
+		        	}
+		        	//$.mobile.navigate("#vote-page?vote=" + id);
+		        }
+			});
+    	}
 	},
 	send_program: function(img){
-		$.ajax({
-			url:  mainURL + "/program_add.php",
-	        type: "POST",
-	        data: {"img": img,
-	    		   "descr": $('#create-item [name=descr]').val(),
-	    		   "title": $('#create-item [name=title ]').val(),
-	    		   "tags": $('#create-item [name=tags]').val(),
-	    		   "nco": $('#create-item [name=nco]').val(),
-	    		   "curr": $('#create-item [name=curr]').val(),
-	    		   "amount": $('#create-item [name=amount]').val()},
-	        crossDomain: true,
-	        xhrFields: {
-		       withCredentials: true
-		    },
-	        complete: function(response){
-	        	if(response && response.responseText.indexOf('error') == -1){
-	        		alert(LOCALE_ARRAY_ADDITIONAL.saved_successfull[CURRENT_LANG]);
-	        		var id = JSON.parse(response.responseText);
-		        	id = id[0].id;
-		        	$.mobile.navigate("#program-page?program=" + id);
-	        	}
-	        	//$.mobile.navigate("#vote-page?vote=" + id);
-	        }
-		});
+		var self = this;
+		var validation_row = [];
+		validation_row[ validation_row.length ] = { type: 0, value: $('#create-item [name=nco]').val(), error: LOCALE_ARRAY_ADDITIONAL.nco_not_selected[CURRENT_LANG] };
+		validation_row[ validation_row.length ] = { type: 0, value: $('#create-item [name=amount]').val(), error: LOCALE_ARRAY_ADDITIONAL.no_amount[CURRENT_LANG] };
+		validation_row[ validation_row.length ] = { type: 0, value: $('#create-item [name=tags]').val(), error: LOCALE_ARRAY_ADDITIONAL.no_tags[CURRENT_LANG] };
+		validation_row[ validation_row.length ] = { type: 0, value: $('#create-item [name=descr]').val(), error: LOCALE_ARRAY_ADDITIONAL.no_description[CURRENT_LANG] };
+    	validation_row[ validation_row.length ] = { type: 0, value: $('#create-item [name=title]').val(), error: LOCALE_ARRAY_ADDITIONAL.no_title[CURRENT_LANG] };    	
+
+    	var validation_error = self.validation( validation_row );
+    	if( validation_error == 0 ){
+    		$.ajax({
+				url:  mainURL + "/program_add.php",
+		        type: "POST",
+		        data: {"img": img,
+		    		   "descr": $('#create-item [name=descr]').val(),
+		    		   "title": $('#create-item [name=title ]').val(),
+		    		   "tags": $('#create-item [name=tags]').val(),
+		    		   "nco": $('#create-item [name=nco]').val(),
+		    		   "curr": $('#create-item [name=curr]').val(),
+		    		   "amount": $('#create-item [name=amount]').val()},
+		        crossDomain: true,
+		        xhrFields: {
+			       withCredentials: true
+			    },
+		        complete: function(response){
+		        	if(response && response.responseText.indexOf('error') == -1){
+		        		alert(LOCALE_ARRAY_ADDITIONAL.saved_successfull[CURRENT_LANG]);
+		        		var id = JSON.parse(response.responseText);
+			        	id = id[0].id;
+			        	$.mobile.navigate("#program-page?program=" + id);
+		        	}
+		        	//$.mobile.navigate("#vote-page?vote=" + id);
+		        }
+			});
+    	}
 	},
 	send_request: function(img){
+		var self = this;
 		var dtex = $('#create-item [name=dtex_year]').val() + "-" 
 				 + $('#create-item [name=dtex_month]').val() + "-" 
 				 + $('#create-item [name=dtex_date]').val();
-		$.ajax({
-			url:  mainURL + "/request_add.php",
-	        type: "POST",
-	        data: {"img": img,
-	    		   "descr": $('#create-item [name=descr]').val(),
-	    		   "title": $('#create-item [name=title]').val(),
-	    		   "dtex": dtex,
-	    		   "ben": $('#create-item [name=ben]').val(),
-	    		   "tags": $('#create-item [name=tags]').val(),
-	    		   "nco": $('#create-item [name=nco]').val(),
-	    		   "curr": $('#create-item [name=curr]').val(),
-	    		   "amount": $('#create-item [name=amount]').val()},
-	        crossDomain: true,
-	        xhrFields: {
-		       withCredentials: true
-		    },
-	        complete: function(response){
-	        	if(response && response.responseText.indexOf('error') == -1){
-	        		alert(LOCALE_ARRAY_ADDITIONAL.saved_successfull[CURRENT_LANG]);
-	        		var id = JSON.parse(response.responseText);
-		        	id = id[0].id;
-		        	$.mobile.navigate("#request-page?request=" + id);
-	        	}
-	        	//$.mobile.navigate("#vote-page?vote=" + id);
-	        }
-		});
+		var validation_row = [];
+		validation_row[ validation_row.length ] = { type: 0, value: $('#create-item [name=nco]').val(), error: LOCALE_ARRAY_ADDITIONAL.nco_not_selected[CURRENT_LANG] };
+		validation_row[ validation_row.length ] = { type: 0, value: $('#create-item [name=amount]').val(), error: LOCALE_ARRAY_ADDITIONAL.no_amount[CURRENT_LANG] };
+		validation_row[ validation_row.length ] = { type: 0, value: $('#create-item [name=ben]').val(), error: LOCALE_ARRAY_ADDITIONAL.no_beneficiary[CURRENT_LANG] };
+		validation_row[ validation_row.length ] = { type: 0, value: $('#create-item [name=tags]').val(), error: LOCALE_ARRAY_ADDITIONAL.no_tags[CURRENT_LANG] };
+		validation_row[ validation_row.length ] = { type: 0, value: $('#create-item [name=descr]').val(), error: LOCALE_ARRAY_ADDITIONAL.no_description[CURRENT_LANG] };
+    	validation_row[ validation_row.length ] = { type: 0, value: $('#create-item [name=title]').val(), error: LOCALE_ARRAY_ADDITIONAL.no_title[CURRENT_LANG] };    	
+
+    	var validation_error = self.validation( validation_row );
+    	if( validation_error == 0 ){
+    		$.ajax({
+				url:  mainURL + "/request_add.php",
+		        type: "POST",
+		        data: {"img": img,
+		    		   "descr": $('#create-item [name=descr]').val(),
+		    		   "title": $('#create-item [name=title]').val(),
+		    		   "dtex": dtex,
+		    		   "ben": $('#create-item [name=ben]').val(),
+		    		   "tags": $('#create-item [name=tags]').val(),
+		    		   "nco": $('#create-item [name=nco]').val(),
+		    		   "curr": $('#create-item [name=curr]').val(),
+		    		   "amount": $('#create-item [name=amount]').val()},
+		        crossDomain: true,
+		        xhrFields: {
+			       withCredentials: true
+			    },
+		        complete: function(response){
+		        	if(response && response.responseText.indexOf('error') == -1){
+		        		alert(LOCALE_ARRAY_ADDITIONAL.saved_successfull[CURRENT_LANG]);
+		        		var id = JSON.parse(response.responseText);
+			        	id = id[0].id;
+			        	$.mobile.navigate("#request-page?request=" + id);
+		        	}
+		        	//$.mobile.navigate("#vote-page?vote=" + id);
+		        }
+			});
+    	}
 	},
 	send_weighted_voting: function(img){
+		var self = this;
 		var start = $('#create-item [name=start_year]').val() + "-" 
 				 + $('#create-item [name=start_month]').val() + "-" 
 				 + $('#create-item [name=start_date]').val();
 		var finish = $('#create-item [name=dtex_year]').val() + "-" 
 				 + $('#create-item [name=dtex_month]').val() + "-" 
 				 + $('#create-item [name=dtex_date]').val();
-		$.ajax({
-			url:  mainURL + "/weighted_voting_add.php",
-	        type: "POST",
-	        data: {"img": img,
-	    		   "descr": $('#create-item [name=descr]').val(),
-	    		   "title": $('#create-item [name=title]').val(),
-	    		   "program_id": $('#create-item [name=program_id]').val(),
-	    		   "start": start,
-	    		   "finish": finish, 
-	    		   "tags": $('#create-item [name=tags]').val()},
-	        crossDomain: true,
-	        xhrFields: {
-		       withCredentials: true
-		    },
-	        complete: function(response){
-	        	if(response && response.responseText.indexOf('error') == -1){
-	        		alert(LOCALE_ARRAY_ADDITIONAL.saved_successfull[CURRENT_LANG]);
-	        		var id = JSON.parse(response.responseText);
-		        	id = id[0].id;
-		        	$.mobile.navigate("#weighted-vote-page?vote=" + id);
-	        	}
-	        	//$.mobile.navigate("#vote-page?vote=" + id);
-	        }
-		});
+		var validation_row = [];
+		validation_row[ validation_row.length ] = { type: 0, value: $('#create-item [name=tags]').val(), error: LOCALE_ARRAY_ADDITIONAL.no_tags[CURRENT_LANG] };
+		validation_row[ validation_row.length ] = { type: 0, value: $('#create-item [name=descr]').val(), error: LOCALE_ARRAY_ADDITIONAL.no_description[CURRENT_LANG] };
+    	validation_row[ validation_row.length ] = { type: 0, value: $('#create-item [name=title]').val(), error: LOCALE_ARRAY_ADDITIONAL.no_title[CURRENT_LANG] };
+    	validation_row[ validation_row.length ] = { type: 1, value: $('#create-item [name=program_id]').val(), error: LOCALE_ARRAY_ADDITIONAL.weighted_voitng_only_from_program[CURRENT_LANG] };    	
+
+    	var validation_error = self.validation( validation_row );
+    	if( validation_error == 0 ){
+    		$.ajax({
+				url:  mainURL + "/weighted_voting_add.php",
+		        type: "POST",
+		        data: {"img": img,
+		    		   "descr": $('#create-item [name=descr]').val(),
+		    		   "title": $('#create-item [name=title]').val(),
+		    		   "program_id": $('#create-item [name=program_id]').val(),
+		    		   "start": start,
+		    		   "finish": finish, 
+		    		   "tags": $('#create-item [name=tags]').val()},
+		        crossDomain: true,
+		        xhrFields: {
+			       withCredentials: true
+			    },
+		        complete: function(response){
+		        	if(response && response.responseText.indexOf('error') == -1){
+		        		alert(LOCALE_ARRAY_ADDITIONAL.saved_successfull[CURRENT_LANG]);
+		        		var id = JSON.parse(response.responseText);
+			        	id = id[0].id;
+			        	$.mobile.navigate("#weighted-vote-page?vote=" + id);
+		        	}
+		        	//$.mobile.navigate("#vote-page?vote=" + id);
+		        }
+			});
+    	}
 	},
 	send_project_proposition: function(img){
+		var self = this;
 		var dtex = $('#create-item [name=dtex_year]').val() + "-" 
 				 + $('#create-item [name=dtex_month]').val() + "-" 
 				 + $('#create-item [name=dtex_date]').val();
-		$.ajax({
-			url:  mainURL + "/project_propositions_add.php",
-	        type: "POST",
-	        data: {"img": img,
-	    		   "descr": $('#create-item [name=descr]').val(),
-	    		   "title": $('#create-item [name=title ]').val(),
-	    		   "dtex": dtex,
-	    		   "program_id": $('#create-item [name=program_id]').val(), 
-	    		   "tags": $('#create-item [name=tags]').val(),
-	    		   "nco": $('#create-item [name=nco]').val(),
-	    		   "curr": $('#create-item [name=curr]').val(),
-	    		   "amount": $('#create-item [name=amount]').val()},
-	        crossDomain: true,
-	        xhrFields: {
-		       withCredentials: true
-		    },
-	        complete: function(response){
-	        	if(response && response.responseText.indexOf('error') == -1){
-	        		alert(LOCALE_ARRAY_ADDITIONAL.saved_successfull[CURRENT_LANG]);
-	        		var id = JSON.parse(response.responseText);
-		        	id = id[0].id;
-		        	$.mobile.navigate("#project-page?project_proposition=" + id);
-	        	}
-	        	//$.mobile.navigate("#vote-page?vote=" + id);
-	        }
-		});
+		var validation_row = [];
+		validation_row[ validation_row.length ] = { type: 0, value: $('#create-item [name=nco]').val(), error: LOCALE_ARRAY_ADDITIONAL.nco_not_selected[CURRENT_LANG] };
+		validation_row[ validation_row.length ] = { type: 0, value: $('#create-item [name=amount]').val(), error: LOCALE_ARRAY_ADDITIONAL.no_amount[CURRENT_LANG] };
+		validation_row[ validation_row.length ] = { type: 0, value: $('#create-item [name=tags]').val(), error: LOCALE_ARRAY_ADDITIONAL.no_tags[CURRENT_LANG] };
+		validation_row[ validation_row.length ] = { type: 0, value: $('#create-item [name=descr]').val(), error: LOCALE_ARRAY_ADDITIONAL.no_description[CURRENT_LANG] };
+    	validation_row[ validation_row.length ] = { type: 0, value: $('#create-item [name=title]').val(), error: LOCALE_ARRAY_ADDITIONAL.no_title[CURRENT_LANG] };
+    	validation_row[ validation_row.length ] = { type: 1, value: $('#create-item [name=program_id]').val(), error: LOCALE_ARRAY_ADDITIONAL.projects_proposition_only_from_program[CURRENT_LANG] };    	
+
+    	var validation_error = self.validation( validation_row );
+    	if( validation_error == 0 ){
+    				$.ajax({
+						url:  mainURL + "/project_propositions_add.php",
+				        type: "POST",
+				        data: {"img": img,
+				    		   "descr": $('#create-item [name=descr]').val(),
+				    		   "title": $('#create-item [name=title ]').val(),
+				    		   "dtex": dtex,
+				    		   "program_id": $('#create-item [name=program_id]').val(), 
+				    		   "tags": $('#create-item [name=tags]').val(),
+				    		   "nco": $('#create-item [name=nco]').val(),
+				    		   "curr": $('#create-item [name=curr]').val(),
+				    		   "amount": $('#create-item [name=amount]').val()},
+				        crossDomain: true,
+				        xhrFields: {
+					       withCredentials: true
+					    },
+				        complete: function(response){
+				        	if(response && response.responseText.indexOf('error') == -1){
+				        		alert(LOCALE_ARRAY_ADDITIONAL.saved_successfull[CURRENT_LANG]);
+				        		var id = JSON.parse(response.responseText);
+					        	id = id[0].id;
+					        	$.mobile.navigate("#project-page?project_proposition=" + id);
+				        	}
+				        	//$.mobile.navigate("#vote-page?vote=" + id);
+				        }
+					});
+    	}
+	},
+	validation: function( rows_array ){
+		var error = 0;
+		var error_description = '';
+		jQuery.each(rows_array, function(i, one_row) {
+		    switch( one_row.type ){
+		    	case 0:
+		    		if( one_row.value == '' ){
+		    			error_description = one_row.error;
+		    			error = 1;
+		    		}
+		    		break;
+		    	case 1:
+		    		if( one_row.value == '' || one_row.value == 0 ){
+		    			error_description = one_row.error;
+		    			error = 1;
+		    		}
+		    		break;
+		    }
+    	});
+    	if(error_description != '')
+    		alert( error_description );
+
+    	return error;
 	}
 }
 
@@ -1443,11 +1567,13 @@ var PROJECTS = {
 			$('#projects-page #create_link').attr('style','display: block');
 			$('#projects-page #menu_link').attr('style', 'display:none');
 			$('#projects-page #my_activities_link').attr('style', 'display:block');
+			PIF.get_pif_array(true);
 		}else if(location.href.indexOf('#projects-page?my_project_propositions=true') > -1){
 			var url = mainURL + '/project_propositions.php?my=1';
 			$('#projects-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.my_projects_propositions[CURRENT_LANG]);
 			$('#projects-page #menu_link').attr('style', 'display:none');
 			$('#projects-page #my_activities_link').attr('style', 'display:block');
+			PIF.get_pif_array(true);
 		}else{
 			var url = mainURL + '/project.php';
 			$('#programs-page #menu_link').attr('style', 'display:block');
@@ -1718,7 +1844,7 @@ var PROJECTS = {
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + ' fund-raising">\
 					                <a onclick = "$.mobile.navigate(\'#project-page?' + page + one_voting.id + '\')" href="#">\
 					                    <div class="img">\
-					                        <img src="http://' + one_voting.img + '" />\
+					                        <img src="' + mainURL + one_voting.img + '" />\
 					                    </div>\
 					                    <div class="info">\
 					                        <div class="title">\
@@ -1754,7 +1880,7 @@ var PROJECTS = {
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + ' project-completed">\
 				                <a onclick = "$.mobile.navigate(\'#project-page?project=' + one_voting.id + '\')" href="#">\
 				                    <div class="img">\
-				                        <img src="http://' + one_voting.img + '" />\
+				                        <img src="' + mainURL + one_voting.img + '" />\
 				                    </div>\
 				                    <div class="info">\
 				                        <div class="title">\
@@ -1790,7 +1916,7 @@ var PROJECTS = {
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + ' fund-raising">\
 					                <a onclick = "$.mobile.navigate(\'#project-page?project=' + one_voting.id + '\')" href="#">\
 					                    <div class="img">\
-					                        <img src="http://' + one_voting.img + '" />\
+					                        <img src="' + mainURL + one_voting.img + '" />\
 					                    </div>\
 					                    <div class="info">\
 					                        <div class="title">\
@@ -1945,15 +2071,43 @@ var PROJECTS = {
 			var nco_button = '';
 		}
 		var nco_create_button = '';
-		/*if(SUPER_PROFILE.id == data_for_build.creator_id && data_for_build.nco_acceptance == '0' ){
-			if( data_for_build.nco_list.length == 0 || ( data_for_build.nco_list.length > 0 && nco_create_flag == 0 ) ){
+		var creator_check = 0;
+		if(SUPER_PROFILE.nco == '1' && data_for_build.nco_acceptance == '0' && data_for_build.nco_id == '0' ){
+			if( data_for_build.nco_list.length == 0 ){
 				nco_create_button = '<div class="nko-btn">\
-			                    <a class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate(\'#nko-page?project_proposition=' + data_for_build.id + '\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.create_nco[CURRENT_LANG] + '</a>\
+			                    <a class="ui-btn ui-corner-all ui-shadow" onclick = "NCO_OBJECT.offer_accept_nco(4,' + data_for_build.id + ',\'#project-page\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.create_nco[CURRENT_LANG] + '</a>\
 			                </div>';
+			}else{
+				jQuery.each(data_for_build.nco_list, function(i, one_nko) {
+					if( SUPER_PROFILE.id == one_nko.user_id ){
+						creator_check = 1;
+					} 
+		    	});
+		    	if(creator_check == 0){
+		    		nco_create_button = '<div class="nko-btn">\
+			                    <a class="ui-btn ui-corner-all ui-shadow" onclick = "NCO_OBJECT.offer_accept_nco(4,' + data_for_build.id + '\'#project-page\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.create_nco[CURRENT_LANG] + '</a>\
+			                </div>';
+		    	}
 			}
-		}else{
-			nco_create_button = '';
-		}*/
+		}
+		var nco_accept_button = '';
+		var creator_check_accept = 0;
+		if(SUPER_PROFILE.nco == '1' && data_for_build.nco_acceptance == '0' && data_for_build.nco_id == '0' ){
+			jQuery.each(data_for_build.nco_list, function(i, one_nko) {
+				if( SUPER_PROFILE.id == one_nko.user_id ){
+					creator_check_accept = 1;
+				} 
+	    	});
+	    	if(creator_check_accept == 0){
+	    		jQuery.each(data_for_build.nco_list, function(i, one_nko) {
+					if( data_for_build.nco_id == one_nko.id){
+						nco_accept_button = '<div class="nko-btn">\
+		                    <a class="ui-btn ui-corner-all ui-shadow" onclick = "NCO_OBJECT.offer_accept_nco(4,' + data_for_build.id + '\'#project-page\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.accept_nco[CURRENT_LANG] + '</a>\
+		                </div>';
+					} 
+		    	});   		
+	    	}
+		}
 		var ui_donate_panel = '';
 		if(data_for_build.status == 0){
 			if(flag_selected == 1){
@@ -2026,7 +2180,7 @@ var PROJECTS = {
 			    <div role="main" class="ui-content">\
 			        <div id = "project-item" class="project-item">\
 			        <div class="img">\
-		                <img width="100%" src="http://' + data_for_build.img + '" />\
+		                <img width="100%" src="' + mainURL + data_for_build.img + '" />\
 		            </div>\
 		            <div class="project-item-inner">\
 		                <div class="stars-wrap">\
@@ -2058,6 +2212,7 @@ var PROJECTS = {
 		                </div>\
 		                ' + nco_button + '\
 		                ' + nco_create_button + '\
+		                ' + nco_accept_button + '\
 		                <div class="desc">\
 		                    <div class="text">\
 		                        ' + data_for_build.description + '\
@@ -2074,7 +2229,7 @@ var PROJECTS = {
 		                    <div class="social-wrap">\
 		                        <div class="ui-grid-b">\
 		                            <div class="ui-block-a">\
-		                                <a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href)  + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + 'http://' + data_for_build.img + '"></a>\
+		                                <a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href)  + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
 		                            </div>\
 		                            <div class="ui-block-b">\
 		                                <a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href)  + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
@@ -2186,15 +2341,43 @@ var PROJECTS = {
 			var nco_button = '';
 		}
 		var nco_create_button = '';
-		/*if(SUPER_PROFILE.id == data_for_build.creator_id && data_for_build.nco_acceptance == '0' ){
-			if( data_for_build.nco_list.length == 0 || ( data_for_build.nco_list.length > 0 && nco_create_flag == 0 ) ){
+		var creator_check = 0;
+		if(SUPER_PROFILE.nco == '1' && data_for_build.nco_acceptance == '0' && data_for_build.nco_id == '0' ){
+			if( data_for_build.nco_list.length == 0 ){
 				nco_create_button = '<div class="nko-btn">\
-			                    <a class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate(\'#nko-page?project_proposition=' + data_for_build.id + '\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.create_nco[CURRENT_LANG] + '</a>\
+			                    <a class="ui-btn ui-corner-all ui-shadow" onclick = "NCO_OBJECT.offer_accept_nco(3,' + data_for_build.id + ',\'#project-page\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.create_nco[CURRENT_LANG] + '</a>\
 			                </div>';
+			}else{
+				jQuery.each(data_for_build.nco_list, function(i, one_nko) {
+					if( SUPER_PROFILE.id == one_nko.user_id ){
+						creator_check = 1;
+					} 
+		    	});
+		    	if(creator_check == 0){
+		    		nco_create_button = '<div class="nko-btn">\
+			                    <a class="ui-btn ui-corner-all ui-shadow" onclick = "NCO_OBJECT.offer_accept_nco(3,' + data_for_build.id + '\'#project-page\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.create_nco[CURRENT_LANG] + '</a>\
+			                </div>';
+		    	}
 			}
-		}else{
-			nco_create_button = '';
-		}*/
+		}
+		var nco_accept_button = '';
+		var creator_check_accept = 0;
+		if(SUPER_PROFILE.nco == '1' && data_for_build.nco_acceptance == '0' && data_for_build.nco_id == '0' ){
+			jQuery.each(data_for_build.nco_list, function(i, one_nko) {
+				if( SUPER_PROFILE.id == one_nko.user_id ){
+					creator_check_accept = 1;
+				} 
+	    	});
+	    	if(creator_check_accept == 0){
+	    		jQuery.each(data_for_build.nco_list, function(i, one_nko) {
+					if( data_for_build.nco_id == one_nko.id){
+						nco_accept_button = '<div class="nko-btn">\
+		                    <a class="ui-btn ui-corner-all ui-shadow" onclick = "NCO_OBJECT.offer_accept_nco(3,' + data_for_build.id + '\'#project-page\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.accept_nco[CURRENT_LANG] + '</a>\
+		                </div>';
+					} 
+		    	});   		
+	    	}
+		}
 		var ui_donate_panel = '';
 		if(data_for_build.status == 0){
 			if(flag_selected == 1){
@@ -2268,7 +2451,7 @@ var PROJECTS = {
 			    <div role="main" class="ui-content">\
 			        <div id = "project-item" class="project-item">\
 			        <div class="img">\
-		                <img width="100%" src="http://' + data_for_build.img + '" />\
+		                <img width="100%" src="' + mainURL + data_for_build.img + '" />\
 		            </div>\
 		            <div class="project-item-inner">\
 		                <div class="stars-wrap">\
@@ -2300,6 +2483,7 @@ var PROJECTS = {
 		                </div>\
 		                ' + nco_button + '\
 		                ' + nco_create_button + '\
+		                ' + nco_accept_button + '\
 		                <div class="desc">\
 		                    <div class="text">\
 		                        ' + data_for_build.description + '\
@@ -2316,7 +2500,7 @@ var PROJECTS = {
 		                    <div class="social-wrap">\
 		                        <div class="ui-grid-b">\
 		                            <div class="ui-block-a">\
-		                                <a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href)  + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + 'http://' + data_for_build.img + '"></a>\
+		                                <a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href)  + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
 		                            </div>\
 		                            <div class="ui-block-b">\
 		                                <a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href)  + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
@@ -2712,6 +2896,7 @@ var PROGRAMS = {
 			$('#programs-page #create_link').attr('style','display: block');
 			$('#programs-page #menu_link').attr('style', 'display:none');
 			$('#programs-page #my_activities_link').attr('style', 'display:block');
+			PIF.get_pif_array(true);
 		}else{
 			var url = mainURL + '/program.php';
 			$('#programs-page #menu_link').attr('style', 'display:block');
@@ -2994,7 +3179,7 @@ var PROGRAMS = {
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + ' fund-raising">\
 					                <a onclick = "$.mobile.navigate(\'#program-page?program=' + one_voting.id + '\')" href="#">\
 					                    <div class="img">\
-					                        <img src="http://' + one_voting.img + '" />\
+					                        <img src="' + mainURL + one_voting.img + '" />\
 					                    </div>\
 					                    <div class="info">\
 					                        <div class="title">\
@@ -3030,7 +3215,7 @@ var PROGRAMS = {
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + ' program-completed">\
 				                <a onclick = "$.mobile.navigate(\'#program-page?program=' + one_voting.id + '\')" href="#">\
 				                    <div class="img">\
-				                        <img src="http://' + one_voting.img + '" />\
+				                        <img src="' + mainURL + one_voting.img + '" />\
 				                    </div>\
 				                    <div class="info">\
 				                        <div class="title">\
@@ -3066,7 +3251,7 @@ var PROGRAMS = {
 		}
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + ' voting-canceled" style = "cursor: pointer" onclick = "VOTINGS.switch_page_for_build(' + one_voting.id + ', 0)">\
 				                <div class="img">\
-			                        <img src="http://' + one_voting.img + '" />\
+			                        <img src="' + mainURL + one_voting.img + '" />\
 			                    </div>\
 				                <div class="info">\
 				                    <div class="title">\
@@ -3179,7 +3364,6 @@ var PROGRAMS = {
 				                        <strong>' + one_nko.reg_name + '</strong> (<strong>ID</strong>:<span>' + one_nko.id + '</span>)<span class="phone">' + one_nko.reg_phone + '</span><span class="doc">' + one_nko.reg_doc + '</span><span class="addr">' + one_nko.reg_address + '</span>\
 				                    </div>\
 				                </li>\ ';
-				    nco_create_flag = 1;
 				}
 			} 
     	});
@@ -3202,20 +3386,49 @@ var PROGRAMS = {
 		}else{
 			var nco_button = '';
 		}
+
 		var nco_create_button = '';
-		/*if(SUPER_PROFILE.id == data_for_build.creator_id && data_for_build.nco_acceptance == '0' ){
-			if( data_for_build.nco_list.length == 0 || ( data_for_build.nco_list.length > 0 && nco_create_flag == 0 ) ){
+		var creator_check = 0;
+		if(SUPER_PROFILE.nco == '1' && data_for_build.nco_acceptance == '0' && data_for_build.nco_id == '0' ){
+			if( data_for_build.nco_list.length == 0 ){
 				nco_create_button = '<div class="nko-btn">\
-			                    <a class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate(\'#nko-page?project_proposition=' + data_for_build.id + '\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.create_nco[CURRENT_LANG] + '</a>\
+			                    <a class="ui-btn ui-corner-all ui-shadow" onclick = "NCO_OBJECT.offer_accept_nco(2,' + data_for_build.id + ',\'#program-page\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.create_nco[CURRENT_LANG] + '</a>\
 			                </div>';
+			}else{
+				jQuery.each(data_for_build.nco_list, function(i, one_nko) {
+					if( SUPER_PROFILE.id == one_nko.user_id ){
+						creator_check = 1;
+					} 
+		    	});
+		    	if(creator_check == 0){
+		    		nco_create_button = '<div class="nko-btn">\
+			                    <a class="ui-btn ui-corner-all ui-shadow" onclick = "NCO_OBJECT.offer_accept_nco(2,' + data_for_build.id + '\'#program-page\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.create_nco[CURRENT_LANG] + '</a>\
+			                </div>';
+		    	}
 			}
-		}else{
-			nco_create_button = '';
-		}*/
+		}
+		var nco_accept_button = '';
+		var creator_check_accept = 0;
+		if(SUPER_PROFILE.nco == '1' && data_for_build.nco_acceptance == '0' && data_for_build.nco_id == '0' ){
+			jQuery.each(data_for_build.nco_list, function(i, one_nko) {
+				if( SUPER_PROFILE.id == one_nko.user_id ){
+					creator_check_accept = 1;
+				} 
+	    	});
+	    	if(creator_check_accept == 0){
+	    		jQuery.each(data_for_build.nco_list, function(i, one_nko) {
+					if( data_for_build.nco_id == one_nko.id){
+						nco_accept_button = '<div class="nko-btn">\
+		                    <a class="ui-btn ui-corner-all ui-shadow" onclick = "NCO_OBJECT.offer_accept_nco(2,' + data_for_build.id + '\'#program-page\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.accept_nco[CURRENT_LANG] + '</a>\
+		                </div>';
+					} 
+		    	});   		
+	    	}
+		}
 		var ui_donate_panel = '';
 		if(data_for_build.status == 0){
 			if(flag_selected == 1){
-	    		var ui_donate_panel = '<div class="ui-grid-a">\
+	    		ui_donate_panel = '<div class="ui-grid-a">\
 				                        <div class="ui-block-a">\
 				                            <div>\
 				                                <label>' + LOCALE_ARRAY_ADDITIONAL.choose_personal_fund[CURRENT_LANG] + '</label><select name="pif">\
@@ -3280,7 +3493,7 @@ var PROGRAMS = {
 			    <div role="main" class="ui-content">\
 			        <div id = "program-item" class="program-item">\
 			        <div class="img">\
-		                <img width="100%" src="http://' + data_for_build.img + '" />\
+		                <img width="100%" src="' + mainURL + data_for_build.img + '" />\
 		            </div>\
 		            <div class="program-item-inner">\
 		                <div class="stars-wrap">\
@@ -3312,6 +3525,7 @@ var PROGRAMS = {
 		                </div>\
 		                ' + nco_button + '\
 		                ' + nco_create_button + '\
+		                ' + nco_accept_button + '\
 		                <div class="desc">\
 		                    <div class="text">\
 		                        ' + data_for_build.description + '\
@@ -3328,7 +3542,7 @@ var PROGRAMS = {
 		                    <div class="social-wrap">\
 		                        <div class="ui-grid-b">\
 		                            <div class="ui-block-a">\
-		                                <a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href)  + '&title=' + encodeURIComponent(data_for_build.title) + '&image=' + 'http://' + data_for_build.img + '"></a>\
+		                                <a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href)  + '&title=' + encodeURIComponent(data_for_build.title) + '&image=' + mainURL + data_for_build.img + '"></a>\
 		                            </div>\
 		                            <div class="ui-block-b">\
 		                                <a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href)  + '&t=' + encodeURIComponent(data_for_build.title) + '"></a>\
@@ -3708,6 +3922,7 @@ var REQUESTS = {
 			$('#requests-page #create_link').attr('style','display: block');
 			$('#requests-page #menu_link').attr('style', 'display:none');
 			$('#requests-page #my_activities_link').attr('style', 'display:block');
+			PIF.get_pif_array(true);
 		}else{
 			var url = mainURL + '/request.php';
 		}
@@ -3993,7 +4208,7 @@ var REQUESTS = {
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + ' fund-raising">\
 					                <a onclick = "$.mobile.navigate(\'#request-page?request=' + one_voting.id + '\')" href="#">\
 					                    <div class="img">\
-					                        <img src="http://' + one_voting.img + '" />\
+					                        <img src="' + mainURL + one_voting.img + '" />\
 					                    </div>\
 					                    <div class="info">\
 					                        <div class="title">\
@@ -4029,7 +4244,7 @@ var REQUESTS = {
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + ' request-completed">\
 				                <a onclick = "$.mobile.navigate(\'#request-page?request=' + one_voting.id + '\')" href="#">\
 				                    <div class="img">\
-				                        <img src="http://' + one_voting.img + '" />\
+				                        <img src="' + mainURL + one_voting.img + '" />\
 				                    </div>\
 				                    <div class="info">\
 				                        <div class="title">\
@@ -4065,7 +4280,7 @@ var REQUESTS = {
 		}
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + ' voting-canceled" style = "cursor: pointer" onclick = "VOTINGS.switch_page_for_build(' + one_voting.id + ', 0)">\
 				                <div class="img">\
-			                        <img src="http://' + one_voting.img + '" />\
+			                        <img src="' + mainURL + one_voting.img + '" />\
 			                    </div>\
 				                <div class="info">\
 				                    <div class="title">\
@@ -4194,15 +4409,43 @@ var REQUESTS = {
 			var nco_button = '';
 		}
 		var nco_create_button = '';
-		/*if(SUPER_PROFILE.id == data_for_build.creator_id && data_for_build.nco_acceptance == '0' ){
-			if( data_for_build.nco_list.length == 0 || ( data_for_build.nco_list.length > 0 && nco_create_flag == 0 ) ){
+		var creator_check = 0;
+		if(SUPER_PROFILE.nco == '1' && data_for_build.nco_acceptance == '0' && data_for_build.nco_id == '0' ){
+			if( data_for_build.nco_list.length == 0 ){
 				nco_create_button = '<div class="nko-btn">\
-			                    <a class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate(\'#nko-page?project_proposition=' + data_for_build.id + '\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.create_nco[CURRENT_LANG] + '</a>\
+			                    <a class="ui-btn ui-corner-all ui-shadow" onclick = "NCO_OBJECT.offer_accept_nco(5,' + data_for_build.id + ',\'#request-page\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.create_nco[CURRENT_LANG] + '</a>\
 			                </div>';
+			}else{
+				jQuery.each(data_for_build.nco_list, function(i, one_nko) {
+					if( SUPER_PROFILE.id == one_nko.user_id ){
+						creator_check = 1;
+					} 
+		    	});
+		    	if(creator_check == 0){
+		    		nco_create_button = '<div class="nko-btn">\
+			                    <a class="ui-btn ui-corner-all ui-shadow" onclick = "NCO_OBJECT.offer_accept_nco(5,' + data_for_build.id + '\'#request-page\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.create_nco[CURRENT_LANG] + '</a>\
+			                </div>';
+		    	}
 			}
-		}else{
-			nco_create_button = '';
-		}*/
+		}
+		var nco_accept_button = '';
+		var creator_check_accept = 0;
+		if(SUPER_PROFILE.nco == '1' && data_for_build.nco_acceptance == '0' && data_for_build.nco_id == '0' ){
+			jQuery.each(data_for_build.nco_list, function(i, one_nko) {
+				if( SUPER_PROFILE.id == one_nko.user_id ){
+					creator_check_accept = 1;
+				} 
+	    	});
+	    	if(creator_check_accept == 0){
+	    		jQuery.each(data_for_build.nco_list, function(i, one_nko) {
+					if( data_for_build.nco_id == one_nko.id){
+						nco_accept_button = '<div class="nko-btn">\
+		                    <a class="ui-btn ui-corner-all ui-shadow" onclick = "NCO_OBJECT.offer_accept_nco(5,' + data_for_build.id + '\'#request-page\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.accept_nco[CURRENT_LANG] + '</a>\
+		                </div>';
+					} 
+		    	});   		
+	    	}
+		}
 		var ui_donate_panel = '';
 		if(data_for_build.status == 0){
 			if(flag_selected == 1){
@@ -4276,7 +4519,7 @@ var REQUESTS = {
 			    <div role="main" class="ui-content">\
 			        <div id = "request-item" class="request-item">\
 			        <div class="img">\
-		                <img width="100%" src="http://' + data_for_build.img + '" />\
+		                <img width="100%" src="' + mainURL + data_for_build.img + '" />\
 		            </div>\
 		            <div class="request-item-inner">\
 		                <div class="stars-wrap">\
@@ -4327,7 +4570,7 @@ var REQUESTS = {
 		                    <div class="social-wrap">\
 		                        <div class="ui-grid-b">\
 		                            <div class="ui-block-a">\
-		                                <a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href)  + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + 'http://' + data_for_build.img + '"></a>\
+		                                <a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href)  + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
 		                            </div>\
 		                            <div class="ui-block-b">\
 		                                <a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href)  + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
@@ -5242,7 +5485,7 @@ var WEIGHTED_VOTINGS = {
 		}
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + ' voting-supporters" style = "cursor: pointer" onclick = "WEIGHTED_VOTINGS.switch_page_for_build(' + one_voting.id + ', 0)">\
 				                <div class="img">\
-				                    <img src="http://' + one_voting.img + '" />\
+				                    <img src="' + mainURL + one_voting.img + '" />\
 				                </div>\
 				                <div class="info">\
 				                     <div class="title">\
@@ -5265,7 +5508,7 @@ var WEIGHTED_VOTINGS = {
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + '" style = "cursor: pointer" onclick = "WEIGHTED_VOTINGS.switch_page_for_build(' + one_voting.id + ', 0)">\
 				                <a href="#">\
 				                    <div class="img">\
-				                        <img src="http://' + one_voting.img + '" />\
+				                        <img src="' + mainURL + one_voting.img + '" />\
 				                    </div>\
 				                    <div class="info">\
 				                        <div class="title">\
@@ -5297,7 +5540,7 @@ var WEIGHTED_VOTINGS = {
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + ' voting-completed" style = "cursor: pointer" onclick = "WEIGHTED_VOTINGS.switch_page_for_build(' + one_voting.id + ', 0)">\
 				                <a href="#">\
 				                    <div class="img">\
-				                        <img src="http://' + one_voting.img + '" />\
+				                        <img src="' + mainURL + one_voting.img + '" />\
 				                    </div>\
 				                    <div class="info">\
 				                        <div class="title">\
@@ -5328,7 +5571,7 @@ var WEIGHTED_VOTINGS = {
 		}
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + ' voting-canceled" style = "cursor: pointer" onclick = "WEIGHTED_VOTINGS.switch_page_for_build(' + one_voting.id + ', 0)">\
 				                <div class="img">\
-			                        <img src="http://' + one_voting.img + '" />\
+			                        <img src="' + mainURL + one_voting.img + '" />\
 			                    </div>\
 				                <div class="info">\
 				                    <div class="title">\
@@ -5418,7 +5661,7 @@ var WEIGHTED_VOTINGS = {
 							    <div role="main" class="ui-content">\
 							        <div class="vote-item">\
 							            <div class="img">\
-							                <img width="100%" src="http://' + data_for_build.img + '" />\
+							                <img width="100%" src="' + mainURL + data_for_build.img + '" />\
 							            </div>\
 							            <div class="vote-item-inner">\
 							                <div class="stars-wrap">' + stars_ui + 
@@ -5446,7 +5689,7 @@ var WEIGHTED_VOTINGS = {
 							                    <div class="social-wrap">\
 							                        <div class="ui-grid-b">\
 							                            <div class="ui-block-a">\
-							                                <a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href)  + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + 'http://' + data_for_build.img + '"></a>\
+							                                <a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href)  + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
 							                            </div>\
 							                            <div class="ui-block-b">\
 							                                <a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href)  + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
@@ -5616,7 +5859,7 @@ var WEIGHTED_VOTINGS = {
 						    <div role="main" class="ui-content">\
 						        <div class="vote-item">\
 						            <div class="img">\
-						                <img width="100%" src="http://' + data_for_build.img + '" />\
+						                <img width="100%" src="' + mainURL + data_for_build.img + '" />\
 						            </div>\
 						            <div class="vote-item-inner">\
 						                <div class="stars-wrap">' + stars_ui +						                    
@@ -5643,7 +5886,7 @@ var WEIGHTED_VOTINGS = {
 						                    <div class="social-wrap">\
 						                        <div class="ui-grid-b">\
 						                            <div class="ui-block-a">\
-						                                <a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href)  + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + 'http://' + data_for_build.img + '"></a>\
+						                                <a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href)  + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
 						                            </div>\
 						                            <div class="ui-block-b">\
 						                                <a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href)  + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
@@ -5976,7 +6219,7 @@ var WEIGHTED_VOTINGS = {
 	    jQuery.each(self.voters_list, function(i, one_voter) {
 	    	var item = '<div class="item">\
 		                    <div class="avatar">\
-		                        <img src="http://' + one_voter.avatar + '" />\
+		                        <img src="' + mainURL + one_voter.avatar + '" />\
 		                    </div>\
 		                    <div class="id">\
 		                        ID:' + one_voter.user_id + '\
@@ -6128,7 +6371,7 @@ var TRUST_LIST = {
 		jQuery.each(build_array, function(i, one_trust) {
 			elements_string += '<div class="item ui-corner-all">\
 					                <div class="avatar">\
-					                    <img src="http://' + one_trust.img + '" />\
+					                    <img src="' + mainURL + one_trust.img + '" />\
 					                </div>\
 					                <div class="osmd-list">';
 			var type_sphere = '';
@@ -6896,11 +7139,11 @@ var NEWS = {
 			}
 			if(one_news.img.indexOf('svg') > -1){
 				var image_news = '<div class="img">\
-					                	<object type="image/svg+xml" data="http://' + one_news.img + '">Your browser does not support SVG</object>\
+					                	<object type="image/svg+xml" data="' + mainURL + one_news.img + '">Your browser does not support SVG</object>\
 					                </div>';
 			}else{
 				var image_news = '<div class="img">\
-					                	<img src="http://' + one_news.img + '"/>\
+					                	<img src="' + mainURL + one_news.img + '"/>\
 					                </div>';
 			}
 			elements_string += '<div ' + onclick_event + ' class="item ui-corner-all ' + icon_news + '">\
@@ -6923,6 +7166,156 @@ var NEWS = {
     	}else{
     		$('#news-page #news_list').html(elements_string);
     	}
+	},
+}; 
+
+
+var TASKS = {
+	tasks_list: [],
+	tasks_last_item: 10,
+	init: function(){
+		var self = this;
+		$.mobile.loading( "show", {  theme: "z"	});
+		$.ajax({
+		  url: mainURL + '/tasks.php',
+		  type: "GET",
+		  xhrFields: {
+	       withCredentials: true
+	      },
+          crossDomain: true,
+		  complete: function( response ){
+	  		console.log(response);
+	  		var query_array = JSON.parse( response.responseText );
+	  		if(query_array.length > 0){
+	  			self.tasks_list = self.tasks_list.concat(query_array);
+	  			self.build_elements(true, query_array);
+	  			self.tasks_last_item += query_array.length;
+	  		}
+	  		console.log(self.tasks_list);
+		  },
+		});
+ 		$.mobile.loading( "hide" );	
+
+	},
+	reinit: function(){
+		var self = this;
+		$.mobile.loading( "show", {  theme: "z"	});
+		$.ajax({
+		  url: mainURL + '/tasks.php?ls=' + self.tasks_last_item,
+		  type: "GET",
+		  xhrFields: {
+	       withCredentials: true
+	      },
+          crossDomain: true,
+		  complete: function( response ){
+	  		console.log(response);
+	  		var query_array = JSON.parse( response.responseText );
+	  		if(query_array.length > 0){
+	  			self.tasks_list = self.tasks_list.concat(query_array);
+	  			self.build_elements(true, query_array);
+	  			self.tasks_last_item += query_array.length;
+	  		}	  		
+	  		$.mobile.loading( "hide" );	
+		  },
+		});
+	},
+	build_elements: function(reinit, reinit_array){
+		var self = this;
+		var elements_string = '';
+		if(reinit){
+			var build_array = reinit_array;
+		}else{
+			var build_array = self.tasks_list;
+		}
+
+
+		jQuery.each(build_array, function(i, one_tasks) {
+			var l_task = '';
+			if(CURRENT_LANG == 'ua') {
+				l_task = one_tasks.ua;
+			}else if (CURRENT_LANG == 'ru') {
+				l_task = one_tasks.ru;
+			}else{
+				l_task = one_tasks.en;
+			}
+
+			elements_string += '<div class="item ui-corner-all task-icon">' + l_task + '<div class="check-' + one_tasks.chk + '"></div></div>';
+    	});
+   		$('#my-tasks-page #tasklist').html(elements_string);
+	},
+}; 
+
+var MAP = {
+	marks_list: [],
+	init: function(){
+		var self = this;
+		$.mobile.loading( "show", {  theme: "z"	});
+		$.ajax({
+		  url: mainURL + '/map_marks.php',
+		  type: "GET",
+		  xhrFields: {
+	       withCredentials: true
+	      },
+          crossDomain: true,
+		  complete: function( response ){
+	  		console.log(response);
+	  		var query_array = JSON.parse( response.responseText );
+	  		if(query_array.length > 0){
+	  			self.markss_list = self.marks_list.concat(query_array);
+	  			self.build_elements(true, query_array);
+	  			self.marks_last_item += query_array.length;
+	  		}
+	  		console.log(self.marks_list);
+		  },
+		});
+		$.mobile.loading( "hide" );
+	},
+	reinit: function(){
+		var self = this;
+		$.mobile.loading( "show", {  theme: "z"	});
+		$.ajax({
+		  url: mainURL + '/map_marks.php',
+		  type: "GET",
+		  xhrFields: {
+	       withCredentials: true
+	      },
+          crossDomain: true,
+		  complete: function( response ){
+	  		console.log(response);
+	  		var query_array = JSON.parse( response.responseText );
+	  		if(query_array.length > 0){
+	  			self.markss_list = self.marks_list.concat(query_array);
+	  			self.build_elements(true, query_array);
+	  			self.marks_last_item += query_array.length;
+	  		}
+	  		console.log(self.marks_list);
+		  },
+		});
+		$.mobile.loading( "hide" );
+	},
+	build_elements: function(reinit, reinit_array){
+		var self = this;
+		var elements_string = '';
+		if(reinit){
+			var build_array = reinit_array;
+		}else{
+			var build_array = self.marks_list;
+		}
+
+		var self = this;
+		
+		var map = L.map('map').setView([50.450691, 30.522470], 5);
+
+		L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a rel="nofollow" href="http://osm.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+
+		jQuery.each(build_array, function(i, one_mark) {
+
+			L.marker([one_mark.lat, one_mark.lng]).addTo(map);
+
+    	});
+
+    	$('.leaflet-container').show();
+
 	},
 }; 
 
@@ -7380,7 +7773,7 @@ var VOTINGS = {
 		}
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + ' voting-supporters" style = "cursor: pointer" onclick = "VOTINGS.switch_page_for_build(' + one_voting.id + ', 0)">\
 				                <div class="img">\
-				                    <img src="http://' + one_voting.img + '" />\
+				                    <img src="' + mainURL + one_voting.img + '" />\
 				                </div>\
 				                <div class="info">\
 				                     <div class="title">\
@@ -7406,7 +7799,7 @@ var VOTINGS = {
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + '" style = "cursor: pointer" onclick = "VOTINGS.switch_page_for_build(' + one_voting.id + ', 0)">\
 				                <a href="#">\
 				                    <div class="img">\
-				                        <img src="http://' + one_voting.img + '" />\
+				                        <img src="' + mainURL + one_voting.img + '" />\
 				                    </div>\
 				                    <div class="info">\
 				                        <div class="title">\
@@ -7441,7 +7834,7 @@ var VOTINGS = {
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + ' voting-completed" style = "cursor: pointer" onclick = "VOTINGS.switch_page_for_build(' + one_voting.id + ', 0)">\
 				                <a href="#">\
 				                    <div class="img">\
-				                        <img src="http://' + one_voting.img + '" />\
+				                        <img src="' + mainURL + one_voting.img + '" />\
 				                    </div>\
 				                    <div class="info">\
 				                        <div class="title">\
@@ -7475,7 +7868,7 @@ var VOTINGS = {
 		}
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + ' voting-canceled" style = "cursor: pointer" onclick = "VOTINGS.switch_page_for_build(' + one_voting.id + ', 0)">\
 				                <div class="img">\
-			                        <img src="http://' + one_voting.img + '" />\
+			                        <img src="' + mainURL + one_voting.img + '" />\
 			                    </div>\
 				                <div class="info">\
 				                    <div class="title">\
@@ -7580,7 +7973,7 @@ var VOTINGS = {
 							    <div role="main" class="ui-content">\
 							        <div class="vote-item">\
 							            <div class="img">\
-							                <img width="100%" src="http://' + data_for_build.img + '" />\
+							                <img width="100%" src="' + mainURL + data_for_build.img + '" />\
 							            </div>\
 							            <div class="vote-item-inner">\
 							                <div class="stars-wrap">' + stars_ui + 
@@ -7608,7 +8001,7 @@ var VOTINGS = {
 							                    <div class="social-wrap">\
 							                        <div class="ui-grid-b">\
 							                            <div class="ui-block-a">\
-							                                <a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href)  + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + 'http://' + data_for_build.img + '"></a>\
+							                                <a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href)  + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
 							                            </div>\
 							                            <div class="ui-block-b">\
 							                                <a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href)  + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
@@ -7810,7 +8203,7 @@ var VOTINGS = {
 						    <div role="main" class="ui-content">\
 						        <div class="vote-item">\
 						            <div class="img">\
-						                <img width="100%" src="http://' + data_for_build.img + '" />\
+						                <img width="100%" src="' + mainURL + data_for_build.img + '" />\
 						            </div>\
 						            <div class="vote-item-inner">\
 						                <div class="stars-wrap">' + stars_ui +						                    
@@ -7839,7 +8232,7 @@ var VOTINGS = {
 						                    <div class="social-wrap">\
 						                        <div class="ui-grid-b">\
 						                            <div class="ui-block-a">\
-						                                <a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href)  + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + 'http://' + data_for_build.img + '"></a>\
+						                                <a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href)  + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
 						                            </div>\
 						                            <div class="ui-block-b">\
 						                                <a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href)  + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
@@ -8322,7 +8715,7 @@ var VOTINGS = {
 	    jQuery.each(self.voters_list, function(i, one_voter) {
 	    	var item = '<div class="item">\
 		                    <div class="avatar">\
-		                        <img src="http://' + one_voter.avatar + '" />\
+		                        <img src="' + mainURL + one_voter.avatar + '" />\
 		                    </div>\
 		                    <div class="id">\
 		                        ID:' + one_voter.id + '\
@@ -8609,7 +9002,7 @@ var MY_VOTINGS = {
 		}
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + ' voting-supporters" style = "cursor: pointer" onclick = "MY_VOTINGS.switch_page_for_build(' + one_voting.id + ', 0)">\
 				                <div class="img">\
-				                    <img src="http://' + one_voting.img + '" />\
+				                    <img src="' + mainURL + one_voting.img + '" />\
 				                </div>\
 				                <div class="info">\
 				                     <div class="title">\
@@ -8635,7 +9028,7 @@ var MY_VOTINGS = {
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + '" style = "cursor: pointer" onclick = "MY_VOTINGS.switch_page_for_build(' + one_voting.id + ', 0)">\
 				                <a href="#">\
 				                    <div class="img">\
-				                        <img src="http://' + one_voting.img + '" />\
+				                        <img src="' + mainURL + one_voting.img + '" />\
 				                    </div>\
 				                    <div class="info">\
 				                        <div class="title">\
@@ -8670,7 +9063,7 @@ var MY_VOTINGS = {
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + ' voting-completed" style = "cursor: pointer" onclick = "MY_VOTINGS.switch_page_for_build(' + one_voting.id + ', 0)">\
 				                <a href="#">\
 				                    <div class="img">\
-				                        <img src="http://' + one_voting.img + '" />\
+				                        <img src="' + mainURL + one_voting.img + '" />\
 				                    </div>\
 				                    <div class="info">\
 				                        <div class="title">\
@@ -8704,7 +9097,7 @@ var MY_VOTINGS = {
 		}
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + ' voting-canceled" style = "cursor: pointer" onclick = "MY_VOTINGS.switch_page_for_build(' + one_voting.id + ', 0)">\
 				                <div class="img">\
-			                        <img src="http://' + one_voting.img + '" />\
+			                        <img src="' + mainURL + one_voting.img + '" />\
 			                    </div>\
 				                <div class="info">\
 				                    <div class="title">\
@@ -8808,7 +9201,7 @@ var MY_VOTINGS = {
 							    <div role="main" class="ui-content">\
 							        <div class="vote-item">\
 							            <div class="img">\
-							                <img width="100%" src="http://' + data_for_build.img + '" />\
+							                <img width="100%" src="' + mainURL + data_for_build.img + '" />\
 							            </div>\
 							            <div class="vote-item-inner">\
 							                <div class="stars-wrap">' + stars_ui + 
@@ -8836,7 +9229,7 @@ var MY_VOTINGS = {
 							                    <div class="social-wrap">\
 							                        <div class="ui-grid-b">\
 							                            <div class="ui-block-a">\
-							                                <a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href).replace('my-', '')  + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + 'http://' + data_for_build.img + '"></a>\
+							                                <a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href).replace('my-', '')  + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
 							                            </div>\
 							                            <div class="ui-block-b">\
 							                                <a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href).replace('my-', '')  + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
@@ -9032,7 +9425,7 @@ var MY_VOTINGS = {
 						    <div role="main" class="ui-content">\
 						        <div class="vote-item">\
 						            <div class="img">\
-						                <img width="100%" src="http://' + data_for_build.img + '" />\
+						                <img width="100%" src="' + mainURL + data_for_build.img + '" />\
 						            </div>\
 						            <div class="vote-item-inner">\
 						                <div class="stars-wrap">' + stars_ui + 
@@ -9061,7 +9454,7 @@ var MY_VOTINGS = {
 						                    <div class="social-wrap">\
 						                        <div class="ui-grid-b">\
 						                            <div class="ui-block-a">\
-						                                <a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href)  + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + 'http://' + data_for_build.img + '"></a>\
+						                                <a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href)  + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
 						                            </div>\
 						                            <div class="ui-block-b">\
 						                                <a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href)  + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
@@ -9523,7 +9916,7 @@ var MY_VOTINGS = {
 	    jQuery.each(self.voters_list, function(i, one_voter) {
 	    	var item = '<div class="item">\
 		                    <div class="avatar">\
-		                        <img src="http://' + one_voter.avatar + '" />\
+		                        <img src="' + mainURL + one_voter.avatar + '" />\
 		                    </div>\
 		                    <div class="id">\
 		                        ID:' + one_voter.id + '\
@@ -9610,7 +10003,7 @@ var ADRESS = {
 				return arr.sort(levSort)[0];
 			},
 			
-			gpsSet: function(page,country,state,county,city,street,house){
+			gpsSet: function(page,country,state,county,city,street,house, lat, lng){
 				var self = this;
 				if(country){
 					var name = "country";
@@ -9705,6 +10098,8 @@ var ADRESS = {
 					      if (lat == null) {
 					        alert(LOCALE_ARRAY_ADDITIONAL.gps_not_activated[CURRENT_LANG]);
 					      }else{
+					      	g_lat = lat;
+					      	g_lng = lng;
 					      	console.log(lat);
 					      	console.log(lng);
 					      	var geocoder = new google.maps.Geocoder();
@@ -9722,7 +10117,7 @@ var ADRESS = {
 							         //console.log('build: ' + results[0].address_components[0].long_name);
 							         var street = self.getGPSByType(address,"route");
 							         var build = self.getGPSByType(address,"street_number");
-							         ADRESS.gpsSet(page, country,state,county,city,street,build);
+							         ADRESS.gpsSet(page, country,state,county,city,street,build, lat, lng);
 							       }
 
 							       else{
@@ -9772,7 +10167,7 @@ var ADRESS = {
 				  											+ '&bld=' + $('#address-item-' + page + ' [name=house]').val()
 				  											+ '&oth=' + $('#address-item-' + page + ' [name=comment]').val()
 				  											+ '&zip=' + $('#address-item-' + page + ' [name=index]').val()
-				  											+ '&reg_adr=' + reg_adr,
+				  											+ '&reg_adr=' + reg_adr + '&lat=' + g_lat + '&lng=' + g_lng,
 				  type: "GET",
 				  xhrFields: {
 			       withCredentials: true
@@ -10546,6 +10941,7 @@ function change_nan(number){
 }
 
 console.log(window.location.toString());
+
 (function($){
     $(function(){
     	if(location.href.search(/m=[\w&id=]+/i) > -1){
@@ -10650,7 +11046,6 @@ console.log(window.location.toString());
 
 
 		function auth(turn){
-			
 			if(turn){
 				PROFILE.auth = true;
 				SUPER_PROFILE.auth = true;
@@ -10669,7 +11064,8 @@ console.log(window.location.toString());
 				set_unset_links(0, '.menu-icon-options');
 				set_unset_links(0, '[data-link=#trust-list]');
 			}
-			
+
+	
 			
 		}
 		$("#logout").click(function(){
@@ -11162,8 +11558,10 @@ console.log(window.location.toString());
 			            that.nco = that.profile_obj.nco;
 			            that.payment = that.profile_obj.payment;
    			            that.bankid = that.profile_obj.bankid;
+
 			            SUPER_PROFILE.gender = that.gender;
 			            SUPER_PROFILE.id = that.profile_obj.id;
+			            SUPER_PROFILE.nco = that.profile_obj.nco;
 			            for (var i in SOCIAL){
 							if(typeof SOCIAL[i] != "object") continue;
 							var soc = SOCIAL[i];
@@ -11182,7 +11580,6 @@ console.log(window.location.toString());
 			            that.updateMenu();
 			            SOCIAL.init();
 		            }else{
-		            	console.log('nothing');
 		            	$.ajax({
 							url: mainURL + "/profile.php",
 							type:"GET",
@@ -11204,6 +11601,7 @@ console.log(window.location.toString());
 					            that.osmd = that.profile_obj.osmd;
 					            that.nco = that.profile_obj.nco;
 					            that.payment = that.profile_obj.payment;
+
 					            SUPER_PROFILE.gender = that.gender;
 					            SUPER_PROFILE.id = that.profile_obj.id;
 					            for (var i in SOCIAL){
@@ -11243,7 +11641,7 @@ console.log(window.location.toString());
 			        	self.auth = false;
 			        	$("#login-form [name=login]").val("");
 			        	$("#login-form [name=pass]").val("");
-			        	$('#menu_avatar #avatar').attr('src', '');
+			        	$('#menu_avatar').html('');
 			            self.updateMenu();
 			            PROFILE.profile_obj = false;
 			            PIF.pif_array = [];
@@ -11256,8 +11654,8 @@ console.log(window.location.toString());
 	    				$('#profile-page [name=fn]').val(this.first_name);
 	    				$('#profile-page [name=ln]').val(this.last_name);
 	    				$('#profile-page .login > span:eq(1)').html(this.login);
-	    				$('#profile-page #avatar').attr('src', 'http://' + this.avatar);
-	    				$('#menu_avatar').html('<img id="avatar" src="http://' + this.avatar + '">');
+	    				$('#profile-page #avatar').attr('src', mainURL + this.avatar);
+	    				$('#menu_avatar').html('<img id="avatar" src="' + mainURL + this.avatar + '">');
 	    				switch(this.gender){
 	    					case "0":
 	    						$('#profile-page #male').attr('class', 'ui-btn ui-btn-inherit ui-first-child ui-btn-active ui-radio-on');
@@ -11297,11 +11695,24 @@ console.log(window.location.toString());
 	    				} else {
 	    					ribbons += '<a href="#wallet"><img style = "margin: 3px; filter: alpha(Opacity=30); opacity: 0.3;" class="ui-corner-all" src="images/trust-icon-wallet.png"></a>';
 	    				}
-	    				if(this.bankid != "0"){
-	    					ribbons += '<img style = "margin: 3px;" class="ui-corner-all" src="images/trust-icon-password.png">';
-	    				} else {
-    						ribbons += '<a href="#bankid"><img style = "margin: 3px; filter: alpha(Opacity=30); opacity: 0.3;" class="ui-corner-all" src="images/trust-icon-password.png"></a>';
+						if(this.bankid != "0"){
+							ribbons += '<img style = "margin: 3px;" class="ui-corner-all" src="images/trust-icon-password.png">';
+						} else {
+							ribbons += '<a href="#bankid"><img style = "margin: 3px; filter: alpha(Opacity=30); opacity: 0.3;" class="ui-corner-all" src="images/trust-icon-password.png"></a>';
 	    				}
+
+/*						if(this.fb != "0"){
+							ribbons += '<img class="ui-corner-all ribbon" src="images/icon-fb.png">';
+						} else {
+							ribbons += '<a href="sn/fb.php"><img style = "filter: alpha(Opacity=30);" class="ui-corner-all ribbon" src="images/icon-fb.png"></a>';
+	    				}
+
+						if(this.gp != "0"){
+							ribbons += '<img class="ui-corner-all ribbon" src="images/icon-gp.png">';
+						} else {
+							ribbons += '<a href="sn/fb.php"><img style = "filter: alpha(Opacity=30);" class="ui-corner-all ribbon" src="images/icon-gp.png"></a>';
+	    				}*/
+
 
 	    				$('#profile-page #ribbons').html( ribbons );
 	    				$("#left-panel").addClass("auth-panel");
@@ -11324,6 +11735,7 @@ console.log(window.location.toString());
 
 
 (function(){
+
 
     var matcher = /\s*(?:((?:(?:\\\.|[^.,])+\.?)+)\s*([!~><=]=|[><])\s*("|')?((?:\\\3|.)*?)\3|(.+?))\s*(?:,|$)/g;
 
