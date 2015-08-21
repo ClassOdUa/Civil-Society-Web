@@ -1290,24 +1290,24 @@ label.ui-btn {
       margin-left: 25%; } }
 
 
-@media all and (min-width: 800px) {
+@media all and (min-width: 900px) {
   .left_col {
-    width: 780px;
+    width: 35%;
     float: left;
-    margin-right: 20px;
     display: block;
   }
   .right_col {
-    width: 35%;
-    height: 35%;
+    width: 60%;
+    height: 80%;
     float: right;
     display: block;
   }
 }
 
-@media all and (max-width: 799px) {
+@media all and (max-width: 599px) {
   .left_col {
     width: 100%;
+    float: none;
   }
   .right_col {
     display: none;
