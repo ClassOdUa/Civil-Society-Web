@@ -541,9 +541,7 @@ label.ui-btn {
     font-weight: normal;
     outline: none; }
 
-#map {
-  width: 90%;
-}
+
 #left-panel {
   background: #ffffff; }
   #left-panel.ui-panel-open {
@@ -1293,13 +1291,13 @@ label.ui-btn {
 
 
 @media all and (min-width: 800px) {
-  #login {
+  .left_col {
     width: 780px;
     float: left;
     margin-right: 20px;
     display: block;
   }
-  #map {
+  .right_col {
     width: 35%;
     height: 35%;
     float: right;
@@ -1308,10 +1306,10 @@ label.ui-btn {
 }
 
 @media all and (max-width: 799px) {
-  #login {
+  .left_col {
     width: 100%;
   }
-  #map {
+  .right_col {
     display: none;
   }
 
