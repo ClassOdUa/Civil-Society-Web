@@ -94,23 +94,23 @@
                     </div>
                     <div class="ui-grid-b">
                         <div class="ui-block-a">
-                            <a class="vk" onclick = "location.href = 'http://gurtom.mobi/sn/vk.php'" href=""></a>
+                            <a class="gp" onclick = "location.href = 'http://gurtom.mobi/sn/gp.php'" href=""></a>
                         </div>
                         <div class="ui-block-b">
                             <a class="fb" onclick = "location.href = 'http://gurtom.mobi/sn/fb.php'" href=""></a>
                         </div>
                         <div class="ui-block-c">
-                            <a class="tw" onclick = "location.href = 'http://gurtom.mobi/sn/tw.php'" href=""></a>
-                        </div>
-                        <div class="ui-block-a">
-                            <a class="gp" onclick = "location.href = 'http://gurtom.mobi/sn/gp.php'" href=""></a>
-                        </div>
-                        <div class="ui-block-b">
                             <a class="in" onclick = "location.href = 'http://gurtom.mobi/sn/in.php'" href=""></a>
                         </div>
-                        <div class="ui-block-c">
+                        <!-- <div class="ui-block-a">
                             <a class="ok" onclick = "location.href = 'http://gurtom.mobi/sn/ok.php'" href=""></a>
                         </div>
+                        <div class="ui-block-b">
+                            <a class="tw" onclick = "location.href = 'http://gurtom.mobi/sn/tw.php'" href=""></a>
+                        </div>
+                        <div class="ui-block-c">
+                            <a class="vk" onclick = "location.href = 'http://gurtom.mobi/sn/vk.php'" href=""></a>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -398,27 +398,28 @@
             </div>
             <div class="ui-grid-b">
                 <div class="ui-block-a">
-                    <a class="vk" data-index = "5" href="#"><span>Deactivate</span></a>
+                    <a class="gp active" data-index = "2" href="#"><span>Activate</span></a>
                 </div>
                 <div class="ui-block-b">
                     <a class="fb active" data-index = "1" href="#"><span>Activate</span></a>
                 </div>
-                <div class="ui-block-c">
-                    <a class="tw active" data-index = "3" href="#"><span>Activate</span></a>
-                </div>
-                <div class="ui-block-a">
-                    <a class="gp active" data-index = "2" href="#"><span>Activate</span></a>
-                </div>
                 <div class="ui-block-b">
                     <a class="in active" data-index = "4" href="#"><span>Activate</span></a>
+                </div>
+<!--                 <div class="ui-block-a">
+                    <a class="vk" data-index = "5" href="#"><span>Deactivate</span></a>
+                </div>
+                <div class="ui-block-c">
+                    <a class="tw active" data-index = "3" href="#"><span>Activate</span></a>
                 </div>
                 <div class="ui-block-c">
                     <a class="ok active" data-index = "6" href="#"><span>Activate</span></a>
                 </div>
+ -->
             </div>
         </div>
-        <div id = "ribbons">
-        </div>
+        <div id = "ribbons_title"></div>
+        <div id = "ribbons"></div>
         <form style = "display:none" id = "picture_form" action = "http://gurtom.mobi/i/up.php" method="post" enctype="multipart/form-data">
             Select image to upload:
             <input type="hidden" name="MAX_FILE_SIZE" value="3000000">
@@ -2687,7 +2688,8 @@
         <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#profile-page')" href="#profile-page">Back</a>
     </div>
     <div role="main" class="ui-content">
-        <p>Форма авторизации</p>
+        <div id="auth_title"></div>
+        <div id="auth_wallet"></div>
     </div>
 </div>
 
@@ -2697,7 +2699,7 @@
         <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#profile-page')" href="#profile-page">Back</a>
     </div>
     <div role="main" class="ui-content">
-        <a class="ui-btn ui-btn-corner-all ui-btn-icon-right" href="/sn/bankid.php"></a>
+        <a class="ui-btn ui-btn-corner-all ui-btn-icon-right" onclick="location.href='http://gurtom.mobi/sn/bankid.php'" href="/sn/bankid.php"></a>
     </div>
 </div>
 

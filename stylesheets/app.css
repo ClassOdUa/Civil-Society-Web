@@ -1549,7 +1549,7 @@ label.ui-btn {
   #vote-page .status.green, #vote-page .nko-status.green, #vote-page-full .status.green, #vote-page-full .nko-status.green, #my-vote-page .status.green, #my-vote-page .nko-status.green, #program-page .status.green, #program-page .nko-status.green, #request-page .status.green, #request-page .nko-status.green, #project-page .status.green, #project-page .nko-status.green, #weighted-vote-page .status.green, #weighted-vote-page .nko-status.green {
     color: #268a2a; }
   #vote-page .status.yellow, #vote-page .nko-status.yellow, #vote-page-full .status.yellow, #vote-page-full .nko-status.yellow, #my-vote-page .status.yellow, #my-vote-page .nko-status.yellow, #program-page .status.yellow, #program-page .nko-status.yellow, #request-page .status.yellow, #request-page .nko-status.yellow, #project-page .status.yellow, #project-page .nko-status.yellow, #weighted-vote-page .status.yellow, #weighted-vote-page .nko-status.yellow {
-    color: #ff9000; }
+    color: white; background-color: #ff9000;}
   #vote-page .status.red, #vote-page .nko-status.red, #vote-page-full .status.red, #vote-page-full .nko-status.red, #my-vote-page .status.red, #my-vote-page .nko-status.red, #program-page .status.red, #program-page .nko-status.red, #request-page .status.red, #request-page .nko-status.red, #project-page .status.red, #project-page .nko-status.red, #weighted-vote-page .status.red, #weighted-vote-page .nko-status.red {
     color: #f44336; }
 #vote-page .nko-status, #vote-page-full .nko-status, #my-vote-page .nko-status, #program-page .nko-status, #request-page .nko-status, #project-page .nko-status, #weighted-vote-page .nko-status {
