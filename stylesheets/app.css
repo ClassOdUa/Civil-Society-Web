@@ -717,7 +717,9 @@ label.ui-btn {
   width: 60%;
   top: 2.5em !important;
   right: 2.2em !important;
-  left: auto !important; }
+  left: auto !important; 
+  position: fixed;
+}
 
 .button-fixed {
   position: fixed;
@@ -2447,7 +2449,7 @@ label.ui-btn {
   -webkit-box-shadow: none;
   box-shadow: none; }
 #balances-pif-page .yellow {
-  color: #dea10e; }
+  color: white; background-color: #dea10e; }
 #balances-pif-page .green {
   color: #77b42f; }
 #balances-pif-page .blue {

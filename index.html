@@ -293,7 +293,7 @@
                     </select>
                 </fieldset>
 
-                <fieldset class="radio-wrap" data-role="controlgroup" data-type="horizontal">
+                <fieldset class="radio-wrap gender" data-role="controlgroup" data-type="horizontal">
                     <legend>Gender</legend>
                     <div class="ui-radio">
                         <label id = 'male' class="ui-btn ui-btn-inherit ui-radio-off">Male</label><input type="radio" name="gender" value = "0" data-enhanced="true">
@@ -830,7 +830,7 @@
 <div id="spheres-address" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Spheres</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back('#profile-page')" href="#">Back</a>
     </div>
     <div role="main" class="ui-content">
         <form action="" accept-charset="UTF-8" method="post" onsubmit = "SPHERES.save_and_delete_spheres(); return false;">
@@ -846,7 +846,7 @@
 <div id="spheres-filters" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Spheres</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back('#filter-page')" href="#">Back</a>
     </div>
     <div role="main" class="ui-content">
         <form action="" accept-charset="UTF-8" method="post" onsubmit = "">
@@ -859,7 +859,7 @@
 <div id="spheres-trust-vote" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Spheres</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back('#trust-list')" href="#">Back</a>
     </div>
     <div id = "sphere_main" role="main" class="ui-content">
         <form action="" accept-charset="UTF-8" method="post" onsubmit = "SPHERES.save_and_delete_spheres(); return false;">
@@ -875,8 +875,8 @@
 <div id="programs-page" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1 id = "ui_title">Programs</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a>
-        <a id = "my_activities_link" style = "display:none" class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#programs-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back('#social-investment')" href="#">Back</a>
+        <a id = "my_activities_link" style = "display:none" class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back('#my-activities-page')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#programs-help">Ask</a>
         <div id="programs-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
@@ -888,7 +888,7 @@
     </div>
     <div class="filters-panel">
         <div class="filters-panel-inner">
-            <form action="" accept-charset="UTF-8" method="post">
+            <form action="" accept-charset="UTF-8" method="post" onsubmit="return false;">
                 <div class="ui-input-search ui-input-has-clear">
                     <input  onkeyup="PROGRAMS.filter_data()" onchange="PROGRAMS.filter_data()" id = "searched_string" type="search" name="" placeholder="Search by ID or name" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">Clear text</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />
                 </div>
@@ -990,8 +990,8 @@
 <div id="projects-page" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1 id = "ui_title">Projects</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a>
-        <a id = "my_activities_link" style = "display:none" class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#programs-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back('#social-entrepreneurship')" href="#">Back</a>
+        <a id = "my_activities_link" style = "display:none" class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back('#my-activities-page')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#programs-help">Ask</a>
         <div id="programs-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
@@ -1003,7 +1003,7 @@
     </div>
     <div class="filters-panel">
         <div class="filters-panel-inner">
-            <form action="" accept-charset="UTF-8" method="post">
+            <form action="" accept-charset="UTF-8" method="post" onsubmit="return false;">
                 <div class="ui-input-search ui-input-has-clear">
                     <input  onkeyup="PROJECTS.filter_data()" onchange="PROJECTS.filter_data()" id = "searched_string" type="search" name="" placeholder="Search by ID or name" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">Clear text</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />
                 </div>
@@ -1107,8 +1107,8 @@
 <div id="requests-page" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1 id = "ui_title">Requests</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a>
-        <a id = "my_activities_link" style = "display:none" class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#programs-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back('#social-entrepreneurship')" href="#">Back</a>
+        <a id = "my_activities_link" style = "display:none" class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back('#my-activities-page')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#programs-help">Ask</a>
         <div id="programs-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
@@ -1120,7 +1120,7 @@
     </div>
     <div class="filters-panel">
         <div class="filters-panel-inner">
-            <form action="" accept-charset="UTF-8" method="post">
+            <form action="" accept-charset="UTF-8" method="post" onsubmit="return false;">
                 <div class="ui-input-search ui-input-has-clear">
                     <input  onkeyup="REQUESTS.filter_data()" onchange="REQUESTS.filter_data()" id = "searched_string" type="search" name="" placeholder="Search by ID or name" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">Clear text</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />
                 </div>
@@ -1237,7 +1237,7 @@
     </div>
     <div class="filters-panel">
         <div class="filters-panel-inner">
-            <form action="" accept-charset="UTF-8" method="post">
+            <form action="" accept-charset="UTF-8" method="post" onsubmit="return false;">
                 <div class="ui-input-search ui-input-has-clear">
                     <input onkeyup="WEIGHTED_VOTINGS.filter_data()" onchange="WEIGHTED_VOTINGS.filter_data()" id = "searched_string" type="search" name="" placeholder="Search by ID or name" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">Clear text</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />
                 </div>
@@ -1907,7 +1907,7 @@
         </div>
         
         <div class="btn-next-page">
-            <a class="ui-btn ui-btn-icon-right icon-projects" onclick = "$.mobile.navigate('http://gurtom.mobi/#projects-page?program=0')" data-link = "http://gurtom.mobi/#projects-page?program=0" href="#">Projects on Call</a>
+            <a class="ui-btn ui-btn-icon-right icon-projects projects_on_call" onclick = "$.mobile.navigate('#projects-page?program=0')" data-link = "#projects-page?program=0" href="#">Projects on Call</a>
         </div>
         
         <div class="btn-next-page">
@@ -2139,7 +2139,7 @@
 <div id="votings-page" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Votings by spheres</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#votings-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back('#public-proposals')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#votings-help">Ask</a>
         <div id="votings-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
@@ -2151,7 +2151,7 @@
     </div>
     <div class="filters-panel">
         <div class="filters-panel-inner">
-            <form action="" accept-charset="UTF-8" method="post">
+            <form action="" accept-charset="UTF-8" method="post" onsubmit="return false;">
                 <div class="ui-input-search ui-input-has-clear">
                     <input onkeyup="VOTINGS.filter_data()" onchange="VOTINGS.filter_data()" id = "searched_string" type="search" name="" placeholder="Search by ID or name" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">Clear text</a>
                     <input type="button" value="speech" data-icon="speech" data-iconpos="notext" />
@@ -2216,7 +2216,7 @@
     </div>
     <div class="filters-panel">
         <div class="filters-panel-inner">
-            <form action="" accept-charset="UTF-8" method="post">
+            <form action="" accept-charset="UTF-8" method="post" onsubmit="return false;">
                         <div class="ui-input-search ui-input-has-clear">
                             <input onkeyup="MY_VOTINGS.filter_data()" onchange="MY_VOTINGS.filter_data()" id = "searched_string" type="search" name="" placeholder="Search by ID or name" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">Clear text</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />
                         </div>
@@ -2283,7 +2283,7 @@
         </div>
     </div>
     <div role="main" class="ui-content">
-        <form action="" accept-charset="UTF-8" method="post">
+        <form action="" accept-charset="UTF-8" method="post" onsubmit="return false;">
                 <div class="ui-input-search ui-input-has-clear">
                     <input type="search" name="" placeholder="Search" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">Clear text</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />
                 </div></form>
@@ -2297,7 +2297,7 @@
 <div id="filter-page" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Filter</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#filter-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back('#votings-page')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#filter-help">Ask</a>
         <div id="filter-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
@@ -2345,7 +2345,7 @@
 <div id="create-vote" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Create vote</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#create-vote-help">Ask</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back('#my-votings-page')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#create-vote-help">Ask</a>
         <div id="create-vote-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
                 Description
@@ -2608,7 +2608,7 @@
 <div id="spheres-create-vote" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Spheres</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back('#create-vote')" href="#">Back</a>
     </div>
     <div role="main" class="ui-content">
         <form action="" accept-charset="UTF-8" method="post" onsubmit = "">
@@ -2699,7 +2699,7 @@
         <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#profile-page')" href="#profile-page">Back</a>
     </div>
     <div role="main" class="ui-content">
-        <a class="ui-btn ui-btn-corner-all ui-btn-icon-right" onclick="location.href='http://gurtom.mobi/sn/bankid.php'" href="/sn/bankid.php"></a>
+        <a class="ui-btn ui-btn-corner-all ui-btn-icon-right" onclick="location.href='/sn/bankid.php'" href="/sn/bankid.php"></a>
     </div>
 </div>
 
@@ -2737,7 +2737,7 @@
 <div id="spheres-trust" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>Spheres</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back('#trust-list')" href="#">Back</a>
     </div>
     <div role="main" class="ui-content">
         <form action="" accept-charset="UTF-8" method="post" onsubmit = "TRUST_LIST.save_and_delete_spheres(); return false;">
@@ -2747,7 +2747,7 @@
     </div>
 </div>
 
-<!-- <div id="balances-pif-page" data-role="page">
+<div id="balances-pif-page" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1 class="long-title">Personal Fund History</h1>
         <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#balances-pif-help">Ask</a>
@@ -2766,7 +2766,7 @@
             </tbody>
         </table>
     </div>
-</div> -->
+</div>
 
 <!-- <div id="create-pif-page" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">

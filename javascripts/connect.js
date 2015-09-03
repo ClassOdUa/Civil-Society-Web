@@ -9,12 +9,16 @@ var g_lng = 0;
 
 
 $.mobile.defaultPageTransition = 'none';
-function inner_back(){
-	HISTORY_INNER.pop();
-	var back_href = HISTORY_INNER.pop();
-	if(back_href){
-		location.href = back_href;
+function inner_back(link){
+	if(link){
+		$.mobile.navigate(link);
+	}else{
+		HISTORY_INNER.pop();
+		var back_href = HISTORY_INNER.pop();
+		if(back_href){
+			location.href = back_href;
 		}
+	}
 }
 
 function lang_activate_el(element){
@@ -88,8 +92,6 @@ window.onload = function(){
 			console.log('#balances-pif-page');
 			funds.current_fund_history();
 		}
-
-
 
 		$('#profile-page .avatar').click(function(){
 			$('#profile-page [name=picture]').click();
@@ -336,7 +338,7 @@ window.onload = function(){
 					   "name": $('#create-vote [name=name]').val(),
 					   "s_time": start_date,
 					   "f_time": end_date, 
-					   "descr": $('#create-vote [name=descr]').val(),
+					   "descr": $('#create-vote .jqte_editor').html(),
 					   "sprt": $('#create-vote [name=sprt]').val(),
 					   "v0": v0,
 					   "v1": v1,
@@ -808,7 +810,7 @@ function nko_create_page_data(){
 	  		var nko_parts = '';
 			jQuery.each(data_for_build, function(i, one_nko) {
 				nko_parts += '<li>\
-								<div onclick = "$(\'#create-item [name=nco]\').val(' + one_nko.id + '); $.mobile.navigate(\'#create-item\')" class="ui-checkbox">\
+								<div onclick = "nco_show_selected( ' + one_nko.id + ', \'' + one_nko.nco_name + '\', \'' + one_nko.nco_phone + '\', \'' + one_nko.doc_type + '\', \'' + one_nko.doc_series + '\', \'' + one_nko.doc_number + '\', \'' + one_nko.doc_date + '\', \'' +  one_nko.address_type + '\', \'' + one_nko.street + '\', \'' + one_nko.city + '\', \'' + one_nko.county + '\', \'' + one_nko.build + '\', \'' + one_nko.ap + '\'  )" class="ui-checkbox">\
 									<label class="ui-btn ui-btn-icon-left ui-checkbox-off"></label><input type="checkbox" name="" value="1" data-enhanced="true" />\
 								</div>\
 								<div>\
@@ -823,10 +825,10 @@ function nko_create_page_data(){
 								<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#program-nko-help">Ask</a>\
 								<div id="project-nko-help" class="help-popup" data-role="popup" data-history="false">\
 									<div class="title">\
-										Description\
+										' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
 									</div>\
 									<div class="text">\
-										Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in\
+										' + LOCALE_ARRAY_ADDITIONAL.help_nco_create_page[CURRENT_LANG] + '\
 									</div>\
 								</div>\
 							</div>\
@@ -842,6 +844,19 @@ function nko_create_page_data(){
 			$('#create-item-nko-page').html( ui_string ).enhanceWithin();
 	  	}
 	});
+}
+function nco_show_selected( id, nco_name, nco_phone, doc_type, doc_series, doc_number, doc_date, address_type, street, city, county, build, ap  ){
+	var nco_ui = '<div class="select-nko-wrap">\
+					<div class="title">\
+						' + LOCALE_ARRAY_ADDITIONAL.choosen_nco[CURRENT_LANG] + '\
+					</div>\
+					<ol><li>\
+					<div>\
+						<strong>' + nco_name + '</strong> (<strong>ID</strong>:<span>' + id + '</span>)<span class="phone">' + nco_phone + '</span><span class="doc">' + doc_type + ' ' + doc_series + ' ' + doc_number + ' ' + doc_date + '</span><span class="addr">' + address_type + ' ' + street + ',' + city + ',' + county + ', дом ' + build + ', каб. ' + ap + '</span>\
+						</div>\
+					<ol></li></div>\ ';
+	$('#create-item #nco_content').html(nco_ui);
+	$('#create-item [name=nco]').val(id); $.mobile.navigate('#create-item');
 }
 
 var COMMON_OBJECT = {
@@ -934,6 +949,7 @@ var NCO_OBJECT = {
 		});
 	}
 }
+
 
 var CREATE_ITEM = {
 	check_item: function(){
@@ -1048,7 +1064,7 @@ var CREATE_ITEM = {
 				url:  mainURL + "/project_add.php",
 				type: "POST",
 				data: {"img": img,
-					   "descr": $('#create-item [name=descr]').val(),
+					   "descr": $("#create-item .jqte_editor").html(),
 					   "title": $('#create-item [name=title ]').val(),
 					   "dtex": dtex, 
 					   "tags": $('#create-item [name=tags]').val(),
@@ -1065,6 +1081,21 @@ var CREATE_ITEM = {
 						var id = JSON.parse(response.responseText);
 						id = id[0].id;
 						$.mobile.navigate("#project-page?project=" + id);
+					}else{
+						if( response.responseText.indexOf('error') > -1 ){
+							var error_arr = JSON.parse(response.responseText);
+							switch(CURRENT_LANG){
+								case 'en':
+									alert(error_arr[0].error);
+									break;
+								case 'ru':
+									alert(error_arr[0].error_ru);
+									break;
+								case 'ua':
+									alert(error_arr[0].error_uk);
+									break;
+							}
+						}
 					}
 					//$.mobile.navigate("#vote-page?vote=" + id);
 				}
@@ -1084,7 +1115,7 @@ var CREATE_ITEM = {
 				url:  mainURL + "/program_add.php",
 				type: "POST",
 				data: {"img": img,
-					   "descr": $('#create-item [name=descr]').val(),
+					   "descr": $("#create-item .jqte_editor").html(),
 					   "title": $('#create-item [name=title ]').val(),
 					   "tags": $('#create-item [name=tags]').val(),
 					   "curr": $('#create-item [name=curr]').val()},
@@ -1098,6 +1129,21 @@ var CREATE_ITEM = {
 						var id = JSON.parse(response.responseText);
 						id = id[0].id;
 						$.mobile.navigate("#program-page?program=" + id);
+					}else{
+						if( response.responseText.indexOf('error') > -1 ){
+							var error_arr = JSON.parse(response.responseText);
+							switch(CURRENT_LANG){
+								case 'en':
+									alert(error_arr[0].error);
+									break;
+								case 'ru':
+									alert(error_arr[0].error_ru);
+									break;
+								case 'ua':
+									alert(error_arr[0].error_uk);
+									break;
+							}
+						}
 					}
 					//$.mobile.navigate("#vote-page?vote=" + id);
 				}
@@ -1141,6 +1187,21 @@ var CREATE_ITEM = {
 						var id = JSON.parse(response.responseText);
 						id = id[0].id;
 						$.mobile.navigate("#request-page?request=" + id);
+					}else{
+						if( response.responseText.indexOf('error') > -1 ){
+							var error_arr = JSON.parse(response.responseText);
+							switch(CURRENT_LANG){
+								case 'en':
+									alert(error_arr[0].error);
+									break;
+								case 'ru':
+									alert(error_arr[0].error_ru);
+									break;
+								case 'ua':
+									alert(error_arr[0].error_uk);
+									break;
+							}
+						}
 					}
 					//$.mobile.navigate("#vote-page?vote=" + id);
 				}
@@ -1183,6 +1244,21 @@ var CREATE_ITEM = {
 						var id = JSON.parse(response.responseText);
 						id = id[0].id;
 						$.mobile.navigate("#weighted-vote-page?vote=" + id);
+					}else{
+						if( response.responseText.indexOf('error') > -1 ){
+							var error_arr = JSON.parse(response.responseText);
+							switch(CURRENT_LANG){
+								case 'en':
+									alert(error_arr[0].error);
+									break;
+								case 'ru':
+									alert(error_arr[0].error_ru);
+									break;
+								case 'ua':
+									alert(error_arr[0].error_uk);
+									break;
+							}
+						}
 					}
 					//$.mobile.navigate("#vote-page?vote=" + id);
 				}
@@ -1208,7 +1284,7 @@ var CREATE_ITEM = {
 						url:  mainURL + "/project_propositions_add.php",
 						type: "POST",
 						data: {"img": img,
-							   "descr": $('#create-item [name=descr]').val(),
+							   "descr": $("#create-item .jqte_editor").html(),
 							   "title": $('#create-item [name=title ]').val(),
 							   "dtex": dtex,
 							   "program_id": $('#create-item [name=program_id]').val(), 
@@ -1226,7 +1302,22 @@ var CREATE_ITEM = {
 								var id = JSON.parse(response.responseText);
 								id = id[0].id;
 								$.mobile.navigate("#project-page?project_proposition=" + id);
+							}else{
+						if( response.responseText.indexOf('error') > -1 ){
+							var error_arr = JSON.parse(response.responseText);
+							switch(CURRENT_LANG){
+								case 'en':
+									alert(error_arr[0].error);
+									break;
+								case 'ru':
+									alert(error_arr[0].error_ru);
+									break;
+								case 'ua':
+									alert(error_arr[0].error_uk);
+									break;
 							}
+						}
+					}
 							//$.mobile.navigate("#vote-page?vote=" + id);
 						}
 					});
@@ -1281,7 +1372,7 @@ var HISTORY_PAGE = {
 					for (var i = 0; i < one_fund.cf.length; i++) {
 						var currency_name = PIF.get_currency_name_by_id( one_fund.cf[i].currency );
 						ui_cf += '<tr>\
-									<td>' + one_fund.cf[i].ts_modified + '</td>\
+									<td>' + one_fund.cf[i].ts_created + '</td>\
 									<td>' + one_fund.cf[i].user_id + ' ' + one_fund.cf[i].fname + ' ' + one_fund.cf[i].lname + '</td>\
 									<td><strong>' + one_fund.cf[i].saldo + '</strong> ' + currency_name + '</td>\
 								</tr>';
@@ -1295,10 +1386,10 @@ var HISTORY_PAGE = {
 									<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#request-history-help">Ask</a>\
 									<div id="request-history-help" class="help-popup" data-role="popup" data-history="false">\
 										<div class="title">\
-											Description\
+											' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
 										</div>\
 										<div class="text">\
-											Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in\
+											' + LOCALE_ARRAY_ADDITIONAL.help_history_page[CURRENT_LANG] + '\
 										</div>\
 									</div>\
 								</div>\
@@ -1545,8 +1636,8 @@ var PROJECTS = {
 		$('#projects-page #create_proposition_link').attr('style', 'display: none');
 
 		if(location.href.indexOf('#projects-page?tags_filter=') > -1){
-			var match_array = location.href.match(/=[a-zA-Z0-9а-яА-Я]*/i);
-			var tag_filter = match_array[0].match(/[^=][a-zA-Z]*/i);
+			var tag_filter = location.href.match(/=([a-zA-Z0-9а-яА-Я]*)/i)[1];
+			
 			var url = mainURL + '/project.php?filter=' + encodeURIComponent(tag_filter);
 			$('#projects-page #menu_link').attr('style', 'display:block');
 			$('#projects-page #my_activities_link').attr('style', 'display:none');
@@ -1614,8 +1705,8 @@ var PROJECTS = {
 			$.mobile.loading( "show", {  theme: "z"	});
 
 			if(location.href.indexOf('#projects-page?tags_filter=') > -1){
-				var match_array = location.href.match(/=[a-zA-Z0-9а-яА-Я]*/i);
-				var tag_filter = match_array[0].match(/[^=][a-zA-Z]*/i);
+				var tag_filter = location.href.match(/=([a-zA-Z0-9а-яА-Я]*)/i)[1];
+				
 
 				var url = mainURL + '/project.php?filter=' + encodeURIComponent(tag_filter) + '&ls=' + self.data_last_item;
 				console.log(tag_filter);
@@ -1690,17 +1781,6 @@ var PROJECTS = {
 			case "down":
 				url += '&direct=1';
 				break;	
-		}
-
-		switch($('#projects-page [name=sort]').data('direct')){
-			case 0:
-				url += '&direct=0';
-				$('#projects-page [name=sort]').data('direct', 1);
-				break;
-			case 1:
-				url += '&direct=1';
-				$('#projects-page [name=sort]').data('direct', 0);
-				break;
 		}
 
 		if($('#projects-page #searched_string').val() != ""){
@@ -2024,7 +2104,7 @@ var PROJECTS = {
 				break;
 		}
 
-		var tags_array = data_for_build.tags.match(/[^,][a-zA-Z0-9а-яА-Я]*/ig);
+		var tags_array = data_for_build.tags.split(",");
 		var ui_tags = '';
 		jQuery.each(tags_array, function(i, one_tag) {
 			ui_tags += '<span style = "cursor: pointer;" onclick = "$.mobile.navigate(\'#projects-page?tags_filter=' + one_tag.trim() + '\');">' + one_tag + '</span>';
@@ -2065,7 +2145,7 @@ var PROJECTS = {
 								<a class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate(\'#nko-page?project=' + data_for_build.id + '\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.choose_nco[CURRENT_LANG] + '</a>\
 							</div>\
 							<div class="nko-status red">\
-								' + LOCALE_ARRAY_ADDITIONAL.nco_not_selected[CURRENT_LANG] + '\
+								' + (data_for_build.nco_list.length > 0 ? "" : LOCALE_ARRAY_ADDITIONAL.nco_not_selected[CURRENT_LANG]) + '\
 							</div>';
 		}else{
 			var nco_button = '';
@@ -2170,10 +2250,10 @@ var PROJECTS = {
 					<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#project-help">Ask</a>\
 					<div id="project-help" class="help-popup" data-role="popup" data-history="false">\
 						<div class="title">\
-							Description\
+							' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
 						</div>\
 						<div class="text">\
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in\
+							' + LOCALE_ARRAY_ADDITIONAL.help_collect_cash_project[CURRENT_LANG] + '\
 						</div>\
 					</div>\
 				</div>\
@@ -2210,6 +2290,7 @@ var PROJECTS = {
 								' + nko_parts + '\
 							</ol>\
 						</div>\
+						' + (data_for_build.nco_acceptance == '0' ? LOCALE_ARRAY_ADDITIONAL.nco_accept_no[CURRENT_LANG] : LOCALE_ARRAY_ADDITIONAL.nco_accept_yes[CURRENT_LANG] ) + '\
 						' + nco_button + '\
 						' + nco_create_button + '\
 						' + nco_accept_button + '\
@@ -2222,7 +2303,7 @@ var PROJECTS = {
 							</div>\
 						</div>\
 						<div class="discuss-btn">\
-							<a class="ui-btn ui-corner-all ui-shadow" onclick="window.open(\'' + data_for_build.project_discussion_link +  '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_voting[CURRENT_LANG] + '</a>\
+							<a class="ui-btn ui-corner-all ui-shadow" onclick="window.open(\'' + data_for_build.project_discussion_link +  '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_project[CURRENT_LANG] + '</a>\
 						</div>\
 						<div class="btn-login-soc">\
 							<button class="ui-btn ui-corner-all ui-shadow share-btn">' + LOCALE_ARRAY_ADDITIONAL.share_by_social_newtworks[CURRENT_LANG] + '</button>\
@@ -2294,7 +2375,7 @@ var PROJECTS = {
 				break;
 		}
 
-		var tags_array = data_for_build.tags.match(/[^,][a-zA-Z0-9а-яА-Я]*/ig);
+		var tags_array = data_for_build.tags.split(",");
 		var ui_tags = '';
 		jQuery.each(tags_array, function(i, one_tag) {
 			ui_tags += '<span style = "cursor: pointer;" onclick = "$.mobile.navigate(\'#projects-page?program=' + data_for_build.program_id + 'tags_filter=' + one_tag.trim() + '\');">' + one_tag + '</span>';
@@ -2335,7 +2416,7 @@ var PROJECTS = {
 								<a class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate(\'#nko-page?project_proposition=' + data_for_build.id + '\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.choose_nco[CURRENT_LANG] + '</a>\
 							</div>\
 							<div class="nko-status red">\
-								' + LOCALE_ARRAY_ADDITIONAL.nco_not_selected[CURRENT_LANG] + '\
+								' + (data_for_build.nco_list.length > 0 ? "" : LOCALE_ARRAY_ADDITIONAL.nco_not_selected[CURRENT_LANG]) + '\
 							</div>';
 		}else{
 			var nco_button = '';
@@ -2481,6 +2562,7 @@ var PROJECTS = {
 								' + nko_parts + '\
 							</ol>\
 						</div>\
+						' + (data_for_build.nco_acceptance == '0' ? LOCALE_ARRAY_ADDITIONAL.nco_accept_no[CURRENT_LANG] : LOCALE_ARRAY_ADDITIONAL.nco_accept_yes[CURRENT_LANG] ) + '\
 						' + nco_button + '\
 						' + nco_create_button + '\
 						' + nco_accept_button + '\
@@ -2493,7 +2575,7 @@ var PROJECTS = {
 							</div>\
 						</div>\
 						<div class="discuss-btn">\
-							<a class="ui-btn ui-corner-all ui-shadow" onclick="window.open(\'' + data_for_build.project_discussion_link +  '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_voting[CURRENT_LANG] + '</a>\
+							<a class="ui-btn ui-corner-all ui-shadow" onclick="window.open(\'' + data_for_build.project_discussion_link +  '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_project_proposition[CURRENT_LANG] + '</a>\
 						</div>\
 						<div class="btn-login-soc">\
 							<button class="ui-btn ui-corner-all ui-shadow share-btn">' + LOCALE_ARRAY_ADDITIONAL.share_by_social_newtworks[CURRENT_LANG] + '</button>\
@@ -2582,10 +2664,10 @@ var PROJECTS = {
 								<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#program-nko-help">Ask</a>\
 								<div id="project-nko-help" class="help-popup" data-role="popup" data-history="false">\
 									<div class="title">\
-										Description\
+										' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
 									</div>\
 									<div class="text">\
-										Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in\
+										' + LOCALE_ARRAY_ADDITIONAL.help_nco_page_project[CURRENT_LANG] + '\
 									</div>\
 								</div>\
 							</div>\
@@ -2719,15 +2801,15 @@ var PROJECTS = {
 			if(location.href.indexOf('#history-page?item=project&id=') > -1){
 				var match_array = location.href.match(/#history-page\?item=project&id=[0-9]*/i);
 				var object_id = match_array[0].match(/[0-9]+/i);
-				var type = 4;				
+				var type = 4;
+				var return_page = '#project-page?project=' + object_id;				
 				//var return_page = '#project-page?project=';
 			}else{
 				var match_array = location.href.match(/#history-page\?item=project_proposition&id=[0-9]*/i);
 				var object_id = match_array[0].match(/[0-9]+/i);
 				var type = 3;
-				//var return_page = '#project-page?project_proposition=';
+				var return_page = '#project-page?project_proposition=' + object_id;
 			}
-			var return_page = '#project-page';
 			var my_add = 0;
 			$.mobile.loading( "show", {  theme: "z"	});
 			$.ajax({
@@ -2755,7 +2837,7 @@ var PROJECTS = {
 								my_add += parseInt(one_fund.cf[i].saldo);
 							}
 							ui_cf += '<tr>\
-										<td>' + cancel_span + ' ' + one_fund.cf[i].ts_modified + '</td>\
+										<td>' + cancel_span + ' ' + one_fund.cf[i].ts_created + '</td>\
 										<td>' + one_fund.cf[i].user_id + ' ' + one_fund.cf[i].fname + ' ' + one_fund.cf[i].lname + '</td>\
 										<td><strong>' + one_fund.cf[i].saldo + '</strong> ' + currency_name + '</td>\
 									</tr>';
@@ -2766,13 +2848,13 @@ var PROJECTS = {
 										<h1 class="long-title">\
 											' + LOCALE_ARRAY_ADDITIONAL.history_donation[CURRENT_LANG] + '\
 										</h1>\
-										<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#project_proposition-history-help">Ask</a>\
+										<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back(\'' + return_page + '\')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#project_proposition-history-help">Ask</a>\
 										<div id="project_proposition-history-help" class="help-popup" data-role="popup" data-history="false">\
 											<div class="title">\
-												Description\
+												' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
 											</div>\
 											<div class="text">\
-												Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in\
+												' + LOCALE_ARRAY_ADDITIONAL.help_history_page_project_project[CURRENT_LANG] + '\
 											</div>\
 										</div>\
 									</div>\
@@ -2884,8 +2966,8 @@ var PROGRAMS = {
 		$('#programs-page #create_link').attr('style','display: none');
 
 		if(location.href.indexOf('#programs-page?tags_filter=') > -1){
-			var match_array = location.href.match(/=[a-zA-Z0-9а-яА-Я]*/i);
-			var tag_filter = match_array[0].match(/[^=][a-zA-Z]*/i);
+			var tag_filter = location.href.match(/=([a-zA-Z0-9а-яА-Я]*)/i)[1];
+			
 			var url = mainURL + '/program.php?filter=' + encodeURIComponent(tag_filter);
 			console.log(tag_filter);
 			$('#programs-page #menu_link').attr('style', 'display:block');
@@ -2912,7 +2994,7 @@ var PROGRAMS = {
 		  },
 		  crossDomain: true,
 		  complete: function( response ){
-		  		//console.log(response);
+		  		console.log(response);
 		  		self.data_array = JSON.parse( response.responseText );
 		  		if(self.data_array.length == 0  && self.activated_hard_filter == 1){
 		  			alert(LOCALE_ARRAY_ADDITIONAL.no_data[CURRENT_LANG]);
@@ -2936,8 +3018,8 @@ var PROGRAMS = {
 		}else{
 
 			if(location.href.indexOf('#programs-page?tags_filter=') > -1){
-				var match_array = location.href.match(/=[a-zA-Z0-9а-яА-Я]*/i);
-				var tag_filter = match_array[0].match(/[^=][a-zA-Z]*/i);
+				var tag_filter = location.href.match(/=([a-zA-Z0-9а-яА-Я]*)/i)[1];
+				
 
 				var url = mainURL + '/program.php?filter=' + encodeURIComponent(tag_filter) + '&ls=' + self.data_last_item;
 				console.log(tag_filter);
@@ -3012,16 +3094,7 @@ var PROGRAMS = {
 				break;	
 		}
 
-		switch($('#programs-page [name=sort]').data('direct')){
-			case 0:
-				url += '&direct=0';
-				$('#programs-page [name=sort]').data('direct', 1);
-				break;
-			case 1:
-				url += '&direct=1';
-				$('#programs-page [name=sort]').data('direct', 0);
-				break;
-		}
+		
 
 		if($('#programs-page #searched_string').val() != ""){
 			url += '&filter=' + $('#programs-page #searched_string').val();
@@ -3070,31 +3143,6 @@ var PROGRAMS = {
 		  },
 		});
 	},
-	/*support_voting: function(vote_id){
-		$.ajax({
-		  url: mainURL + '/like_add.php?id=' + vote_id,
-		  type: "GET",
-		  xhrFields: {
-		   withCredentials: true
-		  },
-		  crossDomain: true,
-		  complete: function( response ){
-		  		console.log("all ok!");	 
-		  },
-		});
-		switch($('#support').data('supported')){
-			case 1:
-				$('#support').html(LOCALE_ARRAY_ADDITIONAL.support[CURRENT_LANG]);
-				$('#support').data('supported', 0);
-				$('#supported').html(parseInt($('#supported').html())-1);
-				break;
-			case 0:
-				$('#support').html(LOCALE_ARRAY_ADDITIONAL.not_support[CURRENT_LANG]);
-				$('#support').data('supported', 1);
-				$('#supported').html(parseInt($('#supported').html())+1);
-				break;
-		}
-	},*/
 	build_elements: function(ready_array, reinit, reinit_array){
 		var self = this;
 		var elements_string = '';
@@ -3305,7 +3353,7 @@ var PROGRAMS = {
 				break;
 		}
 
-		var tags_array = data_for_build.tags.match(/[^,][a-zA-Z0-9а-яА-Я]*/ig);
+		var tags_array = data_for_build.tags.split(",");
 		var ui_tags = '';
 		jQuery.each(tags_array, function(i, one_tag) {
 			ui_tags += '<span style = "cursor: pointer;" onclick = "$.mobile.navigate(\'#programs-page?tags_filter=' + one_tag.trim() + '\');">' + one_tag + '</span>';
@@ -3388,13 +3436,13 @@ var PROGRAMS = {
 					<h1>\
 						' + LOCALE_ARRAY_ADDITIONAL.program[CURRENT_LANG] + '\
 					</h1>\
-					<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#program-help">Ask</a>\
+					<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back(\'#programs-page\')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#program-help">Ask</a>\
 					<div id="program-help" class="help-popup" data-role="popup" data-history="false">\
 						<div class="title">\
-							Description\
+							' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
 						</div>\
 						<div class="text">\
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in\
+							' + LOCALE_ARRAY_ADDITIONAL.help_collect_cash_program[CURRENT_LANG] + '\
 						</div>\
 					</div>\
 				</div>\
@@ -3429,7 +3477,7 @@ var PROGRAMS = {
 							</div>\
 						</div>\
 						<div class="discuss-btn">\
-							<a class="ui-btn ui-corner-all ui-shadow" onclick="window.open(\'' + data_for_build.project_discussion_link +  '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_voting[CURRENT_LANG] + '</a>\
+							<a class="ui-btn ui-corner-all ui-shadow" onclick="window.open(\'' + data_for_build.prog_discussion_link +  '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_program[CURRENT_LANG] + '</a>\
 						</div>\
 						<div class="btn-login-soc">\
 							<button class="ui-btn ui-corner-all ui-shadow share-btn">' + LOCALE_ARRAY_ADDITIONAL.share_by_social_newtworks[CURRENT_LANG] + '</button>\
@@ -3603,7 +3651,7 @@ var PROGRAMS = {
 								my_add += parseInt(one_fund.cf[i].saldo);
 							}
 							ui_cf += '<tr>\
-										<td>' + cancel_span + ' ' + one_fund.cf[i].ts_modified + '</td>\
+										<td>' + cancel_span + ' ' + one_fund.cf[i].ts_created + '</td>\
 										<td>' + one_fund.cf[i].user_id + ' ' + one_fund.cf[i].fname + ' ' + one_fund.cf[i].lname + '</td>\
 										<td><strong>' + one_fund.cf[i].saldo + '</strong> ' + currency_name + '</td>\
 									</tr>';
@@ -3614,13 +3662,13 @@ var PROGRAMS = {
 										<h1 class="long-title">\
 											' + LOCALE_ARRAY_ADDITIONAL.history_donation[CURRENT_LANG] + '\
 										</h1>\
-										<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#request-history-help">Ask</a>\
+										<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back(\'#program-page?program=\'' + object_id + ')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#request-history-help">Ask</a>\
 										<div id="request-history-help" class="help-popup" data-role="popup" data-history="false">\
 											<div class="title">\
-												Description\
+												' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
 											</div>\
 											<div class="text">\
-												Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in\
+												' + LOCALE_ARRAY_ADDITIONAL.help_history_page_program[CURRENT_LANG] + '\
 											</div>\
 										</div>\
 									</div>\
@@ -3639,13 +3687,6 @@ var PROGRAMS = {
 														<strong>\
 														' + funds_list[0].amount_current + '\
 														 ' + main_currency + '</strong><span>' + LOCALE_ARRAY_ADDITIONAL.amount_current[CURRENT_LANG] + '</span>\
-													</div>\
-												</div>\
-												<div class="ui-block-c">\
-													<div class="total-amount">\
-														<strong>\
-														' + funds_list[0].amount_asking + '\
-														' + main_currency + '</strong><span>' + LOCALE_ARRAY_ADDITIONAL.amount_asking[CURRENT_LANG] + '</span>\
 													</div>\
 												</div>\
 											</div>\
@@ -3735,8 +3776,8 @@ var REQUESTS = {
 		$('#requests-page #my_activities_link').attr('style', 'display:none');
 
 		if(location.href.indexOf('#requests-page?tags_filter=') > -1){
-			var match_array = location.href.match(/=[a-zA-Z0-9а-яА-Я]*/i);
-			var tag_filter = match_array[0].match(/[^=][a-zA-Z]*/i);
+			var tag_filter = location.href.match(/=([a-zA-Z0-9а-яА-Я]*)/i)[1];
+			
 			var url = mainURL + '/request.php?filter=' + encodeURIComponent(tag_filter);
 			console.log(tag_filter);
 		}else if(location.href.indexOf('#requests-page?my_request=true') > -1){
@@ -3779,8 +3820,8 @@ var REQUESTS = {
 			self.filter_data(-1, 1);
 		}else{
 			if(location.href.indexOf('#requests-page?tags_filter=') > -1){
-				var match_array = location.href.match(/=[a-zA-Z0-9а-яА-Я]*/i);
-				var tag_filter = match_array[0].match(/[^=][a-zA-Z]*/i);
+				var tag_filter = location.href.match(/=([a-zA-Z0-9а-яА-Я]*)/i)[1];
+				
 
 				var url = mainURL + '/request.php?filter=' + encodeURIComponent(tag_filter) + '&ls=' + self.data_last_item;
 				console.log(tag_filter);
@@ -3864,16 +3905,7 @@ var REQUESTS = {
 				break;	
 		}
 
-		switch($('#requests-page [name=sort]').data('direct')){
-			case 0:
-				url += '&direct=0';
-				$('#requests-page [name=sort]').data('direct', 1);
-				break;
-			case 1:
-				url += '&direct=1';
-				$('#requests-page [name=sort]').data('direct', 0);
-				break;
-		}
+		
 
 		if($('#requests-page #searched_string').val() != ""){
 			url += '&filter=' + $('#requests-page #searched_string').val();
@@ -4185,7 +4217,7 @@ var REQUESTS = {
 				break;
 		}
 
-		var tags_array = data_for_build.tags.match(/[^,][a-zA-Z0-9а-яА-Я]*/ig);
+		var tags_array = data_for_build.tags.split(",");
 		var ui_tags = '';
 		jQuery.each(tags_array, function(i, one_tag) {
 			ui_tags += '<span style = "cursor: pointer;" onclick = "$.mobile.navigate(\'#requests-page?tags_filter=' + one_tag.trim() + '\');">' + one_tag + '</span>';
@@ -4226,7 +4258,7 @@ var REQUESTS = {
 								<a class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate(\'#nko-page?request=' + data_for_build.id + '\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.choose_nco[CURRENT_LANG] + '</a>\
 							</div>\
 							<div class="nko-status red">\
-								' + LOCALE_ARRAY_ADDITIONAL.nco_not_selected[CURRENT_LANG] + '\
+								' + (data_for_build.nco_list.length > 0 ? "" : LOCALE_ARRAY_ADDITIONAL.nco_not_selected[CURRENT_LANG]) + '\
 							</div>';
 		}else{
 			var nco_button = '';
@@ -4329,13 +4361,13 @@ var REQUESTS = {
 					<h1>\
 						' + LOCALE_ARRAY_ADDITIONAL.request[CURRENT_LANG] + '\
 					</h1>\
-					<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#request-help">Ask</a>\
+					<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back(\'#requests-page\')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#request-help">Ask</a>\
 					<div id="request-help" class="help-popup" data-role="popup" data-history="false">\
 						<div class="title">\
-							Description\
+							' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
 						</div>\
 						<div class="text">\
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in\
+							' + LOCALE_ARRAY_ADDITIONAL.help_collect_cash_request[CURRENT_LANG] + '\
 						</div>\
 					</div>\
 				</div>\
@@ -4375,6 +4407,7 @@ var REQUESTS = {
 							   ' + nko_parts + '\
 							</ol>\
 						</div>\
+						' + (data_for_build.nco_acceptance == '0' ? LOCALE_ARRAY_ADDITIONAL.nco_accept_no[CURRENT_LANG] : LOCALE_ARRAY_ADDITIONAL.nco_accept_yes[CURRENT_LANG] ) + '\
 						' + nco_button + '\
 						' + nco_create_button + '\
 						<div class="desc">\
@@ -4386,7 +4419,7 @@ var REQUESTS = {
 							</div>\
 						</div>\
 						<div class="discuss-btn">\
-							<a class="ui-btn ui-corner-all ui-shadow" onclick="window.open(\'' + data_for_build.project_discussion_link +  '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_voting[CURRENT_LANG] + '</a>\
+							<a class="ui-btn ui-corner-all ui-shadow" onclick="window.open(\'' + data_for_build.project_discussion_link +  '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_request[CURRENT_LANG] + '</a>\
 						</div>\
 						<div class="btn-login-soc">\
 							<button class="ui-btn ui-corner-all ui-shadow share-btn">' + LOCALE_ARRAY_ADDITIONAL.share_by_social_newtworks[CURRENT_LANG] + '</button>\
@@ -4469,10 +4502,10 @@ var REQUESTS = {
 								<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#program-nko-help">Ask</a>\
 								<div id="request-nko-help" class="help-popup" data-role="popup" data-history="false">\
 									<div class="title">\
-										Description\
+										' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
 									</div>\
 									<div class="text">\
-										Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in\
+										' + LOCALE_ARRAY_ADDITIONAL.help_check_nco_request[CURRENT_LANG] + '\
 									</div>\
 								</div>\
 							</div>\
@@ -4622,7 +4655,7 @@ var REQUESTS = {
 								my_add += parseInt(one_fund.cf[i].saldo);
 							}
 							ui_cf += '<tr>\
-										<td>' + cancel_span + ' ' + one_fund.cf[i].ts_modified + '</td>\
+										<td>' + cancel_span + ' ' + one_fund.cf[i].ts_created + '</td>\
 										<td>' + one_fund.cf[i].user_id + ' ' + one_fund.cf[i].fname + ' ' + one_fund.cf[i].lname + '</td>\
 										<td><strong>' + one_fund.cf[i].saldo + '</strong> ' + currency_name + '</td>\
 									</tr>';
@@ -4636,10 +4669,10 @@ var REQUESTS = {
 										<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#request-history-help">Ask</a>\
 										<div id="request-history-help" class="help-popup" data-role="popup" data-history="false">\
 											<div class="title">\
-												Description\
+												' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
 											</div>\
 											<div class="text">\
-												Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat. Duis aute irure in\
+												' + LOCALE_ARRAY_ADDITIONAL.help_request_history_page[CURRENT_LANG] + '\
 											</div>\
 										</div>\
 									</div>\
@@ -4875,7 +4908,7 @@ var funds = {
 	},
 	current_fund_history: function(){
 		if(location.href.indexOf('#balances-pif-page?fund=') > -1){
-			var match_array = location.href.match(/=[a-zA-Z0-9а-яА-Я]*/i);
+			var match_array = location.href.match(/=([a-zA-Z0-9а-яА-Я]*)/i)[1];
 			var fund_id = match_array[0].match(/[^=][0-9]*/i);
 			var url = mainURL + '/fund_user_cf.php?fund_id=' + fund_id;
 
@@ -4931,7 +4964,7 @@ var funds = {
 										var currency_name = "EUR";
 										break;
 								}
-								if(one_fund.r){
+								if(one_fund.r == 1){
 									var additional_span = '<span style = "cursor: pointer;" class = "yellow" onclick = "funds.cancel_fund(\'' + one_fund.fund_id + '\',\'' + one_fund.cur + '\',\'' + one_fund.type + '\',\'' + one_fund.id + '\');">' + LOCALE_ARRAY_ADDITIONAL.cancel_donate[CURRENT_LANG] + '</span> ';
 								}else{
 									var additional_span = '';
@@ -4984,7 +5017,7 @@ var funds = {
 		var self = this;
 		var options = '';
 		jQuery.each(PIF.pif_array, function(i, one_pif) {
-			options += '<option data-currency = "' + one_pif.currency + '" value = ' + one_pif.id + '>#' + one_pif.id + ' ' + one_pif.saldo + ' ' + PIF.get_currency_name_by_id(one_pif.currency) + '</option>';
+			options += '<option data-currency = "' + one_pif.currency + '" value = ' + one_pif.id + '>#' + one_pif.id + ' >> ' + one_pif.saldo + ' ' + PIF.get_currency_name_by_id(one_pif.currency) + '</option>';
 		});
 		$(page + ' #select_pif').html(options);
 		if(location.href.indexOf(page) > -1){
@@ -5011,8 +5044,8 @@ var funds = {
 					if(data){
 						var response_data = JSON.parse(data.responseText);
 						alert(LOCALE_ARRAY_ADDITIONAL.transaction_okay[CURRENT_LANG]);
-						$('#transaction-page [name=fund_id] option[value=' + $('#transaction-page [name=fund_id]').val() + ']').html('#' + $('#transaction-page [name=fund_id]').val() + ' ' + response_data[0].saldo + ' ' + PIF.get_currency_name_by_id( $('#transaction-page [name=fund_id] option[value=' + $('#transaction-page [name=fund_id]').val() + ']').data('currency') ) );
-						$('#my-fund-page #select_pif option[value=' + $('#transaction-page [name=fund_id]').val() + ']').html('#' + $('#transaction-page [name=fund_id]').val() + ' ' + response_data[0].saldo + ' ' + PIF.get_currency_name_by_id( $('#transaction-page [name=fund_id] option[value=' + $('#transaction-page [name=fund_id]').val() + ']').data('currency') ) );
+						$('#transaction-page [name=fund_id] option[value=' + $('#transaction-page [name=fund_id]').val() + ']').html('#' + $('#transaction-page [name=fund_id]').val() + ' >> ' + response_data[0].saldo + ' ' + PIF.get_currency_name_by_id( $('#transaction-page [name=fund_id] option[value=' + $('#transaction-page [name=fund_id]').val() + ']').data('currency') ) );
+						$('#my-fund-page #select_pif option[value=' + $('#transaction-page [name=fund_id]').val() + ']').html('#' + $('#transaction-page [name=fund_id]').val() + ' >> ' + response_data[0].saldo + ' ' + PIF.get_currency_name_by_id( $('#transaction-page [name=fund_id] option[value=' + $('#transaction-page [name=fund_id]').val() + ']').data('currency') ) );
 						$('#transaction-page select').selectmenu().selectmenu("refresh", true);
 						$('#my-fund-page select').selectmenu().selectmenu("refresh", true);
 						console.log("saved ok");
@@ -5124,16 +5157,7 @@ var WEIGHTED_VOTINGS = {
 		}
 		
 
-		switch($('#weighted-votings-page [name=sort]').data('direct')){
-			case 0:
-				url += '&direct=0';
-				$('#weighted-votings-page [name=sort]').data('direct', 1);
-				break;
-			case 1:
-				url += '&direct=1';
-				$('#weighted-votings-page [name=sort]').data('direct', 0);
-				break;
-		}
+		
 		switch($('#weighted-votings-page [name=sort_direction]').val()){
 			case "up":
 				url += '&direct=0';
@@ -5418,12 +5442,10 @@ var WEIGHTED_VOTINGS = {
 		}
 
 		if(SUPER_PROFILE.id == data_for_build.author_id && data_for_build.vote_no == "0" && data_for_build.vote_nth == "0" && data_for_build.vote_yes == "0"){
-			console.log('1111111111111');
 			var delete_button = '<div class="delete_vote_button">\
 									<a onclick = "WEIGHTED_VOTINGS.delete_voting(\'' + data_for_build.id + '\', \'#weighted-votings-page?my=1\')" class="ui-btn ui-corner-all ui-shadow special_href" href="#">' + LOCALE_ARRAY_ADDITIONAL.delete_vote[CURRENT_LANG] + '</a>\
 								</div> ';
 		}else{
-			console.log('rrrrrrrrrrr');
 			var delete_button = '';
 		}
 
@@ -5460,7 +5482,7 @@ var WEIGHTED_VOTINGS = {
 				break;
 		}
 
-		var tags_array = data_for_build.tags.match(/[^,][a-zA-Z0-9а-яА-Я]*/ig);
+		var tags_array = data_for_build.tags.split(",");
 		var ui_tags = '';
 		if(tags_array){
 			jQuery.each(tags_array, function(i, one_tag) {
@@ -5604,7 +5626,7 @@ var WEIGHTED_VOTINGS = {
 		var voting_buttons = '';
 		var status_vote = '';
 
-		var tags_array = data_for_build.tags.match(/[^,][a-zA-Z0-9а-яА-Я]*/ig);
+		var tags_array = data_for_build.tags.split(",");
 		var ui_tags = '';
 		if(tags_array){
 			jQuery.each(tags_array, function(i, one_tag) {
@@ -6193,41 +6215,22 @@ var TRUST_LIST = {
 		}
 		jQuery.each(build_array, function(i, one_trust) {
 			elements_string += '<div class="item ui-corner-all">\
-									<div class="avatar">\
-										<img src="' + mainURL + one_trust.img + '" />\
-									</div>\
-									<div class="osmd-list">';
-			var type_sphere = '';
-			SPHERES.set_locale_names();
-			for (var i = 0; i < one_trust.t_l.length; i++) {
-				for (var k = 0; k < SPHERES.spheres.length; k++) {
-					if(SPHERES.spheres[k].type == parseInt( one_trust.t_l[i].type ) ){
-						type_sphere = SPHERES.spheres[k].name;
-						break;
-					}
-				}
-				var sphere = '';
-				if(one_trust.t_l[i].sphere){
-					sphere = ': ' + one_trust.t_l[i].sphere;
-				}
-				var subtype = '';
-				if(one_trust.t_l[i].subtype){
-					subtype = ': ' + one_trust.t_l[i].subtype;
-				}
-				elements_string += '<div>' + type_sphere + sphere + subtype + '</div>';
-				
-			}
-			elements_string +=	 '</div>\
-									<div class="ui-grid-a">\
-										<div class="ui-block-a">\
-											<div class="id">\
-												ID:' + one_trust.id + '\
-											</div>\
-											<div class="name">\
-												' + one_trust.name + '\
-											</div>\
-											<a class="ui-btn ui-corner-all" href="#" onclick = "$.mobile.navigate(\'#spheres-trust-vote\'); TRUST_LIST.set_spheres_for_trust(\'' + one_trust.id + '\');">' + LOCALE_ARRAY_ADDITIONAL.trust_vote[CURRENT_LANG] + '</a>\
+									<div class="ui-block-a">\
+										<div class="avatar">\
+											<img src="' + mainURL + one_trust.img + '" />\
 										</div>\
+									</div>\
+									<div class="ui-block-b">\
+										<div class="id">\
+											ID: ' + one_trust.id + ' ' + one_trust.name +'\
+										</div>\
+										<div class="name">\
+											' + one_trust.fname + ' ' + one_trust.lname + '\
+										</div>\
+										<a class="ui-btn ui-corner-all" href="#" onclick = "$.mobile.navigate(\'#spheres-trust-vote\'); TRUST_LIST.set_spheres_for_trust(\'' + one_trust.id + '\');">' + LOCALE_ARRAY_ADDITIONAL.trust_vote[CURRENT_LANG] + '</a>\
+									</div>';
+
+			elements_string += '<div class="ui-grid-a">\
 										<div class="ui-block-b">\
 									<div>';
 			for (var i = 0; i < one_trust.t_s.length; i++) {
@@ -6272,8 +6275,32 @@ var TRUST_LIST = {
 				}				
 			}												
 			elements_string +=		 '	</div>\
-										</div>\
-									</div>\
+										</div>';
+
+			elements_string += '<div class="osmd-list">';
+			var type_sphere = '';
+			SPHERES.set_locale_names();
+			for (var i = 0; i < one_trust.t_l.length; i++) {
+				for (var k = 0; k < SPHERES.spheres.length; k++) {
+					if(SPHERES.spheres[k].type == parseInt( one_trust.t_l[i].type ) ){
+						type_sphere = SPHERES.spheres[k].name;
+						break;
+					}
+				}
+				var sphere = '';
+				if(one_trust.t_l[i].sphere){
+					sphere = ': ' + one_trust.t_l[i].sphere;
+				}
+				var subtype = '';
+				if(one_trust.t_l[i].subtype){
+					subtype = ': ' + one_trust.t_l[i].subtype;
+				}
+				elements_string += '<div>' + type_sphere + sphere + subtype + '</div>';
+				
+			}
+			elements_string += '</div>';
+
+			elements_string += '</div>\
 								</div>\
 							  </div>';
 		});
@@ -7798,7 +7825,7 @@ var VOTINGS = {
 		var ui_string = '';
 		ui_string += '<div data-role="header" data-position="fixed" data-tap-toggle="false">\
 									<h1>' + LOCALE_ARRAY_ADDITIONAL.vote[CURRENT_LANG] + '</h1>\
-									<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#vote-help">Ask</a>\
+									<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back(\'#votings-page\')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#vote-help">Ask</a>\
 									<div id="vote-help" class="help-popup" data-role="popup" data-history="false">\
 										<div class="title">\
 											' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
@@ -8028,7 +8055,7 @@ var VOTINGS = {
 		var ui_string = '';
 		ui_string = '<div data-role="header" data-position="fixed" data-tap-toggle="false">\
 							<h1>' + LOCALE_ARRAY_ADDITIONAL.vote[CURRENT_LANG] + '</h1>\
-								<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#vote-help">Ask</a>\
+								<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back(\'#votings-page\')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#vote-help">Ask</a>\
 								<div id="vote-help" class="help-popup" data-role="popup" data-history="false">\
 									<div class="title">\
 										' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
@@ -9026,7 +9053,7 @@ var MY_VOTINGS = {
 		var ui_string = '';
 		ui_string += '<div data-role="header" data-position="fixed" data-tap-toggle="false">\
 									<h1>' + LOCALE_ARRAY_ADDITIONAL.my_vote[CURRENT_LANG] + '</h1>\
-									<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#vote-help">Ask</a>\
+									<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back(\'#my-votings-page\')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#vote-help">Ask</a>\
 									<div id="vote-help" class="help-popup" data-role="popup" data-history="false">\
 										<div class="title">\
 											' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
@@ -9250,7 +9277,7 @@ var MY_VOTINGS = {
 		var ui_string = '';
 		ui_string = '<div data-role="header" data-position="fixed" data-tap-toggle="false">\
 							<h1>' + LOCALE_ARRAY_ADDITIONAL.my_vote[CURRENT_LANG] + '</h1>\
-								<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#vote-help">Ask</a>\
+								<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back(\'#my-votings-page\')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#vote-help">Ask</a>\
 								<div id="vote-help" class="help-popup" data-role="popup" data-history="false">\
 									<div class="title">\
 										' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
@@ -10399,7 +10426,6 @@ var ADRESS = {
 					crossDomain: true,
 					complete: function(response){
 						var data = response.responseText;
-					  //  console.log(data);
 						self.city = jQuery.parseJSON(data);
 						$("#address-item-" + page + " [name=city]").html('');
 						$("#address-item-" + page + " [name=city]").show();
@@ -11353,7 +11379,13 @@ console.log(window.location.toString());
 						alert(LOCALE_ARRAY_ADDITIONAL.wrong_captcha[CURRENT_LANG]);
 						update_img("#register-form .captcha img", mainURL + "/l/tools/showCaptcha.php");
 					}
-					else if(resp.indexOf("Please click the VERIFICATION LINK within that mail.")!==-1){
+					if(resp.indexOf("This email address is already registered") !==-1){
+						alert(LOCALE_ARRAY_ADDITIONAL.email_already_registered[CURRENT_LANG]);
+					}
+					if(resp.indexOf("Sorry, that username is already taken") !==-1){
+						alert(LOCALE_ARRAY_ADDITIONAL.login_already_registered[CURRENT_LANG]);
+					}
+					if(resp.indexOf("Please click the VERIFICATION LINK within that mail.")!==-1){
 						alert(LOCALE_ARRAY_ADDITIONAL.account_created[CURRENT_LANG]);
 						$.mobile.navigate("#main-page");
 					}
@@ -11433,8 +11465,10 @@ console.log(window.location.toString());
 								that.last_name = that.profile_obj.user_last;
 								that.gender = that.profile_obj.gender;
 								that.osmd = that.profile_obj.osmd;
+								that.go = that.profile_obj.go;
 								that.nco = that.profile_obj.nco;
 								that.payment = that.profile_obj.payment;
+		   						that.bankid = that.profile_obj.bankid;
 
 								SUPER_PROFILE.gender = that.gender;
 								SUPER_PROFILE.id = that.profile_obj.id;
