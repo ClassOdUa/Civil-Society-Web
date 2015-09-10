@@ -2,7 +2,7 @@ var DEFAULT_LANG = "en";
 var CURRENT_LANG = false;
 var FILE;
 var UI_STATE_DIALOG = 0;
-var mainURL = 'http://gurtom.mobi';
+var mainURL = 'https://gurtom.mobi';
 var HISTORY_INNER = [location.href];
 var g_lat = 0;
 var g_lng = 0;
@@ -231,6 +231,7 @@ window.onload = function(){
 
 		if(location.href.indexOf('#registration') > -1){
 			$("#captcha").attr("src", mainURL + "/l/tools/showCaptcha.php");
+			$('#registration [type=submit]').button('refresh');
 		}
 	}, 300);
 
@@ -245,14 +246,34 @@ window.onload = function(){
 			   withCredentials: true
 		},
 		complete: function(response){
-			var data = response.responseText;
-			if(data.indexOf('File is larger than the specified amount set') > -1){
+			//var data = response.responseText;
+			if(response && response.responseText.indexOf('error') == -1){
+				var profile_obj = jQuery.parseJSON(response.responseText)[0];
+				$('#profile-page #avatar').attr('src', mainURL + profile_obj.avatar);
+				console.log( mainURL + '/' + profile_obj.avatar);
+			}else{
+				if( response.responseText.indexOf('error') > -1 ){
+					var error_arr = JSON.parse(response.responseText);
+					switch(CURRENT_LANG){
+						case 'en':
+							alert(error_arr[0].error);
+							break;
+						case 'ru':
+							alert(error_arr[0].error_ru);
+							break;
+						case 'ua':
+							alert(error_arr[0].error_uk);
+							break;
+					}
+				}
+			}
+			/*if(data.indexOf('File is larger than the specified amount set') > -1){
 				alert(LOCALE_ARRAY_ADDITIONAL.bad_size[CURRENT_LANG]);
 			}else{
 				var profile_obj = jQuery.parseJSON(data)[0];
 				$('#profile-page #avatar').attr('src', mainURL + profile_obj.avatar);
 				console.log( mainURL + '/' + profile_obj.avatar);
-			}						
+			}*/						
 		}});
 	}});
 
@@ -261,6 +282,31 @@ window.onload = function(){
 	$('#picture_form_create_vote').ajaxForm({url: mainURL + '/i/up.php', type: 'post', success: function(response) {
 		var error = 0;
 		if(response){
+			if(response.indexOf('error') == -1){
+				var img = response;
+			}else{
+				if( response.indexOf('error') > -1 ){
+					var error_arr = JSON.parse(response);
+					switch(CURRENT_LANG){
+						case 'en':
+							alert(error_arr[0].error);
+							break;
+						case 'ru':
+							alert(error_arr[0].error_ru);
+							break;
+						case 'ua':
+							alert(error_arr[0].error_uk);
+							break;
+					}
+				}
+				error = 1;
+			}
+		}else{
+			var img = "";
+			alert(LOCALE_ARRAY_ADDITIONAL.please_enter_image_voting[CURRENT_LANG]);
+			error = 1;
+		}
+		/*if(response){
 			if(response.indexOf('File is larger than the specified amount set') > -1){
 				alert(LOCALE_ARRAY_ADDITIONAL.bad_size[CURRENT_LANG]);
 				error = 1;
@@ -271,7 +317,7 @@ window.onload = function(){
 			var img = "";
 			alert(LOCALE_ARRAY_ADDITIONAL.please_enter_image_voting[CURRENT_LANG]);
 			error = 1;
-		}
+		}*/
 		if($('#create-vote [name=name]').val() == "" && error != 1){
 			alert(LOCALE_ARRAY_ADDITIONAL.please_enter_name_voting[CURRENT_LANG]);
 			error = 1;
@@ -367,9 +413,40 @@ window.onload = function(){
 		
 	}});
 
+	//функция create_object
+
 	$('#additional_photo_form').ajaxForm({url: mainURL + '/i/up.php', type: 'post', success: function(response) {
 		var error = 0;
 		if(response){
+			if(response.indexOf('error') == -1){
+				var img = response;
+				console.log(img);
+			}else{
+				if( response.indexOf('error') > -1 ){
+					var error_arr = JSON.parse(response);
+					switch(CURRENT_LANG){
+						case 'en':
+							alert(error_arr[0].error);
+							break;
+						case 'ru':
+							alert(error_arr[0].error_ru);
+							break;
+						case 'ua':
+							alert(error_arr[0].error_uk);
+							break;
+					}
+					error = 1;
+				}
+			}
+		}else{
+			var img = "";
+		}
+		if(error == 0){
+			$('#create-item #response_img').val(img);
+			$('#create-item #image_div').attr('style', 'display:block');
+			$('#create-item #image_div img').attr('src', img);							
+		}
+		/*if(response){
 			if(response.indexOf('File is larger than the specified amount set') > -1){
 				alert(LOCALE_ARRAY_ADDITIONAL.bad_size[CURRENT_LANG]);
 				error = 1;
@@ -380,27 +457,7 @@ window.onload = function(){
 			var img = "";
 			//alert(LOCALE_ARRAY_ADDITIONAL.please_enter_image_voting[CURRENT_LANG]);
 			//error = 1;
-		}
-
-		if(error == 0){
-			switch($('#create-item [name=type_item]').val()){
-				case '2':
-					CREATE_ITEM.send_program(img);
-					break;
-				case '3':
-					CREATE_ITEM.send_project_proposition(img);
-					break;
-				case '4':
-					CREATE_ITEM.send_project(img);
-					break;
-				case '5':
-					CREATE_ITEM.send_request(img);
-					break;
-				case '6':
-					CREATE_ITEM.send_weighted_voting(img);
-					break;
-			}			
-		}	
+		}*/	
 	}}); 
 
 	$('#create-vote #img').click(function(){
@@ -580,9 +637,11 @@ window.onhashchange = function(){
 	if(location.href.indexOf('#profile-page') > -1 && SUPER_PROFILE.auth == true){
 		switch(SUPER_PROFILE.gender){
 			case "0":
+				$('#profile-page #female').attr('class', 'ui-btn ui-btn-inherit ui-first-child ui-radio-off');
 				$('#profile-page #male').attr('class', 'ui-btn ui-btn-inherit ui-first-child ui-btn-active ui-radio-on');
 				break;
 			case "1":
+				$('#profile-page #male').attr('class', 'ui-btn ui-btn-inherit ui-first-child ui-radio-off');
 				$('#profile-page #female').attr('class', 'ui-btn ui-btn-inherit ui-first-child ui-btn-active ui-radio-on');
 				break;
 		}
@@ -590,6 +649,7 @@ window.onhashchange = function(){
 
 	if(location.href.indexOf('#registration') > -1){
 		$("#captcha").attr("src", mainURL + "/l/tools/showCaptcha.php");
+		$('#registration [type=submit]').button('refresh');
 	}
 
 	if(location.href.indexOf('network_status=EmailNotMuch') > -1){
@@ -950,22 +1010,44 @@ var NCO_OBJECT = {
 	}
 }
 
-
 var CREATE_ITEM = {
+	create_object: function (){
+		var img = $('#create-item #response_img').val();
+		switch($('#create-item [name=type_item]').val()){
+			case '2':
+				CREATE_ITEM.send_program(img);
+				break;
+			case '3':
+				CREATE_ITEM.send_project_proposition(img);
+				break;
+			case '4':
+				CREATE_ITEM.send_project(img);
+				break;
+			case '5':
+				CREATE_ITEM.send_request(img);
+				break;
+			case '6':
+				CREATE_ITEM.send_weighted_voting(img);
+				break;
+		}
+	},
 	check_item: function(){
 		var self = this;		
 		if(location.href.indexOf('#create-item?project=true') > -1){
 			$('#create-item [name=type_item] option[value=4]').attr('selected', true);
 			$('#create-item #title_item').html(LOCALE_ARRAY_ADDITIONAL.create_project[CURRENT_LANG]);
-			$('#create-item #name_item').html(LOCALE_ARRAY_ADDITIONAL.name_of_your_project[CURRENT_LANG]);			
+			$('#create-item #name_item').html(LOCALE_ARRAY_ADDITIONAL.name_of_your_project[CURRENT_LANG]);
+			$('#create-item .ui-icon-back').attr('onclick', 'inner_back(\'#projects-page?my_project=true\')');			
 		}else if(location.href.indexOf('#create-item?program=true') > -1){
 			$('#create-item [name=type_item] option[value=2]').attr('selected', true);
 			$('#create-item #title_item').html(LOCALE_ARRAY_ADDITIONAL.create_program[CURRENT_LANG]);
 			$('#create-item #name_item').html(LOCALE_ARRAY_ADDITIONAL.name_of_your_program[CURRENT_LANG]);
+			$('#create-item .ui-icon-back').attr('onclick', 'inner_back(\'#programs-page?my_program=true\')');
 		}else if(location.href.indexOf('#create-item?request=true') > -1){
 			$('#create-item [name=type_item] option[value=5]').attr('selected', true);
 			$('#create-item #title_item').html(LOCALE_ARRAY_ADDITIONAL.create_request[CURRENT_LANG]);
-			$('#create-item #name_item').html(LOCALE_ARRAY_ADDITIONAL.name_of_your_request[CURRENT_LANG]);			
+			$('#create-item #name_item').html(LOCALE_ARRAY_ADDITIONAL.name_of_your_request[CURRENT_LANG]);
+			$('#create-item .ui-icon-back').attr('onclick', 'inner_back(\'#requests-page?my_request=true\')');			
 		}else if(location.href.indexOf('#create-item?weighted_voting=true') > -1){
 			$('#create-item [name=type_item] option[value=6]').attr('selected', true);
 			$('#create-item #title_item').html(LOCALE_ARRAY_ADDITIONAL.create_weighted_vote[CURRENT_LANG]);
@@ -974,12 +1056,14 @@ var CREATE_ITEM = {
 				var match_array = location.href.match(/item=[0-9]*/i);
 				var object_id = match_array[0].match(/[0-9]+/i);
 				$('#create-item [name=program_id]').val(object_id);
+				$('#create-item .ui-icon-back').attr('onclick', 'inner_back(\'#weighted-votings-page?program=' + object_id + '\')');
 			}
 		}else if(location.href.indexOf('#create-item?project_proposition=true') > -1){
 			if(location.href.indexOf('#create-item?project_proposition=true&item=') > -1){
 				var match_array = location.href.match(/item=[0-9]*/i);
 				var object_id = match_array[0].match(/[0-9]+/i);
 				$('#create-item [name=program_id]').val(object_id);
+				$('#create-item .ui-icon-back').attr('onclick', 'inner_back(\'#projects-page?program=' + object_id + '\')');
 			}
 			$('#create-item [name=type_item] option[value=3]').attr('selected', true);
 			$('#create-item #title_item').html(LOCALE_ARRAY_ADDITIONAL.create_project_proposition[CURRENT_LANG]);
@@ -2506,7 +2590,7 @@ var PROJECTS = {
 
 		if(data_for_build.status == 0){
 			var status_item = '<div class="status yellow">\
-									' + LOCALE_ARRAY_ADDITIONAL.collect_cash_to[CURRENT_LANG] + ' ' + data_for_build.ts_closed + '\
+									' + LOCALE_ARRAY_ADDITIONAL.collect_cash_to[CURRENT_LANG] + ' ' + data_for_build.dt_expired + '\
 								</div>';						
 		}else{
 			var status_item = '<div class="status green">\
@@ -3662,7 +3746,7 @@ var PROGRAMS = {
 										<h1 class="long-title">\
 											' + LOCALE_ARRAY_ADDITIONAL.history_donation[CURRENT_LANG] + '\
 										</h1>\
-										<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back(\'#program-page?program=\'' + object_id + ')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#request-history-help">Ask</a>\
+										<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back(\'#program-page?program=' + object_id + '\')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#request-history-help">Ask</a>\
 										<div id="request-history-help" class="help-popup" data-role="popup" data-history="false">\
 											<div class="title">\
 												' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
@@ -6104,7 +6188,7 @@ var WEIGHTED_VOTINGS = {
 		$('#voters-page').enhanceWithin();
 	}
 };
-//////////////////////////////////////////////////////			
+//////////////////////////////////////////////////			
 
 var TRUST_LIST = {
 	trust_array: [],
@@ -6389,7 +6473,7 @@ var TRUST_LIST = {
 			}
 		}
 		ui_string += '</fieldset>\
-						<div class="btn-save">\
+						<div style = "display:none;" class="btn-save">\
 								<input type="submit" value="Save" class="ui-btn ui-btn-corner-all ui-shadow" />\
 							</div>\
 							</form>';
@@ -7154,7 +7238,7 @@ var MAP = {
 		
 		var map = L.map('map').setView([48.574740, 31.465320], 5);
 
-		L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a rel="nofollow" href="http://osm.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a rel="nofollow" href="https://osm.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
 
 		jQuery.each(build_array, function(i, one_mark) {
 
@@ -10611,11 +10695,15 @@ var ADRESS = {
 								 						$('#address-item-' + z + ' [name=street]').val(one_address['str']);
 					  									$('#address-item-' + z + ' [name=house]').val(one_address['bld']);
 					  									$('#address-item-' + z + ' [name=comment]').val(one_address['oth']);
-					  									/*if(one_address['reg_adr']){
-					  										console.log('reg_adr');
-					  										$('#address-item-' + z + ' .ui-btn.ui-btn-inherit.ui-btn-icon-left.ui-checkbox-off').attr('class', 'ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-on');
-					  										$('#address-item-' + z + ' [name=off_address]').data('cacheval', 'false');
-					  									}*/
+					  									//Корректировка работы в firefox
+					  									if($('#address-item-' + z + ' [name=county] option').length == 1){
+															$('#address-item-' + z + ' [name=county]').val( $('#address-item-' + z + ' [name=county] option[selected="selected"]').val() );
+															$('#address-item-' + z + ' [name=county]').parent().children('span').html( $('#address-item-' + z + ' [name=county] option[selected="selected"]').html() );
+														}//правильно отображение области
+														if($('#address-item-' + z + ' [name=city] option').length == 1){
+															$('#address-item-' + z + ' [name=city]').val( $('#address-item-' + z + ' [name=city] option[selected="selected"]').val() );
+															$('#address-item-' + z + ' [name=city]').parent().children('span').html( $('#address-item-' + z + ' [name=city] option[selected="selected"]').html() );
+														}//правильно отображение города
 					  									if(location.href.indexOf('#address-item-' + z) > -1){
 					  										$('#address-item-' + z + ' [name=country]').selectmenu("refresh", true);
 					  										$('#address-item-' + z + ' [name=state]').selectmenu("refresh", true);
@@ -10791,7 +10879,6 @@ function levenshtein(s1, s2, cost_ins, cost_rep, cost_del) {
 			  c0 = p1[l2];
 			  return c0;
 }
-
 
 function change_nan(number){
 	if(isNaN(number)){
@@ -11224,6 +11311,8 @@ console.log(window.location.toString());
 						},
 						complete: function(data){
 							console.log("saved ok");
+							PROFILE.gender = g;
+							SUPER_PROFILE.gender = g;
 					  		$('#profile-page .name').html(fn + ' ' + ln);
 							alert(LOCALE_ARRAY_ADDITIONAL.saved_successfull[CURRENT_LANG]);
 							//alert('okay');
@@ -11601,9 +11690,7 @@ console.log(window.location.toString());
 	})
 })(jQuery);
 
-
 (function(){
-
 
 	var matcher = /\s*(?:((?:(?:\\\.|[^.,])+\.?)+)\s*([!~><=]=|[><])\s*("|')?((?:\\\3|.)*?)\3|(.+?))\s*(?:,|$)/g;
 
