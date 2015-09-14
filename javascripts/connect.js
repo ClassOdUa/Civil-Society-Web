@@ -97,7 +97,7 @@ window.onload = function(){
 			$('#profile-page [name=picture]').click();
 		});
 
-		$("#profile-page #avatar, #menu_avatar img").css("margin-top",-(($("#menu_avatar img").height() - $("#menu_avatar").height())/2)+"px");
+		$("#profile-page #avatar, #menu_avatar img").css("margin-top",-(($("#menu_avatar img").height() - $("#menu_avatar").height())/2) +"px");
 
 		set_dates_range('#filter-page [name=start_date]', '#filter-page [name=start_month]', '#filter-page [name=start_year]', new Date().getFullYear(), 2, 'current', 'current');
 		set_dates_range('#filter-page [name=end_date]', '#filter-page [name=end_month]', '#filter-page [name=end_year]', new Date().getFullYear(), 2, 'current');
@@ -182,28 +182,30 @@ window.onload = function(){
 		}
 
 		if( ( location.href.indexOf('#trust-list') > -1 ||
-			  location.href.indexOf('#create-item') > -1 ||
-			  location.href.indexOf('#create-vote') > -1 ||
-			  location.href.indexOf('#my-fund-page') > -1 ||
-			  location.href.indexOf('#voters-page') > -1 ||
-			  location.href.indexOf('#profile-page') > -1 ||
-			  location.href.indexOf('#my-votings-page') > -1 ||
-			  location.href.indexOf('#programs-page?my_program=true') > -1 ||
-			  location.href.indexOf('#projects-page?my_project_propositions=true') > -1 ||
-			  location.href.indexOf('#weighted-votings-page?my=1') > -1 ||
-			  location.href.indexOf('#weighted-votings-page?my=2') > -1 ||
-			  location.href.indexOf('#projects-page?my_project=true') > -1 ||
-			  location.href.indexOf('#requests-page?my_request=true') > -1 ||
-			  location.href.indexOf('#spheres-trust-vote') > -1) && SUPER_PROFILE.auth == false){
+				location.href.indexOf('#create-item') > -1 ||
+				location.href.indexOf('#create-vote') > -1 ||
+				location.href.indexOf('#my-fund-page') > -1 ||
+				location.href.indexOf('#voters-page') > -1 ||
+				location.href.indexOf('#profile-page') > -1 ||
+				location.href.indexOf('#my-votings-page') > -1 ||
+				location.href.indexOf('#programs-page?my_program=true') > -1 ||
+				location.href.indexOf('#projects-page?my_project_propositions=true') > -1 ||
+				location.href.indexOf('#weighted-votings-page?my=1') > -1 ||
+				location.href.indexOf('#weighted-votings-page?my=2') > -1 ||
+				location.href.indexOf('#projects-page?my_project=true') > -1 ||
+				location.href.indexOf('#requests-page?my_request=true') > -1 ||
+				location.href.indexOf('#address-item') > -1 ||
+				location.href.indexOf('#edit-address') > -1 ||
+				location.href.indexOf('#spheres-trust-vote') > -1) && SUPER_PROFILE.auth == false){
 			ask_login();
 		}
 
 		if( (
-			  location.href.indexOf('#create-item') > -1 ||
-			  location.href.indexOf('#history-page') > -1 ||
-			  location.href.indexOf('#project-page') > -1 ||
-			  location.href.indexOf('#program-page') > -1 ||
-			  location.href.indexOf('#request-page') > -1) && SUPER_PROFILE.auth == true){
+				location.href.indexOf('#create-item') > -1 ||
+				location.href.indexOf('#history-page') > -1 ||
+				location.href.indexOf('#project-page') > -1 ||
+				location.href.indexOf('#program-page') > -1 ||
+				location.href.indexOf('#request-page') > -1) && SUPER_PROFILE.auth == true){
 			PIF.get_pif_array();
 		}
 
@@ -243,9 +245,9 @@ window.onload = function(){
 			type:"GET",
 			crossDomain: true,
 			xhrFields: {
-			   withCredentials: true
-		},
-		complete: function(response){
+				withCredentials: true
+			},
+			complete: function(response){
 			//var data = response.responseText;
 			if(response && response.responseText.indexOf('error') == -1){
 				var profile_obj = jQuery.parseJSON(response.responseText)[0];
@@ -343,8 +345,8 @@ window.onload = function(){
 							+ $('#create-vote [name=s_time_month]').val() + "-" 
 							+ $('#create-vote [name=s_time_date]').val();
 			var end_date = $('#create-vote [name=f_time_year]').val() + "-" 
-						  + $('#create-vote [name=f_time_month]').val() + "-" 
-						  + $('#create-vote [name=f_time_date]').val();
+						+ $('#create-vote [name=f_time_month]').val() + "-" 
+						+ $('#create-vote [name=f_time_date]').val();
 			if($('#create-vote #v0').hasClass('ui-checkbox-on')){
 				var v0 = 1;
 			}else{
@@ -380,23 +382,23 @@ window.onload = function(){
 				url: mainURL + "/mc_add.php",
 				type: "POST",
 				data: {"img": img,
-					   "sph": $('#create-vote [name=sph]').val(),
-					   "name": $('#create-vote [name=name]').val(),
-					   "s_time": start_date,
-					   "f_time": end_date, 
-					   "descr": $('#create-vote .jqte_editor').html(),
-					   "sprt": $('#create-vote [name=sprt]').val(),
-					   "v0": v0,
-					   "v1": v1,
-					   "v2": v2,
-					   "v3": v3,
-					   "v4": v4,
-					   "v5": v5,
-					   "age_from": 	$('#create-vote [name=age_from]').val(),
-					   "age_to": $('#create-vote [name=age_to]').val()},
+					 "sph": $('#create-vote [name=sph]').val(),
+					 "name": $('#create-vote [name=name]').val(),
+					 "s_time": start_date,
+					 "f_time": end_date, 
+					 "descr": $('#create-vote .jqte_editor').html(),
+					 "sprt": $('#create-vote [name=sprt]').val(),
+					 "v0": v0,
+					 "v1": v1,
+					 "v2": v2,
+					 "v3": v3,
+					 "v4": v4,
+					 "v5": v5,
+					 "age_from": 	$('#create-vote [name=age_from]').val(),
+					 "age_to": $('#create-vote [name=age_to]').val()},
 				crossDomain: true,
 				xhrFields: {
-				   withCredentials: true
+					withCredentials: true
 				},
 				complete: function(response){
 					var id = JSON.parse(response.responseText);
@@ -470,6 +472,9 @@ window.onload = function(){
 	if(location.href.indexOf('network_status=NotAuth') > -1){
 		alert(LOCALE_ARRAY_ADDITIONAL.not_auth[CURRENT_LANG]);
 	}
+	if(location.href.indexOf('verification_code=') > -1) { 
+		COMMON_OBJECT.registration_verification();
+	}
 	//PROGRAMS.check_nko_page();
 	PROJECTS.check_nko_page();
 	REQUESTS.check_nko_page();
@@ -501,19 +506,21 @@ window.onhashchange = function(){
 	}
 	HISTORY_INNER.push(location.href);
 	if( ( location.href.indexOf('#trust-list') > -1 ||
-		  location.href.indexOf('#create-item') > -1 ||
-		  location.href.indexOf('#create-vote') > -1 ||
-		  location.href.indexOf('#my-fund-page') > -1 ||
-		  location.href.indexOf('#voters-page') > -1 ||
-		  location.href.indexOf('#profile-page') > -1 ||
-		  location.href.indexOf('#my-votings-page') > -1 ||
-		  location.href.indexOf('#programs-page?my_program=true') > -1 ||
-		  location.href.indexOf('#projects-page?my_project_propositions=true') > -1 ||
-		  location.href.indexOf('#weighted-votings-page?my=1') > -1 ||
-		  location.href.indexOf('#weighted-votings-page?my=2') > -1 ||
-		  location.href.indexOf('#projects-page?my_project=true') > -1 ||
-		  location.href.indexOf('#requests-page?my_request=true') > -1 ||
-		  location.href.indexOf('#spheres-trust-vote') > -1) && SUPER_PROFILE.auth == false){
+			location.href.indexOf('#create-item') > -1 ||
+			location.href.indexOf('#create-vote') > -1 ||
+			location.href.indexOf('#my-fund-page') > -1 ||
+			location.href.indexOf('#voters-page') > -1 ||
+			location.href.indexOf('#profile-page') > -1 ||
+			location.href.indexOf('#my-votings-page') > -1 ||
+			location.href.indexOf('#programs-page?my_program=true') > -1 ||
+			location.href.indexOf('#projects-page?my_project_propositions=true') > -1 ||
+			location.href.indexOf('#weighted-votings-page?my=1') > -1 ||
+			location.href.indexOf('#weighted-votings-page?my=2') > -1 ||
+			location.href.indexOf('#projects-page?my_project=true') > -1 ||
+			location.href.indexOf('#requests-page?my_request=true') > -1 ||
+			location.href.indexOf('#address-item') > -1 ||
+			location.href.indexOf('#edit-address') > -1 ||
+			location.href.indexOf('#spheres-trust-vote') > -1) && SUPER_PROFILE.auth == false){
 		ask_login();
 	}
 
@@ -617,7 +624,7 @@ window.onhashchange = function(){
 	if(( location.href.indexOf('#edit-address') > -1 || 
 		 location.href.indexOf('#address-item-1') > -1 ||
 		 location.href.indexOf('#address-item-2') > -1 ||
-		 location.href.indexOf('#address-item-3') > -1 )  && SUPER_PROFILE.auth == true){
+		 location.href.indexOf('#address-item-3') > -1 ) && SUPER_PROFILE.auth == true){
 		if(ADRESS){
 			ADRESS.init();
 		}
@@ -815,7 +822,7 @@ function set_dates_range(selector_date, selector_month, selector_year, year_from
 	options = "";
 	var current_month = -1;
 	if(selected_date == "current"){
-		current_month = new Date().getMonth()+1;
+		current_month = new Date().getMonth() + 1;
 	}
 	if(current_month == 1){		options += '<option value="01" selected>' + LOCALE_ARRAY_ADDITIONAL.january[CURRENT_LANG] + '</option>';	}else{		options += '<option value="01">' + LOCALE_ARRAY_ADDITIONAL.january[CURRENT_LANG] + '</option>';	}
 	if(current_month == 2){		options += '<option value="02" selected>' + LOCALE_ARRAY_ADDITIONAL.february[CURRENT_LANG] + '</option>';	}else{		options += '<option value="02">' + LOCALE_ARRAY_ADDITIONAL.february[CURRENT_LANG] + '</option>';	}
@@ -858,23 +865,23 @@ function nko_create_page_data(){
 	var data_for_build;
 
 	$.ajax({
-	  	url:  mainURL + "/nco.php",
-	  	type: "GET",
-	  	xhrFields: {
-	   		withCredentials: true
-	  	},
+		url: mainURL + "/nco.php",
+		type: "GET",
+		xhrFields: {
+	 		withCredentials: true
+		},
 	 	crossDomain: true,
-	  	complete: function( response ){
-	  		data_for_build =  JSON.parse( response.responseText );
+		complete: function( response ){
+			data_for_build = JSON.parse( response.responseText );
 
-	  		var nko_parts = '';
+			var nko_parts = '';
 			jQuery.each(data_for_build, function(i, one_nko) {
 				nko_parts += '<li>\
 								<div onclick = "nco_show_selected( ' + one_nko.id + ', \'' + one_nko.nco_name + '\', \'' + one_nko.nco_phone + '\', \'' + one_nko.doc_type + '\', \'' + one_nko.doc_series + '\', \'' + one_nko.doc_number + '\', \'' + one_nko.doc_date + '\', \'' +  one_nko.address_type + '\', \'' + one_nko.street + '\', \'' + one_nko.city + '\', \'' + one_nko.county + '\', \'' + one_nko.build + '\', \'' + one_nko.ap + '\'  )" class="ui-checkbox">\
 									<label class="ui-btn ui-btn-icon-left ui-checkbox-off"></label><input type="checkbox" name="" value="1" data-enhanced="true" />\
 								</div>\
 								<div>\
-									<strong>' + one_nko.nco_name + '</strong> (<strong>ID</strong>:<span>' + one_nko.id + '</span>)<span class="phone">' + one_nko.nco_phone + '</span><span class="doc">' + one_nko.doc_type + ' ' + one_nko.doc_series + ' ' + one_nko.doc_number + ' ' + one_nko.doc_date + '</span><span class="addr">' + one_nko.address_type + ' ' + one_nko.street + ',' + one_nko.city + ',' + one_nko.county + ', дом ' + one_nko.build + ', каб. ' + one_nko.ap + '</span>\
+									<strong>' + one_nko.nco_name + '</strong> (<strong>ID</strong>:<span>' + one_nko.user_id + '</span>)<span class="phone">' + one_nko.nco_phone + '</span><span class="doc">' + one_nko.doc_type + ' ' + one_nko.doc_series + ' ' + one_nko.doc_number + ' ' + one_nko.doc_date + '</span><span class="addr">' + one_nko.address_type + ' ' + one_nko.street + ',' + one_nko.city + ',' + one_nko.county + ', дом ' + one_nko.build + ', каб. ' + one_nko.ap + '</span>\
 								</div>\
 							</li>\ '; 
 			});
@@ -902,10 +909,11 @@ function nko_create_page_data(){
 								</div>\
 							</div>';
 			$('#create-item-nko-page').html( ui_string ).enhanceWithin();
-	  	}
+		}
 	});
 }
-function nco_show_selected( id, nco_name, nco_phone, doc_type, doc_series, doc_number, doc_date, address_type, street, city, county, build, ap  ){
+
+function nco_show_selected( id, nco_name, nco_phone, doc_type, doc_series, doc_number, doc_date, address_type, street, city, county, build, ap){
 	var nco_ui = '<div class="select-nko-wrap">\
 					<div class="title">\
 						' + LOCALE_ARRAY_ADDITIONAL.choosen_nco[CURRENT_LANG] + '\
@@ -924,38 +932,38 @@ var COMMON_OBJECT = {
 		if(location.href.indexOf('#votings-page') > -1){
 			
 			if( $(window).scrollTop() == $(document).height() - $(window).height()){
-			  	VOTINGS.reinit();
-		  	}
-		  	
+				VOTINGS.reinit();
+			}
+			
 		}else if(location.href.indexOf('#news-page') > -1){
 			if( $(window).scrollTop() == $(document).height() - $(window).height()){
-			  	NEWS.reinit();
-		  	}
+				NEWS.reinit();
+			}
 
 		}else if(location.href.indexOf('#trust-list') > -1){
 			if( $(window).scrollTop() == $(document).height() - $(window).height()){
-			  	TRUST_LIST.reinit();
-		  	}
+				TRUST_LIST.reinit();
+			}
 		}else if(location.href.indexOf('#my-votings-page') > -1){
 			if( $(window).scrollTop() == $(document).height() - $(window).height()){
-			  	MY_VOTINGS.reinit();
-		  	}
+				MY_VOTINGS.reinit();
+			}
 		}else if(location.href.indexOf('#programs-page') > -1){
 			if( $(window).scrollTop() == $(document).height() - $(window).height()){
-			  	PROGRAMS.reinit();
-		  	}
+				PROGRAMS.reinit();
+			}
 		}else if(location.href.indexOf('#projects-page') > -1){
 			if( $(window).scrollTop() == $(document).height() - $(window).height()){
-			  	PROJECTS.reinit();
-		  	}
+				PROJECTS.reinit();
+			}
 		}else if(location.href.indexOf('#requests-page') > -1){
 			if( $(window).scrollTop() == $(document).height() - $(window).height()){
-			  	REQUESTS.reinit();
-		  	}
+				REQUESTS.reinit();
+			}
 		}else if(location.href.indexOf('#weighted-votings-page') > -1){
 			if( $(window).scrollTop() == $(document).height() - $(window).height()){
-			  	WEIGHTED_VOTINGS.reinit();
-		  	}
+				WEIGHTED_VOTINGS.reinit();
+			}
 		}
 	},
 	init_common_listeners: function(){
@@ -983,6 +991,57 @@ var COMMON_OBJECT = {
 		if(callback_function){
 			callback_function();
 		}
+	},
+	registration_verification: function(){ 
+		var pattern = /m=[0-9]+/; 
+		var parts = pattern.exec(location.href);
+		pattern = /[0-9]/;
+		parts = pattern.exec(parts[0]);
+		var the_m = parts[0];
+
+		pattern = /id=[0-9]+/; 
+		parts = pattern.exec(location.href);
+		pattern = /[0-9]+/;
+		parts = pattern.exec(parts[0]);
+		var the_id = parts[0];
+
+		pattern = /verification_code=[\w]+/; 
+		parts = pattern.exec(location.href);
+		pattern = /[^verification_code=][\w]+/;
+		parts = pattern.exec(parts[0]);
+		var the_verification_code = parts[0];
+
+		$.ajax({
+			url: mainURL + "/l/index.php",
+			type: "POST",
+			data: {"m": the_m,
+				 "id": the_id,
+				 "verification_code": the_verification_code },
+			crossDomain: true,
+			xhrFields: {
+				withCredentials: true
+			},
+			complete: function(response){
+				if(response && response.responseText.indexOf('error') == -1){
+					window.location.replace(mainURL + "/index.html");
+				}else{
+					if( response.responseText.indexOf('error') > -1 ){
+						var error_arr = JSON.parse(response.responseText);
+						switch(CURRENT_LANG){
+							case 'en':
+								alert(error_arr[0].error);
+								break;
+							case 'ru':
+								alert(error_arr[0].error_ru);
+								break;
+							case 'ua':
+								alert(error_arr[0].error_uk);
+								break;
+						}
+					}
+				}				
+			}
+		});
 	}
 };
 
@@ -995,13 +1054,13 @@ var SUPER_PROFILE = {
 var NCO_OBJECT = {
 	offer_accept_nco: function(object_type, object_id, page){
 		$.ajax({
-			url:  mainURL + "/nco_bid.php",
+			url: mainURL + "/nco_bid.php",
 			type: "POST",
 			data: {"type": object_type,
-				   "id": object_id},
+				 "id": object_id},
 			crossDomain: true,
 			xhrFields: {
-			   withCredentials: true
+				withCredentials: true
 			},
 			complete: function(data){
 				$(page + ' #create_nco_button').css('display', 'none');
@@ -1145,19 +1204,19 @@ var CREATE_ITEM = {
 		var validation_error = self.validation( validation_row );
 		if( validation_error == 0 ){
 			$.ajax({
-				url:  mainURL + "/project_add.php",
+				url: mainURL + "/project_add.php",
 				type: "POST",
 				data: {"img": img,
-					   "descr": $("#create-item .jqte_editor").html(),
-					   "title": $('#create-item [name=title ]').val(),
-					   "dtex": dtex, 
-					   "tags": $('#create-item [name=tags]').val(),
-					   "nco": $('#create-item [name=nco]').val(),
-					   "curr": $('#create-item [name=curr]').val(),
-					   "amount": $('#create-item [name=amount]').val()},
+					 "descr": $("#create-item .jqte_editor").html(),
+					 "title": $('#create-item [name=title ]').val(),
+					 "dtex": dtex, 
+					 "tags": $('#create-item [name=tags]').val(),
+					 "nco": $('#create-item [name=nco]').val(),
+					 "curr": $('#create-item [name=curr]').val(),
+					 "amount": $('#create-item [name=amount]').val()},
 				crossDomain: true,
 				xhrFields: {
-				   withCredentials: true
+					withCredentials: true
 				},
 				complete: function(response){
 					if(response && response.responseText.indexOf('error') == -1){
@@ -1196,16 +1255,16 @@ var CREATE_ITEM = {
 		var validation_error = self.validation( validation_row );
 		if( validation_error == 0 ){
 			$.ajax({
-				url:  mainURL + "/program_add.php",
+				url: mainURL + "/program_add.php",
 				type: "POST",
 				data: {"img": img,
-					   "descr": $("#create-item .jqte_editor").html(),
-					   "title": $('#create-item [name=title ]').val(),
-					   "tags": $('#create-item [name=tags]').val(),
-					   "curr": $('#create-item [name=curr]').val()},
+					 "descr": $("#create-item .jqte_editor").html(),
+					 "title": $('#create-item [name=title ]').val(),
+					 "tags": $('#create-item [name=tags]').val(),
+					 "curr": $('#create-item [name=curr]').val()},
 				crossDomain: true,
 				xhrFields: {
-				   withCredentials: true
+					withCredentials: true
 				},
 				complete: function(response){
 					if(response && response.responseText.indexOf('error') == -1){
@@ -1250,20 +1309,20 @@ var CREATE_ITEM = {
 		var validation_error = self.validation( validation_row );
 		if( validation_error == 0 ){
 			$.ajax({
-				url:  mainURL + "/request_add.php",
+				url: mainURL + "/request_add.php",
 				type: "POST",
 				data: {"img": img,
-					   "descr": $('#create-item [name=descr]').val(),
-					   "title": $('#create-item [name=title]').val(),
-					   "dtex": dtex,
-					   "ben": $('#create-item [name=ben]').val(),
-					   "tags": $('#create-item [name=tags]').val(),
-					   "nco": $('#create-item [name=nco]').val(),
-					   "curr": $('#create-item [name=curr]').val(),
-					   "amount": $('#create-item [name=amount]').val()},
+					 "descr": $('#create-item [name=descr]').val(),
+					 "title": $('#create-item [name=title]').val(),
+					 "dtex": dtex,
+					 "ben": $('#create-item [name=ben]').val(),
+					 "tags": $('#create-item [name=tags]').val(),
+					 "nco": $('#create-item [name=nco]').val(),
+					 "curr": $('#create-item [name=curr]').val(),
+					 "amount": $('#create-item [name=amount]').val()},
 				crossDomain: true,
 				xhrFields: {
-				   withCredentials: true
+					withCredentials: true
 				},
 				complete: function(response){
 					if(response && response.responseText.indexOf('error') == -1){
@@ -1309,18 +1368,18 @@ var CREATE_ITEM = {
 		var validation_error = self.validation( validation_row );
 		if( validation_error == 0 ){
 			$.ajax({
-				url:  mainURL + "/weighted_voting_add.php",
+				url: mainURL + "/weighted_voting_add.php",
 				type: "POST",
 				data: {"img": img,
-					   "descr": $('#create-item [name=descr]').val(),
-					   "title": $('#create-item [name=title]').val(),
-					   "program_id": $('#create-item [name=program_id]').val(),
-					   "start": start,
-					   "finish": finish, 
-					   "tags": $('#create-item [name=tags]').val()},
+					 "descr": $('#create-item [name=descr]').val(),
+					 "title": $('#create-item [name=title]').val(),
+					 "program_id": $('#create-item [name=program_id]').val(),
+					 "start": start,
+					 "finish": finish, 
+					 "tags": $('#create-item [name=tags]').val()},
 				crossDomain: true,
 				xhrFields: {
-				   withCredentials: true
+					withCredentials: true
 				},
 				complete: function(response){
 					if(response && response.responseText.indexOf('error') == -1){
@@ -1365,20 +1424,20 @@ var CREATE_ITEM = {
 		var validation_error = self.validation( validation_row );
 		if( validation_error == 0 ){
 					$.ajax({
-						url:  mainURL + "/project_propositions_add.php",
+						url: mainURL + "/project_propositions_add.php",
 						type: "POST",
 						data: {"img": img,
-							   "descr": $("#create-item .jqte_editor").html(),
-							   "title": $('#create-item [name=title ]').val(),
-							   "dtex": dtex,
-							   "program_id": $('#create-item [name=program_id]').val(), 
-							   "tags": $('#create-item [name=tags]').val(),
-							   "nco": $('#create-item [name=nco]').val(),
-							   "curr": $('#create-item [name=curr]').val(),
-							   "amount": $('#create-item [name=amount]').val()},
+							 "descr": $("#create-item .jqte_editor").html(),
+							 "title": $('#create-item [name=title ]').val(),
+							 "dtex": dtex,
+							 "program_id": $('#create-item [name=program_id]').val(), 
+							 "tags": $('#create-item [name=tags]').val(),
+							 "nco": $('#create-item [name=nco]').val(),
+							 "curr": $('#create-item [name=curr]').val(),
+							 "amount": $('#create-item [name=amount]').val()},
 						crossDomain: true,
 						xhrFields: {
-						   withCredentials: true
+							withCredentials: true
 						},
 						complete: function(response){
 							if(response && response.responseText.indexOf('error') == -1){
@@ -1436,23 +1495,23 @@ var CREATE_ITEM = {
 var HISTORY_PAGE = {
 	build_history_page: function(object_id, my_add, amount_current, amount_asking, currency_asking){
 		var self = this;
-		$.mobile.loading( "show", {  theme: "z"	});
+		$.mobile.loading( "show", {theme: "z"});
 		$.ajax({
-		  url: mainURL + '/fund_public_cf.php?type=4&id=' + object_id,
-		  type: "GET",
-		  xhrFields: {
-		   withCredentials: true
-		  },
-		  crossDomain: true,
-		  complete: function( response ){
-		  		var funds_list = JSON.parse( response.responseText );
-		  		console.log('history');	
-		  		$.mobile.loading( "hide" );
+			url: mainURL + '/fund_public_cf.php?type=4&id=' + object_id,
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				var funds_list = JSON.parse( response.responseText );
+				console.log('history');	
+				$.mobile.loading( "hide" );
 
-		  		var ui_funds = '';
-		  		var ui_cf = '';
-		  		var main_currency = PIF.get_currency_name_by_id( currency_asking );
-		  		jQuery.each(funds_list, function(i, one_fund) {		  			
+				var ui_funds = '';
+				var ui_cf = '';
+				var main_currency = PIF.get_currency_name_by_id( currency_asking );
+				jQuery.each(funds_list, function(i, one_fund) {					
 					for (var i = 0; i < one_fund.cf.length; i++) {
 						var currency_name = PIF.get_currency_name_by_id( one_fund.cf[i].currency );
 						ui_cf += '<tr>\
@@ -1460,7 +1519,7 @@ var HISTORY_PAGE = {
 									<td>' + one_fund.cf[i].user_id + ' ' + one_fund.cf[i].fname + ' ' + one_fund.cf[i].lname + '</td>\
 									<td><strong>' + one_fund.cf[i].saldo + '</strong> ' + currency_name + '</td>\
 								</tr>';
-		  			} 
+					} 
 				});
 
 				ui_funds += '<div data-role="header" data-position="fixed" data-tap-toggle="false">\
@@ -1523,8 +1582,8 @@ var HISTORY_PAGE = {
 									</div>\
 								</div>';
 			$('#history-page').html( ui_funds ).enhanceWithin();
-		  				
-		  },
+						
+		},
 		});
 	}
 }
@@ -1536,7 +1595,7 @@ var CREATE_VOTE = {
 
 		$( "#picture_form_create_vote" ).submit();
 	}
-};  
+};
 
 var PIF = {
 	pif_array: [],
@@ -1546,8 +1605,8 @@ var PIF = {
 		function temp_callback(){
 			return function(){
 				var ui_pif_option = '';
-		  		var unique_array = [];
-		  		var temp_flag = 0;		  		
+				var unique_array = [];
+				var temp_flag = 0;
 				jQuery.each(self.pif_array, function(i, one_pif) {
 					switch(one_pif.currency){
 						case "1":
@@ -1595,25 +1654,25 @@ var PIF = {
 			console.log(funds.arr);
 			console.log('pif here');
 			$.ajax({
-			  	url:  mainURL + "/fund_user.php",
-			  	type: "GET",
-			  	xhrFields: {
-			   		withCredentials: true
-			  	},
+				url: mainURL + "/fund_user.php",
+				type: "GET",
+				xhrFields: {
+			 		withCredentials: true
+				},
 			 	crossDomain: true,
-			  	complete: function( response ){
-			  		self.pif_array =  JSON.parse( response.responseText );	
-			  		COMMON_OBJECT.free_callbacker( temp_callback() );
-			  		if( callback_function ){
-			  			callback_function();
-			  		}	  						
-			  	}
+				complete: function( response ){
+					self.pif_array = JSON.parse( response.responseText );	
+					COMMON_OBJECT.free_callbacker( temp_callback() );
+					if( callback_function ){
+						callback_function();
+					}							
+				}
 			});
 		}
 	},
 	get_currency_name_by_id: function(currency_id){
 		switch(currency_id){
-  			case "1":
+			case "1":
 				var currency_name = "ICAN";
 				break;
 			case 1:
@@ -1637,8 +1696,8 @@ var PIF = {
 			case 978:
 				var currency_name = "EUR";
 				break;
-  		}
-  		return currency_name;
+		}
+		return currency_name;
 	},
 	set_select_input: function(selector_container, object_name, special_type, id_object, code_type_object, currency_asking){
 		var self = this;
@@ -1734,7 +1793,11 @@ var PROJECTS = {
 			var return_to = '#program-page?program=' + object_id;
 			$('#projects-page #menu_link').attr('style', 'display:block');
 			$('#projects-page #create_proposition_link').attr('style', 'display:block');
-			$('#projects-page #create_proposition_link').attr('onclick', '$.mobile.navigate(\'#create-item?project_proposition=true&item=' + object_id + '\')');
+			if(object_id == 0){
+				$('#projects-page #create_proposition_link').attr('onclick', 'alert(\'' + LOCALE_ARRAY_ADDITIONAL.projects_proposition_only_from_program[CURRENT_LANG] + '\');');
+			}else{
+				$('#projects-page #create_proposition_link').attr('onclick', '$.mobile.navigate(\'#create-item?project_proposition=true&item=' + object_id + '\')');
+			}
 			$('#projects-page #my_activities_link').attr('style', 'display:none');
 		}else if(location.href.indexOf('#projects-page?my_project=true') > -1){
 			var url = mainURL + '/project.php?my=1';
@@ -1757,28 +1820,28 @@ var PROJECTS = {
 
 		
 
-		$.mobile.loading( "show", {  theme: "z"	});
+		$.mobile.loading( "show", {theme: "z"});
 		$.ajax({
-		  url: url,
-		  type: "GET",
-		  xhrFields: {
-		   withCredentials: true
-		  },
-		  crossDomain: true,
-		  complete: function( response ){
-		  		//console.log(response);
-		  		self.data_array = JSON.parse( response.responseText );
-		  		if(self.data_array.length == 0){
-		  			//alert(LOCALE_ARRAY_ADDITIONAL.no_data[CURRENT_LANG] && self.activated_hard_filter == 1);
-		  			$('#projects-page #projects-list').html('<center>Empty</center>');
-		  		}	
-		  		console.log( self.data_array );
-		  		$.mobile.loading( "hide" );
-		  		self.check_current_url( 1 );
-		  		self.build_elements();
-		  		$('#projects-page #activated_filter').css('display', 'none'); 
-		  		$('#projects-page #solo_filter').css('display', 'block');	 	
-		  },
+			url: url,
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				//console.log(response);
+				self.data_array = JSON.parse( response.responseText );
+				if(self.data_array.length == 0){
+					//alert(LOCALE_ARRAY_ADDITIONAL.no_data[CURRENT_LANG] && self.activated_hard_filter == 1);
+					$('#projects-page #projects-list').html('<center>Empty</center>');
+				}	
+				console.log( self.data_array );
+				$.mobile.loading( "hide" );
+				self.check_current_url( 1 );
+				self.build_elements();
+				$('#projects-page #activated_filter').css('display', 'none'); 
+				$('#projects-page #solo_filter').css('display', 'block');	 	
+			},
 		});
 	},
 	reinit: function(){
@@ -1786,7 +1849,7 @@ var PROJECTS = {
 		if(self.activated_easy_filter == 1 || self.activated_hard_filter == 1){
 			self.filter_data(-1, 1);
 		}else{
-			$.mobile.loading( "show", {  theme: "z"	});
+			$.mobile.loading( "show", {theme: "z"});
 
 			if(location.href.indexOf('#projects-page?tags_filter=') > -1){
 				var tag_filter = location.href.match(/=([a-zA-Z0-9а-яА-Я]*)/i)[1];
@@ -1808,25 +1871,25 @@ var PROJECTS = {
 			}
 
 			$.ajax({
-			  url: url,
-			  type: "GET",
-			  xhrFields: {
-			   withCredentials: true
-			  },
-			  crossDomain: true,
-			  complete: function( response ){
-			  		//console.log(response);
-			  		
-			  		var query_array =  JSON.parse( response.responseText );	
-			  		console.log( self.data_array );			  		
-			  		if(query_array.length > 0){
-			  			self.data_array = self.data_array.concat(query_array);
-			  			self.data_last_item += query_array.length;
-				  		self.check_current_url( 1 );
-				  		self.build_elements( 0, true,  query_array);
-			  		}
-			  		$.mobile.loading( "hide" );	 
-			  },
+				url: url,
+				type: "GET",
+				xhrFields: {
+					withCredentials: true
+				},
+				crossDomain: true,
+				complete: function( response ){
+					//console.log(response);
+					
+					var query_array = JSON.parse( response.responseText );	
+					console.log( self.data_array );
+					if(query_array.length > 0){
+						self.data_array = self.data_array.concat(query_array);
+						self.data_last_item += query_array.length;
+						self.check_current_url( 1 );
+						self.build_elements( 0, true, query_array);
+					}
+					$.mobile.loading( "hide" );
+				},
 			});
 		}
 	},
@@ -1834,7 +1897,7 @@ var PROJECTS = {
 		var self = this;
 		self.activated_easy_filter = 1;
 
-		$.mobile.loading( "show", {  theme: "z"	});
+		$.mobile.loading( "show", {theme: "z"});
 
 		var url = mainURL + '/project.php';
 
@@ -1875,8 +1938,8 @@ var PROJECTS = {
 							+ $('#filter-page-projects [name=start_month]').val() + "-" 
 							+ $('#filter-page-projects [name=start_date]').val();
 			var end_date = $('#filter-page-projects [name=end_year]').val() + "-" 
-						  + $('#filter-page-projects [name=end_month]').val() + "-" 
-						  + $('#filter-page-projects [name=end_date]').val();
+						+ $('#filter-page-projects [name=end_month]').val() + "-" 
+						+ $('#filter-page-projects [name=end_date]').val();
 			url += '&start=' + start_date + '&finish=' + end_date;
 			
 			/*if(self.sphere_filter >= 0){
@@ -1892,26 +1955,26 @@ var PROJECTS = {
 		}
 
 		$.ajax({
-		  url: url,
-		  type: "GET",
-		  xhrFields: {
-		   withCredentials: true
-		  },
-		  crossDomain: true,
-		  complete: function( response ){
-		  		console.log(url);
-		  		self.data_array = JSON.parse( response.responseText );	
-		  		$.mobile.loading( "hide" );
-		  		//self.check_current_url( 1 );
-		  		if(reinit){
-		  			self.build_elements( "", true );	
-		  		}else{
-		  			self.build_elements();	
-		  		}
-		  		if(self.data_array.length == 0 && reinit != 1 && self.activated_hard_filter){
-		  			$('#projects-page #projects-list').html('<center>Empty</center>');
-		  		} 	
-		  },
+			url: url,
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				console.log(url);
+				self.data_array = JSON.parse( response.responseText );	
+				$.mobile.loading( "hide" );
+				//self.check_current_url( 1 );
+				if(reinit){
+					self.build_elements( "", true );	
+				}else{
+					self.build_elements();	
+				}
+				if(self.data_array.length == 0 && reinit != 1 && self.activated_hard_filter){
+					$('#projects-page #projects-list').html('<center>Empty</center>');
+				} 	
+			},
 		});
 	},
 	build_elements: function(ready_array, reinit, reinit_array){
@@ -1962,29 +2025,29 @@ var PROJECTS = {
 				allStar.removeClass('active');
 				
 				$.ajax({
-				  url:  mainURL + "/stars_add.php?id=" + vote_id + "&stars=0&obj=" + obj_type,
-				  type: "GET",
-				  xhrFields: {
-				   withCredentials: true
-				  },
-				  crossDomain: true,
-				  complete: function( response ){
-				  		
-				  }
+					url: mainURL + "/stars_add.php?id=" + vote_id + "&stars=0&obj=" + obj_type,
+					type: "GET",
+					xhrFields: {
+						withCredentials: true
+					},
+					crossDomain: true,
+					complete: function( response ){
+						
+					}
 				});
 				return false;
 			}
 
 			$.ajax({
-			  url:  mainURL + "/stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=" + obj_type,
-			  type: "GET",
-			  xhrFields: {
-			   withCredentials: true
-			  },
-			  crossDomain: true,
-			  complete: function( response ){
-			  		
-			  }
+				url: mainURL + "/stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=" + obj_type,
+				type: "GET",
+				xhrFields: {
+					withCredentials: true
+				},
+				crossDomain: true,
+				complete: function( response ){
+					
+				}
 			});
 
 			star.siblings().removeClass('active');
@@ -1992,7 +2055,7 @@ var PROJECTS = {
 			for (var i = 0; i <= val; i++) {
 				allStar.eq(i).addClass('active');
 			}
-	   // });
+	 // });
 	},
 	collect_cash_build:function(one_voting){
 		var self = this;
@@ -2149,7 +2212,7 @@ var PROJECTS = {
 					self.current_collect_cash( data_for_build, 0, type_trigger);
 					break;
 				case '1':
-					self.current_collect_cash(  data_for_build, 0, type_trigger)
+					self.current_collect_cash(data_for_build, 0, type_trigger)
 					break;
 			}
 		}
@@ -2168,17 +2231,17 @@ var PROJECTS = {
 	},
 	current_collect_cash: function(data_for_build, canceled, type_trigger){
 		var self = this;
-		$.mobile.loading( "show", {  theme: "z"	});
+		$.mobile.loading( "show", {theme: "z"});
 
 		switch(data_for_build.stars){
 			case "0":
-				var stars_ui = '<span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span>\ ';
+				var stars_ui = '<span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span>\ ';
 				break;
 			case "1":
-				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span>\ ';
+				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span>\ ';
 				break;
 			case "2":
-				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span>\ ';
+				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span>\ ';
 				break;
 			case "3":
 				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span>\ ';
@@ -2209,14 +2272,14 @@ var PROJECTS = {
 			if( data_for_build.nco_id == '0' ){
 					nko_parts += '<li>\
 									<div>\
-										<strong>' + one_nko.reg_name + '</strong> (<strong>ID</strong>:<span>' + one_nko.id + '</span>)<span class="phone">' + one_nko.reg_phone + '</span><span class="doc">' + one_nko.reg_doc + '</span><span class="addr">' + one_nko.reg_address + '</span>\
+										<strong>' + one_nko.reg_name + '</strong> (<strong>ID</strong>:<span>' + one_nko.user_id + '</span>)<span class="phone">' + one_nko.reg_phone + '</span><span class="doc">' + one_nko.reg_doc + '</span><span class="addr">' + one_nko.reg_address + '</span>\
 									</div>\
 								</li>\ ';
 			}else{
-				if( data_for_build.nco_id == one_nko.id){
+				if( data_for_build.nco_id == one_nko.user_id){
 					nko_parts += '<li>\
 									<div>\
-										<strong>' + one_nko.reg_name + '</strong> (<strong>ID</strong>:<span>' + one_nko.id + '</span>)<span class="phone">' + one_nko.reg_phone + '</span><span class="doc">' + one_nko.reg_doc + '</span><span class="addr">' + one_nko.reg_address + '</span>\
+										<strong>' + one_nko.reg_name + '</strong> (<strong>ID</strong>:<span>' + one_nko.user_id + '</span>)<span class="phone">' + one_nko.reg_phone + '</span><span class="doc">' + one_nko.reg_doc + '</span><span class="addr">' + one_nko.reg_address + '</span>\
 									</div>\
 								</li>\ ';
 					nco_create_flag = 1;
@@ -2264,12 +2327,12 @@ var PROJECTS = {
 			});
 			if(creator_check_accept == 0){
 				jQuery.each(data_for_build.nco_list, function(i, one_nko) {
-					if( data_for_build.nco_id == one_nko.id){
+					if( data_for_build.nco_id == user_id){
 						nco_accept_button = '<div class="nko-btn">\
 							<a class="ui-btn ui-corner-all ui-shadow" onclick = "NCO_OBJECT.offer_accept_nco(4,' + data_for_build.id + '\'#project-page\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.accept_nco[CURRENT_LANG] + '</a>\
 						</div>';
 					} 
-				});   		
+				});
 			}
 		}
 		var ui_donate_panel = '';
@@ -2387,29 +2450,29 @@ var PROJECTS = {
 							</div>\
 						</div>\
 						<div class="discuss-btn">\
-							<a class="ui-btn ui-corner-all ui-shadow" onclick="window.open(\'' + data_for_build.project_discussion_link +  '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_project[CURRENT_LANG] + '</a>\
+							<a class="ui-btn ui-corner-all ui-shadow" onclick="window.open(\'' + data_for_build.project_discussion_link + '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_project[CURRENT_LANG] + '</a>\
 						</div>\
 						<div class="btn-login-soc">\
 							<button class="ui-btn ui-corner-all ui-shadow share-btn">' + LOCALE_ARRAY_ADDITIONAL.share_by_social_newtworks[CURRENT_LANG] + '</button>\
 							<div class="social-wrap">\
 								<div class="ui-grid-b">\
 									<div class="ui-block-a">\
-										<a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href)  + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
+										<a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
 									</div>\
 									<div class="ui-block-b">\
-										<a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href)  + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
+										<a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href) + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
 									</div>\
 									<div class="ui-block-c">\
-										<a target="_blank" class="tw" href="http://twitter.com/share?url=' + encodeURIComponent(location.href)  + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
+										<a target="_blank" class="tw" href="http://twitter.com/share?url=' + encodeURIComponent(location.href) + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
 									</div>\
 									<div class="ui-block-a">\
-										<a target="_blank" class="gp" href="https://plus.google.com/share?url=' + encodeURIComponent(location.href)  + '"></a>\
+										<a target="_blank" class="gp" href="https://plus.google.com/share?url=' + encodeURIComponent(location.href) + '"></a>\
 									</div>\
 									<div class="ui-block-b">\
-										<a target="_blank" class="in" href="https://www.linkedin.com/cws/share?url=' + encodeURIComponent(location.href)  + '"></a>\
+										<a target="_blank" class="in" href="https://www.linkedin.com/cws/share?url=' + encodeURIComponent(location.href) + '"></a>\
 									</div>\
 									<div class="ui-block-c">\
-										<a target="_blank" class="ok" href="http://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href)  + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
+										<a target="_blank" class="ok" href="http://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href) + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
 									</div>\
 								</div>\
 							</div>\
@@ -2439,17 +2502,17 @@ var PROJECTS = {
 	},
 	current_collect_cash_project_proposition: function(data_for_build, canceled, type_trigger){
 		var self = this;
-		$.mobile.loading( "show", {  theme: "z"	});
+		$.mobile.loading( "show", {theme: "z"});
 
 		switch(data_for_build.stars){
 			case "0":
-				var stars_ui = '<span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span>\ ';
+				var stars_ui = '<span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span>\ ';
 				break;
 			case "1":
-				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span>\ ';
+				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span>\ ';
 				break;
 			case "2":
-				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span>\ ';
+				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span>\ ';
 				break;
 			case "3":
 				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this, 1)"></span>\ ';
@@ -2480,14 +2543,14 @@ var PROJECTS = {
 			if( data_for_build.nco_id == '0' ){
 					nko_parts += '<li>\
 									<div>\
-										<strong>' + one_nko.reg_name + '</strong> (<strong>ID</strong>:<span>' + one_nko.id + '</span>)<span class="phone">' + one_nko.reg_phone + '</span><span class="doc">' + one_nko.reg_doc + '</span><span class="addr">' + one_nko.reg_address + '</span>\
+										<strong>' + one_nko.reg_name + '</strong> (<strong>ID</strong>:<span>' + one_nko.user_id + '</span>)<span class="phone">' + one_nko.reg_phone + '</span><span class="doc">' + one_nko.reg_doc + '</span><span class="addr">' + one_nko.reg_address + '</span>\
 									</div>\
 								</li>\ ';
 			}else{
-				if( data_for_build.nco_id == one_nko.id){
+				if( data_for_build.nco_id == one_nko.user_id){
 					nko_parts += '<li>\
 									<div>\
-										<strong>' + one_nko.reg_name + '</strong> (<strong>ID</strong>:<span>' + one_nko.id + '</span>)<span class="phone">' + one_nko.reg_phone + '</span><span class="doc">' + one_nko.reg_doc + '</span><span class="addr">' + one_nko.reg_address + '</span>\
+										<strong>' + one_nko.reg_name + '</strong> (<strong>ID</strong>:<span>' + one_nko.user_id + '</span>)<span class="phone">' + one_nko.reg_phone + '</span><span class="doc">' + one_nko.reg_doc + '</span><span class="addr">' + one_nko.reg_address + '</span>\
 									</div>\
 								</li>\ ';
 					nco_create_flag = 1;
@@ -2535,12 +2598,12 @@ var PROJECTS = {
 			});
 			if(creator_check_accept == 0){
 				jQuery.each(data_for_build.nco_list, function(i, one_nko) {
-					if( data_for_build.nco_id == one_nko.id){
+					if( data_for_build.nco_id == one_nko.user_id){
 						nco_accept_button = '<div class="nko-btn">\
 							<a class="ui-btn ui-corner-all ui-shadow" onclick = "NCO_OBJECT.offer_accept_nco(3,' + data_for_build.id + '\'#project-page\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.accept_nco[CURRENT_LANG] + '</a>\
 						</div>';
 					} 
-				});   		
+				});
 			}
 		}
 		var ui_donate_panel = '';
@@ -2659,29 +2722,29 @@ var PROJECTS = {
 							</div>\
 						</div>\
 						<div class="discuss-btn">\
-							<a class="ui-btn ui-corner-all ui-shadow" onclick="window.open(\'' + data_for_build.project_discussion_link +  '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_project_proposition[CURRENT_LANG] + '</a>\
+							<a class="ui-btn ui-corner-all ui-shadow" onclick="window.open(\'' + data_for_build.project_discussion_link + '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_project_proposition[CURRENT_LANG] + '</a>\
 						</div>\
 						<div class="btn-login-soc">\
 							<button class="ui-btn ui-corner-all ui-shadow share-btn">' + LOCALE_ARRAY_ADDITIONAL.share_by_social_newtworks[CURRENT_LANG] + '</button>\
 							<div class="social-wrap">\
 								<div class="ui-grid-b">\
 									<div class="ui-block-a">\
-										<a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href)  + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
+										<a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
 									</div>\
 									<div class="ui-block-b">\
-										<a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href)  + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
+										<a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href) + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
 									</div>\
 									<div class="ui-block-c">\
-										<a target="_blank" class="tw" href="http://twitter.com/share?url=' + encodeURIComponent(location.href)  + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
+										<a target="_blank" class="tw" href="http://twitter.com/share?url=' + encodeURIComponent(location.href) + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
 									</div>\
 									<div class="ui-block-a">\
-										<a target="_blank" class="gp" href="https://plus.google.com/share?url=' + encodeURIComponent(location.href)  + '"></a>\
+										<a target="_blank" class="gp" href="https://plus.google.com/share?url=' + encodeURIComponent(location.href) + '"></a>\
 									</div>\
 									<div class="ui-block-b">\
-										<a target="_blank" class="in" href="https://www.linkedin.com/cws/share?url=' + encodeURIComponent(location.href)  + '"></a>\
+										<a target="_blank" class="in" href="https://www.linkedin.com/cws/share?url=' + encodeURIComponent(location.href) + '"></a>\
 									</div>\
 									<div class="ui-block-c">\
-										<a target="_blank" class="ok" href="http://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href)  + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
+										<a target="_blank" class="ok" href="http://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href) + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
 									</div>\
 								</div>\
 							</div>\
@@ -2737,7 +2800,7 @@ var PROJECTS = {
 									<label class="ui-btn ui-btn-icon-left ui-checkbox-off"></label><input type="checkbox" name="" value="1" data-enhanced="true" />\
 								</div>\
 								<div>\
-									<strong>' + one_nko.reg_name + '</strong> (<strong>ID</strong>:<span>' + one_nko.id + '</span>)<span class="phone">' + one_nko.reg_phone + '</span><span class="doc">' + one_nko.reg_doc + '</span><span class="addr">' + one_nko.reg_address + '</span>\
+									<strong>' + one_nko.reg_name + '</strong> (<strong>ID</strong>:<span>' + one_nko.user_id + '</span>)<span class="phone">' + one_nko.reg_phone + '</span><span class="doc">' + one_nko.reg_doc + '</span><span class="addr">' + one_nko.reg_address + '</span>\
 								</div>\
 							</li>\ '; 
 			});
@@ -2772,14 +2835,14 @@ var PROJECTS = {
 	},
 	set_nco: function(object_type, object_id, nco_id){
 		$.ajax({
-			url:  mainURL + "/nco_choice.php",
+			url: mainURL + "/nco_choice.php",
 			type: "POST",
 			data: {"type": object_type,
-				   "id": object_id,
-				   "nco": nco_id},
+				 "id": object_id,
+				 "nco": nco_id},
 			crossDomain: true,
 			xhrFields: {
-			   withCredentials: true
+				withCredentials: true
 			},
 			complete: function(data){
 				alert(LOCALE_ARRAY_ADDITIONAL.saved_successfull[CURRENT_LANG]);
@@ -2796,46 +2859,45 @@ var PROJECTS = {
 		var self = this;
 		var return_element;
 		$.ajax({
-			  url: url,
-			  type: "GET",
-			  xhrFields: {
-			   withCredentials: true
-			  },
-			  crossDomain: true,
-			  complete: function( response ){
-			  		return_element = JSON.parse( response.responseText );
-			  		data_for_build = return_element[0];
-			  		self.data_array = data_for_build;
-			  		console.log(self.data_array);
-			  		if(project_proposition){
-						self.current_collect_cash_project_proposition( data_for_build, 0, type_trigger);
-					}else{
-						switch(data_for_build.status){
-							case '0':
-								self.current_collect_cash( data_for_build, 0, type_trigger);
-								break;
-							case '1':
-								self.current_collect_cash(  data_for_build, 0, type_trigger)
-								break;
-							case '2':
-								self.current_collect_cash(  data_for_build, 0, type_trigger)
-								break;
-						}
-
+			url: url,
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				return_element = JSON.parse( response.responseText );
+				data_for_build = return_element[0];
+				self.data_array = data_for_build;
+				console.log(self.data_array);
+				if(project_proposition){
+					self.current_collect_cash_project_proposition( data_for_build, 0, type_trigger);
+				}else{
+					switch(data_for_build.status){
+						case '0':
+							self.current_collect_cash( data_for_build, 0, type_trigger);
+							break;
+						case '1':
+							self.current_collect_cash(data_for_build, 0, type_trigger)
+							break;
+						case '2':
+							self.current_collect_cash(data_for_build, 0, type_trigger)
+							break;
 					}
-					$('#project-page .btn-login-soc button').on('click', function(e){
-						$(this).next().fadeToggle(300);
-						if($('.overlay').length < 1) {
-							$(this).closest('.ui-page').append('<span class="overlay"></span>');
-						} else {
-							$('.overlay').remove();
-						}
-					});
-					$(document).on('click','.overlay', function() {
-						$(this).closest('.ui-page').find('#project-page .btn-login-soc button').trigger('click');
-					});			  		
-			  },
-			});
+				}
+				$('#project-page .btn-login-soc button').on('click', function(e){
+					$(this).next().fadeToggle(300);
+					if($('.overlay').length < 1) {
+						$(this).closest('.ui-page').append('<span class="overlay"></span>');
+					} else {
+						$('.overlay').remove();
+					}
+				});
+				$(document).on('click','.overlay', function() {
+					$(this).closest('.ui-page').find('#project-page .btn-login-soc button').trigger('click');
+				});
+			},
+		});
 	},
 	donate: function(selector, object_id, type_id){
 		var fund_id = $('#' + selector + '-page [name=pif]').val(); 
@@ -2847,17 +2909,17 @@ var PROJECTS = {
 		}
 		
 		$.ajax({
-			url:  mainURL + "/fund_add_by_type.php",
+			url: mainURL + "/fund_add_by_type.php",
 			type: "POST",
 			data: {"fund_id": fund_id,
-				   "currency": currency,
-				   "amount": amount,
-				   "type": type_id,
-				   "id": object_id,
-				   "open": open},
+				 "currency": currency,
+				 "amount": amount,
+				 "type": type_id,
+				 "id": object_id,
+				 "open": open},
 			crossDomain: true,
 			xhrFields: {
-			   withCredentials: true
+				withCredentials: true
 			},
 			complete: function(data){
 				if(data){
@@ -2895,24 +2957,24 @@ var PROJECTS = {
 				var return_page = '#project-page?project_proposition=' + object_id;
 			}
 			var my_add = 0;
-			$.mobile.loading( "show", {  theme: "z"	});
+			$.mobile.loading( "show", {theme: "z"});
 			$.ajax({
-			  url: mainURL + '/fund_public_cf.php?type=' + type + '&id=' + object_id,
-			  type: "GET",
-			  xhrFields: {
-			   withCredentials: true
-			  },
-			  crossDomain: true,
-			  complete: function( response ){
-			  		var funds_list = JSON.parse( response.responseText );
-			  		console.log('project_proposition or project');	
-			  		$.mobile.loading( "hide" );
+			url: mainURL + '/fund_public_cf.php?type=' + type + '&id=' + object_id,
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+					var funds_list = JSON.parse( response.responseText );
+					console.log('project_proposition or project');	
+					$.mobile.loading( "hide" );
 
-			  		var ui_funds = '';
-			  		var ui_cf = '';
-			  		var main_currency = PIF.get_currency_name_by_id( funds_list[0].cur );
+					var ui_funds = '';
+					var ui_cf = '';
+					var main_currency = PIF.get_currency_name_by_id( funds_list[0].cur );
 
-			  		jQuery.each(funds_list, function(i, one_fund) {		  			
+					jQuery.each(funds_list, function(i, one_fund) {
 						for (var i = 0; i < one_fund.cf.length; i++) {
 							var currency_name = PIF.get_currency_name_by_id( one_fund.cf[i].currency );
 							var cancel_span = '';
@@ -2925,7 +2987,7 @@ var PROJECTS = {
 										<td>' + one_fund.cf[i].user_id + ' ' + one_fund.cf[i].fname + ' ' + one_fund.cf[i].lname + '</td>\
 										<td><strong>' + one_fund.cf[i].saldo + '</strong> ' + currency_name + '</td>\
 									</tr>';
-			  			} 
+						} 
 					});
 
 					ui_funds += '<div data-role="header" data-position="fixed" data-tap-toggle="false">\
@@ -2988,23 +3050,23 @@ var PROJECTS = {
 										</div>\
 									</div>';
 				$('#history-page').html( ui_funds ).enhanceWithin();
-			  				
-			  },
+							
+			},
 			});
 		}
 	}, 
 	return_donate: function(fund_id, currency, amount, type, type_id, return_page){
 		$.ajax({
-			url:  mainURL + "/fund_return_by_type.php",
+			url: mainURL + "/fund_return_by_type.php",
 			type: "POST",
 			data: {"fund_id": fund_id,
-				   "currency": currency,
-				   "amount": amount,
-				   "type": type,
-				   "id": type_id},
+				 "currency": currency,
+				 "amount": amount,
+				 "type": type,
+				 "id": type_id},
 			crossDomain: true,
 			xhrFields: {
-			   withCredentials: true
+				withCredentials: true
 			},
 			complete: function(data){
 				alert(LOCALE_ARRAY_ADDITIONAL.return_donate_successfull[CURRENT_LANG]);
@@ -3017,16 +3079,16 @@ var PROJECTS = {
 	},
 	/*delete_voting: function(voting_id, return_page){
 		$.ajax({
-		  url: mainURL + '/mc_rm.php?id=' + voting_id,
-		  type: "GET",
-		  xhrFields: {
-		   withCredentials: true
-		  },
-		  crossDomain: true,
-		  complete: function( response ){
-		  	 console.log("Deleted id:" + voting_id);
-		  	 $.mobile.navigate(return_page);  	
-		  },
+			url: mainURL + '/mc_rm.php?id=' + voting_id,
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				 console.log("Deleted id:" + voting_id);
+				 $.mobile.navigate(return_page);
+			},
 		});
 	},*/
 };
@@ -3069,30 +3131,30 @@ var PROGRAMS = {
 			$('#programs-page #my_activities_link').attr('style', 'display:none');
 		}
 
-		$.mobile.loading( "show", {  theme: "z"	});
+		$.mobile.loading( "show", {theme: "z"});
 		$.ajax({
-		  url: url,
-		  type: "GET",
-		  xhrFields: {
-		   withCredentials: true
-		  },
-		  crossDomain: true,
-		  complete: function( response ){
-		  		console.log(response);
-		  		self.data_array = JSON.parse( response.responseText );
-		  		if(self.data_array.length == 0  && self.activated_hard_filter == 1){
-		  			alert(LOCALE_ARRAY_ADDITIONAL.no_data[CURRENT_LANG]);
-		  		}	
-		  		console.log( self.data_array );
-		  		$.mobile.loading( "hide" );
-		  		self.check_current_url( 1 );
-		  		self.build_elements();
-		  		$('#programs-page #activated_filter').css('display', 'none'); 
-		  		$('#programs-page #solo_filter').css('display', 'block');	 
-		  		/*if(call_back){
-		  			call_back();
-		  		}*/	
-		  },
+			url: url,
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+					console.log(response);
+					self.data_array = JSON.parse( response.responseText );
+					if(self.data_array.length == 0 && self.activated_hard_filter == 1){
+						alert(LOCALE_ARRAY_ADDITIONAL.no_data[CURRENT_LANG]);
+					}	
+					console.log( self.data_array );
+					$.mobile.loading( "hide" );
+					self.check_current_url( 1 );
+					self.build_elements();
+					$('#programs-page #activated_filter').css('display', 'none'); 
+					$('#programs-page #solo_filter').css('display', 'block');	 
+					/*if(call_back){
+						call_back();
+					}*/	
+			},
 		});
 	},
 	reinit: function(){
@@ -3113,27 +3175,27 @@ var PROGRAMS = {
 				var url = mainURL + '/program.php?ls=' + self.data_last_item;
 			}
 
-			$.mobile.loading( "show", {  theme: "z"	});
+			$.mobile.loading( "show", {theme: "z"});
 			$.ajax({
-			  url: url,
-			  type: "GET",
-			  xhrFields: {
-			   withCredentials: true
-			  },
-			  crossDomain: true,
-			  complete: function( response ){
-			  		//console.log(response);
-			  		
-			  		var query_array =  JSON.parse( response.responseText );	
-			  		console.log( self.data_array );			  		
-			  		if(query_array.length > 0){
-			  			self.data_array = self.data_array.concat(query_array);
-			  			self.data_last_item += query_array.length;
-				  		self.check_current_url( 1 );
-				  		self.build_elements( 1, true,  query_array);
-			  		}
-			  		$.mobile.loading( "hide" );	 
-			  },
+				url: url,
+				type: "GET",
+				xhrFields: {
+				 withCredentials: true
+				},
+				crossDomain: true,
+				complete: function( response ){
+						//console.log(response);
+					
+						var query_array =JSON.parse( response.responseText );
+						console.log( self.data_array );
+						if(query_array.length > 0){
+							self.data_array = self.data_array.concat(query_array);
+							self.data_last_item += query_array.length;
+							self.check_current_url( 1 );
+							self.build_elements( 1, true, query_array);
+						}
+						$.mobile.loading( "hide" );	 
+				},
 			});
 		}
 	},
@@ -3151,7 +3213,7 @@ var PROGRAMS = {
 			}
 			$('#filter-page #choose_spheres').html(LOCALE_ARRAY_ADDITIONAL.choose_sphere[CURRENT_LANG] + ': ' + type_sphere);
 		}*/
-		$.mobile.loading( "show", {  theme: "z"	});
+		$.mobile.loading( "show", {theme: "z"});
 
 		var url = mainURL + '/program.php';
 
@@ -3188,8 +3250,8 @@ var PROGRAMS = {
 							+ $('#filter-page-programs [name=start_month]').val() + "-" 
 							+ $('#filter-page-programs [name=start_date]').val();
 			var end_date = $('#filter-page-programs [name=end_year]').val() + "-" 
-						  + $('#filter-page-programs [name=end_month]').val() + "-" 
-						  + $('#filter-page-programs [name=end_date]').val();
+						+ $('#filter-page-programs [name=end_month]').val() + "-" 
+						+ $('#filter-page-programs [name=end_date]').val();
 			url += '&start=' + start_date + '&finish=' + end_date;
 			
 			/*if(self.sphere_filter >= 0){
@@ -3205,26 +3267,26 @@ var PROGRAMS = {
 		}
 
 		$.ajax({
-		  url: url,
-		  type: "GET",
-		  xhrFields: {
-		   withCredentials: true
-		  },
-		  crossDomain: true,
-		  complete: function( response ){
-		  		console.log(url);
-		  		self.data_array = JSON.parse( response.responseText );	
-		  		$.mobile.loading( "hide" );
-		  		//self.check_current_url( 1 );
-		  		if(reinit){
-		  			self.build_elements( "", true );	
-		  		}else{
-		  			self.build_elements();	
-		  		}
-		  		if(self.data_array.length == 0 && reinit != 1 && self.activated_hard_filter){
-		  			$('#programs-page #programs-list').html('<center>Empty</center>');
-		  		} 	
-		  },
+			url: url,
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+					console.log(url);
+					self.data_array = JSON.parse( response.responseText );	
+					$.mobile.loading( "hide" );
+					//self.check_current_url( 1 );
+					if(reinit){
+						self.build_elements( "", true );	
+					}else{
+						self.build_elements();	
+					}
+					if(self.data_array.length == 0 && reinit != 1 && self.activated_hard_filter){
+						$('#programs-page #programs-list').html('<center>Empty</center>');
+					} 	
+			},
 		});
 	},
 	build_elements: function(ready_array, reinit, reinit_array){
@@ -3270,29 +3332,29 @@ var PROGRAMS = {
 			if (star.hasClass('active') && !star.next().hasClass('active')) {
 				allStar.removeClass('active');
 				$.ajax({
-				  url:  mainURL + "/stars_add.php?id=" + vote_id + "&stars=0&obj=2",
-				  type: "GET",
-				  xhrFields: {
-				   withCredentials: true
-				  },
-				  crossDomain: true,
-				  complete: function( response ){
-				  		
-				  }
+					url: mainURL + "/stars_add.php?id=" + vote_id + "&stars=0&obj=2",
+					type: "GET",
+					xhrFields: {
+						withCredentials: true
+					},
+					crossDomain: true,
+					complete: function( response ){
+						
+					}
 				});
 				return false;
 			}
 
 			$.ajax({
-			  url:  mainURL + "/stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=2",
-			  type: "GET",
-			  xhrFields: {
-			   withCredentials: true
-			  },
-			  crossDomain: true,
-			  complete: function( response ){
-			  		
-			  }
+				url: mainURL + "/stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=2",
+				type: "GET",
+				xhrFields: {
+					withCredentials: true
+				},
+				crossDomain: true,
+				complete: function( response ){
+					
+				}
 			});
 
 			star.siblings().removeClass('active');
@@ -3300,7 +3362,7 @@ var PROGRAMS = {
 			for (var i = 0; i <= val; i++) {
 				allStar.eq(i).addClass('active');
 			}
-	   // });
+	 // });
 	},
 	collect_cash_build:function(one_voting){
 		var self = this;
@@ -3393,7 +3455,7 @@ var PROGRAMS = {
 				self.current_collect_cash( data_for_build, 0, type_trigger);
 				break;
 			case '1':
-				self.current_collect_cash(  data_for_build, 0, type_trigger)
+				self.current_collect_cash(data_for_build, 0, type_trigger)
 				break;
 			case '2':
 				//self.current_vote_page_voting_period( data_for_build, 1, type_trigger)
@@ -3417,17 +3479,17 @@ var PROGRAMS = {
 	},
 	current_collect_cash: function(data_for_build, canceled, type_trigger){
 		var self = this;
-		$.mobile.loading( "show", {  theme: "z"	});
+		$.mobile.loading( "show", {theme: "z"});
 
 		switch(data_for_build.stars){
 			case "0":
-				var stars_ui = '<span data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span>\ ';
+				var stars_ui = '<span data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span>\ ';
 				break;
 			case "1":
-				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span>\ ';
+				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span>\ ';
 				break;
 			case "2":
-				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span>\ ';
+				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span>\ ';
 				break;
 			case "3":
 				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span>\ ';
@@ -3561,29 +3623,29 @@ var PROGRAMS = {
 							</div>\
 						</div>\
 						<div class="discuss-btn">\
-							<a class="ui-btn ui-corner-all ui-shadow" onclick="window.open(\'' + data_for_build.prog_discussion_link +  '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_program[CURRENT_LANG] + '</a>\
+							<a class="ui-btn ui-corner-all ui-shadow" onclick="window.open(\'' + data_for_build.prog_discussion_link + '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_program[CURRENT_LANG] + '</a>\
 						</div>\
 						<div class="btn-login-soc">\
 							<button class="ui-btn ui-corner-all ui-shadow share-btn">' + LOCALE_ARRAY_ADDITIONAL.share_by_social_newtworks[CURRENT_LANG] + '</button>\
 							<div class="social-wrap">\
 								<div class="ui-grid-b">\
 									<div class="ui-block-a">\
-										<a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href)  + '&title=' + encodeURIComponent(data_for_build.title) + '&image=' + mainURL + data_for_build.img + '"></a>\
+										<a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(data_for_build.title) + '&image=' + mainURL + data_for_build.img + '"></a>\
 									</div>\
 									<div class="ui-block-b">\
-										<a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href)  + '&t=' + encodeURIComponent(data_for_build.title) + '"></a>\
+										<a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href) + '&t=' + encodeURIComponent(data_for_build.title) + '"></a>\
 									</div>\
 									<div class="ui-block-c">\
-										<a target="_blank" class="tw" href="http://twitter.com/share?url=' + encodeURIComponent(location.href)  + '&text=' + encodeURIComponent(data_for_build.title) + '"></a>\
+										<a target="_blank" class="tw" href="http://twitter.com/share?url=' + encodeURIComponent(location.href) + '&text=' + encodeURIComponent(data_for_build.title) + '"></a>\
 									</div>\
 									<div class="ui-block-a">\
-										<a target="_blank" class="gp" href="https://plus.google.com/share?url=' + encodeURIComponent(location.href)  + '"></a>\
+										<a target="_blank" class="gp" href="https://plus.google.com/share?url=' + encodeURIComponent(location.href) + '"></a>\
 									</div>\
 									<div class="ui-block-b">\
-										<a target="_blank" class="in" href="https://www.linkedin.com/cws/share?url=' + encodeURIComponent(location.href)  + '"></a>\
+										<a target="_blank" class="in" href="https://www.linkedin.com/cws/share?url=' + encodeURIComponent(location.href) + '"></a>\
 									</div>\
 									<div class="ui-block-c">\
-										<a target="_blank" class="ok" href="http://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href)  + '&st.comments=' + encodeURIComponent(data_for_build.title) + '"></a>\
+										<a target="_blank" class="ok" href="http://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href) + '&st.comments=' + encodeURIComponent(data_for_build.title) + '"></a>\
 									</div>\
 								</div>\
 							</div>\
@@ -3600,7 +3662,7 @@ var PROGRAMS = {
 							<a class="ui-btn ui-btn-icon-right" href="#" onclick = "$.mobile.navigate(\'#history-page?item=program&id=' + data_for_build.id + '\');">' + LOCALE_ARRAY_ADDITIONAL.history_donation[CURRENT_LANG] + '</a>\
 						</div>\
 						<div class="btn-next-page">\
-							<a id = "weighted_voting_link" class="ui-btn ui-btn-icon-right" onclick = "' + weighted_votings_link +  '" href="#">' + LOCALE_ARRAY_ADDITIONAL.votings_on_program[CURRENT_LANG] + '</a>\
+							<a id = "weighted_voting_link" class="ui-btn ui-btn-icon-right" onclick = "' + weighted_votings_link + '" href="#">' + LOCALE_ARRAY_ADDITIONAL.votings_on_program[CURRENT_LANG] + '</a>\
 						</div>\
 						<div class="btn-next-page">\
 							<a class="ui-btn ui-btn-icon-right" onclick = "$.mobile.navigate(\'#projects-page?program=' + data_for_build.id + '\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.projects_propositions[CURRENT_LANG] + '</a>\
@@ -3623,42 +3685,42 @@ var PROGRAMS = {
 		var self = this;
 		var return_element;
 		$.ajax({
-			  url: mainURL + '/program.php?id=' + data_id,
-			  type: "GET",
-			  xhrFields: {
-			   withCredentials: true
-			  },
-			  crossDomain: true,
-			  complete: function( response ){
-			  		return_element = JSON.parse( response.responseText );
-			  		data_for_build = return_element[0];
-			  		self.data_array = data_for_build;
-			  		console.log(self.data_array);
-			  		switch(data_for_build.status){
-						case '0':
-							self.current_collect_cash( data_for_build, 0, type_trigger);
-							break;
-						case '1':
-							self.current_collect_cash(  data_for_build, 0, type_trigger)
-							break;
-						case '2':
-							self.current_collect_cash(  data_for_build, 0, type_trigger)
-							break;
-					}
+			url: mainURL + '/program.php?id=' + data_id,
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				return_element = JSON.parse( response.responseText );
+				data_for_build = return_element[0];
+				self.data_array = data_for_build;
+				console.log(self.data_array);
+				switch(data_for_build.status){
+					case '0':
+						self.current_collect_cash( data_for_build, 0, type_trigger);
+						break;
+					case '1':
+						self.current_collect_cash(data_for_build, 0, type_trigger)
+						break;
+					case '2':
+						self.current_collect_cash(data_for_build, 0, type_trigger)
+						break;
+				}
 
-					$('#program-page .btn-login-soc button').on('click', function(e){
-						$(this).next().fadeToggle(300);
-						if($('.overlay').length < 1) {
-							$(this).closest('.ui-page').append('<span class="overlay"></span>');
-						} else {
-							$('.overlay').remove();
-						}
-					});
-					$(document).on('click','.overlay', function() {
-						$(this).closest('.ui-page').find('#program-page .btn-login-soc button').trigger('click');
-					});			  		
-			  },
-			});
+				$('#program-page .btn-login-soc button').on('click', function(e){
+					$(this).next().fadeToggle(300);
+					if($('.overlay').length < 1) {
+						$(this).closest('.ui-page').append('<span class="overlay"></span>');
+					} else {
+						$('.overlay').remove();
+					}
+				});
+				$(document).on('click','.overlay', function() {
+					$(this).closest('.ui-page').find('#program-page .btn-login-soc button').trigger('click');
+				});
+			},
+		});
 	},
 	donate: function(selector, object_id, type_id){
 		var fund_id = $('#' + selector + '-page [name=pif]').val(); 
@@ -3670,17 +3732,17 @@ var PROGRAMS = {
 		}
 		
 		$.ajax({
-			url:  mainURL + "/fund_add_by_type.php",
+			url: mainURL + "/fund_add_by_type.php",
 			type: "POST",
 			data: {"fund_id": fund_id,
-				   "currency": currency,
-				   "amount": amount,
-				   "type": type_id,
-				   "id": object_id,
-				   "open": open},
+				 "currency": currency,
+				 "amount": amount,
+				 "type": type_id,
+				 "id": object_id,
+				 "open": open},
 			crossDomain: true,
 			xhrFields: {
-			   withCredentials: true
+				withCredentials: true
 			},
 			complete: function(data){
 				if(data){
@@ -3692,7 +3754,7 @@ var PROGRAMS = {
 						$('#' + selector + '-page #my_amount_current').html( parseInt( $('#' + selector + '-page #my_amount_current').html() ) + parseInt( amount ) );
 						$('#' + selector + '-page select').selectmenu().selectmenu("refresh", true);
 						PIF.get_pif_array(true);
-						$('#weighted_voting_link').attr('onclick',  '$.mobile.navigate(\'#weighted-votings-page?program=' + object_id + '\')');
+						$('#weighted_voting_link').attr('onclick', '$.mobile.navigate(\'#weighted-votings-page?program=' + object_id + '\')');
 						console.log("donate ok");
 					}else{
 						alert(LOCALE_ARRAY_ADDITIONAL.fund_closed[CURRENT_LANG]);
@@ -3707,27 +3769,27 @@ var PROGRAMS = {
 			var match_array = location.href.match(/#history-page\?item=program&id=[0-9]*/i);
 			var object_id = match_array[0].match(/[0-9]+/i);
 			var my_add = 0;
-			$.mobile.loading( "show", {  theme: "z"	});
+			$.mobile.loading( "show", {theme: "z"});
 			$.ajax({
-			  url: mainURL + '/fund_public_cf.php?type=2&id=' + object_id,
-			  type: "GET",
-			  xhrFields: {
-			   withCredentials: true
-			  },
-			  crossDomain: true,
-			  complete: function( response ){
-			  		var funds_list = JSON.parse( response.responseText );
-			  		console.log('program');
-			  		console.log('funds_list');
-			  		console.log(funds_list);	
-			  		$.mobile.loading( "hide" );
+				url: mainURL + '/fund_public_cf.php?type=2&id=' + object_id,
+				type: "GET",
+				xhrFields: {
+					withCredentials: true
+				},
+				crossDomain: true,
+				complete: function( response ){
+					var funds_list = JSON.parse( response.responseText );
+					console.log('program');
+					console.log('funds_list');
+					console.log(funds_list);	
+					$.mobile.loading( "hide" );
 
-			  		var ui_funds = '';
-			  		var ui_cf = '';
-			  		var main_currency = PIF.get_currency_name_by_id( funds_list[0].cur );
-			  		jQuery.each(funds_list, function(j, one_fund) {
-			  			for (var i = 0; i < one_fund.cf.length; i++) {
-			  				var currency_name = PIF.get_currency_name_by_id( one_fund.cf[i].currency );
+					var ui_funds = '';
+					var ui_cf = '';
+					var main_currency = PIF.get_currency_name_by_id( funds_list[0].cur );
+					jQuery.each(funds_list, function(j, one_fund) {
+						for (var i = 0; i < one_fund.cf.length; i++) {
+							var currency_name = PIF.get_currency_name_by_id( one_fund.cf[i].currency );
 							var cancel_span = '';
 							if(one_fund.cf[i].user_id == SUPER_PROFILE.id && SUPER_PROFILE.auth == true){
 								cancel_span = '<span style = "color: red; cursor: pointer;" onclick = "PROGRAMS.return_donate(\'' + one_fund.id + '\',\'' + one_fund.cur + '\',\'' + one_fund.cf[i].saldo + '\',2,\'' + object_id + '\',\'#program-page?program=' + object_id + '\')">' + LOCALE_ARRAY_ADDITIONAL.cancel_donate[CURRENT_LANG] + '</span>';
@@ -3739,7 +3801,7 @@ var PROGRAMS = {
 										<td>' + one_fund.cf[i].user_id + ' ' + one_fund.cf[i].fname + ' ' + one_fund.cf[i].lname + '</td>\
 										<td><strong>' + one_fund.cf[i].saldo + '</strong> ' + currency_name + '</td>\
 									</tr>';
-			  			}		  			 
+						}
 					});
 
 					ui_funds += '<div data-role="header" data-position="fixed" data-tap-toggle="false">\
@@ -3795,29 +3857,29 @@ var PROGRAMS = {
 										</div>\
 									</div>';
 				$('#history-page').html( ui_funds ).enhanceWithin();
-			  				
-			  },
+							
+			},
 			});
 		}
 	},
 	return_donate: function(fund_id, currency, amount, type, type_id, return_page){
 		$.ajax({
-			url:  mainURL + "/fund_return_by_type.php",
+			url: mainURL + "/fund_return_by_type.php",
 			type: "POST",
 			data: {"fund_id": fund_id,
-				   "currency": currency,
-				   "amount": amount,
-				   "type": type,
-				   "id": type_id},
+				 "currency": currency,
+				 "amount": amount,
+				 "type": type,
+				 "id": type_id},
 			crossDomain: true,
 			xhrFields: {
-			   withCredentials: true
+				withCredentials: true
 			},
 			complete: function(data){
 				alert(LOCALE_ARRAY_ADDITIONAL.return_donate_successfull[CURRENT_LANG]);
 				console.log(return_page);
 				PIF.get_pif_array(true);
-				$('#weighted_voting_link').attr('onclick',  'alert(\'' + LOCALE_ARRAY_ADDITIONAL.only_for_donators[CURRENT_LANG] + '\');');
+				$('#weighted_voting_link').attr('onclick', 'alert(\'' + LOCALE_ARRAY_ADDITIONAL.only_for_donators[CURRENT_LANG] + '\');');
 				$.mobile.navigate(return_page);
 				//alert('okay');
 			}
@@ -3825,16 +3887,16 @@ var PROGRAMS = {
 	}	
 	/*delete_voting: function(voting_id, return_page){
 		$.ajax({
-		  url: mainURL + '/mc_rm.php?id=' + voting_id,
-		  type: "GET",
-		  xhrFields: {
-		   withCredentials: true
-		  },
-		  crossDomain: true,
-		  complete: function( response ){
-		  	 console.log("Deleted id:" + voting_id);
-		  	 $.mobile.navigate(return_page);  	
-		  },
+			url: mainURL + '/mc_rm.php?id=' + voting_id,
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				 console.log("Deleted id:" + voting_id);
+				 $.mobile.navigate(return_page);	
+			},
 		});
 	},*/
 };
@@ -3875,27 +3937,27 @@ var REQUESTS = {
 			var url = mainURL + '/request.php';
 		}
 
-		$.mobile.loading( "show", {  theme: "z"	});
+		$.mobile.loading( "show", {theme: "z"});
 		$.ajax({
-		  url: url,
-		  type: "GET",
-		  xhrFields: {
-		   withCredentials: true
-		  },
-		  crossDomain: true,
-		  complete: function( response ){
-		  		//console.log(response);
-		  		self.data_array = JSON.parse( response.responseText );
-		  		if(self.data_array.length == 0  && self.activated_hard_filter == 1){
-		  			alert(LOCALE_ARRAY_ADDITIONAL.no_data[CURRENT_LANG]);
-		  		}	
-		  		console.log( self.data_array );
-		  		$.mobile.loading( "hide" );
-		  		self.check_current_url( 1 );
-		  		self.build_elements();
-		  		$('#requests-page #activated_filter').css('display', 'none'); 
-		  		$('#requests-page #solo_filter').css('display', 'block');	
-		  },
+			url: url,
+			type: "GET",
+			xhrFields: {
+			 withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				//console.log(response);
+				self.data_array = JSON.parse( response.responseText );
+				if(self.data_array.length == 0 && self.activated_hard_filter == 1){
+					alert(LOCALE_ARRAY_ADDITIONAL.no_data[CURRENT_LANG]);
+				}	
+				console.log( self.data_array );
+				$.mobile.loading( "hide" );
+				self.check_current_url( 1 );
+				self.build_elements();
+				$('#requests-page #activated_filter').css('display', 'none'); 
+				$('#requests-page #solo_filter').css('display', 'block');	
+			},
 		});
 	},
 	reinit: function(){
@@ -3915,27 +3977,27 @@ var REQUESTS = {
 				var url = mainURL + '/request.php?ls=' + self.data_last_item;
 			}
 
-			$.mobile.loading( "show", {  theme: "z"	});
+			$.mobile.loading( "show", {theme: "z"});
 			$.ajax({
-			  url: url,
-			  type: "GET",
-			  xhrFields: {
-			   withCredentials: true
-			  },
-			  crossDomain: true,
-			  complete: function( response ){
-			  		//console.log(response);
-			  		
-			  		var query_array =  JSON.parse( response.responseText );	
-			  		console.log( self.data_array );			  		
-			  		if(query_array.length > 0){
-			  			self.data_array = self.data_array.concat(query_array);
-			  			self.data_last_item += query_array.length;
-				  		self.check_current_url( 1 );
-				  		self.build_elements( 0, true,  query_array);
-			  		}
-			  		$.mobile.loading( "hide" );	 
-			  },
+				url: url,
+				type: "GET",
+				xhrFields: {
+					withCredentials: true
+				},
+				crossDomain: true,
+				complete: function( response ){
+					//console.log(response);
+				
+					var query_array = JSON.parse( response.responseText );	
+					console.log( self.data_array );
+					if(query_array.length > 0){
+						self.data_array = self.data_array.concat(query_array);
+						self.data_last_item += query_array.length;
+						self.check_current_url( 1 );
+						self.build_elements(0, true, query_array);
+					}
+					$.mobile.loading( "hide" );	 
+				},
 			});
 		}
 	},
@@ -3953,7 +4015,7 @@ var REQUESTS = {
 			}
 			$('#filter-page #choose_spheres').html(LOCALE_ARRAY_ADDITIONAL.choose_sphere[CURRENT_LANG] + ': ' + type_sphere);
 		}*/
-		$.mobile.loading( "show", {  theme: "z"	});
+		$.mobile.loading("show", {theme: "z"});
 
 		var url = mainURL + '/request.php';
 
@@ -3999,8 +4061,8 @@ var REQUESTS = {
 							+ $('#filter-page-requests [name=start_month]').val() + "-" 
 							+ $('#filter-page-requests [name=start_date]').val();
 			var end_date = $('#filter-page-requests [name=end_year]').val() + "-" 
-						  + $('#filter-page-requests [name=end_month]').val() + "-" 
-						  + $('#filter-page-requests [name=end_date]').val();
+						+ $('#filter-page-requests [name=end_month]').val() + "-" 
+						+ $('#filter-page-requests [name=end_date]').val();
 			url += '&start=' + start_date + '&finish=' + end_date;
 			
 			/*if(self.sphere_filter >= 0){
@@ -4016,39 +4078,39 @@ var REQUESTS = {
 		}
 
 		$.ajax({
-		  url: url,
-		  type: "GET",
-		  xhrFields: {
-		   withCredentials: true
-		  },
-		  crossDomain: true,
-		  complete: function( response ){
-		  		console.log(url);
-		  		self.data_array = JSON.parse( response.responseText );	
-		  		$.mobile.loading( "hide" );
-		  		//self.check_current_url( 1 );
-		  		if(reinit){
-		  			self.build_elements( "", true );	
-		  		}else{
-		  			self.build_elements();	
-		  		}
-		  		if(self.data_array.length == 0 && reinit != 1 && self.activated_hard_filter){
-		  			$('#requests-page #requests-list').html('<center>Empty</center>');
-		  		} 	
-		  },
+			url: url,
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				console.log(url);
+				self.data_array = JSON.parse( response.responseText );	
+				$.mobile.loading( "hide" );
+				//self.check_current_url( 1 );
+				if(reinit){
+					self.build_elements( "", true );	
+				}else{
+					self.build_elements();	
+				}
+				if(self.data_array.length == 0 && reinit != 1 && self.activated_hard_filter){
+					$('#requests-page #requests-list').html('<center>Empty</center>');
+				} 	
+			},
 		});
 	},
 	/*support_voting: function(vote_id){
 		$.ajax({
-		  url: mainURL + '/like_add.php?id=' + vote_id,
-		  type: "GET",
-		  xhrFields: {
-		   withCredentials: true
-		  },
-		  crossDomain: true,
-		  complete: function( response ){
-		  		console.log("all ok!");	 
-		  },
+			url: mainURL + '/like_add.php?id=' + vote_id,
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+					console.log("all ok!");	 
+			},
 		});
 		switch($('#support').data('supported')){
 			case 1:
@@ -4059,7 +4121,7 @@ var REQUESTS = {
 			case 0:
 				$('#support').html(LOCALE_ARRAY_ADDITIONAL.not_support[CURRENT_LANG]);
 				$('#support').data('supported', 1);
-				$('#supported').html(parseInt($('#supported').html())+1);
+				$('#supported').html(parseInt($('#supported').html()) + 1);
 				break;
 		}
 	},*/
@@ -4106,29 +4168,29 @@ var REQUESTS = {
 			if (star.hasClass('active') && !star.next().hasClass('active')) {
 				allStar.removeClass('active');
 				$.ajax({
-				  url:  mainURL + "/stars_add.php?id=" + vote_id + "&stars=0&obj=5",
-				  type: "GET",
-				  xhrFields: {
-				   withCredentials: true
-				  },
-				  crossDomain: true,
-				  complete: function( response ){
-				  		
-				  }
+					url:mainURL + "/stars_add.php?id=" + vote_id + "&stars=0&obj=5",
+					type: "GET",
+					xhrFields: {
+						withCredentials: true
+					},
+					crossDomain: true,
+					complete: function( response ){
+						
+					}
 				});
 				return false;
 			}
 
 			$.ajax({
-			  url:  mainURL + "/stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=5",
-			  type: "GET",
-			  xhrFields: {
-			   withCredentials: true
-			  },
-			  crossDomain: true,
-			  complete: function( response ){
-			  		
-			  }
+				url: mainURL + "/stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=5",
+				type: "GET",
+				xhrFields: {
+					withCredentials: true
+				},
+				crossDomain: true,
+				complete: function( response ){
+					
+				}
 			});
 
 			star.siblings().removeClass('active');
@@ -4136,7 +4198,7 @@ var REQUESTS = {
 			for (var i = 0; i <= val; i++) {
 				allStar.eq(i).addClass('active');
 			}
-	   // });
+	 // });
 	},
 	collect_cash_build:function(one_voting){
 		var self = this;
@@ -4257,7 +4319,7 @@ var REQUESTS = {
 				self.current_collect_cash( data_for_build, 0, type_trigger);
 				break;
 			case '1':
-				self.current_collect_cash(  data_for_build, 0, type_trigger)
+				self.current_collect_cash(data_for_build, 0, type_trigger)
 				break;
 			case '2':
 				//self.current_vote_page_voting_period( data_for_build, 1, type_trigger)
@@ -4281,17 +4343,17 @@ var REQUESTS = {
 	},
 	current_collect_cash: function(data_for_build, canceled, type_trigger){
 		var self = this;
-		$.mobile.loading( "show", {  theme: "z"	});
+		$.mobile.loading( "show", {theme: "z"});
 
 		switch(data_for_build.stars){
 			case "0":
-				var stars_ui = '<span data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span>\ ';
+				var stars_ui = '<span data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span>\ ';
 				break;
 			case "1":
-				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span>\ ';
+				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span>\ ';
 				break;
 			case "2":
-				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span>\ ';
+				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span>\ ';
 				break;
 			case "3":
 				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "REQUESTS.stars_action(this)"></span>\ ';
@@ -4322,14 +4384,14 @@ var REQUESTS = {
 			if( data_for_build.nco_id == '0' ){
 					nko_parts += '<li>\
 									<div>\
-										<strong>' + one_nko.reg_name + '</strong> (<strong>ID</strong>:<span>' + one_nko.id + '</span>)<span class="phone">' + one_nko.reg_phone + '</span><span class="doc">' + one_nko.reg_doc + '</span><span class="addr">' + one_nko.reg_address + '</span>\
+										<strong>' + one_nko.reg_name + '</strong> (<strong>ID</strong>:<span>' + one_nko.user_id + '</span>)<span class="phone">' + one_nko.reg_phone + '</span><span class="doc">' + one_nko.reg_doc + '</span><span class="addr">' + one_nko.reg_address + '</span>\
 									</div>\
 								</li>\ ';
 			}else{
-				if( data_for_build.nco_id == one_nko.id){
+				if( data_for_build.nco_id == one_nko.user_id){
 					nko_parts += '<li>\
 									<div>\
-										<strong>' + one_nko.reg_name + '</strong> (<strong>ID</strong>:<span>' + one_nko.id + '</span>)<span class="phone">' + one_nko.reg_phone + '</span><span class="doc">' + one_nko.reg_doc + '</span><span class="addr">' + one_nko.reg_address + '</span>\
+										<strong>' + one_nko.reg_name + '</strong> (<strong>ID</strong>:<span>' + one_nko.user_id + '</span>)<span class="phone">' + one_nko.reg_phone + '</span><span class="doc">' + one_nko.reg_doc + '</span><span class="addr">' + one_nko.reg_address + '</span>\
 									</div>\
 								</li>\ ';
 					nco_create_flag = 1;
@@ -4377,12 +4439,12 @@ var REQUESTS = {
 			});
 			if(creator_check_accept == 0){
 				jQuery.each(data_for_build.nco_list, function(i, one_nko) {
-					if( data_for_build.nco_id == one_nko.id){
+					if( data_for_build.nco_id == one_nko.user_id){
 						nco_accept_button = '<div class="nko-btn">\
 							<a class="ui-btn ui-corner-all ui-shadow" onclick = "NCO_OBJECT.offer_accept_nco(5,' + data_for_build.id + '\'#request-page\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.accept_nco[CURRENT_LANG] + '</a>\
 						</div>';
 					} 
-				});   		
+				});
 			}
 		}
 		var ui_donate_panel = '';
@@ -4488,7 +4550,7 @@ var REQUESTS = {
 								' + LOCALE_ARRAY_ADDITIONAL.nco_list_locale[CURRENT_LANG] + ':\
 							</div>\
 							<ol>\
-							   ' + nko_parts + '\
+								' + nko_parts + '\
 							</ol>\
 						</div>\
 						' + (data_for_build.nco_acceptance == '0' ? LOCALE_ARRAY_ADDITIONAL.nco_accept_no[CURRENT_LANG] : LOCALE_ARRAY_ADDITIONAL.nco_accept_yes[CURRENT_LANG] ) + '\
@@ -4503,29 +4565,29 @@ var REQUESTS = {
 							</div>\
 						</div>\
 						<div class="discuss-btn">\
-							<a class="ui-btn ui-corner-all ui-shadow" onclick="window.open(\'' + data_for_build.project_discussion_link +  '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_request[CURRENT_LANG] + '</a>\
+							<a class="ui-btn ui-corner-all ui-shadow" onclick="window.open(\'' + data_for_build.project_discussion_link + '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_request[CURRENT_LANG] + '</a>\
 						</div>\
 						<div class="btn-login-soc">\
 							<button class="ui-btn ui-corner-all ui-shadow share-btn">' + LOCALE_ARRAY_ADDITIONAL.share_by_social_newtworks[CURRENT_LANG] + '</button>\
 							<div class="social-wrap">\
 								<div class="ui-grid-b">\
 									<div class="ui-block-a">\
-										<a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href)  + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
+										<a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
 									</div>\
 									<div class="ui-block-b">\
-										<a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href)  + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
+										<a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href) + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
 									</div>\
 									<div class="ui-block-c">\
-										<a target="_blank" class="tw" href="http://twitter.com/share?url=' + encodeURIComponent(location.href)  + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
+										<a target="_blank" class="tw" href="http://twitter.com/share?url=' + encodeURIComponent(location.href) + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
 									</div>\
 									<div class="ui-block-a">\
-										<a target="_blank" class="gp" href="https://plus.google.com/share?url=' + encodeURIComponent(location.href)  + '"></a>\
+										<a target="_blank" class="gp" href="https://plus.google.com/share?url=' + encodeURIComponent(location.href) + '"></a>\
 									</div>\
 									<div class="ui-block-b">\
-										<a target="_blank" class="in" href="https://www.linkedin.com/cws/share?url=' + encodeURIComponent(location.href)  + '"></a>\
+										<a target="_blank" class="in" href="https://www.linkedin.com/cws/share?url=' + encodeURIComponent(location.href) + '"></a>\
 									</div>\
 									<div class="ui-block-c">\
-										<a target="_blank" class="ok" href="http://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href)  + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
+										<a target="_blank" class="ok" href="http://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href) + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
 									</div>\
 								</div>\
 							</div>\
@@ -4575,7 +4637,7 @@ var REQUESTS = {
 									<label class="ui-btn ui-btn-icon-left ui-checkbox-off"></label><input type="checkbox" name="" value="1" data-enhanced="true" />\
 								</div>\
 								<div>\
-									<strong>' + one_nko.reg_name + '</strong> (<strong>ID</strong>:<span>' + one_nko.id + '</span>)<span class="phone">' + one_nko.reg_phone + '</span><span class="doc">' + one_nko.reg_doc + '</span><span class="addr">' + one_nko.reg_address + '</span>\
+									<strong>' + one_nko.reg_name + '</strong> (<strong>ID</strong>:<span>' + one_nko.user_id + '</span>)<span class="phone">' + one_nko.reg_phone + '</span><span class="doc">' + one_nko.reg_doc + '</span><span class="addr">' + one_nko.reg_address + '</span>\
 								</div>\
 							</li>\ '; 
 			});
@@ -4610,14 +4672,14 @@ var REQUESTS = {
 	},
 	set_nco: function(object_type, object_id, nco_id){
 		$.ajax({
-			url:  mainURL + "/nco_choice.php",
+			url: mainURL + "/nco_choice.php",
 			type: "POST",
 			data: {"type": object_type,
-				   "id": object_id,
-				   "nco": nco_id},
+				 "id": object_id,
+				 "nco": nco_id},
 			crossDomain: true,
 			xhrFields: {
-			   withCredentials: true
+				withCredentials: true
 			},
 			complete: function(data){
 				alert(LOCALE_ARRAY_ADDITIONAL.saved_successfull[CURRENT_LANG]);
@@ -4630,42 +4692,42 @@ var REQUESTS = {
 		var self = this;
 		var return_element;
 		$.ajax({
-			  url: mainURL + '/request.php?id=' + data_id,
-			  type: "GET",
-			  xhrFields: {
-			   withCredentials: true
-			  },
-			  crossDomain: true,
-			  complete: function( response ){
-			  		return_element = JSON.parse( response.responseText );
-			  		data_for_build = return_element[0];
-			  		self.data_array = data_for_build;
-			  		console.log(self.data_array);
-			  		switch(data_for_build.status){
-						case '0':
-							self.current_collect_cash( data_for_build, 0, type_trigger);
-							break;
-						case '1':
-							self.current_collect_cash(  data_for_build, 0, type_trigger)
-							break;
-						case '2':
-							self.current_collect_cash(  data_for_build, 0, type_trigger)
-							break;
-					}
+			url: mainURL + '/request.php?id=' + data_id,
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				return_element = JSON.parse( response.responseText );
+				data_for_build = return_element[0];
+				self.data_array = data_for_build;
+				console.log(self.data_array);
+				switch(data_for_build.status){
+					case '0':
+						self.current_collect_cash( data_for_build, 0, type_trigger);
+						break;
+					case '1':
+						self.current_collect_cash(data_for_build, 0, type_trigger)
+						break;
+					case '2':
+						self.current_collect_cash(data_for_build, 0, type_trigger)
+						break;
+				}
 
-					$('#request-page .btn-login-soc button').on('click', function(e){
-						$(this).next().fadeToggle(300);
-						if($('.overlay').length < 1) {
-							$(this).closest('.ui-page').append('<span class="overlay"></span>');
-						} else {
-							$('.overlay').remove();
-						}
-					});
-					$(document).on('click','.overlay', function() {
-						$(this).closest('.ui-page').find('#request-page .btn-login-soc button').trigger('click');
-					});			  		
-			  },
-			});
+				$('#request-page .btn-login-soc button').on('click', function(e){
+					$(this).next().fadeToggle(300);
+					if($('.overlay').length < 1) {
+						$(this).closest('.ui-page').append('<span class="overlay"></span>');
+					} else {
+						$('.overlay').remove();
+					}
+				});
+				$(document).on('click','.overlay', function() {
+					$(this).closest('.ui-page').find('#request-page .btn-login-soc button').trigger('click');
+				});
+			},
+		});
 	},
 	donate: function(selector, object_id, type_id){
 		var fund_id = $('#' + selector + '-page [name=pif]').val(); 
@@ -4677,17 +4739,17 @@ var REQUESTS = {
 		}
 		
 		$.ajax({
-			url:  mainURL + "/fund_add_by_type.php",
+			url: mainURL + "/fund_add_by_type.php",
 			type: "POST",
 			data: {"fund_id": fund_id,
-				   "currency": currency,
-				   "amount": amount,
-				   "type": type_id,
-				   "id": object_id,
-				   "open": open},
+				 "currency": currency,
+				 "amount": amount,
+				 "type": type_id,
+				 "id": object_id,
+				 "open": open},
 			crossDomain: true,
 			xhrFields: {
-			   withCredentials: true
+				withCredentials: true
 			},
 			complete: function(data){
 				if(data){
@@ -4713,24 +4775,24 @@ var REQUESTS = {
 			var match_array = location.href.match(/#history-page\?item=request&id=[0-9]*/i);
 			var object_id = match_array[0].match(/[0-9]+/i);
 			var my_add = 0;
-			$.mobile.loading( "show", {  theme: "z"	});
+			$.mobile.loading( "show", {theme: "z"});
 			$.ajax({
-			  url: mainURL + '/fund_public_cf.php?type=5&id=' + object_id,
-			  type: "GET",
-			  xhrFields: {
-			   withCredentials: true
-			  },
-			  crossDomain: true,
-			  complete: function( response ){
-			  		var funds_list = JSON.parse( response.responseText );
-			  		console.log('request');	
-			  		$.mobile.loading( "hide" );
+				url: mainURL + '/fund_public_cf.php?type=5&id=' + object_id,
+				type: "GET",
+				xhrFields: {
+					withCredentials: true
+				},
+				crossDomain: true,
+				complete: function( response ){
+					var funds_list = JSON.parse( response.responseText );
+					console.log('request');	
+					$.mobile.loading( "hide" );
 
-			  		var ui_funds = '';
-			  		var ui_cf = '';
-			  		var main_currency = PIF.get_currency_name_by_id( funds_list[0].cur );
+					var ui_funds = '';
+					var ui_cf = '';
+					var main_currency = PIF.get_currency_name_by_id( funds_list[0].cur );
 
-			  		jQuery.each(funds_list, function(i, one_fund) {		  			
+					jQuery.each(funds_list, function(i, one_fund) {
 						for (var i = 0; i < one_fund.cf.length; i++) {
 							var currency_name = PIF.get_currency_name_by_id( one_fund.cf[i].currency );
 							var cancel_span = '';
@@ -4743,7 +4805,7 @@ var REQUESTS = {
 										<td>' + one_fund.cf[i].user_id + ' ' + one_fund.cf[i].fname + ' ' + one_fund.cf[i].lname + '</td>\
 										<td><strong>' + one_fund.cf[i].saldo + '</strong> ' + currency_name + '</td>\
 									</tr>';
-			  			}
+						}
 					});
 
 					ui_funds += '<div data-role="header" data-position="fixed" data-tap-toggle="false">\
@@ -4806,23 +4868,23 @@ var REQUESTS = {
 										</div>\
 									</div>';
 				$('#history-page').html( ui_funds ).enhanceWithin();
-			  				
-			  },
+							
+			},
 			});
 		}
 	},
 	return_donate: function(fund_id, currency, amount, type, type_id, return_page){
 		$.ajax({
-			url:  mainURL + "/fund_return_by_type.php",
+			url: mainURL + "/fund_return_by_type.php",
 			type: "POST",
 			data: {"fund_id": fund_id,
-				   "currency": currency,
-				   "amount": amount,
-				   "type": type,
-				   "id": type_id},
+				 "currency": currency,
+				 "amount": amount,
+				 "type": type,
+				 "id": type_id},
 			crossDomain: true,
 			xhrFields: {
-			   withCredentials: true
+				withCredentials: true
 			},
 			complete: function(data){
 				alert(LOCALE_ARRAY_ADDITIONAL.return_donate_successfull[CURRENT_LANG]);
@@ -4835,16 +4897,16 @@ var REQUESTS = {
 	}	
 	/*delete_voting: function(voting_id, return_page){
 		$.ajax({
-		  url: mainURL + '/mc_rm.php?id=' + voting_id,
-		  type: "GET",
-		  xhrFields: {
-		   withCredentials: true
-		  },
-		  crossDomain: true,
-		  complete: function( response ){
-		  	 console.log("Deleted id:" + voting_id);
-		  	 $.mobile.navigate(return_page);  	
-		  },
+			url: mainURL + '/mc_rm.php?id=' + voting_id,
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				 console.log("Deleted id:" + voting_id);
+				 $.mobile.navigate(return_page);	
+			},
 		});
 	},*/
 };
@@ -4859,11 +4921,11 @@ var funds = {
 	init : function(callback_function){
 		var self = this;
 		$.ajax({
-			url:  mainURL + "/fund_user.php",
+			url: mainURL + "/fund_user.php",
 			type: "GET",
 			crossDomain: true,
 			xhrFields: {
-			   withCredentials: true
+				withCredentials: true
 			},
 			complete: function(data){
 				self.arr = JSON.parse(data.responseText);
@@ -4896,7 +4958,7 @@ var funds = {
 								'+fund_id+'\
 							</div>\
 							<div class="sum">\
-								'+saldo+' '+PIF.get_currency_name_by_id(fund.currency)+'\
+								'+saldo+' '+PIF.get_currency_name_by_id(fund.currency) +'\
 							</div>\
 						</div>';
 		return fund_str;
@@ -4908,11 +4970,11 @@ var funds = {
 	update_pay_button : function(id){
 		var self = this;
 		$.ajax({
-			url:  mainURL + "/sn/donation.php?fund_id="+id,
+			url: mainURL + "/sn/donation.php?fund_id="+id,
 			type: "GET",
 			crossDomain: true,
 			xhrFields: {
-			   withCredentials: true
+				withCredentials: true
 			},
 			complete: function(data){
 				if(data.responseText.indexOf('Incorrect') > -1){
@@ -4934,11 +4996,11 @@ var funds = {
 		var self = this;
 		if(confirm(LOCALE_ARRAY_ADDITIONAL.create_fund_question[CURRENT_LANG])){
 			$.ajax({
-				url:  mainURL + "/fund_user_add.php?currency="+currency,
+				url: mainURL + "/fund_user_add.php?currency="+currency,
 				type: "GET",
 				crossDomain: true,
 				xhrFields: {
-				   withCredentials: true
+					withCredentials: true
 				},
 				complete: function(data){
 					try{
@@ -4960,7 +5022,7 @@ var funds = {
 	build_page : function(data){
 		var self = this;
 		if(!data){
-		  data = self.arr;
+			data = self.arr;
 		}
 
 		var build_string_list = "";
@@ -4997,23 +5059,23 @@ var funds = {
 			var url = mainURL + '/fund_user_cf.php?fund_id=' + fund_id;
 
 			$.ajax({
-			  url: url,
-			  type: "GET",
-			  xhrFields: {
-			   withCredentials: true
-			  },
-			  crossDomain: true,
-			  complete: function( response ){
-			  		//console.log(response);
-			  		var fund_array  = JSON.parse( response.responseText );
-			  		if(fund_array.length == 0){
-			  			$('#balances-pif-page #content_table').html( '<center><h2>' + LOCALE_ARRAY_ADDITIONAL.no_pif_history[CURRENT_LANG] + '</h1></center>' ).enhanceWithin();
-			  		}else{
-			  			console.log( fund_array );
-					  		$.mobile.loading( "hide" );
-					  		var ui_elements = '';
+				url: url,
+				type: "GET",
+				xhrFields: {
+					withCredentials: true
+				},
+				crossDomain: true,
+				complete: function( response ){
+					//console.log(response);
+					var fund_array = JSON.parse( response.responseText );
+					if(fund_array.length == 0){
+						$('#balances-pif-page #content_table').html( '<center><h2>' + LOCALE_ARRAY_ADDITIONAL.no_pif_history[CURRENT_LANG] + '</h1></center>' ).enhanceWithin();
+					}else{
+						console.log( fund_array );
+							$.mobile.loading( "hide" );
+							var ui_elements = '';
 
-					  		jQuery.each(fund_array, function(i, one_fund) {
+							jQuery.each(fund_array, function(i, one_fund) {
 								switch(one_fund.type){
 									case '0':
 										var general_span = '<span>(' + LOCALE_ARRAY_ADDITIONAL.donation[CURRENT_LANG] + ' - ' + LOCALE_ARRAY_ADDITIONAL.personal_fund[CURRENT_LANG] + ' ' + fund_id + ')</span>';
@@ -5031,7 +5093,7 @@ var funds = {
 										var general_span = '<span>(' + LOCALE_ARRAY_ADDITIONAL.personal_fund[CURRENT_LANG] + ' ' + fund_id + ' - Проект ' + one_fund.fund_id + ')</span>';
 										break;
 									case '5':
-										var general_span = '<span>(' + LOCALE_ARRAY_ADDITIONAL.personal_fund[CURRENT_LANG] + '  ' + fund_id + ' - Заявка ' + one_fund.fund_id + ')</span>';
+										var general_span = '<span>(' + LOCALE_ARRAY_ADDITIONAL.personal_fund[CURRENT_LANG] + ' ' + fund_id + ' - Заявка ' + one_fund.fund_id + ')</span>';
 										break;
 								}
 								switch(one_fund.cur){
@@ -5059,19 +5121,19 @@ var funds = {
 															' + one_fund.dts + '\
 														</div>\
 														<div class="pif">\
-														 '  + additional_span + general_span + '\
+														 ' + additional_span + general_span + '\
 														</div>\
 													</td>\
 													<td>\
 														<div class="price">\
-														  <span data-id-amount = "' + one_fund.id + '">' +  one_fund.amount + '</span> ' + currency_name + '\
+															<span data-id-amount = "' + one_fund.id + '">' + one_fund.amount + '</span> ' + currency_name + '\
 														</div>\
 													</td>\
 												</tr>';
 							});
 						$('#balances-pif-page #content_table').html( ui_elements ).enhanceWithin();
-			  		}
-			  }
+					}
+				}
 			});
 		}
 	}, 
@@ -5084,15 +5146,15 @@ var funds = {
 			}else{
 				console.log( parsed_int );
 				$.ajax({
-				  url: mainURL + '/fund_return_by_type.php?fund_id=' + fund_id + '&currency=' + currency + '&amount=' + amount + '&type=' + type + '&id=' + id,
-				  type: "GET",
-				  xhrFields: {
-				   withCredentials: true
-				  },
-				  crossDomain: true,
-				  complete: function( response ){
-				  		$('#balances-pif-page [data-id-amount=' + id + ']').html( parsed_int - amount );
-				  }
+					url: mainURL + '/fund_return_by_type.php?fund_id=' + fund_id + '&currency=' + currency + '&amount=' + amount + '&type=' + type + '&id=' + id,
+					type: "GET",
+					xhrFields: {
+						withCredentials: true
+					},
+					crossDomain: true,
+					complete: function( response ){
+							$('#balances-pif-page [data-id-amount=' + id + ']').html( parsed_int - amount );
+					}
 				});
 			}
 		}
@@ -5114,15 +5176,15 @@ var funds = {
 	set_cash: function(){
 		if(confirm(LOCALE_ARRAY_ADDITIONAL.transaction_question[CURRENT_LANG])){
 			$.ajax({
-				url:  mainURL + "/fund_user_user.php",
+				url: mainURL + "/fund_user_user.php",
 				type: "POST",
 				data: {"fund_id": $('#transaction-page [name=fund_id]').val(),
-					   "currency": $('#transaction-page [name=fund_id] option[value=' + $('#transaction-page [name=fund_id]').val() + ']').data('currency'),
-					   "amount": $('#transaction-page [name=amount]').val(),
-					   "user_id": $('#transaction-page [name=user_id]').val()},
+					 "currency": $('#transaction-page [name=fund_id] option[value=' + $('#transaction-page [name=fund_id]').val() + ']').data('currency'),
+					 "amount": $('#transaction-page [name=amount]').val(),
+					 "user_id": $('#transaction-page [name=user_id]').val()},
 				crossDomain: true,
 				xhrFields: {
-				   withCredentials: true
+					withCredentials: true
 				},
 				complete: function(data){
 					if(data){
@@ -5156,7 +5218,7 @@ var WEIGHTED_VOTINGS = {
 			self.voting_last_item = 10;
 			$('#weighted-votings-page #searched_string').val('');
 
-			$.mobile.loading( "show", {  theme: "z"	});
+			$.mobile.loading( "show", {theme: "z"});
 
 			if(location.href.indexOf('#weighted-votings-page?program=') > -1){
 				var match_array = location.href.match(/#weighted-votings-page\?program=[0-9]*/i);
@@ -5183,25 +5245,25 @@ var WEIGHTED_VOTINGS = {
 			}
 
 			$.ajax({
-			  url: url,
-			  type: "GET",
-			  xhrFields: {
-			   withCredentials: true
-			  },
-			  crossDomain: true,
-			  complete: function( response ){
-			  		//console.log(response);
-			  		self.votings_array = JSON.parse( response.responseText );
-			  		if(self.votings_array.length == 0 && self.activated_hard_filter == 1){
-			  			alert(LOCALE_ARRAY_ADDITIONAL.no_data[CURRENT_LANG]);
-			  		}	
-			  		console.log( self.votings_array );
-			  		$.mobile.loading( "hide" );
-			  		self.check_current_url( 1 );
-			  		self.build_elements();
-			  		$('#weighted-votings-page #activated_filter').css('display', 'none'); 
-			  		$('#weighted-votings-page #solo_filter').css('display', 'block');	 	
-			  },
+				url: url,
+				type: "GET",
+				xhrFields: {
+					withCredentials: true
+				},
+				crossDomain: true,
+				complete: function( response ){
+					//console.log(response);
+					self.votings_array = JSON.parse( response.responseText );
+					if(self.votings_array.length == 0 && self.activated_hard_filter == 1){
+						alert(LOCALE_ARRAY_ADDITIONAL.no_data[CURRENT_LANG]);
+					}	
+					console.log( self.votings_array );
+					$.mobile.loading( "hide" );
+					self.check_current_url( 1 );
+					self.build_elements();
+					$('#weighted-votings-page #activated_filter').css('display', 'none'); 
+					$('#weighted-votings-page #solo_filter').css('display', 'block');	 	
+				},
 			});
 		}
 	},
@@ -5220,7 +5282,7 @@ var WEIGHTED_VOTINGS = {
 			}
 			$('#filter-page #choose_spheres').html(LOCALE_ARRAY_ADDITIONAL.choose_sphere[CURRENT_LANG] + ': ' + type_sphere);
 		}
-		$.mobile.loading( "show", {  theme: "z"	});
+		$.mobile.loading( "show", {theme: "z"});
 
 		var url = mainURL + '/weighted_votings.php?';
 
@@ -5256,8 +5318,8 @@ var WEIGHTED_VOTINGS = {
 							+ $('#filter-page [name=start_month]').val() + "-" 
 							+ $('#filter-page [name=start_date]').val();
 			var end_date = $('#filter-page [name=end_year]').val() + "-" 
-						  + $('#filter-page [name=end_month]').val() + "-" 
-						  + $('#filter-page [name=end_date]').val();
+						+ $('#filter-page [name=end_month]').val() + "-" 
+						+ $('#filter-page [name=end_date]').val();
 			url += '&start=' + start_date + '&finish=' + end_date;
 		}
 
@@ -5269,26 +5331,26 @@ var WEIGHTED_VOTINGS = {
 		}
 
 		$.ajax({
-		  url: url,
-		  type: "GET",
-		  xhrFields: {
-		   withCredentials: true
-		  },
-		  crossDomain: true,
-		  complete: function( response ){
-		  		//console.log(response);
-		  		self.votings_array = JSON.parse( response.responseText );	
-		  		$.mobile.loading( "hide" );
-		  		self.check_current_url( 1 );
-		  		if(reinit){
-		  			self.build_elements( "", true );	
-		  		}else{
-		  			self.build_elements();	
-		  		}
-		  		if(self.votings_array.length == 0 && reinit != 1 && self.activated_hard_filter == 1){
-		  			alert(LOCALE_ARRAY_ADDITIONAL.no_data[CURRENT_LANG]);
-		  		} 	
-		  },
+			url: url,
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				//console.log(response);
+				self.votings_array = JSON.parse( response.responseText );	
+				$.mobile.loading( "hide" );
+				self.check_current_url( 1 );
+				if(reinit){
+					self.build_elements( "", true );	
+				}else{
+					self.build_elements();	
+				}
+				if(self.votings_array.length == 0 && reinit != 1 && self.activated_hard_filter == 1){
+					alert(LOCALE_ARRAY_ADDITIONAL.no_data[CURRENT_LANG]);
+				} 	
+			},
 		});
 	},
 	reinit: function(){
@@ -5309,27 +5371,27 @@ var WEIGHTED_VOTINGS = {
 				var url = mainURL + '/weighted_votings.php?my=1&ls=' + self.voting_last_item;
 			}
 
-			$.mobile.loading( "show", {  theme: "z"	});
+			$.mobile.loading( "show", {theme: "z"});
 			$.ajax({
-			  url: url,
-			  type: "GET",
-			  xhrFields: {
-			   withCredentials: true
-			  },
-			  crossDomain: true,
-			  complete: function( response ){
-			  		//console.log(response);
-			  		
-			  		var query_array =  JSON.parse( response.responseText );	
-			  		console.log( self.votings_array );			  		
-			  		if(query_array.length > 0){
-			  			self.votings_array = self.votings_array.concat(query_array);
-			  			self.voting_last_item += query_array.length;
-				  		//self.check_current_url( 1 );
-				  		self.build_elements( 0, true,  query_array);
-			  		}
-			  		$.mobile.loading( "hide" );	 
-			  },
+				url: url,
+				type: "GET",
+				xhrFields: {
+					withCredentials: true
+				},
+				crossDomain: true,
+				complete: function( response ){
+						//console.log(response);
+					
+						var query_array = JSON.parse( response.responseText );	
+						console.log( self.votings_array );
+						if(query_array.length > 0){
+							self.votings_array = self.votings_array.concat(query_array);
+							self.voting_last_item += query_array.length;
+							//self.check_current_url( 1 );
+							self.build_elements( 0, true,query_array);
+						}
+						$.mobile.loading( "hide" );	 
+				},
 			});
 		}
 	},
@@ -5376,29 +5438,29 @@ var WEIGHTED_VOTINGS = {
 			if (star.hasClass('active') && !star.next().hasClass('active')) {
 				allStar.removeClass('active');
 				$.ajax({
-				  url:  mainURL + "/stars_add.php?id=" + vote_id + "&stars=0&obj=6",
-				  type: "GET",
-				  xhrFields: {
-				   withCredentials: true
-				  },
-				  crossDomain: true,
-				  complete: function( response ){
-				  		
-				  }
+					url: mainURL + "/stars_add.php?id=" + vote_id + "&stars=0&obj=6",
+					type: "GET",
+					xhrFields: {
+						withCredentials: true
+					},
+					crossDomain: true,
+					complete: function( response ){
+						
+					}
 				});
 				return false;
 			}
 
 			$.ajax({
-			  url:  mainURL + "/stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=6",
-			  type: "GET",
-			  xhrFields: {
-			   withCredentials: true
-			  },
-			  crossDomain: true,
-			  complete: function( response ){
-			  		
-			  }
+				url: mainURL + "/stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=6",
+				type: "GET",
+				xhrFields: {
+					withCredentials: true
+				},
+				crossDomain: true,
+				complete: function( response ){
+					
+				}
 			});
 
 			star.siblings().removeClass('active');
@@ -5406,7 +5468,7 @@ var WEIGHTED_VOTINGS = {
 			for (var i = 0; i <= val; i++) {
 				allStar.eq(i).addClass('active');
 			}
-	   // });
+	 // });
 	},
 	collect_supports_build:function(one_voting){
 		var self = this;
@@ -5453,8 +5515,8 @@ var WEIGHTED_VOTINGS = {
 										</div>\
 										<div class="voting-line clearfix">\
 											<span class="left" style="width: ' + parseInt(percents_object.plus_percent) + '%">' + parseInt(one_voting.vote_yes) + '</span><span class="middle" style="width: ' 
-																			   + parseInt(percents_object.abstained_percent) + '%">' + parseInt(one_voting.vote_nth) + '</span><span class="right" style="width: ' 
-																			   + parseInt(percents_object.minus_percent) + '%">' + parseInt(one_voting.vote_no) + '</span>\
+																			 + parseInt(percents_object.abstained_percent) + '%">' + parseInt(one_voting.vote_nth) + '</span><span class="right" style="width: ' 
+																			 + parseInt(percents_object.minus_percent) + '%">' + parseInt(one_voting.vote_no) + '</span>\
 										</div>\
 									</div>\
 								</a>\
@@ -5485,8 +5547,8 @@ var WEIGHTED_VOTINGS = {
 										</div>\
 										<div class="voting-line clearfix">\
 											<span class="left" style="width: ' + parseInt(percents_object.plus_percent) + '%">' + parseInt(one_voting.vote_yes) + '%</span><span class="middle" style="width: ' 
-																			   + parseInt(percents_object.abstained_percent) + '%">' + parseInt(one_voting.vote_nth) + '%</span><span class="right" style="width: ' 
-																			   + parseInt(percents_object.minus_percent) + '%">' + parseInt(one_voting.vote_no) + '%</span>\
+																			 + parseInt(percents_object.abstained_percent) + '%">' + parseInt(one_voting.vote_nth) + '%</span><span class="right" style="width: ' 
+																			 + parseInt(percents_object.minus_percent) + '%">' + parseInt(one_voting.vote_no) + '%</span>\
 										</div>\
 									</div>\
 								</a>\
@@ -5517,7 +5579,7 @@ var WEIGHTED_VOTINGS = {
 	},
 	current_vote_page_collect_supports: function(data_for_build, canceled, type_trigger){
 		var self = this;
-		$.mobile.loading( "show", {  theme: "z"	});
+		$.mobile.loading( "show", {theme: "z"});
 		for (var k = 0; k < SPHERES.spheres.length; k++) {
 			if(SPHERES.spheres[k].type == parseInt( data_for_build.type ) ){
 				var type_sphere = SPHERES.spheres[k].name;
@@ -5541,7 +5603,7 @@ var WEIGHTED_VOTINGS = {
 		if(canceled == 0){			
 			status_vote = '<div class="status yellow">\
 								<span>' + LOCALE_ARRAY_ADDITIONAL.collect_supporters[CURRENT_LANG] + data_for_build.start + ' - ' + data_for_build.sprtf +
-						   '</span></div>\ ';
+						 '</span></div>\ ';
 		}else{
 			status_vote = '<div class="status red" >\
 								<span>' + LOCALE_ARRAY_ADDITIONAL.voting_canceled[CURRENT_LANG] + '</span>\
@@ -5550,13 +5612,13 @@ var WEIGHTED_VOTINGS = {
 
 		switch(data_for_build.stars){
 			case "0":
-				var stars_ui = '<span data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span>\ ';
+				var stars_ui = '<span data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span>\ ';
 				break;
 			case "1":
-				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span>\ ';
+				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span>\ ';
 				break;
 			case "2":
-				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span>\ ';
+				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span>\ ';
 				break;
 			case "3":
 				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span>\ ';
@@ -5602,38 +5664,38 @@ var WEIGHTED_VOTINGS = {
 												 ' + LOCALE_ARRAY_ADDITIONAL.by[CURRENT_LANG] + ' @<strong>' + data_for_build.author + '</strong>\
 											</div>\
 											<div class="address">\
-												' + LOCALE_ARRAY_ADDITIONAL.share[CURRENT_LANG] + '  - ' + type_sphere + ' - ' + organization + data_for_build.sphere + '\
+												' + LOCALE_ARRAY_ADDITIONAL.share[CURRENT_LANG] + ' - ' + type_sphere + ' - ' + organization + data_for_build.sphere + '\
 											</div>\
 											<div class="num-votes-support">\
-												' + LOCALE_ARRAY_ADDITIONAL.number_of_votes_support[CURRENT_LANG] + status_vote +  										  
+												' + LOCALE_ARRAY_ADDITIONAL.number_of_votes_support[CURRENT_LANG] + status_vote +										
 											'<div class="desc">' + data_for_build.description + ' </div>\
 											<div class="tag-list">\
-											  ' + ui_tags + '\
+											' + ui_tags + '\
 											</div>\
 											<div class="discuss-btn">\
-												<a class="ui-btn ui-corner-all ui-shadow" onclick="window.open(\'' + data_for_build.chat +  '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_voting[CURRENT_LANG] + '</a>\
+												<a class="ui-btn ui-corner-all ui-shadow" onclick="window.open(\'' + data_for_build.chat + '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_voting[CURRENT_LANG] + '</a>\
 											</div>\
 											<div class="btn-login-soc">\
 												<button class="ui-btn ui-corner-all ui-shadow share-btn"> ' + LOCALE_ARRAY_ADDITIONAL.share_by_social_newtworks[CURRENT_LANG] + '</button>\
 												<div class="social-wrap">\
 													<div class="ui-grid-b">\
 														<div class="ui-block-a">\
-															<a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href)  + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
+															<a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
 														</div>\
 														<div class="ui-block-b">\
-															<a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href)  + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
+															<a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href) + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
 														</div>\
 														<div class="ui-block-c">\
-															<a target="_blank" class="tw" href="http://twitter.com/share?url=' + encodeURIComponent(location.href)  + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
+															<a target="_blank" class="tw" href="http://twitter.com/share?url=' + encodeURIComponent(location.href) + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
 														</div>\
 														<div class="ui-block-a">\
-															<a target="_blank" class="gp" href="https://plus.google.com/share?url=' + encodeURIComponent(location.href)  + '"></a>\
+															<a target="_blank" class="gp" href="https://plus.google.com/share?url=' + encodeURIComponent(location.href) + '"></a>\
 														</div>\
 														<div class="ui-block-b">\
-															<a target="_blank" class="in" href="https://www.linkedin.com/cws/share?url=' + encodeURIComponent(location.href)  + '"></a>\
+															<a target="_blank" class="in" href="https://www.linkedin.com/cws/share?url=' + encodeURIComponent(location.href) + '"></a>\
 														</div>\
 														<div class="ui-block-c">\
-															<a target="_blank" class="ok" href="http://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href)  + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
+															<a target="_blank" class="ok" href="http://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href) + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
 														</div>\
 													</div>\
 												</div>\
@@ -5748,7 +5810,7 @@ var WEIGHTED_VOTINGS = {
 														</div></form>\ ';
 			status_vote = '<div class="status blue">\
 								<span>' + LOCALE_ARRAY_ADDITIONAL.time_voting[CURRENT_LANG] + data_for_build.start + ' - ' + data_for_build.finish +
-						   '</span></div>\ ';
+						 '</span></div>\ ';
 		}else{
 			status_vote = '<div class="status green">\
 								<span>' + LOCALE_ARRAY_ADDITIONAL.voting_finished[CURRENT_LANG] + '</span>\
@@ -5757,13 +5819,13 @@ var WEIGHTED_VOTINGS = {
 
 		switch(data_for_build.stars){
 			case "0":
-				var stars_ui = '<span data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span>\ ';
+				var stars_ui = '<span data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span>\ ';
 				break;
 			case "1":
-				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span>\ ';
+				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span>\ ';
 				break;
 			case "2":
-				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span>\ ';
+				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span>\ ';
 				break;
 			case "3":
 				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "WEIGHTED_VOTINGS.stars_action(this)"></span>\ ';
@@ -5805,32 +5867,32 @@ var WEIGHTED_VOTINGS = {
 										</div>' + status_vote + 
 										'<div class="desc">' + data_for_build.description + ' </div>\
 										<div class="tag-list">\
-										  ' + ui_tags + '\
+										' + ui_tags + '\
 										</div>\
 										<div class="discuss-btn">\
-											<a class="ui-btn ui-corner-all ui-shadow" onclick="window.open(' + data_for_build.chat +  '); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_voting[CURRENT_LANG] + '</a>\
+											<a class="ui-btn ui-corner-all ui-shadow" onclick="window.open(' + data_for_build.chat + '); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_voting[CURRENT_LANG] + '</a>\
 										</div>\
 										<div class="btn-login-soc">\
 											<button data-role="button" class="ui-btn ui-corner-all ui-shadow share-btn">' + LOCALE_ARRAY_ADDITIONAL.share_by_social_newtworks[CURRENT_LANG] + '</button>\
 											<div class="social-wrap">\
 												<div class="ui-grid-b">\
 													<div class="ui-block-a">\
-														<a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href)  + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
+														<a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
 													</div>\
 													<div class="ui-block-b">\
-														<a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href)  + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
+														<a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href) + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
 													</div>\
 													<div class="ui-block-c">\
-														<a target="_blank" class="tw" href="http://twitter.com/share?url=' + encodeURIComponent(location.href)  + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
+														<a target="_blank" class="tw" href="http://twitter.com/share?url=' + encodeURIComponent(location.href) + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
 													</div>\
 													<div class="ui-block-a">\
-														<a target="_blank" class="gp" href="https://plus.google.com/share?url=' + encodeURIComponent(location.href)  + '"></a>\
+														<a target="_blank" class="gp" href="https://plus.google.com/share?url=' + encodeURIComponent(location.href) + '"></a>\
 													</div>\
 													<div class="ui-block-b">\
-														<a target="_blank" class="in" href="https://www.linkedin.com/cws/share?url=' + encodeURIComponent(location.href)  + '"></a>\
+														<a target="_blank" class="in" href="https://www.linkedin.com/cws/share?url=' + encodeURIComponent(location.href) + '"></a>\
 													</div>\
 													<div class="ui-block-c">\
-														<a target="_blank" class="ok" href="http://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href)  + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
+														<a target="_blank" class="ok" href="http://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href) + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
 													</div>\
 												</div>\
 											</div>\
@@ -5847,10 +5909,10 @@ var WEIGHTED_VOTINGS = {
 											</div>\
 											<div class="voting-line clearfix">\
 												<span class="left" style="width: ' + parseInt(percents_object.plus_percent) + '%">' + parseInt(data_for_build.vote_yes) + '</span><span class="middle" style="width: ' 
-																				   + parseInt(percents_object.abstained_percent) + '%">' + parseInt(data_for_build.vote_nth) + '</span><span class="right" style="width: ' 
-																				   + parseInt(percents_object.minus_percent) + '%">' + parseInt(data_for_build.vote_no) + '</span>\
+																				 + parseInt(percents_object.abstained_percent) + '%">' + parseInt(data_for_build.vote_nth) + '</span><span class="right" style="width: ' 
+																				 + parseInt(percents_object.minus_percent) + '%">' + parseInt(data_for_build.vote_no) + '</span>\
 											</div>\
-										</div>\ ' + voting_buttons +  ' <div class="btn-next-page">\
+										</div>\ ' + voting_buttons + ' <div class="btn-next-page">\
 											<a class="ui-btn ui-btn-icon-right" href="#" onclick = "$.mobile.navigate(\'#voters-page?voting=' + data_for_build.id + '\'); WEIGHTED_VOTINGS.get_open_voters_list(' + data_for_build.id + ');">' + LOCALE_ARRAY_ADDITIONAL.view_list_public_voters[CURRENT_LANG] + '</a>\
 										</div>' + delete_button + '\
 									</div>\
@@ -5896,12 +5958,12 @@ var WEIGHTED_VOTINGS = {
 		for(var j = 0; j < 6; j++){
 			if(parseInt(data_for_build['plus' + j]) == 0 && parseInt(data_for_build['abstained' + j]) == 0 && parseInt(data_for_build['minus' + j]) ==0){
 				data_array[j] = [{ value: (parseInt(data_for_build['plus' + j]) + 1), color: "#399d3d" },
-					   			 { value: (parseInt(data_for_build['abstained' + j]) + 1), color: "#03a9f4" },
-					   			 { value: (parseInt(data_for_build['minus' + j]) + 1), color:"#f44336" } ];
+					 			 { value: (parseInt(data_for_build['abstained' + j]) + 1), color: "#03a9f4" },
+					 			 { value: (parseInt(data_for_build['minus' + j]) + 1), color:"#f44336" } ];
 			}else{
 				data_array[j] = [{ value: parseInt(data_for_build['plus' + j]), color: "#399d3d" },
-					   			 { value: parseInt(data_for_build['abstained' + j]), color: "#03a9f4" },
-					   			 { value: parseInt(data_for_build['minus' + j]), color:"#f44336" } ];
+					 			 { value: parseInt(data_for_build['abstained' + j]), color: "#03a9f4" },
+					 			 { value: parseInt(data_for_build['minus' + j]), color:"#f44336" } ];
 			}
 		}
 		
@@ -5934,7 +5996,7 @@ var WEIGHTED_VOTINGS = {
 				self.current_vote_page_collect_supports( data_for_build, 0, type_trigger);
 				break;
 			case '0':
-				self.current_vote_page_voting_period(  data_for_build, 0, type_trigger);
+				self.current_vote_page_voting_period(data_for_build, 0, type_trigger);
 				break;
 			case '2':
 				self.current_vote_page_voting_period( data_for_build, 1, type_trigger);
@@ -5960,39 +6022,39 @@ var WEIGHTED_VOTINGS = {
 		var self = this;
 		var return_element;
 		$.ajax({
-			  url: mainURL + '/weighted_votings.php?id=' + vote_id,
-			  type: "GET",
-			  xhrFields: {
-			   withCredentials: true
-			  },
-			  crossDomain: true,
-			  complete: function( response ){
-			  		return_element = JSON.parse( response.responseText );
-			  		data_for_build = return_element[0];
-			  		console.log('data_for_build');
-			  		console.log(data_for_build);
-			  		switch(data_for_build.status){
-						case '0':
-							self.current_vote_page_voting_period( data_for_build, 0, type_trigger);
-							break;
-						case '1':
-							self.current_vote_page_voting_period(  data_for_build, 1, type_trigger);
-							break;
-					}
+			url: mainURL + '/weighted_votings.php?id=' + vote_id,
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				return_element = JSON.parse( response.responseText );
+				data_for_build = return_element[0];
+				console.log('data_for_build');
+				console.log(data_for_build);
+				switch(data_for_build.status){
+					case '0':
+						self.current_vote_page_voting_period( data_for_build, 0, type_trigger);
+						break;
+					case '1':
+						self.current_vote_page_voting_period(data_for_build, 1, type_trigger);
+						break;
+				}
 
-					$('#weighted-vote-page .btn-login-soc button').on('click', function(e){
-						$(this).next().fadeToggle(300);
-						if($('.overlay').length < 1) {
-							$(this).closest('.ui-page').append('<span class="overlay"></span>');
-						} else {
-							$('.overlay').remove();
-						}
-					});
-					$(document).on('click','.overlay', function() {
-						$(this).closest('.ui-page').find('#weighted-vote-page .btn-login-soc button').trigger('click');
-					});			  		
-			  },
-			});
+				$('#weighted-vote-page .btn-login-soc button').on('click', function(e){
+					$(this).next().fadeToggle(300);
+					if($('.overlay').length < 1) {
+						$(this).closest('.ui-page').append('<span class="overlay"></span>');
+					} else {
+						$('.overlay').remove();
+					}
+				});
+				$(document).on('click','.overlay', function() {
+					$(this).closest('.ui-page').find('#weighted-vote-page .btn-login-soc button').trigger('click');
+				});					
+			},
+		});
 	},
 	check_current_url:function(type_trigger){
 		var self = this;
@@ -6006,9 +6068,9 @@ var WEIGHTED_VOTINGS = {
 		var one_percent = (parseInt(plus_value) + parseInt(abstained_value) + parseInt(minus_value)) / 100;
 		//console.log(one_percent);
 		var percents_object = {plus_percent: change_nan(parseInt(plus_value) / one_percent),
-							   abstained_percent: change_nan(parseInt(abstained_value) / one_percent),
-							   minus_percent: change_nan(parseInt(minus_value) / one_percent),
-							   sum_values: parseInt(plus_value) + parseInt(abstained_value) + parseInt(minus_value)};
+							 abstained_percent: change_nan(parseInt(abstained_value) / one_percent),
+							 minus_percent: change_nan(parseInt(minus_value) / one_percent),
+							 sum_values: parseInt(plus_value) + parseInt(abstained_value) + parseInt(minus_value)};
 		return percents_object;
 	},
 	vote_for_voting:function(object_id){
@@ -6053,53 +6115,53 @@ var WEIGHTED_VOTINGS = {
 			}
 			$('#weighted-vote-page .selected-text').html( status_current_voting );
 			$.ajax({
-			  url: mainURL + '/weighted_vote_add.php?wv_id=' + object_id + '&vote=' + vote + '&open=' + open_name,
-			  type: "GET",
-			  xhrFields: {
-			   withCredentials: true
-			  },
-			  crossDomain: true,
-			  complete: function( response ){
-			  		self.get_one_element(object_id);
-			  		console.log('ok');  	
-			  },
+				url: mainURL + '/weighted_vote_add.php?wv_id=' + object_id + '&vote=' + vote + '&open=' + open_name,
+				type: "GET",
+				xhrFields: {
+					withCredentials: true
+				},
+				crossDomain: true,
+				complete: function( response ){
+						self.get_one_element(object_id);
+						console.log('ok');
+				},
 			});
 		}, 100);
 	},
 	delete_voting: function(voting_id, return_page){
 		$.ajax({
-		  url: mainURL + '/weighted_voting_rm.php?wv_id=' + voting_id,
-		  type: "GET",
-		  xhrFields: {
-		   withCredentials: true
-		  },
-		  crossDomain: true,
-		  complete: function( response ){
-		  	 console.log("Deleted id:" + voting_id);
-		  	 $.mobile.navigate(return_page);  	
-		  },
+			url: mainURL + '/weighted_voting_rm.php?wv_id=' + voting_id,
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				 console.log("Deleted id:" + voting_id);
+				 $.mobile.navigate(return_page);	
+			},
 		});
 	},
 	get_open_voters_list:function(vote_id, idu_input){
 		var self = this;
-		$.mobile.loading( "show", {  theme: "z"	});
+		$.mobile.loading( "show", {theme: "z"});
 		var filter_id = '';
 		if(idu_input){
 			filter_id = '&idu=' + $(idu_input).val();
 		}
 		$.ajax({
-		  url: mainURL + '/weighted_vote_open.php?id=' + vote_id + filter_id,
-		  type: "GET",
-		  xhrFields: {
-		   withCredentials: true
-		  },
-		  crossDomain: true,
-		  complete: function( response ){
-		  		//console.log(response);
-		  		self.voters_list = JSON.parse( response.responseText );
-		  		$.mobile.loading( "hide" );  
-		  		self.set_voters_list(vote_id);	
-		  },
+			url: mainURL + '/weighted_vote_open.php?id=' + vote_id + filter_id,
+			type: "GET",
+			xhrFields: {
+			 withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+					//console.log(response);
+					self.voters_list = JSON.parse( response.responseText );
+					$.mobile.loading( "hide" );
+					self.set_voters_list(vote_id);
+			},
 		});
 	},
 	set_voters_list: function(vote_id){
@@ -6122,7 +6184,7 @@ var WEIGHTED_VOTINGS = {
 						<div role="main" class="ui-content">\
 							<form action="" accept-charset="UTF-8" method="post">\
 									<div class="ui-input-search ui-input-has-clear">\
-										<input id = "filter_input" onkeyup="WEIGHTED_VOTINGS.get_open_voters_list(\'' + vote_id + '\', this)" type="search" name="" placeholder="' + LOCALE_ARRAY_ADDITIONAL.search_voters[CURRENT_LANG]  + '" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">' + LOCALE_ARRAY_ADDITIONAL.clear_text[CURRENT_LANG] + '</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />\
+										<input id = "filter_input" onkeyup="WEIGHTED_VOTINGS.get_open_voters_list(\'' + vote_id + '\', this)" type="search" name="" placeholder="' + LOCALE_ARRAY_ADDITIONAL.search_voters[CURRENT_LANG] + '" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">' + LOCALE_ARRAY_ADDITIONAL.clear_text[CURRENT_LANG] + '</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />\
 									</div></form>\
 							<div class="ui-grid-b voters-list">\
 								<div class="ui-block-a">\
@@ -6176,7 +6238,7 @@ var WEIGHTED_VOTINGS = {
 
 		ui_string += plus_vote_string;
 		ui_string += abstained_vote_string;	
-		ui_string += minus_vote_string;			   
+		ui_string += minus_vote_string;
 		
 		ui_string += '</div>\
 					</div>';
@@ -6195,7 +6257,7 @@ var TRUST_LIST = {
 	trust_last_item: 10,
 	init: function(next_used, parameter){
 		var self = this;
-		$.mobile.loading( "show", {  theme: "z"	});
+		$.mobile.loading( "show", {theme: "z"});
 		if(parameter){
 			if(parameter == 's'){
 				var url = mainURL + '/trust.php';					
@@ -6219,67 +6281,67 @@ var TRUST_LIST = {
 		}
 		if($('#trust-list #searched_string').val() != ''){
 			if(url.indexOf('?') > -1){
-				url += "&s="  + $('#trust-list #searched_string').val();
+				url += "&s=" + $('#trust-list #searched_string').val();
 			}else{
-				url += "?s="  + $('#trust-list #searched_string').val();
+				url += "?s=" + $('#trust-list #searched_string').val();
 			}
 		}
 		if(location.href.indexOf('sphere=') > -1){
 			var match_array = location.href.match(/sphere=[0-9]*/i);
 			var object_id = match_array[0].match(/[0-9]+/i);
 			if(url.indexOf('?') > -1){
-				url += "&sph="  + object_id;
+				url += "&sph=" + object_id;
 			}else{
-				url += "?sph="  + object_id;
+				url += "?sph=" + object_id;
 			}
 		}
 		$.ajax({
-		  url: url,
-		  type: "GET",
-		  xhrFields: {		  	
-		   withCredentials: true
-		  },
-		  crossDomain: true,
-		  complete: function( response ){
-	  		//console.log(response);
-	  		self.trust_array = JSON.parse( response.responseText );
-	  		console.log('trust');	
-	  		console.log(self.trust_array);
-	  		self.build_elements();
-	  		self.set_spheres_and_listeners();
-	  		SPHERES.initial();
-	  		$.mobile.loading( "hide" );	
-		  },
+			url: url,
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				//console.log(response);
+				self.trust_array = JSON.parse( response.responseText );
+				console.log('trust');	
+				console.log(self.trust_array);
+				self.build_elements();
+				self.set_spheres_and_listeners();
+				SPHERES.initial();
+				$.mobile.loading( "hide" );	
+			},
 		});
 	},
 	reinit: function(){
 		var self = this;
-		$.mobile.loading( "show", {  theme: "z"	});
+		$.mobile.loading( "show", {theme: "z"});
 		if($('#trusted_checkbox').hasClass('ui-checkbox-on')){
 			var url = mainURL + '/trust.php?p_s=1&ls=' + self.trust_last_item;			
 		}else{
 			var url = mainURL + '/trust.php?ls=' + self.trust_last_item;
 		}
 		if($('#trust-list #searched_string').val() != ''){
-				url += "&s="  + $('#trust-list #searched_string').val();
+				url += "&s=" + $('#trust-list #searched_string').val();
 		}
 		$.ajax({
-		  url: url,
-		  type: "GET",
-		  xhrFields: {
-		   withCredentials: true
-		  },
-		  crossDomain: true,
-		  complete: function( response ){
-	  		//console.log(response);
-	  		var query_array = JSON.parse( response.responseText );
-	  		if(query_array.length > 0){
-	  			self.trust_array = self.trust_array.concat(query_array);
-	  			self.build_elements(true, query_array);
-		  		self.trust_last_item += query_array.length;
-	  		}
-	  		$.mobile.loading( "hide" );	
-		  },
+			url: url,
+			type: "GET",
+			xhrFields: {
+			 withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				//console.log(response);
+				var query_array = JSON.parse( response.responseText );
+				if(query_array.length > 0){
+					self.trust_array = self.trust_array.concat(query_array);
+					self.build_elements(true, query_array);
+					self.trust_last_item += query_array.length;
+				}
+				$.mobile.loading( "hide" );	
+			},
 		});
 	},
 	filter_by_id:function(click){
@@ -6386,7 +6448,7 @@ var TRUST_LIST = {
 
 			elements_string += '</div>\
 								</div>\
-							  </div>';
+							</div>';
 		});
 		if(reinit){
 			$('#trust-list #trust_list_all').append(elements_string);
@@ -6427,27 +6489,27 @@ var TRUST_LIST = {
 						stop_flag = 0;
 						for (var current_index = 0; current_index < current_trust.t_l.length; current_index++) {
 							if(current_trust.t_l[current_index].sphere_id == SPHERES.spheres[i].objects[0].sph[j].idc){
-								ui_string += '<option value = "' + SPHERES.spheres[i].objects[0].sph[j].idc +  '" selected>' + SPHERES.spheres[i].objects[0].sph[j].sphere + '</option>';
+								ui_string += '<option value = "' + SPHERES.spheres[i].objects[0].sph[j].idc + '" selected>' + SPHERES.spheres[i].objects[0].sph[j].sphere + '</option>';
 								stop_flag = 1;
 								break;
 							}
 						} 
 						if(stop_flag != 1){
-							ui_string += '<option value = "' + SPHERES.spheres[i].objects[0].sph[j].idc +  '">' + SPHERES.spheres[i].objects[0].sph[j].sphere + '</option>';
+							ui_string += '<option value = "' + SPHERES.spheres[i].objects[0].sph[j].idc + '">' + SPHERES.spheres[i].objects[0].sph[j].sphere + '</option>';
 						}
 					}
 
-					ui_string +=  '</select>\
+					ui_string += '</select>\
 								</div>';
 				}else{
 					//console.log('equal more than one');
 					var varable = '#spheres-trust-vote #' + SPHERES.spheres[i].selector_name + '_content';
 					ui_string += '<div onclick = "TRUST_LIST.show_mini_spheres(\'' + varable + '\');">\
-									<select disabled class = "container"  name="' + SPHERES.spheres[i].selector_name + '"><option value="' + SPHERES.spheres[i].name + '">' + SPHERES.spheres[i].name + '</option></select>\
+									<select disabled class = "container" name="' + SPHERES.spheres[i].selector_name + '"><option value="' + SPHERES.spheres[i].name + '">' + SPHERES.spheres[i].name + '</option></select>\
 								</div>';
 					ui_string += '<div id = "' + SPHERES.spheres[i].selector_name + '_content" style = "display:none;">';
 					for (var k = 0; k < SPHERES.spheres[i].objects.length; k++) {
-					   ui_string += '<div>\
+						ui_string += '<div>\
 									<select class = "content_value" data-mini="true" name ="' + SPHERES.spheres[i].selector_name + '" multiple="multiple" data-native-menu="false">\
 										<option>' + SPHERES.spheres[i].objects[k].org + '</option>';
 						
@@ -6455,17 +6517,17 @@ var TRUST_LIST = {
 							stop_flag = 0;
 							for (var current_index = 0; current_index < current_trust.t_l.length; current_index++) {
 								if(current_trust.t_l[current_index].sphere_id == SPHERES.spheres[i].objects[k].sph[j].idc){
-									ui_string += '<option value = "' + SPHERES.spheres[i].objects[k].sph[j].idc +  '" selected>' + SPHERES.spheres[i].objects[k].sph[j].sphere + '</option>';
+									ui_string += '<option value = "' + SPHERES.spheres[i].objects[k].sph[j].idc + '" selected>' + SPHERES.spheres[i].objects[k].sph[j].sphere + '</option>';
 									stop_flag = 1;
 									break;
 								}
 							}
 							if(stop_flag != 1){
-								ui_string += '<option value = "' + SPHERES.spheres[i].objects[k].sph[j].idc +  '">' + SPHERES.spheres[i].objects[k].sph[j].sphere + '</option>';
+								ui_string += '<option value = "' + SPHERES.spheres[i].objects[k].sph[j].idc + '">' + SPHERES.spheres[i].objects[k].sph[j].sphere + '</option>';
 							}						
 							
 						}
-						ui_string +=  '</select>\
+						ui_string += '</select>\
 								</div>'; 
 					}
 					ui_string += '</div>';	
@@ -6504,14 +6566,14 @@ var TRUST_LIST = {
 				if(SPHERES.spheres[i].objects[0].org == ''){
 					//console.log('equal one');
 					ui_string += '<div class = "content_value">\
-									<select id = "select_' + i + '"  onchange = "$.mobile.navigate(\'#trust-list?sphere=\'+$(this).val())" name = "' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
+									<select id = "select_' + i + '" onchange = "$.mobile.navigate(\'#trust-list?sphere=\'+$(this).val())" name = "' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
 										<option>' + SPHERES.spheres[i].name + '</option>';
 					
 					for (var j = 0; j < SPHERES.spheres[i].objects[0].sph.length; j++) {
-						ui_string += '<option value = "' + SPHERES.spheres[i].objects[0].sph[j].idc +  '">' + SPHERES.spheres[i].objects[0].sph[j].sphere + '</option>';					
+						ui_string += '<option value = "' + SPHERES.spheres[i].objects[0].sph[j].idc + '">' + SPHERES.spheres[i].objects[0].sph[j].sphere + '</option>';					
 					}
 
-					ui_string +=  '</select>\
+					ui_string += '</select>\
 								</div>';
 				}else{
 					//console.log('equal more than one');
@@ -6521,14 +6583,14 @@ var TRUST_LIST = {
 								</div>';
 					ui_string += '<div id = "' + SPHERES.spheres[i].selector_name + '_content" style = "display:none;">';
 					for (var k = 0; k < SPHERES.spheres[i].objects.length; k++) {
-					   ui_string += '<div class = "content_value">\
-									<select id = "select_' + i + '" onchange = "$.mobile.navigate(\'#trust-list?sphere=\'+$(this).val())"  data-mini="true" name ="' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
+						ui_string += '<div class = "content_value">\
+									<select id = "select_' + i + '" onchange = "$.mobile.navigate(\'#trust-list?sphere=\'+$(this).val())" data-mini="true" name ="' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
 										<option>' + SPHERES.spheres[i].objects[k].org + '</option>';
 						
 						for (var j = 0; j < SPHERES.spheres[i].objects[k].sph.length; j++) {
-							ui_string += '<option value = "' + SPHERES.spheres[i].objects[k].sph[j].idc +  '">' + SPHERES.spheres[i].objects[k].sph[j].sphere + '</option>';						
+							ui_string += '<option value = "' + SPHERES.spheres[i].objects[k].sph[j].idc + '">' + SPHERES.spheres[i].objects[k].sph[j].sphere + '</option>';						
 						}
-						ui_string +=  '</select>\
+						ui_string += '</select>\
 								</div>'; 
 					}
 					ui_string += '</div>';
@@ -6581,31 +6643,31 @@ var TRUST_LIST = {
 		//$.mobile.navigate("#edit-address");
 	},
 	delete_sphere: function(id_sphere_trust){
-		$.mobile.loading( "show", {  theme: "z"	});
+		$.mobile.loading( "show", {theme: "z"});
 		$.ajax({
-		  url: mainURL + '/trust_rm.php?tid=' + id_sphere_trust,
-		  type: "GET",
-		  xhrFields: {
-		   withCredentials: true
-		  },
-		  crossDomain: true,
-		  complete: function( response ){
-			$.mobile.loading( "hide" );
-		  },
+			url: mainURL + '/trust_rm.php?tid=' + id_sphere_trust,
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				$.mobile.loading( "hide" );
+			},
 		});
 	},
 	save_sphere: function(id_user, id_sphere){
-		$.mobile.loading( "show", {  theme: "z"	});
+		$.mobile.loading( "show", {theme: "z"});
 		$.ajax({
-		  url: mainURL + '/trust_add.php?t=' + id_user + '&s=' + id_sphere,
-		  type: "GET",
-		  xhrFields: {
-		   withCredentials: true
-		  },
-		  crossDomain: true,
-		  complete: function( response ){
-		  		$.mobile.loading( "hide" );  	
-		  },
+			url: mainURL + '/trust_add.php?t=' + id_user + '&s=' + id_sphere,
+			type: "GET",
+			xhrFields: {
+			 withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+					$.mobile.loading( "hide" );
+			},
 		});
 	},
 };
@@ -6613,114 +6675,114 @@ var TRUST_LIST = {
 var SPHERES = {
 	spheres_array: [],
 	spheres: [{name: "Votings by spheres",
-			  selector_name: "votings_by_sphere",
-			  type: 1,
-			  objects: []},
-			  {name: "Local self-governments indicative",
-			  selector_name: "local_self_goverments_indicative",
-			  type: 2,
-			  objects: []},
-			  {name: "Co-owners",
-			  selector_name: "co_owners",
-			  type: 3,
-			  objects: []},
-			  {name: "Political Parties, Public organizations",
-			  selector_name: "public_organization",
-			  type: 4,
-			  objects: []},
-			  {name: "Public primaries",
-			  selector_name: "primaries",
-			  type: 5,
-			  objects: []},
-			  {name: "Elections",
-			  selector_name: "elections",
-			  type: 6,
-			  objects: []},
-			  {name: "Maidan",
-			  selector_name: "maidan",
-			  type: 7,
-			  objects: []},
-			  /*{name: "Candidates\' rating (Public proposal)",
-			  selector_name: "candidates_proposal",
-			  type: 8,
-			  objects: []},
-			  {name: "Candidates\' rating (Political Parties)",
-			  selector_name: "candidates_parties",
-			  type: 9,
-			  objects: []},
-			  {name: "Local self-governments",
-			  selector_name: "local_self_goverments",
-			  type: 10,
-			  objects: []}*/],
+			selector_name: "votings_by_sphere",
+			type: 1,
+			objects: []},
+			{name: "Local self-governments indicative",
+			selector_name: "local_self_goverments_indicative",
+			type: 2,
+			objects: []},
+			{name: "Co-owners",
+			selector_name: "co_owners",
+			type: 3,
+			objects: []},
+			{name: "Political Parties, Public organizations",
+			selector_name: "public_organization",
+			type: 4,
+			objects: []},
+			{name: "Public primaries",
+			selector_name: "primaries",
+			type: 5,
+			objects: []},
+			{name: "Elections",
+			selector_name: "elections",
+			type: 6,
+			objects: []},
+			{name: "Maidan",
+			selector_name: "maidan",
+			type: 7,
+			objects: []},
+			/*{name: "Candidates\' rating (Public proposal)",
+			selector_name: "candidates_proposal",
+			type: 8,
+			objects: []},
+			{name: "Candidates\' rating (Political Parties)",
+			selector_name: "candidates_parties",
+			type: 9,
+			objects: []},
+			{name: "Local self-governments",
+			selector_name: "local_self_goverments",
+			type: 10,
+			objects: []}*/],
 	set_locale_names: function(){
 		var self = this;
-		self.spheres[0].name =  LOCALE_ARRAY_ADDITIONAL.votings_by_sphere[CURRENT_LANG];
-		self.spheres[1].name =  LOCALE_ARRAY_ADDITIONAL.local_self_goverments_indicative[CURRENT_LANG];
-		self.spheres[2].name =  LOCALE_ARRAY_ADDITIONAL.co_owners[CURRENT_LANG];
-		self.spheres[3].name =  LOCALE_ARRAY_ADDITIONAL.type_public_orrganization[CURRENT_LANG];
-		self.spheres[4].name =  LOCALE_ARRAY_ADDITIONAL.type_primaries[CURRENT_LANG];
-		self.spheres[5].name =  LOCALE_ARRAY_ADDITIONAL.elections[CURRENT_LANG];
-		self.spheres[6].name =  LOCALE_ARRAY_ADDITIONAL.type_maidan[CURRENT_LANG];
-		/*self.spheres[7].name =  LOCALE_ARRAY_ADDITIONAL.candidates_proposal[CURRENT_LANG];
-		self.spheres[8].name =  LOCALE_ARRAY_ADDITIONAL.candidates_parties[CURRENT_LANG];
-		self.spheres[9].name =  LOCALE_ARRAY_ADDITIONAL.local_self_goverments[CURRENT_LANG];*/
+		self.spheres[0].name = LOCALE_ARRAY_ADDITIONAL.votings_by_sphere[CURRENT_LANG];
+		self.spheres[1].name = LOCALE_ARRAY_ADDITIONAL.local_self_goverments_indicative[CURRENT_LANG];
+		self.spheres[2].name = LOCALE_ARRAY_ADDITIONAL.co_owners[CURRENT_LANG];
+		self.spheres[3].name = LOCALE_ARRAY_ADDITIONAL.type_public_orrganization[CURRENT_LANG];
+		self.spheres[4].name = LOCALE_ARRAY_ADDITIONAL.type_primaries[CURRENT_LANG];
+		self.spheres[5].name = LOCALE_ARRAY_ADDITIONAL.elections[CURRENT_LANG];
+		self.spheres[6].name = LOCALE_ARRAY_ADDITIONAL.type_maidan[CURRENT_LANG];
+		/*self.spheres[7].name = LOCALE_ARRAY_ADDITIONAL.candidates_proposal[CURRENT_LANG];
+		self.spheres[8].name = LOCALE_ARRAY_ADDITIONAL.candidates_parties[CURRENT_LANG];
+		self.spheres[9].name = LOCALE_ARRAY_ADDITIONAL.local_self_goverments[CURRENT_LANG];*/
 	},
 	initial: function(callback_function, forced_initial){
 		var self = this;
-		$.mobile.loading( "show", {  theme: "z"	});
+		$.mobile.loading( "show", {theme: "z"});
 		self.set_locale_names();
 		if(SPHERES.spheres_array.length == 0 || forced_initial){
 			$.ajax({
-				  url: mainURL + '/filter.php',
-				  type: "GET",
-				  xhrFields: {
-				   withCredentials: true
-				  },
-				  crossDomain: true,
-				  complete: function( response ){
-				  		self.spheres_array = JSON.parse( response.responseText );	
-				  		self.normalize_array();
-				  		if(location.href.indexOf('#spheres-filters') > -1){
-				  			self.set_spheres_filters();
-				  			$('#spheres-filters #sphere_form select').selectmenu().selectmenu("refresh", true);
-				  		}
-				  		if(location.href.indexOf('#spheres-address') > -1){
-				  			self.set_spheres_and_listeners();				  			
-				  			$('#spheres-address #sphere_form select').selectmenu().selectmenu("refresh", true);
-				  			$('#spheres-address').enhanceWithin();
-				  		}
-				  		if(location.href.indexOf('#spheres-create-vote') > -1){
-				  			self.set_spheres_create_vote();
-				  			$('#spheres-create-vote #sphere_form select').selectmenu().selectmenu("refresh", true);
-				  		}		
-				  		$.mobile.loading( "hide" );
-				  		
-				  		if(callback_function)
-				  			callback_function();
-				  			  	
-				  },
-				});
+				url: mainURL + '/filter.php',
+				type: "GET",
+				xhrFields: {
+					withCredentials: true
+				},
+				crossDomain: true,
+				complete: function( response ){
+						self.spheres_array = JSON.parse( response.responseText );	
+						self.normalize_array();
+						if(location.href.indexOf('#spheres-filters') > -1){
+							self.set_spheres_filters();
+							$('#spheres-filters #sphere_form select').selectmenu().selectmenu("refresh", true);
+						}
+						if(location.href.indexOf('#spheres-address') > -1){
+							self.set_spheres_and_listeners();
+							$('#spheres-address #sphere_form select').selectmenu().selectmenu("refresh", true);
+							$('#spheres-address').enhanceWithin();
+						}
+						if(location.href.indexOf('#spheres-create-vote') > -1){
+							self.set_spheres_create_vote();
+							$('#spheres-create-vote #sphere_form select').selectmenu().selectmenu("refresh", true);
+						}		
+						$.mobile.loading( "hide" );
+						
+						if(callback_function)
+							callback_function();
+	
+				},
+			});
 		}else{
 			if(location.href.indexOf('#spheres-filters') > -1){
-	  			self.set_spheres_filters();
-	  			console.log('#spheres-filters');
-	  			$('#spheres-filters #sphere_form select').selectmenu().selectmenu("refresh", true);
-	  		}
-	  		if(location.href.indexOf('#spheres-address') > -1){
-	  			self.set_spheres_and_listeners();
-	  			console.log('#spheres-address');
-	  			$('#spheres-address #sphere_form select').selectmenu().selectmenu("refresh", true);
-	  			$('#spheres-address').enhanceWithin();
-	  		}
-	  		if(location.href.indexOf('#spheres-create-vote') > -1){
-	  			self.set_spheres_create_vote();
-	  			console.log('#spheres-create-vote');
-	  			$('#spheres-create-vote #sphere_form select').selectmenu().selectmenu("refresh", true);
-	  		}		
-	  		$.mobile.loading( "hide" );
-	  		
-	  		if(callback_function)
-	  			callback_function();
+				self.set_spheres_filters();
+				console.log('#spheres-filters');
+				$('#spheres-filters #sphere_form select').selectmenu().selectmenu("refresh", true);
+			}
+			if(location.href.indexOf('#spheres-address') > -1){
+				self.set_spheres_and_listeners();
+				console.log('#spheres-address');
+				$('#spheres-address #sphere_form select').selectmenu().selectmenu("refresh", true);
+				$('#spheres-address').enhanceWithin();
+			}
+			if(location.href.indexOf('#spheres-create-vote') > -1){
+				self.set_spheres_create_vote();
+				console.log('#spheres-create-vote');
+				$('#spheres-create-vote #sphere_form select').selectmenu().selectmenu("refresh", true);
+			}		
+			$.mobile.loading( "hide" );
+			
+			if(callback_function)
+				callback_function();
 		}		
 	},
 	normalize_array: function(){
@@ -6758,14 +6820,14 @@ var SPHERES = {
 					
 					for (var j = 0; j < self.spheres[i].objects[0].sph.length; j++) {
 						if(self.spheres[i].objects[0].sph[j].fav == 1){
-							ui_string += '<option value = "' + self.spheres[i].objects[0].sph[j].idc +  '" selected>' + self.spheres[i].objects[0].sph[j].sphere + '</option>';
+							ui_string += '<option value = "' + self.spheres[i].objects[0].sph[j].idc + '" selected>' + self.spheres[i].objects[0].sph[j].sphere + '</option>';
 						}else{
-							ui_string += '<option value = "' + self.spheres[i].objects[0].sph[j].idc +  '">' + self.spheres[i].objects[0].sph[j].sphere + '</option>';
+							ui_string += '<option value = "' + self.spheres[i].objects[0].sph[j].idc + '">' + self.spheres[i].objects[0].sph[j].sphere + '</option>';
 						}
 						
 					}
 
-					ui_string +=  '</select>\
+					ui_string += '</select>\
 								</div>';
 				}else{
 					//console.log('equal more than one');
@@ -6775,19 +6837,19 @@ var SPHERES = {
 								</div>';
 					ui_string += '<div id = "' + self.spheres[i].selector_name + '_content" style = "display:none;">';
 					for (var k = 0; k < self.spheres[i].objects.length; k++) {
-					   ui_string += '<div class = "content_value">\
+						ui_string += '<div class = "content_value">\
 									<select data-mini="true" name ="' + self.spheres[i].selector_name + '" multiple="multiple" data-native-menu="false">\
 										<option>' + self.spheres[i].objects[k].org + '</option>';
 						
 						for (var j = 0; j < self.spheres[i].objects[k].sph.length; j++) {
 							if(self.spheres[i].objects[k].sph[j].fav == 1){
-								ui_string += '<option value = "' + self.spheres[i].objects[k].sph[j].idc +  '" selected>' + self.spheres[i].objects[k].sph[j].sphere + '</option>';
+								ui_string += '<option value = "' + self.spheres[i].objects[k].sph[j].idc + '" selected>' + self.spheres[i].objects[k].sph[j].sphere + '</option>';
 							}else{
-								ui_string += '<option value = "' + self.spheres[i].objects[k].sph[j].idc +  '">' + self.spheres[i].objects[k].sph[j].sphere + '</option>';
+								ui_string += '<option value = "' + self.spheres[i].objects[k].sph[j].idc + '">' + self.spheres[i].objects[k].sph[j].sphere + '</option>';
 							}
 							
 						}
-						ui_string +=  '</select>\
+						ui_string += '</select>\
 								</div>'; 
 					}
 					ui_string += '</div>';
@@ -6825,31 +6887,31 @@ var SPHERES = {
 		//$.mobile.navigate("#edit-address");
 	},
 	delete_sphere: function(id_sphere){
-		$.mobile.loading( "show", {  theme: "z"	});
+		$.mobile.loading( "show", {theme: "z"});
 		$.ajax({
-		  url: mainURL + '/filter_fav_add.php?id=' + id_sphere + '&rm=1',
-		  type: "GET",
-		  xhrFields: {
-		   withCredentials: true
-		  },
-		  crossDomain: true,
-		  complete: function( response ){
-			$.mobile.loading( "hide" );
-		  },
+			url: mainURL + '/filter_fav_add.php?id=' + id_sphere + '&rm=1',
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				$.mobile.loading( "hide" );
+			},
 		});
 	},
 	save_sphere: function(id_sphere){
-		$.mobile.loading( "show", {  theme: "z"	});
+		$.mobile.loading( "show", {theme: "z"});
 		$.ajax({
-		  url: mainURL + '/filter_fav_add.php?id=' + id_sphere,
-		  type: "GET",
-		  xhrFields: {
-		   withCredentials: true
-		  },
-		  crossDomain: true,
-		  complete: function( response ){
-		  		$.mobile.loading( "hide" );  	
-		  },
+			url: mainURL + '/filter_fav_add.php?id=' + id_sphere,
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+					$.mobile.loading( "hide" );	
+			},
 		});
 	},
 	show_mini_spheres: function (selector_content){
@@ -6875,14 +6937,14 @@ var SPHERES = {
 				if(SPHERES.spheres[i].objects[0].org == ''){
 					//console.log('equal one');
 					ui_string += '<div class = "content_value">\
-									<select  onchange = "$.mobile.navigate(\'#filter-page\'); VOTINGS.filter_data($(this).val(), 0, \'' + SPHERES.spheres[i].selector_name + '\')" name = "' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
+									<select onchange = "$.mobile.navigate(\'#filter-page\'); VOTINGS.filter_data($(this).val(), 0, \'' + SPHERES.spheres[i].selector_name + '\')" name = "' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
 										<option>' + SPHERES.spheres[i].name + '</option>';
 					
 					for (var j = 0; j < SPHERES.spheres[i].objects[0].sph.length; j++) {
-						ui_string += '<option value = "' + SPHERES.spheres[i].objects[0].sph[j].idc +  '">' + SPHERES.spheres[i].objects[0].sph[j].sphere + '</option>';					
+						ui_string += '<option value = "' + SPHERES.spheres[i].objects[0].sph[j].idc + '">' + SPHERES.spheres[i].objects[0].sph[j].sphere + '</option>';					
 					}
 
-					ui_string +=  '</select>\
+					ui_string += '</select>\
 								</div>';
 				}else{
 					//console.log('equal more than one');
@@ -6892,14 +6954,14 @@ var SPHERES = {
 								</div>';
 					ui_string += '<div id = "' + SPHERES.spheres[i].selector_name + '_content" style = "display:none;">';
 					for (var k = 0; k < SPHERES.spheres[i].objects.length; k++) {
-					   ui_string += '<div class = "content_value">\
-									<select  onchange = "$.mobile.navigate(\'#filter-page\'); VOTINGS.filter_data($(this).val(), 0, \'' + SPHERES.spheres[i].selector_name + '\')" data-mini="true" name ="' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
+						ui_string += '<div class = "content_value">\
+									<select onchange = "$.mobile.navigate(\'#filter-page\'); VOTINGS.filter_data($(this).val(), 0, \'' + SPHERES.spheres[i].selector_name + '\')" data-mini="true" name ="' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
 										<option>' + SPHERES.spheres[i].objects[k].org + '</option>';
 						
 						for (var j = 0; j < SPHERES.spheres[i].objects[k].sph.length; j++) {
-							ui_string += '<option value = "' + SPHERES.spheres[i].objects[k].sph[j].idc +  '">' + SPHERES.spheres[i].objects[k].sph[j].sphere + '</option>';						
+							ui_string += '<option value = "' + SPHERES.spheres[i].objects[k].sph[j].idc + '">' + SPHERES.spheres[i].objects[k].sph[j].sphere + '</option>';						
 						}
-						ui_string +=  '</select>\
+						ui_string += '</select>\
 								</div>'; 
 					}
 					ui_string += '</div>';
@@ -6938,14 +7000,14 @@ var SPHERES = {
 						if(SPHERES.spheres[i].objects[0].org == ''){
 							//console.log('equal one');
 							ui_string += '<div class = "content_value">\
-											<select  onchange = "$.mobile.navigate(\'#create-vote\'); $(\'#create-vote [name=sph]\').val($(this).val()); $(\'#create_vote_sphere\').html(\'' + LOCALE_ARRAY_ADDITIONAL.choose_sphere[CURRENT_LANG] + ': ' + SPHERES.spheres[i].name + '\');" name = "' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
+											<select onchange = "$.mobile.navigate(\'#create-vote\'); $(\'#create-vote [name=sph]\').val($(this).val()); $(\'#create_vote_sphere\').html(\'' + LOCALE_ARRAY_ADDITIONAL.choose_sphere[CURRENT_LANG] + ': ' + SPHERES.spheres[i].name + '\');" name = "' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
 												<option>' + SPHERES.spheres[i].name + '</option>';
 							
 							for (var j = 0; j < SPHERES.spheres[i].objects[0].sph.length; j++) {
-								ui_string += '<option data-checkbox = "1" value = "' + SPHERES.spheres[i].objects[0].sph[j].idc +  '">' + SPHERES.spheres[i].objects[0].sph[j].sphere + '</option>';					
+								ui_string += '<option data-checkbox = "1" value = "' + SPHERES.spheres[i].objects[0].sph[j].idc + '">' + SPHERES.spheres[i].objects[0].sph[j].sphere + '</option>';					
 							}
 
-							ui_string +=  '</select>\
+							ui_string += '</select>\
 										</div>';
 						}else{
 							//console.log('equal more than one');
@@ -6955,14 +7017,14 @@ var SPHERES = {
 										</div>';
 							ui_string += '<div id = "' + SPHERES.spheres[i].selector_name + '_content" style = "display:none;">';
 							for (var k = 0; k < SPHERES.spheres[i].objects.length; k++) {
-							   ui_string += '<div class = "content_value">\
-											<select  onchange = "$.mobile.navigate(\'#create-vote\'); $(\'#create-vote [name=sph]\').val($(this).val()); $(\'#create_vote_sphere\').html(\'' + LOCALE_ARRAY_ADDITIONAL.choose_sphere[CURRENT_LANG] + ': ' + SPHERES.spheres[i].name + '\');" data-mini="true" name ="' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
+								ui_string += '<div class = "content_value">\
+											<select onchange = "$.mobile.navigate(\'#create-vote\'); $(\'#create-vote [name=sph]\').val($(this).val()); $(\'#create_vote_sphere\').html(\'' + LOCALE_ARRAY_ADDITIONAL.choose_sphere[CURRENT_LANG] + ': ' + SPHERES.spheres[i].name + '\');" data-mini="true" name ="' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
 												<option>' + SPHERES.spheres[i].objects[k].org + '</option>';
 								
 								for (var j = 0; j < SPHERES.spheres[i].objects[k].sph.length; j++) {
-									ui_string += '<option data-checkbox = "1"  value = "' + SPHERES.spheres[i].objects[k].sph[j].idc +  '">' + SPHERES.spheres[i].objects[k].sph[j].sphere + '</option>';						
+									ui_string += '<option data-checkbox = "1" value = "' + SPHERES.spheres[i].objects[k].sph[j].idc +'">' + SPHERES.spheres[i].objects[k].sph[j].sphere + '</option>';						
 								}
-								ui_string +=  '</select>\
+								ui_string += '</select>\
 										</div>'; 
 							}
 							ui_string += '</div>';
@@ -6999,43 +7061,43 @@ var NEWS = {
 	news_last_item: 10,
 	init: function(){
 		var self = this;
-		$.mobile.loading( "show", {  theme: "z"	});
+		$.mobile.loading( "show", {theme: "z"});
 		$.ajax({
-		  url: mainURL + '/news.php',
-		  type: "GET",
-		  xhrFields: {
-		   withCredentials: true
-		  },
-		  crossDomain: true,
-		  complete: function( response ){
-	  		//console.log(response);
-	  		self.news_list = JSON.parse( response.responseText );
-	  		self.build_elements();
-	  		console.log(self.news_list);
-	  		$.mobile.loading( "hide" );	
-		  },
+			url: mainURL + '/news.php',
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				//console.log(response);
+				self.news_list = JSON.parse( response.responseText );
+				self.build_elements();
+				console.log(self.news_list);
+				$.mobile.loading( "hide" );	
+			},
 		});
 	},
 	reinit: function(){
 		var self = this;
-		$.mobile.loading( "show", {  theme: "z"	});
+		$.mobile.loading( "show", {theme: "z"});
 		$.ajax({
-		  url: mainURL + '/news.php?ls=' + self.news_last_item,
-		  type: "GET",
-		  xhrFields: {
-		   withCredentials: true
-		  },
-		  crossDomain: true,
-		  complete: function( response ){
-	  		//console.log(response);
-	  		var query_array = JSON.parse( response.responseText );
-	  		if(query_array.length > 0){
-	  			self.news_list = self.news_list.concat(query_array);
-	  			self.build_elements(true, query_array);
-	  			self.news_last_item += query_array.length;
-	  		}	  		
-	  		$.mobile.loading( "hide" );	
-		  },
+			url: mainURL + '/news.php?ls=' + self.news_last_item,
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				//console.log(response);
+				var query_array = JSON.parse( response.responseText );
+				if(query_array.length > 0){
+					self.news_list = self.news_list.concat(query_array);
+					self.build_elements(true, query_array);
+					self.news_last_item += query_array.length;
+				}			
+				$.mobile.loading( "hide" );	
+			},
 		});
 	},
 	build_elements: function(reinit, reinit_array){
@@ -7107,48 +7169,48 @@ var TASKS = {
 	tasks_last_item: 10,
 	init: function(){
 		var self = this;
-		$.mobile.loading( "show", {  theme: "z"	});
+		$.mobile.loading( "show", {theme: "z"});
 		$.ajax({
-		  url: mainURL + '/tasks.php',
-		  type: "GET",
-		  xhrFields: {
-		   withCredentials: true
-		  },
-		  crossDomain: true,
-		  complete: function( response ){
-	  		console.log(response);
-	  		var query_array = JSON.parse( response.responseText );
-	  		if(query_array.length > 0){
-	  			self.tasks_list = self.tasks_list.concat(query_array);
-	  			self.build_elements(true, query_array);
-	  			self.tasks_last_item += query_array.length;
-	  		}
-	  		console.log(self.tasks_list);
-		  },
+			url: mainURL + '/tasks.php',
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				console.log(response);
+				var query_array = JSON.parse( response.responseText );
+				if(query_array.length > 0){
+					self.tasks_list = self.tasks_list.concat(query_array);
+					self.build_elements(true, query_array);
+					self.tasks_last_item += query_array.length;
+				}
+				console.log(self.tasks_list);
+			},
 		});
  		$.mobile.loading( "hide" );	
 
 	},
 	reinit: function(){
 		var self = this;
-		$.mobile.loading( "show", {  theme: "z"	});
+		$.mobile.loading( "show", {theme: "z"});
 		$.ajax({
-		  url: mainURL + '/tasks.php?ls=' + self.tasks_last_item,
-		  type: "GET",
-		  xhrFields: {
-		   withCredentials: true
-		  },
-		  crossDomain: true,
-		  complete: function( response ){
-	  		console.log(response);
-	  		var query_array = JSON.parse( response.responseText );
-	  		if(query_array.length > 0){
-	  			self.tasks_list = self.tasks_list.concat(query_array);
-	  			self.build_elements(true, query_array);
-	  			self.tasks_last_item += query_array.length;
-	  		}	  		
-	  		$.mobile.loading( "hide" );	
-		  },
+			url: mainURL + '/tasks.php?ls=' + self.tasks_last_item,
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				console.log(response);
+				var query_array = JSON.parse( response.responseText );
+				if(query_array.length > 0){
+					self.tasks_list = self.tasks_list.concat(query_array);
+					self.build_elements(true, query_array);
+					self.tasks_last_item += query_array.length;
+				}			
+				$.mobile.loading( "hide" );	
+			},
 		});
 	},
 	build_elements: function(reinit, reinit_array){
@@ -7173,7 +7235,7 @@ var TASKS = {
 
 			elements_string += '<div class="item ui-corner-all task-icon">' + l_task + '<div class="check-' + one_tasks.chk + '"></div></div>';
 		});
-   		$('#my-tasks-page #tasklist').html(elements_string);
+ 		$('#my-tasks-page #tasklist').html(elements_string);
 	},
 }; 
 
@@ -7181,47 +7243,47 @@ var MAP = {
 	marks_list: [],
 	init: function(){
 		var self = this;
-		$.mobile.loading( "show", {  theme: "z"	});
+		$.mobile.loading( "show", {theme: "z"});
 		$.ajax({
-		  url: mainURL + '/map_marks.php',
-		  type: "GET",
-		  xhrFields: {
-		   withCredentials: true
-		  },
-		  crossDomain: true,
-		  complete: function( response ){
-	  		console.log(response);
-	  		var query_array = JSON.parse( response.responseText );
-	  		if(query_array.length > 0){
-	  			self.markss_list = self.marks_list.concat(query_array);
-	  			self.build_elements(true, query_array);
-	  			self.marks_last_item += query_array.length;
-	  		}
-	  		console.log(self.marks_list);
-		  },
+			url: mainURL + '/map_marks.php',
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				console.log(response);
+				var query_array = JSON.parse( response.responseText );
+				if(query_array.length > 0){
+					self.markss_list = self.marks_list.concat(query_array);
+					self.build_elements(true, query_array);
+					self.marks_last_item += query_array.length;
+				}
+				console.log(self.marks_list);
+			},
 		});
 		$.mobile.loading( "hide" );
 	},
 	reinit: function(){
 		var self = this;
-		$.mobile.loading( "show", {  theme: "z"	});
+		$.mobile.loading( "show", {theme: "z"});
 		$.ajax({
-		  url: mainURL + '/map_marks.php',
-		  type: "GET",
-		  xhrFields: {
-		   withCredentials: true
-		  },
-		  crossDomain: true,
-		  complete: function( response ){
-	  		console.log(response);
-	  		var query_array = JSON.parse( response.responseText );
-	  		if(query_array.length > 0){
-	  			self.markss_list = self.marks_list.concat(query_array);
-	  			self.build_elements(true, query_array);
-	  			self.marks_last_item += query_array.length;
-	  		}
-	  		console.log(self.marks_list);
-		  },
+			url: mainURL + '/map_marks.php',
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				console.log(response);
+				var query_array = JSON.parse( response.responseText );
+				if(query_array.length > 0){
+					self.markss_list = self.marks_list.concat(query_array);
+					self.build_elements(true, query_array);
+					self.marks_last_item += query_array.length;
+				}
+				console.log(self.marks_list);
+			},
 		});
 		$.mobile.loading( "hide" );
 	},
@@ -7297,7 +7359,7 @@ var WALLET = {
 			
 			self.sort_elements('must_return');
 
-		   	VOTINGS.build_elements(1);
+		 	VOTINGS.build_elements(1);
 		}			
 
 	},
@@ -7334,11 +7396,11 @@ var WALLET = {
 		if(!sorting_ready){
 			var n = self.filtered_array.length;
 			for (var i = 0; i < n-1; i++){
-			   var min = i;
-			   for (var j = i+1; j < n; j++){
+				var min = i;
+				for (var j = i+1; j < n; j++){
 					if (self.filtered_array[j][filter_element] < self.filtered_array[min][filter_element]) min = j; 
 				} 
-			   var temp = self.filtered_array[min]; self.filtered_array[min] = self.filtered_array[ i ]; self.filtered_array[ i ] = temp;
+			 	var temp = self.filtered_array[min]; self.filtered_array[min] = self.filtered_array[ i ]; self.filtered_array[ i ] = temp;
 			 }
 		}
 		
@@ -7395,8 +7457,8 @@ var WALLET = {
 							+ $('#filter-page [name=start_month]').val() + "-" 
 							+ $('#filter-page [name=start_date]').val();
 			self.end_date = $('#filter-page [name=end_year]').val() + "-" 
-						  + $('#filter-page [name=end_month]').val() + "-" 
-						  + $('#filter-page [name=end_date]').val();
+						+ $('#filter-page [name=end_month]').val() + "-" 
+						+ $('#filter-page [name=end_date]').val();
 			var half_filtered_array = self.filtered_array;
 
 			console.log('half_filtered');
@@ -7445,7 +7507,7 @@ var VOTINGS = {
 		self.voting_last_item = 10;
 		$('#votings-page #searched_string').val('');
 
-		$.mobile.loading( "show", {  theme: "z"	});
+		$.mobile.loading( "show", {theme: "z"});
 
 		if(location.href.indexOf('#votings-page?program=') > -1){
 			var match_array = location.href.match(/#votings-page\?program=[0-9]*/i);
@@ -7462,25 +7524,25 @@ var VOTINGS = {
 		}
 
 		$.ajax({
-		  url: url,
-		  type: "GET",
-		  xhrFields: {
-		   withCredentials: true
-		  },
-		  crossDomain: true,
-		  complete: function( response ){
-		  		//console.log(response);
-		  		self.votings_array = JSON.parse( response.responseText );	
-		  		console.log( self.votings_array );
-		  		$.mobile.loading( "hide" );
-		  		self.check_current_url( 1 );
-		  		self.build_elements();
-		  		$('#votings-page #activated_filter').css('display', 'none'); 
-		  		$('#votings-page #solo_filter').css('display', 'block');	 
-		  		if(call_back){
-		  			call_back();
-		  		} 	
-		  },
+			url: url,
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				//console.log(response);
+				self.votings_array = JSON.parse( response.responseText );	
+				console.log( self.votings_array );
+				$.mobile.loading( "hide" );
+				self.check_current_url( 1 );
+				self.build_elements();
+				$('#votings-page #activated_filter').css('display', 'none'); 
+				$('#votings-page #solo_filter').css('display', 'block');	 
+				if(call_back){
+					call_back();
+				} 	
+			},
 		});
 	},
 	filter_data: function(sphere_id, reinit, name_sphere){
@@ -7498,7 +7560,7 @@ var VOTINGS = {
 			}
 			$('#filter-page #choose_spheres').html(LOCALE_ARRAY_ADDITIONAL.choose_sphere[CURRENT_LANG] + ': ' + type_sphere);
 		}
-		$.mobile.loading( "show", {  theme: "z"	});
+		$.mobile.loading( "show", {theme: "z"});
 
 		var url = mainURL + '/mc.php?sph=0';
 
@@ -7534,8 +7596,8 @@ var VOTINGS = {
 							+ $('#filter-page [name=start_month]').val() + "-" 
 							+ $('#filter-page [name=start_date]').val();
 			var end_date = $('#filter-page [name=end_year]').val() + "-" 
-						  + $('#filter-page [name=end_month]').val() + "-" 
-						  + $('#filter-page [name=end_date]').val();
+						+ $('#filter-page [name=end_month]').val() + "-" 
+						+ $('#filter-page [name=end_date]').val();
 			url += '&start=' + start_date + '&finish=' + end_date;
 			
 			if(self.sphere_filter >= 0){
@@ -7551,26 +7613,26 @@ var VOTINGS = {
 		}
 
 		$.ajax({
-		  url: url,
-		  type: "GET",
-		  xhrFields: {
-		   withCredentials: true
-		  },
-		  crossDomain: true,
-		  complete: function( response ){
-		  		//console.log(response);
-		  		self.votings_array = JSON.parse( response.responseText );	
-		  		$.mobile.loading( "hide" );
-		  		self.check_current_url( 1 );
-		  		if(reinit){
-		  			self.build_elements( "", true );	
-		  		}else{
-		  			self.build_elements();	
-		  		}
-		  		if(self.votings_array.length == 0 && reinit != 1 && self.activated_hard_filter == 1){
-		  			alert(LOCALE_ARRAY_ADDITIONAL.no_data[CURRENT_LANG]);
-		  		} 	
-		  },
+			url: url,
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				//console.log(response);
+				self.votings_array = JSON.parse( response.responseText );	
+				$.mobile.loading( "hide" );
+				self.check_current_url( 1 );
+				if(reinit){
+					self.build_elements( "", true );	
+				}else{
+					self.build_elements();	
+				}
+				if(self.votings_array.length == 0 && reinit != 1 && self.activated_hard_filter == 1){
+					alert(LOCALE_ARRAY_ADDITIONAL.no_data[CURRENT_LANG]);
+				} 	
+			},
 		});
 	},
 	reinit: function(){
@@ -7578,7 +7640,7 @@ var VOTINGS = {
 		if(self.activated_easy_filter == 1 || self.activated_hard_filter == 1){
 			self.filter_data(-1, 1);
 		}else{
-			$.mobile.loading( "show", {  theme: "z"	});
+			$.mobile.loading( "show", {theme: "z"});
 
 			if(location.href.indexOf('#votings-page?type=') > -1){
 				var match_array = location.href.match(/#votings-page\?type=[0-9]*/i);
@@ -7589,39 +7651,39 @@ var VOTINGS = {
 			}
 
 			$.ajax({
-			  url: url,
-			  type: "GET",
-			  xhrFields: {
-			   withCredentials: true
-			  },
-			  crossDomain: true,
-			  complete: function( response ){
-			  		//console.log(response);
-			  		
-			  		var query_array =  JSON.parse( response.responseText );	
-			  		console.log( self.votings_array );			  		
-			  		if(query_array.length > 0){
-			  			self.votings_array = self.votings_array.concat(query_array);
-			  			self.voting_last_item += query_array.length;
-				  		//self.check_current_url( 1 );
-				  		self.build_elements( 0, true,  query_array);
-			  		}
-			  		$.mobile.loading( "hide" );	 
-			  },
+				url: url,
+				type: "GET",
+				xhrFields: {
+					withCredentials: true
+				},
+				crossDomain: true,
+				complete: function( response ){
+					//console.log(response);
+				
+					var query_array =JSON.parse( response.responseText );	
+					console.log( self.votings_array );					
+					if(query_array.length > 0){
+						self.votings_array = self.votings_array.concat(query_array);
+						self.voting_last_item += query_array.length;
+						//self.check_current_url( 1 );
+						self.build_elements( 0, true,query_array);
+					}
+					$.mobile.loading( "hide" );	 
+				},
 			});
 		}
 	},
 	support_voting: function(vote_id, page){
 		$.ajax({
-		  url: mainURL + '/like_add.php?id=' + vote_id,
-		  type: "GET",
-		  xhrFields: {
-		   withCredentials: true
-		  },
-		  crossDomain: true,
-		  complete: function( response ){
-		  		console.log("all ok!");	 
-		  },
+			url: mainURL + '/like_add.php?id=' + vote_id,
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				console.log("all ok!");	 
+			},
 		});
 		switch($('#support').data('supported')){
 			case 1:
@@ -7632,7 +7694,7 @@ var VOTINGS = {
 			case 0:
 				$('#support').html(LOCALE_ARRAY_ADDITIONAL.not_support[CURRENT_LANG]);
 				$('#support').data('supported', 1);
-				$('#supported').html(parseInt($('#supported').html())+1);
+				$('#supported').html(parseInt($('#supported').html()) + 1);
 				break;
 		}
 		if( parseInt( $('#all_supporters').html() ) == parseInt( $('#supported').html() )){
@@ -7682,29 +7744,29 @@ var VOTINGS = {
 			if (star.hasClass('active') && !star.next().hasClass('active')) {
 				allStar.removeClass('active');
 				$.ajax({
-				  url:  mainURL + "/stars_add.php?id=" + vote_id + "&stars=0&obj=1",
-				  type: "GET",
-				  xhrFields: {
-				   withCredentials: true
-				  },
-				  crossDomain: true,
-				  complete: function( response ){
-				  		
-				  }
+					url: mainURL + "/stars_add.php?id=" + vote_id + "&stars=0&obj=1",
+					type: "GET",
+					xhrFields: {
+						withCredentials: true
+					},
+					crossDomain: true,
+					complete: function( response ){
+						
+					}
 				});
 				return false;
 			}
 
 			$.ajax({
-			  url:  mainURL + "/stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=1",
-			  type: "GET",
-			  xhrFields: {
-			   withCredentials: true
-			  },
-			  crossDomain: true,
-			  complete: function( response ){
-			  		
-			  }
+				url: mainURL + "/stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=1",
+				type: "GET",
+				xhrFields: {
+					withCredentials: true
+				},
+				crossDomain: true,
+				complete: function( response ){
+					
+				}
 			});
 
 			star.siblings().removeClass('active');
@@ -7712,7 +7774,7 @@ var VOTINGS = {
 			for (var i = 0; i <= val; i++) {
 				allStar.eq(i).addClass('active');
 			}
-	   // });
+	 // });
 	},
 	collect_supports_build:function(one_voting){
 		var self = this;
@@ -7765,8 +7827,8 @@ var VOTINGS = {
 										</div>\
 										<div class="voting-line clearfix">\
 											<span class="left" style="width: ' + parseInt(percents_object.plus_percent) + '%">' + parseInt(one_voting.vote_yes) + '</span><span class="middle" style="width: ' 
-																			   + parseInt(percents_object.abstained_percent) + '%">' + parseInt(one_voting.vote_nth) + '</span><span class="right" style="width: ' 
-																			   + parseInt(percents_object.minus_percent) + '%">' + parseInt(one_voting.vote_no) + '</span>\
+																			 + parseInt(percents_object.abstained_percent) + '%">' + parseInt(one_voting.vote_nth) + '</span><span class="right" style="width: ' 
+																			 + parseInt(percents_object.minus_percent) + '%">' + parseInt(one_voting.vote_no) + '</span>\
 										</div>\
 									</div>\
 								</a>\
@@ -7800,8 +7862,8 @@ var VOTINGS = {
 										</div>\
 										<div class="voting-line clearfix">\
 											<span class="left" style="width: ' + parseInt(percents_object.plus_percent) + '%">' + parseInt(one_voting.vote_yes) + '</span><span class="middle" style="width: ' 
-																			   + parseInt(percents_object.abstained_percent) + '%">' + parseInt(one_voting.vote_nth) + '</span><span class="right" style="width: ' 
-																			   + parseInt(percents_object.minus_percent) + '%">' + parseInt(one_voting.vote_no) + '</span>\
+																			 + parseInt(percents_object.abstained_percent) + '%">' + parseInt(one_voting.vote_nth) + '</span><span class="right" style="width: ' 
+																			 + parseInt(percents_object.minus_percent) + '%">' + parseInt(one_voting.vote_no) + '</span>\
 										</div>\
 									</div>\
 								</a>\
@@ -7832,7 +7894,7 @@ var VOTINGS = {
 	},
 	current_vote_page_collect_supports: function(data_for_build, canceled, type_trigger){
 		var self = this;
-		$.mobile.loading( "show", {  theme: "z"	});
+		$.mobile.loading( "show", {theme: "z"});
 		for (var k = 0; k < SPHERES.spheres.length; k++) {
 			if(SPHERES.spheres[k].type == parseInt( data_for_build.type ) ){
 				var type_sphere = SPHERES.spheres[k].name;
@@ -7863,7 +7925,7 @@ var VOTINGS = {
 			
 			status_vote = '<div class="status yellow">\
 								<span>' + LOCALE_ARRAY_ADDITIONAL.collect_supporters[CURRENT_LANG] + data_for_build.start + ' - ' + data_for_build.sprtf +
-						   '</span></div>\ ';
+						 '</span></div>\ ';
 		}else{
 			if(canceled != 0){
 				status_vote = '<div class="status red" >\
@@ -7872,20 +7934,20 @@ var VOTINGS = {
 			}else{
 				status_vote = '<div class="status yellow">\
 								<span>' + LOCALE_ARRAY_ADDITIONAL.collect_supporters[CURRENT_LANG] + data_for_build.start + ' - ' + data_for_build.sprtf +
-						   '</span></div>\ ';
+						 '</span></div>\ ';
 			}
 			
 		}
 
 		switch(data_for_build.stars){
 			case "0":
-				var stars_ui = '<span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span>\ ';
+				var stars_ui = '<span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span>\ ';
 				break;
 			case "1":
-				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span>\ ';
+				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span>\ ';
 				break;
 			case "2":
-				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span>\ ';
+				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span>\ ';
 				break;
 			case "3":
 				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span>\ ';
@@ -7934,38 +7996,38 @@ var VOTINGS = {
 												 ' + LOCALE_ARRAY_ADDITIONAL.by[CURRENT_LANG] + ' @<strong>' + data_for_build.author + '</strong>\
 											</div>\
 											<div class="address">\
-												' + LOCALE_ARRAY_ADDITIONAL.share[CURRENT_LANG] + '  - ' + type_sphere + ' - ' + organization + data_for_build.sphere + '\
+												' + LOCALE_ARRAY_ADDITIONAL.share[CURRENT_LANG] + ' - ' + type_sphere + ' - ' + organization + data_for_build.sphere + '\
 											</div>\
 											<div class="num-votes-support">\
 												' + LOCALE_ARRAY_ADDITIONAL.number_of_votes_support[CURRENT_LANG] + '\
 												<div class="counter">\
 													<span><test id = "supported">' + data_for_build.sprtd + '</test>/<test id = "all_supporters">' + data_for_build.sprt + '</test></span>' + support_button + '</div>\
-											</div>' + status_vote +  										  
+											</div>' + status_vote +
 											'<div class="desc">' + data_for_build.description + ' </div>\
 											<div class="discuss-btn">\
-												<a class="ui-btn ui-corner-all ui-shadow" onclick="window.open(\'' + data_for_build.chat +  '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_voting[CURRENT_LANG] + '</a>\
+												<a class="ui-btn ui-corner-all ui-shadow" onclick="window.open(\'' + data_for_build.chat + '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_voting[CURRENT_LANG] + '</a>\
 											</div>\
 											<div class="btn-login-soc">\
 												<button class="ui-btn ui-corner-all ui-shadow share-btn"> ' + LOCALE_ARRAY_ADDITIONAL.share_by_social_newtworks[CURRENT_LANG] + '</button>\
 												<div class="social-wrap">\
 													<div class="ui-grid-b">\
 														<div class="ui-block-a">\
-															<a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href)  + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
+															<a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
 														</div>\
 														<div class="ui-block-b">\
-															<a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href)  + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
+															<a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href) + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
 														</div>\
 														<div class="ui-block-c">\
-															<a target="_blank" class="tw" href="http://twitter.com/share?url=' + encodeURIComponent(location.href)  + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
+															<a target="_blank" class="tw" href="http://twitter.com/share?url=' + encodeURIComponent(location.href) + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
 														</div>\
 														<div class="ui-block-a">\
-															<a target="_blank" class="gp" href="https://plus.google.com/share?url=' + encodeURIComponent(location.href)  + '"></a>\
+															<a target="_blank" class="gp" href="https://plus.google.com/share?url=' + encodeURIComponent(location.href) + '"></a>\
 														</div>\
 														<div class="ui-block-b">\
-															<a target="_blank" class="in" href="https://www.linkedin.com/cws/share?url=' + encodeURIComponent(location.href)  + '"></a>\
+															<a target="_blank" class="in" href="https://www.linkedin.com/cws/share?url=' + encodeURIComponent(location.href) + '"></a>\
 														</div>\
 														<div class="ui-block-c">\
-															<a target="_blank" class="ok" href="http://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href)  + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
+															<a target="_blank" class="ok" href="http://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href) + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
 														</div>\
 													</div>\
 												</div>\
@@ -8045,10 +8107,10 @@ var VOTINGS = {
 		if(finished == 0){
 			only_buttons = '<fieldset class="vote-radio-group" data-role="controlgroup" data-type="horizontal">\
 															<legend>' + LOCALE_ARRAY_ADDITIONAL.yes_no_i_do_not_know[CURRENT_LANG] + '</legend>\
-															<div  class="ui-radio ' + selected_class_yes + '">\
+															<div class="ui-radio ' + selected_class_yes + '">\
 																<label data-checked = "' + checked_yes + '" onclick = "VOTINGS.vote_for_voting(' + data_for_build.id + ')" class="ui-btn ui-radio-off btn-yes">' + LOCALE_ARRAY_ADDITIONAL.yes[CURRENT_LANG] + '</label><input type="radio" name="vote" value="yes" data-enhanced="true">\
 															</div>\
-															<div  class="ui-radio ' + selected_class_abstain + '">\
+															<div class="ui-radio ' + selected_class_abstain + '">\
 																<label data-checked = "' + checked_abstain + '" onclick = "VOTINGS.vote_for_voting(' + data_for_build.id + ')" class="ui-btn ui-radio-off btn-abstain">' + LOCALE_ARRAY_ADDITIONAL.abstain[CURRENT_LANG] + '</label><input type="radio" name="vote" value="abstain" data-enhanced="true">\
 															</div>\
 															<div class="ui-radio ' + selected_class_no + '" >\
@@ -8069,7 +8131,7 @@ var VOTINGS = {
 														</div></form>\ ';
 			status_vote = '<div class="status blue">\
 								<span>' + LOCALE_ARRAY_ADDITIONAL.time_voting[CURRENT_LANG] + data_for_build.start + ' - ' + data_for_build.finish +
-						   '</span></div>\ ';
+						 '</span></div>\ ';
 		}else{
 			status_vote = '<div class="status green">\
 								<span>' + LOCALE_ARRAY_ADDITIONAL.voting_finished[CURRENT_LANG] + '</span>\
@@ -8081,13 +8143,13 @@ var VOTINGS = {
 
 		switch(data_for_build.stars){
 			case "0":
-				var stars_ui = '<span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span>\ ';
+				var stars_ui = '<span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span>\ ';
 				break;
 			case "1":
-				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span>\ ';
+				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span>\ ';
 				break;
 			case "2":
-				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span>\ ';
+				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span>\ ';
 				break;
 			case "3":
 				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span>\ ';
@@ -8174,29 +8236,29 @@ var VOTINGS = {
 										</div>' + status_vote + 
 										'<div class="desc">' + data_for_build.description + ' </div>\
 										<div class="discuss-btn">\
-											<a class="ui-btn ui-corner-all ui-shadow" onclick="window.open(\'' + data_for_build.chat +  '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_voting[CURRENT_LANG] + '</a>\
+											<a class="ui-btn ui-corner-all ui-shadow" onclick="window.open(\'' + data_for_build.chat + '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_voting[CURRENT_LANG] + '</a>\
 										</div>\
 										<div class="btn-login-soc">\
 											<button data-role="button" class="ui-btn ui-corner-all ui-shadow share-btn">' + LOCALE_ARRAY_ADDITIONAL.share_by_social_newtworks[CURRENT_LANG] + '</button>\
 											<div class="social-wrap">\
 												<div class="ui-grid-b">\
 													<div class="ui-block-a">\
-														<a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href)  + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
+														<a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
 													</div>\
 													<div class="ui-block-b">\
-														<a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href)  + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
+														<a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href) + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
 													</div>\
 													<div class="ui-block-c">\
-														<a target="_blank" class="tw" href="http://twitter.com/share?url=' + encodeURIComponent(location.href)  + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
+														<a target="_blank" class="tw" href="http://twitter.com/share?url=' + encodeURIComponent(location.href) + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
 													</div>\
 													<div class="ui-block-a">\
-														<a target="_blank" class="gp" href="https://plus.google.com/share?url=' + encodeURIComponent(location.href)  + '"></a>\
+														<a target="_blank" class="gp" href="https://plus.google.com/share?url=' + encodeURIComponent(location.href) + '"></a>\
 													</div>\
 													<div class="ui-block-b">\
-														<a target="_blank" class="in" href="https://www.linkedin.com/cws/share?url=' + encodeURIComponent(location.href)  + '"></a>\
+														<a target="_blank" class="in" href="https://www.linkedin.com/cws/share?url=' + encodeURIComponent(location.href) + '"></a>\
 													</div>\
 													<div class="ui-block-c">\
-														<a target="_blank" class="ok" href="http://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href)  + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
+														<a target="_blank" class="ok" href="http://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href) + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
 													</div>\
 												</div>\
 											</div>\
@@ -8215,13 +8277,13 @@ var VOTINGS = {
 											</div>\
 											<div class="voting-line clearfix">\
 												<span class="left" style="width: ' + parseInt(percents_object.plus_percent) + '%">' + parseInt(data_for_build.vote_yes) + '</span><span class="middle" style="width: ' 
-																				   + parseInt(percents_object.abstained_percent) + '%">' + parseInt(data_for_build.vote_nth) + '</span><span class="right" style="width: ' 
-																				   + parseInt(percents_object.minus_percent) + '%">' + parseInt(data_for_build.vote_no) + '</span>\
+																				 + parseInt(percents_object.abstained_percent) + '%">' + parseInt(data_for_build.vote_nth) + '</span><span class="right" style="width: ' 
+																				 + parseInt(percents_object.minus_percent) + '%">' + parseInt(data_for_build.vote_no) + '</span>\
 											</div>\
 											<div class="ui-grid-b charts-wrap">\
 												' + charts + '\
 											</div>\
-										</div>\ ' + voting_buttons +  ' <div class="btn-next-page">\
+										</div>\ ' + voting_buttons + ' <div class="btn-next-page">\
 											<a class="ui-btn ui-btn-icon-right" href="#" onclick = " $.mobile.navigate(\'#voters-page?voting=' + data_for_build.id + '\'); VOTINGS.get_open_voters_list(' + data_for_build.id + ');">' + LOCALE_ARRAY_ADDITIONAL.view_list_public_voters[CURRENT_LANG] + '</a>\
 										</div>\
 									</div>\
@@ -8267,12 +8329,12 @@ var VOTINGS = {
 		for(var j = 0; j < 6; j++){
 			if(parseInt(data_for_build['plus' + j]) == 0 && parseInt(data_for_build['abstained' + j]) == 0 && parseInt(data_for_build['minus' + j]) ==0){
 				data_array[j] = [{ value: (parseInt(data_for_build['plus' + j]) + 1), color: "#399d3d" },
-					   			 { value: (parseInt(data_for_build['abstained' + j]) + 1), color: "#03a9f4" },
-					   			 { value: (parseInt(data_for_build['minus' + j]) + 1), color:"#f44336" } ];
+					 			 { value: (parseInt(data_for_build['abstained' + j]) + 1), color: "#03a9f4" },
+					 			 { value: (parseInt(data_for_build['minus' + j]) + 1), color:"#f44336" } ];
 			}else{
 				data_array[j] = [{ value: parseInt(data_for_build['plus' + j]), color: "#399d3d" },
-					   			 { value: parseInt(data_for_build['abstained' + j]), color: "#03a9f4" },
-					   			 { value: parseInt(data_for_build['minus' + j]), color:"#f44336" } ];
+					 			 { value: parseInt(data_for_build['abstained' + j]), color: "#03a9f4" },
+					 			 { value: parseInt(data_for_build['minus' + j]), color:"#f44336" } ];
 			}
 		}
 		
@@ -8304,7 +8366,7 @@ var VOTINGS = {
 					self.current_vote_page_collect_supports( data_for_build, 0, type_trigger);
 					break;
 				case '1':
-					self.current_vote_page_voting_period(  data_for_build, 0, type_trigger)
+					self.current_vote_page_voting_period(data_for_build, 0, type_trigger)
 					break;
 				case '2':
 					self.current_vote_page_voting_period( data_for_build, 1, type_trigger)
@@ -8330,49 +8392,49 @@ var VOTINGS = {
 		var self = this;
 		var return_element;
 		$.ajax({
-			  url: mainURL + '/mc.php?sph=0&id=' + vote_id,
-			  type: "GET",
-			  xhrFields: {
-			   withCredentials: true
-			  },
-			  crossDomain: true,
-			  complete: function( response ){
-			  		return_element = JSON.parse( response.responseText );
-			  		data_for_build = return_element[0];
-			  		if(data_for_build){
-						console.log(data_for_build);
-				  		switch(data_for_build.status){
-							case '0':
-								self.current_vote_page_collect_supports( data_for_build, 0, type_trigger);
-								break;
-							case '1':
-								self.current_vote_page_voting_period(  data_for_build, 0, type_trigger)
-								break;
-							case '2':
-								self.current_vote_page_voting_period( data_for_build, 1, type_trigger)
-								break;
-							case '3':
-								self.current_vote_page_collect_supports( data_for_build, 1, type_trigger);
-								break;
-						}
-					}else{
-						$.mobile.navigate('#votings-page');
-						return false;
+			url: mainURL + '/mc.php?sph=0&id=' + vote_id,
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				return_element = JSON.parse( response.responseText );
+				data_for_build = return_element[0];
+				if(data_for_build){
+					console.log(data_for_build);
+					switch(data_for_build.status){
+						case '0':
+							self.current_vote_page_collect_supports( data_for_build, 0, type_trigger);
+							break;
+						case '1':
+							self.current_vote_page_voting_period(data_for_build, 0, type_trigger)
+							break;
+						case '2':
+							self.current_vote_page_voting_period( data_for_build, 1, type_trigger)
+							break;
+						case '3':
+							self.current_vote_page_collect_supports( data_for_build, 1, type_trigger);
+							break;
 					}
+				}else{
+					$.mobile.navigate('#votings-page');
+					return false;
+				}
 
-					$('#vote-page .btn-login-soc button').on('click', function(e){
-						$(this).next().fadeToggle(300);
-						if($('.overlay').length < 1) {
-							$(this).closest('.ui-page').append('<span class="overlay"></span>');
-						} else {
-							$('.overlay').remove();
-						}
-					});
-					$(document).on('click','.overlay', function() {
-						$(this).closest('.ui-page').find('#vote-page .btn-login-soc button').trigger('click');
-					});			  		
-			  },
-			});
+				$('#vote-page .btn-login-soc button').on('click', function(e){
+					$(this).next().fadeToggle(300);
+					if($('.overlay').length < 1) {
+						$(this).closest('.ui-page').append('<span class="overlay"></span>');
+					} else {
+						$('.overlay').remove();
+					}
+				});
+				$(document).on('click','.overlay', function() {
+					$(this).closest('.ui-page').find('#vote-page .btn-login-soc button').trigger('click');
+				});
+			},
+		});
 		return return_element[0];
 	},
 	check_current_url:function(type_trigger){
@@ -8387,9 +8449,9 @@ var VOTINGS = {
 		var one_percent = (parseInt(plus_value) + parseInt(abstained_value) + parseInt(minus_value)) / 100;
 		//console.log(one_percent);
 		var percents_object = {plus_percent: change_nan(parseInt(plus_value) / one_percent),
-							   abstained_percent: change_nan(parseInt(abstained_value) / one_percent),
-							   minus_percent: change_nan(parseInt(minus_value) / one_percent),
-							   sum_values: parseInt(plus_value) + parseInt(abstained_value) + parseInt(minus_value)};
+							 abstained_percent: change_nan(parseInt(abstained_value) / one_percent),
+							 minus_percent: change_nan(parseInt(minus_value) / one_percent),
+							 sum_values: parseInt(plus_value) + parseInt(abstained_value) + parseInt(minus_value)};
 		return percents_object;
 	},
 	vote_for_voting:function(object_id){
@@ -8434,36 +8496,36 @@ var VOTINGS = {
 			}
 			$('#vote-page .selected-text').html( status_current_voting );
 			$.ajax({
-			  url: mainURL + '/vote_add.php?id=' + object_id + '&vote=' + vote + '&open=' + open_name,
-			  type: "GET",
-			  xhrFields: {
-			   withCredentials: true
-			  },
-			  crossDomain: true,
-			  complete: function( response ){
-			  		function cb(){
-			  			return function(){
-			  				self.switch_page_for_build(object_id, 1);
-			  			}
-			  		}
-			  		self.init(cb(object_id));
-			  		console.log('ok');  	
-			  },
+				url: mainURL + '/vote_add.php?id=' + object_id + '&vote=' + vote + '&open=' + open_name,
+				type: "GET",
+				xhrFields: {
+					withCredentials: true
+				},
+				crossDomain: true,
+				complete: function( response ){
+					function cb(){
+						return function(){
+							self.switch_page_for_build(object_id, 1);
+						}
+					}
+					self.init(cb(object_id));
+					console.log('ok');
+				},
 			});
 		}, 100);
 	},
 	delete_voting: function(voting_id, return_page){
 		$.ajax({
-		  url: mainURL + '/mc_rm.php?id=' + voting_id,
-		  type: "GET",
-		  xhrFields: {
-		   withCredentials: true
-		  },
-		  crossDomain: true,
-		  complete: function( response ){
-		  	 console.log("Deleted id:" + voting_id);
-		  	 $.mobile.navigate(return_page);  	
-		  },
+			url: mainURL + '/mc_rm.php?id=' + voting_id,
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				 console.log("Deleted id:" + voting_id);
+				 $.mobile.navigate(return_page);	
+			},
 		});
 	},
 	build_one_chart: function(selector, id_chart, plus_vote, minus_vote, abstained_vote, name_chart ){
@@ -8478,10 +8540,10 @@ var VOTINGS = {
 									' + LOCALE_ARRAY_ADDITIONAL.yes[CURRENT_LANG] + ':<br>' + plus_vote + '\
 								</div>\
 								<div>\
-									' + LOCALE_ARRAY_ADDITIONAL.abstain[CURRENT_LANG] + ':<br>' + abstained_vote +  '\
+									' + LOCALE_ARRAY_ADDITIONAL.abstain[CURRENT_LANG] + ':<br>' + abstained_vote + '\
 								</div>\
 								<div>\
-									' + LOCALE_ARRAY_ADDITIONAL.no[CURRENT_LANG] + ':<br>' + minus_vote +  '\
+									' + LOCALE_ARRAY_ADDITIONAL.no[CURRENT_LANG] + ':<br>' + minus_vote + '\
 								</div>\
 							</div>\
 						</div>\
@@ -8494,20 +8556,20 @@ var VOTINGS = {
 	},
 	build_circle_chart:function(data_values_array, type_trigger){
 		console.log('data_array0: ' );
-				   			 console.log(data_values_array[0] );
+				 			 console.log(data_values_array[0] );
 		if(location.href.indexOf("vote-page") > -1 && type_trigger == 1){
 			if(document.getElementById("chart-1") || 
-			   document.getElementById("chart-2") ||
-			   document.getElementById("chart-3") ||
-			   document.getElementById("chart-4") ||
-			   document.getElementById("chart-5") ||
-			   document.getElementById("chart-6") ){
-			   	if(document.getElementById("chart-1")){
-			   		var ctx1 = document.getElementById("chart-1").getContext("2d");
+			 document.getElementById("chart-2") ||
+			 document.getElementById("chart-3") ||
+			 document.getElementById("chart-4") ||
+			 document.getElementById("chart-5") ||
+			 document.getElementById("chart-6") ){
+			 	if(document.getElementById("chart-1")){
+			 		var ctx1 = document.getElementById("chart-1").getContext("2d");
 					var chart1 = new Chart(ctx1).Doughnut(data_values_array[0], {
 						showTooltips: false
 					});
-			   	}
+			 	}
 				if(document.getElementById("chart-2")){
 					var ctx2 = document.getElementById("chart-2").getContext("2d");
 					var chart2 = new Chart(ctx2).Doughnut(data_values_array[1], {
@@ -8547,17 +8609,17 @@ var VOTINGS = {
 			$('body').on('pagecontainershow', function(event, ui){
 			if (ui.toPage.prop("id") === "vote-page") {
 				if(document.getElementById("chart-1") || 
-				   document.getElementById("chart-2") ||
-				   document.getElementById("chart-3") ||
-				   document.getElementById("chart-4") ||
-				   document.getElementById("chart-5") ||
-				   document.getElementById("chart-6") ){
-				   	if(document.getElementById("chart-1")){
-				   		var ctx1 = document.getElementById("chart-1").getContext("2d");
+				 document.getElementById("chart-2") ||
+				 document.getElementById("chart-3") ||
+				 document.getElementById("chart-4") ||
+				 document.getElementById("chart-5") ||
+				 document.getElementById("chart-6") ){
+				 	if(document.getElementById("chart-1")){
+				 		var ctx1 = document.getElementById("chart-1").getContext("2d");
 						var chart1 = new Chart(ctx1).Doughnut(data_values_array[0], {
 							showTooltips: false
 						});
-				   	}
+				 	}
 					if(document.getElementById("chart-2")){
 						var ctx2 = document.getElementById("chart-2").getContext("2d");
 						var chart2 = new Chart(ctx2).Doughnut(data_values_array[1], {
@@ -8602,20 +8664,20 @@ var VOTINGS = {
 	},
 	get_open_voters_list:function(vote_id){
 		var self = this;
-		$.mobile.loading( "show", {  theme: "z"	});
+		$.mobile.loading( "show", {theme: "z"});
 		$.ajax({
-		  url: mainURL + '/vote_open.php?id=' + vote_id,
-		  type: "GET",
-		  xhrFields: {
-		   withCredentials: true
-		  },
-		  crossDomain: true,
-		  complete: function( response ){
-		  		//console.log(response);
-		  		self.voters_list = JSON.parse( response.responseText );
-		  		$.mobile.loading( "hide" );  
-		  		self.set_voters_list(vote_id);	
-		  },
+			url: mainURL + '/vote_open.php?id=' + vote_id,
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+					//console.log(response);
+					self.voters_list = JSON.parse( response.responseText );
+					$.mobile.loading( "hide" );
+					self.set_voters_list(vote_id);	
+			},
 		});
 	},
 	set_voters_list: function(vote_id){
@@ -8625,7 +8687,7 @@ var VOTINGS = {
 							<h1>\
 								' + LOCALE_ARRAY_ADDITIONAL.voters[CURRENT_LANG] + '\
 							</h1>\
-							<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">' + LOCALE_ARRAY_ADDITIONAL.back[CURRENT_LANG] + '</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#voters-help">' + LOCALE_ARRAY_ADDITIONAL.ask[CURRENT_LANG] + '</a>\
+							<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back(\'#vote-page?vote=' + vote_id + '\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.back[CURRENT_LANG] + '</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#voters-help">' + LOCALE_ARRAY_ADDITIONAL.ask[CURRENT_LANG] + '</a>\
 							<div id="voters-help" class="help-popup" data-role="popup" data-history="false">\
 								<div class="title">\
 									' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
@@ -8692,7 +8754,7 @@ var VOTINGS = {
 
 		ui_string += plus_vote_string;
 		ui_string += abstained_vote_string;	
-		ui_string += minus_vote_string;			   
+		ui_string += minus_vote_string;
 		
 		ui_string += '</div>\
 					</div>';
@@ -8713,17 +8775,17 @@ var VOTINGS = {
 		}
 		if(answer == 1){
 			$.ajax({
-			  url: url,
-			  type: "GET",
-			  xhrFields: {
-			   withCredentials: true
-			  },
-			  crossDomain: true,
-			  complete: function( response ){
-			  	 console.log("Okay");
-			  	 $('#vote-page #create_project_button').attr('style', 'display: none');
-			  	 $('#vote-page #create_request_button').attr('style', 'display: none');
-			  },
+				url: url,
+				type: "GET",
+				xhrFields: {
+					withCredentials: true
+				},
+				crossDomain: true,
+				complete: function( response ){
+					 console.log("Okay");
+					 $('#vote-page #create_project_button').attr('style', 'display: none');
+					 $('#vote-page #create_request_button').attr('style', 'display: none');
+				},
 			});
 		}
 	}
@@ -8744,52 +8806,52 @@ var MY_VOTINGS = {
 		self.voting_last_item = 10;
 		$('#my-votings-page #searched_string').val('');
 
-		$.mobile.loading( "show", {  theme: "z"	});
+		$.mobile.loading( "show", {theme: "z"});
 		$.ajax({
-		  url: mainURL + '/user_votes_list.php?sph=0',
-		  type: "GET",
-		  xhrFields: {
-		   withCredentials: true
-		  },
-		  crossDomain: true,
-		  complete: function( response ){
-		  		//console.log(response);
-		  		self.votings_array = JSON.parse( response.responseText );	
-		  		console.log( self.votings_array );
-		  		$.mobile.loading( "hide" );
-		  		$('#my-votings-page #activated_filter').css('display', 'none'); 
-		  		$('#my-votings-page #solo_filter').css('display', 'block');	
-		  		self.check_current_url( 1 );
-		  		self.build_elements();	 
-		  		if(call_back){
-		  			call_back();
-		  		} 	
-		  },
+			url: mainURL + '/user_votes_list.php?sph=0',
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				//console.log(response);
+				self.votings_array = JSON.parse( response.responseText );	
+				console.log( self.votings_array );
+				$.mobile.loading( "hide" );
+				$('#my-votings-page #activated_filter').css('display', 'none'); 
+				$('#my-votings-page #solo_filter').css('display', 'block');	
+				self.check_current_url( 1 );
+				self.build_elements();	 
+				if(call_back){
+					call_back();
+				} 	
+			},
 		});
 	},
 	reinit: function(){
 		var self = this;
-			$.mobile.loading( "show", {  theme: "z"	});
+			$.mobile.loading( "show", {theme: "z"});
 			$.ajax({
-			  url: mainURL + '/user_votes_list.php?sph=0&ls=' + self.voting_last_item,
-			  type: "GET",
-			  xhrFields: {
-			   withCredentials: true
-			  },
-			  crossDomain: true,
-			  complete: function( response ){
-			  		//console.log(response);
-			  		var query_array =  JSON.parse( response.responseText );	
-			  		console.log( query_array );			  		
-			  		if(query_array.length > 0){
-			  			self.votings_array = self.votings_array.concat(query_array);
-			  			self.voting_last_item += query_array.length;
-				  		//self.check_current_url( 1 );
-				  		self.build_elements( 0, true,  query_array);
-			  		}
-			  		$.mobile.loading( "hide" );	 
-			  },
-			});
+			url: mainURL + '/user_votes_list.php?sph=0&ls=' + self.voting_last_item,
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				//console.log(response);
+				var query_array =JSON.parse( response.responseText );	
+				console.log( query_array );					
+				if(query_array.length > 0){
+					self.votings_array = self.votings_array.concat(query_array);
+					self.voting_last_item += query_array.length;
+					//self.check_current_url( 1 );
+					self.build_elements( 0, true,query_array);
+				}
+				$.mobile.loading( "hide" );	 
+			},
+		});
 
 	},
 	filter_data: function(sphere_id, reinit, name_sphere){
@@ -8807,7 +8869,7 @@ var MY_VOTINGS = {
 			}
 			$('#filter-page #choose_spheres').html(LOCALE_ARRAY_ADDITIONAL.choose_sphere[CURRENT_LANG] + ': ' + type_sphere);
 		}
-		$.mobile.loading( "show", {  theme: "z"	});
+		$.mobile.loading( "show", {theme: "z"});
 
 		var url = mainURL + '/user_votes_list.php?sph=0';
 
@@ -8843,8 +8905,8 @@ var MY_VOTINGS = {
 							+ $('#filter-page [name=start_month]').val() + "-" 
 							+ $('#filter-page [name=start_date]').val();
 			var end_date = $('#filter-page [name=end_year]').val() + "-" 
-						  + $('#filter-page [name=end_month]').val() + "-" 
-						  + $('#filter-page [name=end_date]').val();
+						+ $('#filter-page [name=end_month]').val() + "-" 
+						+ $('#filter-page [name=end_date]').val();
 			url += '&start=' + start_date + '&finish=' + end_date;
 			
 			if(self.sphere_filter >= 0){
@@ -8860,26 +8922,26 @@ var MY_VOTINGS = {
 		}
 
 		$.ajax({
-		  url: url,
-		  type: "GET",
-		  xhrFields: {
-		   withCredentials: true
-		  },
-		  crossDomain: true,
-		  complete: function( response ){
-		  		//console.log(response);
-		  		self.votings_array = JSON.parse( response.responseText );	
-		  		$.mobile.loading( "hide" );
-		  		self.check_current_url( 1 );
-		  		if(reinit){
-		  			self.build_elements( "", true );	
-		  		}else{
-		  			self.build_elements();	
-		  		}
-		  		if(self.votings_array.length == 0 && reinit != 1 && self.activated_hard_filter == 1){
-		  			alert(LOCALE_ARRAY_ADDITIONAL.no_data[CURRENT_LANG]);
-		  		} 	
-		  },
+			url: url,
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				//console.log(response);
+				self.votings_array = JSON.parse( response.responseText );	
+				$.mobile.loading( "hide" );
+				self.check_current_url( 1 );
+				if(reinit){
+					self.build_elements( "", true );	
+				}else{
+					self.build_elements();	
+				}
+				if(self.votings_array.length == 0 && reinit != 1 && self.activated_hard_filter == 1){
+					alert(LOCALE_ARRAY_ADDITIONAL.no_data[CURRENT_LANG]);
+				} 	
+			},
 		});
 	},
 	build_elements: function(ready_array, reinit, reinit_array){
@@ -8917,15 +8979,15 @@ var MY_VOTINGS = {
 	},
 	support_voting: function(vote_id){
 		$.ajax({
-		  url: mainURL + '/like_add.php?id=' + vote_id,
-		  type: "GET",
-		  xhrFields: {
-		   withCredentials: true
-		  },
-		  crossDomain: true,
-		  complete: function( response ){
-		  		console.log("all ok!");	 
-		  		switch($('#my_support').data('my_supported')){
+			url: mainURL + '/like_add.php?id=' + vote_id,
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				console.log("all ok!");	 
+				switch($('#my_support').data('my_supported')){
 					case 1:
 						$('#my_support').html(LOCALE_ARRAY_ADDITIONAL.support[CURRENT_LANG]);
 						$('#my_support').data('my_supported', 0);
@@ -8934,13 +8996,13 @@ var MY_VOTINGS = {
 					case 0:
 						$('#my_support').html(LOCALE_ARRAY_ADDITIONAL.not_support[CURRENT_LANG]);
 						$('#my_support').data('my_supported', 1);
-						$('#my_supported').html(parseInt($('#my_supported').html())+1);
+						$('#my_supported').html(parseInt($('#my_supported').html()) + 1);
 						break;
 				}
 				if( parseInt( $('#my_all_supporters').html() ) == parseInt( $('#my_supported').html() )){
 					MY_VOTINGS.get_one_element(vote_id);
 				}
-		  },
+			},
 		});
 	},
 	collect_supports_build:function(one_voting){
@@ -8994,8 +9056,8 @@ var MY_VOTINGS = {
 										</div>\
 										<div class="voting-line clearfix">\
 											<span class="left" style="width: ' + parseInt(percents_object.plus_percent) + '%">' + parseInt(one_voting.vote_yes) + '</span><span class="middle" style="width: ' 
-																			   + parseInt(percents_object.abstained_percent) + '%">' + parseInt(one_voting.vote_nth) + '</span><span class="right" style="width: ' 
-																			   + parseInt(percents_object.minus_percent) + '%">' + parseInt(one_voting.vote_no) + '</span>\
+																			 + parseInt(percents_object.abstained_percent) + '%">' + parseInt(one_voting.vote_nth) + '</span><span class="right" style="width: ' 
+																			 + parseInt(percents_object.minus_percent) + '%">' + parseInt(one_voting.vote_no) + '</span>\
 										</div>\
 									</div>\
 								</a>\
@@ -9029,8 +9091,8 @@ var MY_VOTINGS = {
 										</div>\
 										<div class="voting-line clearfix">\
 											<span class="left" style="width: ' + parseInt(percents_object.plus_percent) + '%">' + parseInt(one_voting.vote_yes) + '</span><span class="middle" style="width: ' 
-																			   + parseInt(percents_object.abstained_percent) + '%">' + parseInt(one_voting.vote_nth) + '</span><span class="right" style="width: ' 
-																			   + parseInt(percents_object.minus_percent) + '%">' + parseInt(one_voting.vote_no) + '</span>\
+																			 + parseInt(percents_object.abstained_percent) + '%">' + parseInt(one_voting.vote_nth) + '</span><span class="right" style="width: ' 
+																			 + parseInt(percents_object.minus_percent) + '%">' + parseInt(one_voting.vote_no) + '</span>\
 										</div>\
 									</div>\
 								</a>\
@@ -9061,7 +9123,7 @@ var MY_VOTINGS = {
 	},
 	current_vote_page_collect_supports: function(data_for_build, canceled, type_trigger){
 		var self = this;
-		$.mobile.loading( "show", {  theme: "z"	});
+		$.mobile.loading( "show", {theme: "z"});
 		for (var k = 0; k < SPHERES.spheres.length; k++) {
 			if(SPHERES.spheres[k].type == parseInt( data_for_build.type ) ){
 				var type_sphere = SPHERES.spheres[k].name;
@@ -9092,7 +9154,7 @@ var MY_VOTINGS = {
 			}
 			status_vote = '<div class="status yellow">\
 								<span>' + LOCALE_ARRAY_ADDITIONAL.collect_supporters[CURRENT_LANG] + data_for_build.start + ' - ' + data_for_build.sprtf +
-						   '</span></div>\ ';
+						 '</span></div>\ ';
 		}else{
 			if(canceled != 0){
 				status_vote = '<div class="status red" >\
@@ -9101,19 +9163,19 @@ var MY_VOTINGS = {
 			}else{
 				status_vote = '<div class="status yellow">\
 								<span>' + LOCALE_ARRAY_ADDITIONAL.collect_supporters[CURRENT_LANG] + data_for_build.start + ' - ' + data_for_build.sprtf +
-						   '</span></div>\ ';
+						 '</span></div>\ ';
 			}
 		}
 
 		switch(data_for_build.stars){
 			case "0":
-				var stars_ui = '<span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span>\ ';
+				var stars_ui = '<span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span>\ ';
 				break;
 			case "1":
-				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span>\ ';
+				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span>\ ';
 				break;
 			case "2":
-				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span>\ ';
+				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span>\ ';
 				break;
 			case "3":
 				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span>\ ';
@@ -9168,32 +9230,32 @@ var MY_VOTINGS = {
 												' + LOCALE_ARRAY_ADDITIONAL.number_of_votes_support[CURRENT_LANG] + '\
 												<div class="counter">\
 													<span><test id = "my_supported">' + data_for_build.sprtd + '</test>/<test id = "my_all_supporters">' + data_for_build.sprt + '</test></span>' + support_button + '</div>\
-											</div>' + status_vote +  										  
+											</div>' + status_vote +
 											'<div class="desc">' + data_for_build.description + ' </div>\
 											<div class="discuss-btn">\
-												 <a class="ui-btn ui-corner-all ui-shadow" onclick="window.open(\'' + data_for_build.chat +  '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_voting[CURRENT_LANG] + '</a>\
+												 <a class="ui-btn ui-corner-all ui-shadow" onclick="window.open(\'' + data_for_build.chat + '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_voting[CURRENT_LANG] + '</a>\
 											</div>\
 											<div class="btn-login-soc">\
 												<button class="ui-btn ui-corner-all ui-shadow share-btn">' + LOCALE_ARRAY_ADDITIONAL.share_by_social_newtworks[CURRENT_LANG] + '</button>\
 												<div class="social-wrap">\
 													<div class="ui-grid-b">\
 														<div class="ui-block-a">\
-															<a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href).replace('my-', '')  + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
+															<a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href).replace('my-', '') + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
 														</div>\
 														<div class="ui-block-b">\
-															<a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href).replace('my-', '')  + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
+															<a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href).replace('my-', '') + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
 														</div>\
 														<div class="ui-block-c">\
-															<a target="_blank" class="tw" href="http://twitter.com/share?url=' + encodeURIComponent(location.href).replace('my-', '')  + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
+															<a target="_blank" class="tw" href="http://twitter.com/share?url=' + encodeURIComponent(location.href).replace('my-', '') + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
 														</div>\
 														<div class="ui-block-a">\
-															<a target="_blank" class="gp" href="https://plus.google.com/share?url=' + encodeURIComponent(location.href).replace('my-', '')  + '"></a>\
+															<a target="_blank" class="gp" href="https://plus.google.com/share?url=' + encodeURIComponent(location.href).replace('my-', '') + '"></a>\
 														</div>\
 														<div class="ui-block-b">\
-															<a target="_blank" class="in" href="https://www.linkedin.com/cws/share?url=' + encodeURIComponent(location.href).replace('my-', '')  + '"></a>\
+															<a target="_blank" class="in" href="https://www.linkedin.com/cws/share?url=' + encodeURIComponent(location.href).replace('my-', '') + '"></a>\
 														</div>\
 														<div class="ui-block-c">\
-															<a target="_blank" class="ok" href="http://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href).replace('my-', '')  + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
+															<a target="_blank" class="ok" href="http://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href).replace('my-', '') + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
 														</div>\
 													</div>\
 												</div>\
@@ -9290,11 +9352,11 @@ var MY_VOTINGS = {
 															<label class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">' + LOCALE_ARRAY_ADDITIONAL.turn_to_open_anonymous[CURRENT_LANG] + '</label><input type="checkbox" name="" value="1" data-enhanced="true" />\
 														</div>\
 														<div class="selected-text">\
-														   ' + status_current_voting + '\
+														 ' + status_current_voting + '\
 														</div></form>\ ';
 			status_vote = '<div class="status blue">\
 								<span>' + LOCALE_ARRAY_ADDITIONAL.time_voting[CURRENT_LANG] + data_for_build.start + ' - ' + data_for_build.finish +
-						   '</span></div>\ ';
+						 '</span></div>\ ';
 		}else{
 			status_vote = '<div class="status green">\
 								<span>' + LOCALE_ARRAY_ADDITIONAL.voting_finished[CURRENT_LANG] + '</span>\
@@ -9303,13 +9365,13 @@ var MY_VOTINGS = {
 
 		switch(data_for_build.stars){
 			case "0":
-				var stars_ui = '<span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span>\ ';
+				var stars_ui = '<span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span>\ ';
 				break;
 			case "1":
-				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span>\ ';
+				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span>\ ';
 				break;
 			case "2":
-				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span  data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span>\ ';
+				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span>\ ';
 				break;
 			case "3":
 				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "VOTINGS.stars_action(this)"></span>\ ';
@@ -9386,7 +9448,7 @@ var MY_VOTINGS = {
 											' + LOCALE_ARRAY_ADDITIONAL.by[CURRENT_LANG] + ' @<strong>' + data_for_build.author + '</strong>\
 										</div>\
 										<div class="address">\
-											' + LOCALE_ARRAY_ADDITIONAL.sphere[CURRENT_LANG] + '  - ' + type_sphere + ' - ' + organization + data_for_build.sphere + '\
+											' + LOCALE_ARRAY_ADDITIONAL.sphere[CURRENT_LANG] + ' - ' + type_sphere + ' - ' + organization + data_for_build.sphere + '\
 										</div>\
 										<div class="num-votes-support">\
 											' + LOCALE_ARRAY_ADDITIONAL.number_of_votes_support[CURRENT_LANG] + '\
@@ -9396,29 +9458,29 @@ var MY_VOTINGS = {
 										</div>' + status_vote + 
 										'<div class="desc">' + data_for_build.description + ' </div>\
 										<div class="discuss-btn">\
-											<a class="ui-btn ui-corner-all ui-shadow" onclick="window.open(\'' + data_for_build.chat +  '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_voting[CURRENT_LANG] + '</a>\
+											<a class="ui-btn ui-corner-all ui-shadow" onclick="window.open(\'' + data_for_build.chat + '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_voting[CURRENT_LANG] + '</a>\
 										</div>\
 										<div class="btn-login-soc">\
 											<button data-role="button" class="ui-btn ui-corner-all ui-shadow share-btn">' + LOCALE_ARRAY_ADDITIONAL.share_by_social_newtworks[CURRENT_LANG] + '</button>\
 											<div class="social-wrap">\
 												<div class="ui-grid-b">\
 													<div class="ui-block-a">\
-														<a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href)  + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
+														<a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
 													</div>\
 													<div class="ui-block-b">\
-														<a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href)  + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
+														<a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href) + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
 													</div>\
 													<div class="ui-block-c">\
-														<a target="_blank" class="tw" href="http://twitter.com/share?url=' + encodeURIComponent(location.href)  + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
+														<a target="_blank" class="tw" href="http://twitter.com/share?url=' + encodeURIComponent(location.href) + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
 													</div>\
 													<div class="ui-block-a">\
-														<a target="_blank" class="gp" href="https://plus.google.com/share?url=' + encodeURIComponent(location.href)  + '"></a>\
+														<a target="_blank" class="gp" href="https://plus.google.com/share?url=' + encodeURIComponent(location.href) + '"></a>\
 													</div>\
 													<div class="ui-block-b">\
-														<a target="_blank" class="in" href="https://www.linkedin.com/cws/share?url=' + encodeURIComponent(location.href)  + '"></a>\
+														<a target="_blank" class="in" href="https://www.linkedin.com/cws/share?url=' + encodeURIComponent(location.href) + '"></a>\
 													</div>\
 													<div class="ui-block-c">\
-														<a target="_blank" class="ok" href="http://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href)  + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
+														<a target="_blank" class="ok" href="http://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href) + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
 													</div>\
 												</div>\
 											</div>\
@@ -9426,7 +9488,7 @@ var MY_VOTINGS = {
 										<div class="sms-btn">\
 											<a class="ui-btn ui-corner-all ui-shadow" href="#">SMS</a>\
 										</div>\
-									   	' + create_project_button + '\
+									 	' + create_project_button + '\
 										' + create_request_button + '\
 										<div class="results-wrap">\
 											<div class="results-label">\
@@ -9437,13 +9499,13 @@ var MY_VOTINGS = {
 											</div>\
 											<div class="voting-line clearfix">\
 												<span class="left" style="width: ' + parseInt(percents_object.plus_percent) + '%">' + parseInt(data_for_build.vote_yes) + '</span><span class="middle" style="width: ' 
-																				   + parseInt(percents_object.abstained_percent) + '%">' + parseInt(data_for_build.vote_nth) + '</span><span class="right" style="width: ' 
-																				   + parseInt(percents_object.minus_percent) + '%">' + parseInt(data_for_build.vote_no) + '</span>\
+																				 + parseInt(percents_object.abstained_percent) + '%">' + parseInt(data_for_build.vote_nth) + '</span><span class="right" style="width: ' 
+																				 + parseInt(percents_object.minus_percent) + '%">' + parseInt(data_for_build.vote_no) + '</span>\
 											</div>\
 											<div class="ui-grid-b charts-wrap">\
 												' + charts + '\
 											</div>\
-										</div>\ ' + voting_buttons +  ' <div class="btn-next-page">\
+										</div>\ ' + voting_buttons + ' <div class="btn-next-page">\
 											<a class="ui-btn ui-btn-icon-right" href="#" onclick = "$.mobile.navigate(\'#voters-page?voting=' + data_for_build.id + '\'); MY_VOTINGS.get_open_voters_list(' + data_for_build.id + ');">' + LOCALE_ARRAY_ADDITIONAL.view_list_public_voters[CURRENT_LANG] + '</a>\
 										</div>\
 									</div>\
@@ -9489,12 +9551,12 @@ var MY_VOTINGS = {
 		for(var j = 0; j < 6; j++){
 			if(parseInt(data_for_build['plus' + j]) == 0 && parseInt(data_for_build['abstained' + j]) == 0 && parseInt(data_for_build['minus' + j]) ==0){
 				data_array[j] = [{ value: (parseInt(data_for_build['plus' + j]) + 1), color: "#399d3d" },
-					   			 { value: (parseInt(data_for_build['abstained' + j]) + 1), color: "#03a9f4" },
-					   			 { value: (parseInt(data_for_build['minus' + j]) + 1), color:"#f44336" } ];
+					 			 { value: (parseInt(data_for_build['abstained' + j]) + 1), color: "#03a9f4" },
+					 			 { value: (parseInt(data_for_build['minus' + j]) + 1), color:"#f44336" } ];
 			}else{
 				data_array[j] = [{ value: parseInt(data_for_build['plus' + j]), color: "#399d3d" },
-					   			 { value: parseInt(data_for_build['abstained' + j]), color: "#03a9f4" },
-					   			 { value: parseInt(data_for_build['minus' + j]), color:"#f44336" } ];
+					 			 { value: parseInt(data_for_build['abstained' + j]), color: "#03a9f4" },
+					 			 { value: parseInt(data_for_build['minus' + j]), color:"#f44336" } ];
 			}
 		}
 		
@@ -9525,7 +9587,7 @@ var MY_VOTINGS = {
 				self.current_vote_page_collect_supports( data_for_build, 0, type_trigger);
 				break;
 			case '1':
-				self.current_vote_page_voting_period(  data_for_build, 0, type_trigger)
+				self.current_vote_page_voting_period(data_for_build, 0, type_trigger)
 				break;
 			case '2':
 				self.current_vote_page_voting_period( data_for_build, 1, type_trigger)
@@ -9551,43 +9613,43 @@ var MY_VOTINGS = {
 		var self = this;
 		var return_element;
 		$.ajax({
-			  url: mainURL + '/mc.php?sph=0&id=' + vote_id,
-			  type: "GET",
-			  xhrFields: {
-			   withCredentials: true
-			  },
-			  crossDomain: true,
-			  complete: function( response ){
-			  		return_element = JSON.parse( response.responseText );
-			  		data_for_build = return_element[0];
-			  		switch(data_for_build.status){
-						case '0':
-							self.current_vote_page_collect_supports( data_for_build, 0, type_trigger);
-							break;
-						case '1':
-							self.current_vote_page_voting_period(  data_for_build, 0, type_trigger)
-							break;
-						case '2':
-							self.current_vote_page_voting_period( data_for_build, 1, type_trigger)
-							break;
-						case '3':
-							self.current_vote_page_collect_supports( data_for_build, 1, type_trigger);
-							break;
-					}
+			url: mainURL + '/mc.php?sph=0&id=' + vote_id,
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				return_element = JSON.parse( response.responseText );
+				data_for_build = return_element[0];
+				switch(data_for_build.status){
+					case '0':
+						self.current_vote_page_collect_supports( data_for_build, 0, type_trigger);
+						break;
+					case '1':
+						self.current_vote_page_voting_period(data_for_build, 0, type_trigger)
+						break;
+					case '2':
+						self.current_vote_page_voting_period( data_for_build, 1, type_trigger)
+						break;
+					case '3':
+						self.current_vote_page_collect_supports( data_for_build, 1, type_trigger);
+						break;
+				}
 
-					$('#my-vote-page .btn-login-soc button').on('click', function(e){
-						$(this).next().fadeToggle(300);
-						if($('.overlay').length < 1) {
-							$(this).closest('.ui-page').append('<span class="overlay"></span>');
-						} else {
-							$('.overlay').remove();
-						}
-					});
-					$(document).on('click','.overlay', function() {
-						$(this).closest('.ui-page').find('#my-vote-page .btn-login-soc button').trigger('click');
-					});			  		
-			  },
-			});
+				$('#my-vote-page .btn-login-soc button').on('click', function(e){
+					$(this).next().fadeToggle(300);
+					if($('.overlay').length < 1) {
+						$(this).closest('.ui-page').append('<span class="overlay"></span>');
+					} else {
+						$('.overlay').remove();
+					}
+				});
+				$(document).on('click','.overlay', function() {
+					$(this).closest('.ui-page').find('#my-vote-page .btn-login-soc button').trigger('click');
+				});
+			},
+		});
 		return return_element[0];
 	},
 	check_current_url:function(type_trigger){
@@ -9602,9 +9664,9 @@ var MY_VOTINGS = {
 		var one_percent = (parseInt(plus_value) + parseInt(abstained_value) + parseInt(minus_value)) / 100;
 		//console.log(one_percent);
 		var percents_object = {plus_percent: change_nan(parseInt(plus_value) / one_percent),
-							   abstained_percent: change_nan(parseInt(abstained_value) / one_percent),
-							   minus_percent: change_nan(parseInt(minus_value) / one_percent),
-							   sum_values: parseInt(plus_value) + parseInt(abstained_value) + parseInt(minus_value)};
+							 abstained_percent: change_nan(parseInt(abstained_value) / one_percent),
+							 minus_percent: change_nan(parseInt(minus_value) / one_percent),
+							 sum_values: parseInt(plus_value) + parseInt(abstained_value) + parseInt(minus_value)};
 		return percents_object;
 	},
 	vote_for_voting:function(object_id){
@@ -9649,21 +9711,21 @@ var MY_VOTINGS = {
 			}
 			$('#my-vote-page .selected-text').html( status_current_voting );
 			$.ajax({
-			  url: mainURL + '/vote_add.php?id=' + object_id + '&vote=' + vote + '&open=' + open_name,
-			  type: "GET",
-			  xhrFields: {
-			   withCredentials: true
-			  },
-			  crossDomain: true,
-			  complete: function( response ){
-			  		function cb(){
-			  			return function(){
-			  				self.switch_page_for_build(object_id, 1);
-			  			}
-			  		}
-			  		self.init(cb(object_id));
-			  		console.log('ok');  	
-			  },
+				url: mainURL + '/vote_add.php?id=' + object_id + '&vote=' + vote + '&open=' + open_name,
+				type: "GET",
+				xhrFields: {
+					withCredentials: true
+				},
+				crossDomain: true,
+				complete: function( response ){
+					function cb(){
+						return function(){
+							self.switch_page_for_build(object_id, 1);
+						}
+					}
+					self.init(cb(object_id));
+					console.log('ok');
+				},
 			});
 		}, 100);
 	},
@@ -9679,10 +9741,10 @@ var MY_VOTINGS = {
 									' + LOCALE_ARRAY_ADDITIONAL.yes[CURRENT_LANG] + ':<br>' + plus_vote + '\
 								</div>\
 								<div>\
-									' + LOCALE_ARRAY_ADDITIONAL.abstain[CURRENT_LANG] + ':<br>' + abstained_vote +  '\
+									' + LOCALE_ARRAY_ADDITIONAL.abstain[CURRENT_LANG] + ':<br>' + abstained_vote + '\
 								</div>\
 								<div>\
-									' + LOCALE_ARRAY_ADDITIONAL.no[CURRENT_LANG] + ':<br>' + minus_vote +  '\
+									' + LOCALE_ARRAY_ADDITIONAL.no[CURRENT_LANG] + ':<br>' + minus_vote + '\
 								</div>\
 							</div>\
 						</div>\
@@ -9695,20 +9757,20 @@ var MY_VOTINGS = {
 	},
 	build_circle_chart:function(data_values_array, type_trigger){
 		console.log('data_array0: ' );
-				   			 console.log(data_values_array[0] );
+				 			 console.log(data_values_array[0] );
 		if(location.href.indexOf("my-vote-page") > -1 && type_trigger == 1){
 			if(document.getElementById("chart-1") || 
-			   document.getElementById("chart-2") ||
-			   document.getElementById("chart-3") ||
-			   document.getElementById("chart-4") ||
-			   document.getElementById("chart-5") ||
-			   document.getElementById("chart-6") ){
-			   	if(document.getElementById("chart-1")){
-			   		var ctx1 = document.getElementById("chart-1").getContext("2d");
+					document.getElementById("chart-2") ||
+					document.getElementById("chart-3") ||
+					document.getElementById("chart-4") ||
+					document.getElementById("chart-5") ||
+					document.getElementById("chart-6") ){
+			 	if(document.getElementById("chart-1")){
+			 		var ctx1 = document.getElementById("chart-1").getContext("2d");
 					var chart1 = new Chart(ctx1).Doughnut(data_values_array[0], {
 						showTooltips: false
 					});
-			   	}
+			 	}
 				if(document.getElementById("chart-2")){
 					var ctx2 = document.getElementById("chart-2").getContext("2d");
 					var chart2 = new Chart(ctx2).Doughnut(data_values_array[1], {
@@ -9748,17 +9810,17 @@ var MY_VOTINGS = {
 			$('body').on('pagecontainershow', function(event, ui){
 			if (ui.toPage.prop("id") === "my-vote-page") {
 				if(document.getElementById("chart-1") || 
-				   document.getElementById("chart-2") ||
-				   document.getElementById("chart-3") ||
-				   document.getElementById("chart-4") ||
-				   document.getElementById("chart-5") ||
-				   document.getElementById("chart-6") ){
-				   	if(document.getElementById("chart-1")){
-				   		var ctx1 = document.getElementById("chart-1").getContext("2d");
+						document.getElementById("chart-2") ||
+						document.getElementById("chart-3") ||
+						document.getElementById("chart-4") ||
+						document.getElementById("chart-5") ||
+						document.getElementById("chart-6") ){
+				 	if(document.getElementById("chart-1")){
+				 		var ctx1 = document.getElementById("chart-1").getContext("2d");
 						var chart1 = new Chart(ctx1).Doughnut(data_values_array[0], {
 							showTooltips: false
 						});
-				   	}
+				 	}
 					if(document.getElementById("chart-2")){
 						var ctx2 = document.getElementById("chart-2").getContext("2d");
 						var chart2 = new Chart(ctx2).Doughnut(data_values_array[1], {
@@ -9803,20 +9865,20 @@ var MY_VOTINGS = {
 	},
 	get_open_voters_list:function(vote_id){
 		var self = this;
-		$.mobile.loading( "show", {  theme: "z"	});
+		$.mobile.loading( "show", {theme: "z"});
 		$.ajax({
-		  url: mainURL + '/vote_open.php?id=' + vote_id,
-		  type: "GET",
-		  xhrFields: {
-		   withCredentials: true
-		  },
-		  crossDomain: true,
-		  complete: function( response ){
-		  		//console.log(response);
-		  		self.voters_list = JSON.parse( response.responseText );
-		  		$.mobile.loading( "hide" );  
-		  		self.set_voters_list(vote_id);	
-		  },
+			url: mainURL + '/vote_open.php?id=' + vote_id,
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				//console.log(response);
+				self.voters_list = JSON.parse( response.responseText );
+				$.mobile.loading( "hide" );
+				self.set_voters_list(vote_id);	
+			},
 		});
 	},
 	set_voters_list: function(vote_id){
@@ -9826,7 +9888,7 @@ var MY_VOTINGS = {
 							<h1>\
 								' + LOCALE_ARRAY_ADDITIONAL.voters[CURRENT_LANG] + '\
 							</h1>\
-							<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">' + LOCALE_ARRAY_ADDITIONAL.back[CURRENT_LANG] + '</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#voters-help">' + LOCALE_ARRAY_ADDITIONAL.ask[CURRENT_LANG] + '</a>\
+							<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back(\'#my-vote-page?vote=' + vote_id + '\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.back[CURRENT_LANG] + '</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#voters-help">' + LOCALE_ARRAY_ADDITIONAL.ask[CURRENT_LANG] + '</a>\
 							<div id="voters-help" class="help-popup" data-role="popup" data-history="false">\
 								<div class="title">\
 									' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
@@ -9893,7 +9955,7 @@ var MY_VOTINGS = {
 
 		ui_string += plus_vote_string;
 		ui_string += abstained_vote_string;	
-		ui_string += minus_vote_string;			   
+		ui_string += minus_vote_string;
 		
 		ui_string += '</div>\
 					</div>';
@@ -9904,980 +9966,999 @@ var MY_VOTINGS = {
 };
 
 var ADRESS = {
-			address_arr: [],
-			init:function(){
-				if(location.href.indexOf('#address-item') > -1){
-					var match_array = location.href.match(/#address-item-[0-9]*/i);
-					var object_id = match_array[0].match(/[0-9]+/i);
-					
-					this.setListener(object_id);
-
-					function callback_country(object_id){
-						return function(){
-							ADRESS.selectCountry(object_id, $('#address-item-' + object_id + ' [name=country] > option:eq(0)').val());
-							if(location.href.indexOf('#address-item-' + object_id) > -1){
-					  			$('#address-item-' + object_id + ' [name=country]').selectmenu("refresh", true);								
-							}
-							ADRESS.enable(object_id, 'state');				   
-						}  						
-					}
-
-					this.getCountry(object_id, callback_country(object_id));
-					this.disable(object_id, 'state');
-					this.disable(object_id, 'county');
-					this.disable(object_id, 'city');
-					this.disable(object_id, 'index');				
-					
-					this.setDefault();
-					window.ADRESS = ADRESS;
-					this.getCurrent(false,false, object_id);
-					return false;
-
-			 	}
-				
-				window.ADRESS = ADRESS;
-				this.getCurrent(false,false, false);
-				
-			},
-			levFind:function(source,obj){
-				var clone = jQuery.extend(true, {}, obj);
-				var arr = $.map(clone, function(value, index) {
-					return [value];
-				});
-				function levSort(a,b){
-						var aLev = levenshtein(source,a.name_en);
-						var bLev = levenshtein(source,b.name_en);
-						return aLev - bLev;
-					}
-				return arr.sort(levSort)[0];
-			},
+	address_arr: [],
+	init:function(){
+		if(location.href.indexOf('#address-item') > -1){
+			var match_array = location.href.match(/#address-item-[0-9]*/i);
+			var object_id = match_array[0].match(/[0-9]+/i);
 			
-			gpsSet: function(page,country,state,county,city,street,house, lat, lng){
-				var self = this;
-				if(country){
-					var name = "country";
-					var list_place = self.country;
-					var source = country;
-					var select_func = self.selectCountry.bind(self);
-					country = null;
-				}else if (state){
-					var name = "state";
-					var list_place = self.state;
-					var source = state;
-					var select_func = self.selectState.bind(self);
-					state = null;
-				}
-				else if (county){
-					var name = "county";
-					var list_place = self.county;
-					var source = county;
-					var select_func = self.selectCounty.bind(self);
-					county = null;
-				}
-				else if (city){
-					var name = "city";
-					var list_place = self.city;
-					var source = city;
-					var select_func = self.selectCity.bind(self);
-					city = null;
-				}
-				else {
-					$("#address-item-" + page + " [name=street]").val(street);
-					$("#address-item-" + page + " [name=house]").val(house);
-					$.mobile.loading( "hide" ); //анимация загрузки
-					return ;
-				}
+			this.setListener(object_id);
 
-				var res = this.levFind(source,list_place);
-
-				self.setOption(page, name,res.id);
-
-				select_func(page, res.id,function(){
-					self.gpsSet(page, country,state,county,city,street,house);
-				});
-			},
-			getGPSByType:function(results,type){
-				for(var i in results){
-					var item = results[i];
-					if(item.types.indexOf(type) > -1){
-						return item.long_name;
+			function callback_country(object_id){
+				return function(){
+					ADRESS.selectCountry(object_id, $('#address-item-' + object_id + ' [name=country] > option:eq(0)').val());
+					if(location.href.indexOf('#address-item-' + object_id) > -1){
+						$('#address-item-' + object_id + ' [name=country]').selectmenu("refresh", true);
 					}
+					ADRESS.enable(object_id, 'state');
 				}
-				return "";
-			},
-			setListener:function(page){
-				var self = this;
-				self.clear_listeners(page);
-				$("#address-item-" + page + " [name=country]").change(function(){
-					var value = $(this).val();
-					self.selectCountry(page, value);
-					$("#address-item-" + page + " [name=country]").selectmenu("refresh", true);
+			}
+
+			this.getCountry(object_id, callback_country(object_id));
+			this.disable(object_id, 'state');
+			this.disable(object_id, 'county');
+			this.disable(object_id, 'city');
+			this.disable(object_id, 'index');				
+
+			this.setDefault();
+			window.ADRESS = ADRESS;
+			this.getCurrent(false,false, object_id);
+			return false;
+	 	}
+
+		window.ADRESS = ADRESS;
+		this.getCurrent(false,false, false);
+		
+	},
+	levFind:function(source,obj){
+		var clone = jQuery.extend(true, {}, obj);
+		var arr = $.map(clone, function(value, index) {
+			return [value];
+		});
+		function levSort(a,b){
+				var aLev = levenshtein(source,a.name_en);
+				var bLev = levenshtein(source,b.name_en);
+				return aLev - bLev;
+			}
+		return arr.sort(levSort)[0];
+	},
+
+	gpsSet: function(page,country,state,county,city,street,house, lat, lng){
+		var self = this;
+		if(country){
+			var name = "country";
+			var list_place = self.country;
+			var source = country;
+			var select_func = self.selectCountry.bind(self);
+			country = null;
+		}else if (state){
+			var name = "state";
+			var list_place = self.state;
+			var source = state;
+			var select_func = self.selectState.bind(self);
+			state = null;
+		} else if (county){
+			var name = "county";
+			var list_place = self.county;
+			var source = county;
+			var select_func = self.selectCounty.bind(self);
+			county = null;
+		} else if (city){
+			var name = "city";
+			var list_place = self.city;
+			var source = city;
+			var select_func = self.selectCity.bind(self);
+			city = null;
+		} else {
+			$("#address-item-" + page + " [name=street]").val(street);
+			$("#address-item-" + page + " [name=house]").val(house);
+			$.mobile.loading( "hide" ); //анимация загрузки
+			return ;
+		}
+
+		var res = this.levFind(source,list_place);
+
+		self.setOption(page, name,res.id);
+
+		select_func(page, res.id,function(){
+			self.gpsSet(page, country,state,county,city,street,house);
+		});
+	},
+	getGPSByType:function(results,type){
+		for(var i in results){
+			var item = results[i];
+			if(item.types.indexOf(type) > -1){
+				return item.long_name;
+			}
+		}
+		return "";
+	},
+	setListener:function(page){
+		var self = this;
+		self.clear_listeners(page);
+		$("#address-item-" + page + " [name=country]").change(function(){
+			var value = $(this).val();
+			self.selectCountry(page, value);
+			$("#address-item-" + page + " [name=country]").selectmenu("refresh", true);
+		});
+		$("#address-item-" + page + " [name=state]").change(function(){
+			var value = $(this).val();
+			self.selectState(page, value);
+			$("#address-item-" + page + " [name=state]").selectmenu("refresh", true);
+		});
+		$("#address-item-" + page + " [name=county]").change(function(){
+			var value = $(this).val();
+			self.selectCounty(page, value);
+			$("#address-item-" + page + " [name=county]").selectmenu("refresh", true);
+		});
+		$("#address-item-" + page + " [name=city]").change(function(){
+			var value = $(this).val();
+			self.selectCity(page, value);
+			$("#address-item-" + page + " [name=city]").selectmenu("refresh", true);
+		});
+		$('#address-item-' + page + ' .btn-delete.ui-btn.ui-shadow.ui-corner-all').click(function(){
+			self.delete_address(page);
+		});
+		$("#address-item-" + page + " .ui-btn-right.ui-btn.ui-icon-check.ui-btn-icon-right").click(function(){
+			$('#address-item-' + page + ' .btn-save.ui-btn.ui-shadow.ui-corner-all').click();
+		});
+		$("#findgps-" + page).click(function(){
+				$.mobile.loading( "show", {
+				//text: "foo",
+				//textVisible: true,
+				theme: "z"
+				//html: ""
 				});
-				$("#address-item-" + page + " [name=state]").change(function(){
-					var value = $(this).val();
-					self.selectState(page, value);
-					$("#address-item-" + page + " [name=state]").selectmenu("refresh", true);
-				});
-				$("#address-item-" + page + " [name=county]").change(function(){
-					var value = $(this).val();
-					self.selectCounty(page, value);
-					$("#address-item-" + page + " [name=county]").selectmenu("refresh", true);
-				});
-				$("#address-item-" + page + " [name=city]").change(function(){
-					var value = $(this).val();
-					self.selectCity(page, value);
-					$("#address-item-" + page + " [name=city]").selectmenu("refresh", true);
-				});
-				$('#address-item-' + page + ' .btn-delete.ui-btn.ui-shadow.ui-corner-all').click(function(){
-					self.delete_address(page);
-				});
-				$("#address-item-" + page + " .ui-btn-right.ui-btn.ui-icon-check.ui-btn-icon-right").click(function(){
-					$('#address-item-' + page + ' .btn-save.ui-btn.ui-shadow.ui-corner-all').click();
-				});
-				$("#findgps-" + page).click(function(){
-					  	$.mobile.loading( "show", {
-						  //text: "foo",
-						  //textVisible: true,
-						  theme: "z"
-						  //html: ""
-						});
-					  navigator.geolocation.getCurrentPosition(function (pos) {
-						  var lat = pos.coords.latitude;
-						  var lng = pos.coords.longitude;
-						  if (lat == null) {
+			navigator.geolocation.getCurrentPosition(function (pos) {
+				var lat = pos.coords.latitude;
+				var lng = pos.coords.longitude;
+				if (lat == null) {
+					alert(LOCALE_ARRAY_ADDITIONAL.gps_not_activated[CURRENT_LANG]);
+				} else {
+					g_lat = lat;
+					g_lng = lng;
+					console.log(lat);
+					console.log(lng);
+					var geocoder = new google.maps.Geocoder();
+					var latLng = new google.maps.LatLng(lat, lng);
+					if(geocoder){
+						geocoder.geocode({'latLng': latLng,'language': 'en'},function(results, status) {
+						if (status == google.maps.GeocoderStatus.OK) {
+							 console.log(results);
+							 var address = results[0].address_components;
+
+							 var country = self.getGPSByType(address,"country");
+							 var state = self.getGPSByType(address,"administrative_area_level_1");
+							 var county = self.getGPSByType(address,"administrative_area_level_3");
+							 var city = self.getGPSByType(address,"locality");
+							 //console.log('build: ' + results[0].address_components[0].long_name);
+							 var street = self.getGPSByType(address,"route");
+							 var build = self.getGPSByType(address,"street_number");
+							 ADRESS.gpsSet(page, country,state,county,city,street,build, lat, lng);
+						} else {
 							alert(LOCALE_ARRAY_ADDITIONAL.gps_not_activated[CURRENT_LANG]);
-						  }else{
-						  	g_lat = lat;
-						  	g_lng = lng;
-						  	console.log(lat);
-						  	console.log(lng);
-						  	var geocoder = new google.maps.Geocoder();
-							var latLng = new google.maps.LatLng(lat, lng);
-							if(geocoder){
-								geocoder.geocode({'latLng': latLng,'language': 'en'},function(results, status) {
-								   if (status == google.maps.GeocoderStatus.OK) {
-									 console.log(results);
-									 var address = results[0].address_components;
-
-									 var country = self.getGPSByType(address,"country");
-									 var state = self.getGPSByType(address,"administrative_area_level_1");
-									 var county = self.getGPSByType(address,"administrative_area_level_3");
-									 var city = self.getGPSByType(address,"locality");
-									 //console.log('build: ' + results[0].address_components[0].long_name);
-									 var street = self.getGPSByType(address,"route");
-									 var build = self.getGPSByType(address,"street_number");
-									 ADRESS.gpsSet(page, country,state,county,city,street,build, lat, lng);
-								   }
-
-								   else{
-								   	alert(LOCALE_ARRAY_ADDITIONAL.gps_not_activated[CURRENT_LANG]);
-								   }
-								});;
-							}
-						  }
-					   });
-				});
-			},
-			clear_listeners: function(page){
-				var self = this;
-				$("#address-item-" + page + " [name=country]").off();
-				$("#address-item-" + page + " [name=state]").off();
-				$("#address-item-" + page + " [name=county]").off();
-				$("#address-item-" + page + " [name=city]").off();
-				$('#address-item-' + page + ' .btn-delete.ui-btn.ui-shadow.ui-corner-all').off();
-				$("#address-item-" + page + " .ui-btn-right.ui-btn.ui-icon-check.ui-btn-icon-right").off();
-				$("#findgps-" + page).off();
-			},
-			save_address:function(page){
-				var self = this;
-				var reg_adr = 0;
-
-				$.mobile.loading( "show", {
-					  //text: "foo",
-					  //textVisible: true,
-					  theme: "z",
-					  //html: ""
+						}
 					});
-
-				if($('#address-item-' + page + ' .ui-btn.ui-btn-inherit.ui-btn-icon-left').hasClass('ui-checkbox-on')){
-					reg_adr = 1;
-				}				
-				
-				if(ADRESS.address_arr[page-1]){
-					var ida = ADRESS.address_arr[page-1]['ida'];
-				}else{
-					var ida = '';
 				}
+			}
+		});
+		});
+		$("#address-item-" + page + " [name=house]").change(function(){
+			var value = $(this).val();
 
+			var m = "https://maps.googleapis.com/maps/api/geocode/json?address=" 
+			+ $("#address-item-" + page + " [name=house]").val() + ",+"
+			+ $("#address-item-" + page + " [name=street]").val() + ",+"
+			+ $("#address-item-" + page + " [name=city] option:selected").text() + ",+"
+			+ $("#address-item-" + page + " [name=country] option:selected").text()
+			+ "&sensor=false";
+
+			$.ajax({
+				url: m,
+				type: "GET",
+				xhrFields: {
+					withCredentials: true
+				},
+				crossDomain: true,
+				dataType: 'jsonp',
+				contentType: "application/json",
+				complete: function(result){
+					console.log(result);
+					l_res = jQuery.parseJSON(result);
+					console.log(l_res.results[0].geometry.location.lat);
+					console.log(l_res.results[0].geometry.location.lng);
+					//console.log(result.results[0].geometry.location.lat);
+					//console.log(result.results[0].geometry.location.lng);
+				},
+			});
+
+
+		});
+	},
+	clear_listeners: function(page){
+		var self = this;
+		$("#address-item-" + page + " [name=country]").off();
+		$("#address-item-" + page + " [name=state]").off();
+		$("#address-item-" + page + " [name=county]").off();
+		$("#address-item-" + page + " [name=city]").off();
+		$('#address-item-' + page + ' .btn-delete.ui-btn.ui-shadow.ui-corner-all').off();
+		$("#address-item-" + page + " .ui-btn-right.ui-btn.ui-icon-check.ui-btn-icon-right").off();
+		$("#findgps-" + page).off();
+	},
+	save_address:function(page){
+		var self = this;
+		var reg_adr = 0;
+
+		$.mobile.loading( "show", {
+			//text: "foo",
+			//textVisible: true,
+			theme: "z",
+			//html: ""
+			});
+
+		if($('#address-item-' + page + ' .ui-btn.ui-btn-inherit.ui-btn-icon-left').hasClass('ui-checkbox-on')){
+			reg_adr = 1;
+		}				
+		
+		if(ADRESS.address_arr[page-1]){
+			var ida = ADRESS.address_arr[page-1]['ida'];
+		}else{
+			var ida = '';
+		}
+
+		$.ajax({
+			url: mainURL + '/user_address_add.php?ida=' + ida
+														+ ('&c=' + $('#address-item-' + page + ' [name=city]').val()).replace("'", "`")
+														+ ('&str=' + $('#address-item-' + page + ' [name=street]').val()).replace("'", "`")
+														+ '&bld=' + $('#address-item-' + page + ' [name=house]').val()
+														+ '&oth=' + $('#address-item-' + page + ' [name=comment]').val()
+														+ '&zip=' + $('#address-item-' + page + ' [name=index]').val()
+														+ '&reg_adr=' + reg_adr + '&lat=' + g_lat + '&lng=' + g_lng,
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function(){
+				$.mobile.navigate("#edit-address");
+				$.mobile.loading( "hide" );
+				SPHERES.initial(false, true);
+
+				//if(page > 2 && ADRESS.address_arr.length < 2){
+				//	self.getCurrent(0, callback_current());
+				//}else{
+				//self.getCurrent(0, callback_current(), page);				
+				//}			
+
+				//alert('Changing complete');
+
+			},
+		});
+	},
+	delete_address:function(page){
+		$.mobile.loading( "show", {
+			//text: "foo",
+			//textVisible: true,
+			theme: "z",
+			//html: ""
+		});
+		var self = this;
+		if(ADRESS.address_arr[page-1]){
+			if(ADRESS.address_arr[page-1]['ida']){
 				$.ajax({
-				  url: mainURL + '/user_address_add.php?ida=' + ida
-				  											+ ('&c=' + $('#address-item-' + page + ' [name=city]').val()).replace("'", "`")
-				  											+ ('&str=' + $('#address-item-' + page + ' [name=street]').val()).replace("'", "`")
-				  											+ '&bld=' + $('#address-item-' + page + ' [name=house]').val()
-				  											+ '&oth=' + $('#address-item-' + page + ' [name=comment]').val()
-				  											+ '&zip=' + $('#address-item-' + page + ' [name=index]').val()
-				  											+ '&reg_adr=' + reg_adr + '&lat=' + g_lat + '&lng=' + g_lng,
-				  type: "GET",
-				  xhrFields: {
-				   withCredentials: true
-				  },
-				  crossDomain: true,
-				  complete: function(){			  			
-		  			$.mobile.navigate("#edit-address");
-		  			$.mobile.loading( "hide" );
-		  			SPHERES.initial(false, true);
+					url: mainURL + '/user_address_rm.php?ida=' + ADRESS.address_arr[page-1]['ida'],
+					type: "GET",
+					xhrFields: {
+						withCredentials: true
+					},
+					crossDomain: true,
+					complete: function(){
+						//alert('Deleting complete');	
+					
+						function callback_current(){
+							return function(){
+								$.mobile.loading( "hide" );
+							}
+						}
+						$.mobile.navigate("#edit-address");
+						SPHERES.initial(false, true);						
+						//self.getCurrent(0, callback_current(), page);				
 
-				  	//if(page > 2 && ADRESS.address_arr.length < 2){
-				  	//	self.getCurrent(0, callback_current());
-				  	//}else{
-				  	//self.getCurrent(0, callback_current(), page);				
-				  	//}			
-
-				  	//alert('Changing complete');
-				  	
-				  },
+					},
 				});
-			},
-			delete_address:function(page){
-				$.mobile.loading( "show", {
-				  //text: "foo",
-				  //textVisible: true,
-				  theme: "z",
-				  //html: ""
-				});
-				var self = this;
-				if(ADRESS.address_arr[page-1]){
-					if(ADRESS.address_arr[page-1]['ida']){
-						$.ajax({
-						  url: mainURL + '/user_address_rm.php?ida=' + ADRESS.address_arr[page-1]['ida'],
-						  type: "GET",
-						  xhrFields: {
-						   withCredentials: true
-						  },
-						  crossDomain: true,
-						  complete: function(){
-						  	//alert('Deleting complete');	
-							
-							function callback_current(){
-						  		return function(){
-						  			$.mobile.loading( "hide" );
-						  		}
-						  	}						  	
-						  	$.mobile.navigate("#edit-address");
-						  	SPHERES.initial(false, true);						
-						  	//self.getCurrent(0, callback_current(), page);				
-						  	
-						  },
-						});
-					}
-				}
-			},
-			clear_address_info: function(page){
-				var self = this;
-				$('#edit-address [href=#address-item-' + page + ']').html(LOCALE_ARRAY_ADDITIONAL.address[CURRENT_LANG] + page);
-				
+			}
+		}
+	},
+	clear_address_info: function(page){
+		var self = this;
+		$('#edit-address [href=#address-item-' + page + ']').html(LOCALE_ARRAY_ADDITIONAL.address[CURRENT_LANG] + page);
+		
 				//
 
-				function callback_country(page){
+		function callback_country(page){
+			return function(){
+				//self.enable(page, 'state');
+				function callback_select_country(){
 					return function(){
-						//self.enable(page, 'state');
-						function callback_select_country(){
-							return function(){
-								//self.disable(page, 'state');
-								self.enable(page, 'state');
-								//console.log('state');
-							}
-						}
-						self.selectCountry(page, $('#address-item-' + page + ' [name=country] > option:eq(0)').val(), callback_select_country());
-						//
-
-
-						if(location.href.indexOf('#address-item-' + page) > -1){
-				  			$('#address-item-' + page + ' [name=country]').selectmenu("refresh", true);				  			
-				  			//$('#address-item-' + page + ' [name=state]').selectmenu("refresh", true);						   							
-						}
-					}  						
+						//self.disable(page, 'state');
+						self.enable(page, 'state');
+						//console.log('state');
+					}
 				}
-				self.getCountry(page, callback_country(page));
-				//self.disable(page, 'state');
-				self.disable(page, 'county');
-				self.disable(page, 'city');
-				self.disable(page, 'index');
-				$('#address-item-' + page + ' [name=street]').val('');
-				$('#address-item-' + page + ' [name=house]').val('');
-				$('#address-item-' + page + ' [name=comment]').val('');
-				$('#address-item-' + page + ' .ui-btn ui-btn-inherit.ui-btn-icon-left.ui-checkbox-on').attr('class', 'ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off');
-				$('#address-item-' + page + ' [name=off_address]').data('cacheval', 'true');
-			},
-			selectCountry:function(page, idc,cb_){
-				this.disable(page, "county");
-				this.enable(page, "state");
-				this.getState(page, idc,function(res){
-					$("#address-item-" + page + " [name=state]").val('');
-					if(cb_)cb_(res);
-				});
-				
-			},
-			selectState:function(page, ids, cb_){
-				this.disable(page, "city");
-				this.enable(page, "county")
-				var idc = $("#address-item-" + page + " [name=country]").val();
-				//alert(idc + ',' + ids);
-				this.getCounty(page, idc,ids,function(res){
-					$("#address-item-" + page + " [name=county]").val('');
-					if(cb_)cb_(res);					
-				});
-				
-			},
-			selectCounty:function(page, idr, cb_){
-				this.disable(page, "index");
-				this.enable(page, "city");
-				var idc = $("#address-item-" + page + " [name=country]").val();
-				var ids = $("#address-item-" + page + " [name=state]").val();
-
-				this.getCity(page, idc,ids,idr,function(res){
-					$("#address-item-" + page + " [name=city]").val('');
-					if(cb_)cb_(res);					
-				});
-				
-			},
-			selectCity:function(page, idcity,cb_){
-				this.enable(page, "index");
-				//console.log(idcity);
-				this.getIndex(page, idcity,function(res){
-					$("#address-item-" + page + " [name=index]").val('');
-					if(cb_)cb_(res);					
-				});
-			},
-			getCountry:function(page, cb){/*cb*/
-				var self = this;
-				if(self.country){
-					$("#address-item-" + page + " [name=country]").html('');
-						for(var i = 0; i < self.country.length; i++){
-							var c = self.country[i];
-							var option = document.createElement("option");
-							$(option).val(c.id);
-							if(CURRENT_LANG){
-								switch(CURRENT_LANG){
-									case 'ua':
-										$(option).html(c.name_uk);
-										break;
-									case 'en':
-										$(option).html(c.name_en);
-										break;
-									case 'ru':
-										$(option).html(c.name_ru);
-										break;
-								}
-							}else{
-								switch(DEFAULT_LANG){
-									case 'ua':
-										$(option).html(c.name_uk);
-										break;
-									case 'en':
-										$(option).html(c.name_en);
-										break;
-									case 'ru':
-										$(option).html(c.name_ru);
-										break;
-								}
-							}
-
-							$("#address-item-" + page + " [name=country]").append(option);
-							//console.log(1);
-						}
-						if(cb){
-							cb(self.country);
-						}
-				}else{
-					$.ajax({
-					url: mainURL + "/list_adr_country.php",
-					type:"GET",
-					xhrFields: {
-					   withCredentials: true
-					},
-					async: true,
-					crossDomain: true,
-					complete: function(response){
-						var data = response.responseText;
-					   // console.log(data);
-						self.country = jQuery.parseJSON(data);
-						//console.log(self.country);
-						$("#address-item-" + page + " [name=country]").html('');
-
-						for(var i = 0; i < self.country.length; i++){
-							var c = self.country[i];
-							var option = document.createElement("option");
-							$(option).val(c.id);
-							if(CURRENT_LANG){
-								switch(CURRENT_LANG){
-									case 'ua':
-										$(option).html(c.name_uk);
-										break;
-									case 'en':
-										$(option).html(c.name_en);
-										break;
-									case 'ru':
-										$(option).html(c.name_ru);
-										break;
-								}
-							}else{
-								switch(DEFAULT_LANG){
-									case 'ua':
-										$(option).html(c.name_uk);
-										break;
-									case 'en':
-										$(option).html(c.name_en);
-										break;
-									case 'ru':
-										$(option).html(c.name_ru);
-										break;
-								}
-							}
-
-							$("#address-item-" + page + " [name=country]").append(option);
-							//console.log(1);
-						}
-						if(cb){
-							cb(self.country);
-						}
+				self.selectCountry(page, $('#address-item-' + page + ' [name=country] > option:eq(0)').val(), callback_select_country());
+				//
 
 
-						}
-					});
+				if(location.href.indexOf('#address-item-' + page) > -1){
+					$('#address-item-' + page + ' [name=country]').selectmenu("refresh", true);							
+					//$('#address-item-' + page + ' [name=state]').selectmenu("refresh", true);						 							
 				}
-				
-			},
-			getState:function(page, idc,cb){
-				var self = this;
-				if(self.state){
-					$("#address-item-" + page + " [name=state]").html('');
-						$("#address-item-" + page + " [name=state]").show();
-						for(var i = 0; i < self.state.length; i++){
-							var c = self.state[i];
-							var option = document.createElement("option");
-							$(option).val(c.id);
-							if(CURRENT_LANG){
-								switch(CURRENT_LANG){
-									case 'ua':
-										$(option).html(c.name_uk);
-										break;
-									case 'en':
-										$(option).html(c.name_en);
-										break;
-									case 'ru':
-										$(option).html(c.name_ru);
-										break;
-								}
-							}else{
-								switch(DEFAULT_LANG){
-									case 'ua':
-										$(option).html(c.name_uk);
-										break;
-									case 'en':
-										$(option).html(c.name_en);
-										break;
-									case 'ru':
-										$(option).html(c.name_ru);
-										break;
-								}
-							}
+			}
+		}
+		self.getCountry(page, callback_country(page));
+		//self.disable(page, 'state');
+		self.disable(page, 'county');
+		self.disable(page, 'city');
+		self.disable(page, 'index');
+		$('#address-item-' + page + ' [name=street]').val('');
+		$('#address-item-' + page + ' [name=house]').val('');
+		$('#address-item-' + page + ' [name=comment]').val('');
+		$('#address-item-' + page + ' .ui-btn ui-btn-inherit.ui-btn-icon-left.ui-checkbox-on').attr('class', 'ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off');
+		$('#address-item-' + page + ' [name=off_address]').data('cacheval', 'true');
+	},
+	selectCountry:function(page, idc,cb_){
+		this.disable(page, "county");
+		this.enable(page, "state");
+		this.getState(page, idc,function(res){
+			$("#address-item-" + page + " [name=state]").val('');
+			if(cb_)cb_(res);
+		});
+	},
+	selectState:function(page, ids, cb_){
+		this.disable(page, "city");
+		this.enable(page, "county")
+		var idc = $("#address-item-" + page + " [name=country]").val();
+		//alert(idc + ',' + ids);
+		this.getCounty(page, idc,ids,function(res){
+			$("#address-item-" + page + " [name=county]").val('');
+			if(cb_)cb_(res);					
+		});
+	},
+	selectCounty:function(page, idr, cb_){
+		this.disable(page, "index");
+		this.enable(page, "city");
+		var idc = $("#address-item-" + page + " [name=country]").val();
+		var ids = $("#address-item-" + page + " [name=state]").val();
 
-							$("#address-item-" + page + " [name=state]").append(option);
+		this.getCity(page, idc,ids,idr,function(res){
+			$("#address-item-" + page + " [name=city]").val('');
+			if(cb_)cb_(res);					
+		});
+	},
+	selectCity:function(page, idcity,cb_){
+		this.enable(page, "index");
+		//console.log(idcity);
+		this.getIndex(page, idcity,function(res){
+			$("#address-item-" + page + " [name=index]").val('');
+			if(cb_)cb_(res);					
+		});
+	},
+	getCountry:function(page, cb){/*cb*/
+		var self = this;
+		if(self.country){
+			$("#address-item-" + page + " [name=country]").html('');
+				for(var i = 0; i < self.country.length; i++){
+					var c = self.country[i];
+					var option = document.createElement("option");
+					$(option).val(c.id);
+					if(CURRENT_LANG){
+						switch(CURRENT_LANG){
+							case 'ua':
+								$(option).html(c.name_uk);
+								break;
+							case 'en':
+								$(option).html(c.name_en);
+								break;
+							case 'ru':
+								$(option).html(c.name_ru);
+								break;
 						}
-						//lang_activate_el("#address-item-" + page + " [name=state]");
-						if(cb){
-							cb(self.state);
-						}
-				}else{
-					$.ajax({
-					url: mainURL + "/list_adr_state.php?idc="+idc,
-					type:"GET",
-					xhrFields: {
-					   withCredentials: true
-					},
-					async: true,
-					crossDomain: true,
-					complete: function(response){
-						var data = response.responseText;
-						self.state = jQuery.parseJSON(data);
-						$("#address-item-" + page + " [name=state]").html('');
-						$("#address-item-" + page + " [name=state]").show();
-						for(var i = 0; i < self.state.length; i++){
-							var c = self.state[i];
-							var option = document.createElement("option");
-							$(option).val(c.id);
-							if(CURRENT_LANG){
-								switch(CURRENT_LANG){
-									case 'ua':
-										$(option).html(c.name_uk);
-										break;
-									case 'en':
-										$(option).html(c.name_en);
-										break;
-									case 'ru':
-										$(option).html(c.name_ru);
-										break;
-								}
-							}else{
-								switch(DEFAULT_LANG){
-									case 'ua':
-										$(option).html(c.name_uk);
-										break;
-									case 'en':
-										$(option).html(c.name_en);
-										break;
-									case 'ru':
-										$(option).html(c.name_ru);
-										break;
-								}
-							}
-
-							$("#address-item-" + page + " [name=state]").append(option);
-							
-						}
-						//lang_activate_el("#address-item-" + page + " [name=state]");
-						if(cb){
-							cb(self.state);
+					}else{
+						switch(DEFAULT_LANG){
+							case 'ua':
+								$(option).html(c.name_uk);
+								break;
+							case 'en':
+								$(option).html(c.name_en);
+								break;
+							case 'ru':
+								$(option).html(c.name_ru);
+								break;
 						}
 					}
-				});
+
+					$("#address-item-" + page + " [name=country]").append(option);
+					//console.log(1);
 				}
-			},
-			getCounty:function(page, idc,ids,cb){
-				var self = this;
-				$.ajax({
-					url: mainURL + "/list_adr_county.php?idc="+idc+"&ids="+ids,
-					type:"GET",
-					xhrFields: {
-					   withCredentials: true
-					},
-					crossDomain: true,
-					complete: function(response){
-						var data = response.responseText;
-					 //   console.log(data);
-						self.county = jQuery.parseJSON(data);
-						$("#address-item-" + page + " [name=county]").html('');
-						$("#address-item-" + page + " [name=county]").show();
-						for(var i = 0; i < self.county.length; i++){
-							var c = self.county[i];
-							var option = document.createElement("option");
-							$(option).val(c.id);
-							if(CURRENT_LANG){
-								switch(CURRENT_LANG){
-									case 'ua':
-										$(option).html(c.name_uk);
-										break;
-									case 'en':
-										$(option).html(c.name_en);
-										break;
-									case 'ru':
-										$(option).html(c.name_ru);
-										break;
-								}
-							}else{
-								switch(DEFAULT_LANG){
-									case 'ua':
-										$(option).html(c.name_uk);
-										break;
-									case 'en':
-										$(option).html(c.name_en);
-										break;
-									case 'ru':
-										$(option).html(c.name_ru);
-										break;
-								}
+				if(cb){
+					cb(self.country);
+				}
+		} else {
+			$.ajax({
+				url: mainURL + "/list_adr_country.php",
+				type:"GET",
+				xhrFields: {
+					withCredentials: true
+				},
+				async: true,
+				crossDomain: true,
+				complete: function(response){
+					var data = response.responseText;
+					// console.log(data);
+					self.country = jQuery.parseJSON(data);
+					//console.log(self.country);
+					$("#address-item-" + page + " [name=country]").html('');
+
+					for(var i = 0; i < self.country.length; i++){
+						var c = self.country[i];
+						var option = document.createElement("option");
+						$(option).val(c.id);
+						if(CURRENT_LANG){
+							switch(CURRENT_LANG){
+								case 'ua':
+									$(option).html(c.name_uk);
+									break;
+								case 'en':
+									$(option).html(c.name_en);
+									break;
+								case 'ru':
+									$(option).html(c.name_ru);
+									break;
 							}
-
-							$("#address-item-" + page + " [name=county]").append(option);
-							
-						}
-						//lang_activate_el("#address-item-" + page + " [name=county]");
-						if(cb){
-							cb(self.county);
-						}
-						}
-					})
-			},
-			getCity:function(page, idc,ids,idr,cb){
-				var self = this;
-				$.ajax({
-					url: mainURL + "/list_adr_city.php?idc="+idc+"&ids="+ids+"&idr="+idr,
-					type:"GET",
-					xhrFields: {
-					   withCredentials: true
-					},
-					crossDomain: true,
-					complete: function(response){
-						var data = response.responseText;
-						self.city = jQuery.parseJSON(data);
-						$("#address-item-" + page + " [name=city]").html('');
-						$("#address-item-" + page + " [name=city]").show();
-						for(var i = 0; i < self.city.length; i++){
-							var c = self.city[i];
-							var option = document.createElement("option");
-							$(option).val(c.id);
-							if(CURRENT_LANG){
-								switch(CURRENT_LANG){
-									case 'ua':
-										$(option).html(c.name_uk);
-										break;
-									case 'en':
-										$(option).html(c.name_en);
-										break;
-									case 'ru':
-										$(option).html(c.name_ru);
-										break;
-								}
-							}else{
-								switch(DEFAULT_LANG){
-									case 'ua':
-										$(option).html(c.name_uk);
-										break;
-									case 'en':
-										$(option).html(c.name_en);
-										break;
-									case 'ru':
-										$(option).html(c.name_ru);
-										break;
-								}
+						}else{
+							switch(DEFAULT_LANG){
+								case 'ua':
+									$(option).html(c.name_uk);
+									break;
+								case 'en':
+									$(option).html(c.name_en);
+									break;
+								case 'ru':
+									$(option).html(c.name_ru);
+									break;
 							}
+						}
 
-							$("#address-item-" + page + " [name=city]").append(option);
-							
+						$("#address-item-" + page + " [name=country]").append(option);
+						//console.log(1);
+					}
+					if(cb){
+						cb(self.country);
+					}
+				}
+			});
+		}
+	},
+	getState:function(page, idc,cb){
+		var self = this;
+		if(self.state){
+			$("#address-item-" + page + " [name=state]").html('');
+				$("#address-item-" + page + " [name=state]").show();
+				for(var i = 0; i < self.state.length; i++){
+					var c = self.state[i];
+					var option = document.createElement("option");
+					$(option).val(c.id);
+					if(CURRENT_LANG){
+						switch(CURRENT_LANG){
+							case 'ua':
+								$(option).html(c.name_uk);
+								break;
+							case 'en':
+								$(option).html(c.name_en);
+								break;
+							case 'ru':
+								$(option).html(c.name_ru);
+								break;
 						}
-						//lang_activate_el("#address-item-" + page + " [name=city]");
-						if(cb){
-							cb(self.city);
+					} else {
+						switch(DEFAULT_LANG){
+							case 'ua':
+								$(option).html(c.name_uk);
+								break;
+							case 'en':
+								$(option).html(c.name_en);
+								break;
+							case 'ru':
+								$(option).html(c.name_ru);
+								break;
 						}
-						}
-					})
-			},
-			getIndex:function(page, idcity,cb){
-				var self = this;
-				$.ajax({
-					url: mainURL + "/list_adr_zip.php?id="+idcity,
-					type:"GET",
-					xhrFields: {
-					   withCredentials: true
-					},
-					crossDomain: true,
-					complete: function(response){
-						var data = response.responseText;
-						//console.log(data);
-						self.indexes = jQuery.parseJSON(data);
-						$("#address-item-" + page + " [name=index]").html('');
-						$("#address-item-" + page + " [name=index]").show();
-						for(var i = 0; i < self.indexes.length; i++){
-							var c = self.indexes[i];
-							var option = document.createElement("option");
-							$(option).val(c.id);
-							$(option).html(c.zip);
+					}
 
-							$("#address-item-" + page + " [name=index]").append(option);
-						}
-						if(cb){
-							cb(self.indexes);
-						}
-						}
-					})
+					$("#address-item-" + page + " [name=state]").append(option);
+				}
+				//lang_activate_el("#address-item-" + page + " [name=state]");
+				if(cb){
+					cb(self.state);
+				}
+		} else {
+			$.ajax({
+			url: mainURL + "/list_adr_state.php?idc="+idc,
+			type:"GET",
+			xhrFields: {
+				withCredentials: true
 			},
-			enable:function(page, name,choose){
-			var self = this;				
-				$('#address-item-' + page + ' [name="'+name+'"]').attr("disabled",false);
-				if(!choose)$('#address-item-' + page + ' [name="'+name+'"]').parent().find("span").html(LOCALE_ARRAY_ADDITIONAL.choose[CURRENT_LANG] + self.set_locale_names( name ));
+			async: true,
+			crossDomain: true,
+			complete: function(response){
+				var data = response.responseText;
+				self.state = jQuery.parseJSON(data);
+				$("#address-item-" + page + " [name=state]").html('');
+				$("#address-item-" + page + " [name=state]").show();
+				for(var i = 0; i < self.state.length; i++){
+					var c = self.state[i];
+					var option = document.createElement("option");
+					$(option).val(c.id);
+					if(CURRENT_LANG){
+						switch(CURRENT_LANG){
+							case 'ua':
+								$(option).html(c.name_uk);
+								break;
+							case 'en':
+								$(option).html(c.name_en);
+								break;
+							case 'ru':
+								$(option).html(c.name_ru);
+								break;
+						}
+					}else{
+						switch(DEFAULT_LANG){
+							case 'ua':
+								$(option).html(c.name_uk);
+								break;
+							case 'en':
+								$(option).html(c.name_en);
+								break;
+							case 'ru':
+								$(option).html(c.name_ru);
+								break;
+						}
+					}
+
+						$("#address-item-" + page + " [name=state]").append(option);
+					
+					}
+					//lang_activate_el("#address-item-" + page + " [name=state]");
+					if(cb){
+						cb(self.state);
+					}
+				}
+			});
+		}
+	},
+	getCounty:function(page, idc,ids,cb){
+		var self = this;
+		$.ajax({
+			url: mainURL + "/list_adr_county.php?idc="+idc+"&ids="+ids,
+			type:"GET",
+			xhrFields: {
+				withCredentials: true
 			},
-			getCurrent:function(not_refresh, callback_redirect, page){
-				var self = this;
-				var lang_address = CURRENT_LANG;
-				if(CURRENT_LANG == 'ua')
-					lang_address = 'uk';
-				if(self.address_arr.length > 0 && location.href.indexOf('#address-item') > -1){
+			crossDomain: true,
+			complete: function(response){
+				var data = response.responseText;
+			 // console.log(data);
+				self.county = jQuery.parseJSON(data);
+				$("#address-item-" + page + " [name=county]").html('');
+				$("#address-item-" + page + " [name=county]").show();
+				for(var i = 0; i < self.county.length; i++){
+					var c = self.county[i];
+					var option = document.createElement("option");
+					$(option).val(c.id);
+					if(CURRENT_LANG){
+						switch(CURRENT_LANG){
+							case 'ua':
+								$(option).html(c.name_uk);
+								break;
+							case 'en':
+								$(option).html(c.name_en);
+								break;
+							case 'ru':
+								$(option).html(c.name_ru);
+								break;
+						}
+					}else{
+						switch(DEFAULT_LANG){
+							case 'ua':
+								$(option).html(c.name_uk);
+								break;
+							case 'en':
+								$(option).html(c.name_en);
+								break;
+							case 'ru':
+								$(option).html(c.name_ru);
+								break;
+						}
+					}
+
+					$("#address-item-" + page + " [name=county]").append(option);
+					
+				}
+				//lang_activate_el("#address-item-" + page + " [name=county]");
+				if(cb){
+					cb(self.county);
+				}
+			}
+		})
+	},
+	getCity:function(page, idc,ids,idr,cb){
+		var self = this;
+		$.ajax({
+			url: mainURL + "/list_adr_city.php?idc="+idc+"&ids="+ids+"&idr="+idr,
+			type:"GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function(response){
+				var data = response.responseText;
+				self.city = jQuery.parseJSON(data);
+				$("#address-item-" + page + " [name=city]").html('');
+				$("#address-item-" + page + " [name=city]").show();
+				for(var i = 0; i < self.city.length; i++){
+					var c = self.city[i];
+					var option = document.createElement("option");
+					$(option).val(c.id);
+					if(CURRENT_LANG){
+						switch(CURRENT_LANG){
+							case 'ua':
+								$(option).html(c.name_uk);
+								break;
+							case 'en':
+								$(option).html(c.name_en);
+								break;
+							case 'ru':
+								$(option).html(c.name_ru);
+								break;
+						}
+					} else {
+						switch(DEFAULT_LANG){
+							case 'ua':
+								$(option).html(c.name_uk);
+								break;
+							case 'en':
+								$(option).html(c.name_en);
+								break;
+							case 'ru':
+								$(option).html(c.name_ru);
+								break;
+						}
+					}
+
+					$("#address-item-" + page + " [name=city]").append(option);
+					
+				}
+				//lang_activate_el("#address-item-" + page + " [name=city]");
+				if(cb){
+					cb(self.city);
+				}
+			}
+		})
+	},
+	getIndex:function(page, idcity,cb){
+		var self = this;
+		$.ajax({
+			url: mainURL + "/list_adr_zip.php?id="+idcity,
+			type:"GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function(response){
+				var data = response.responseText;
+				//console.log(data);
+				self.indexes = jQuery.parseJSON(data);
+				$("#address-item-" + page + " [name=index]").html('');
+				$("#address-item-" + page + " [name=index]").show();
+				for(var i = 0; i < self.indexes.length; i++){
+					var c = self.indexes[i];
+					var option = document.createElement("option");
+					$(option).val(c.id);
+					$(option).html(c.zip);
+
+					$("#address-item-" + page + " [name=index]").append(option);
+				}
+				if(cb){
+					cb(self.indexes);
+				}
+			}
+		})
+	},
+
+	enable:function(page, name,choose){
+	var self = this;				
+		$('#address-item-' + page + ' [name="'+name+'"]').attr("disabled",false);
+		if(!choose)$('#address-item-' + page + ' [name="'+name+'"]').parent().find("span").html(LOCALE_ARRAY_ADDITIONAL.choose[CURRENT_LANG] + self.set_locale_names( name ));
+	},
+	getCurrent:function(not_refresh, callback_redirect, page){
+		var self = this;
+		var lang_address = CURRENT_LANG;
+		if(CURRENT_LANG == 'ua')
+			lang_address = 'uk';
+		if(self.address_arr.length > 0 && location.href.indexOf('#address-item') > -1){
+			if(page && self.address_arr[page-1]){
+				self.set_one_address(page, not_refresh, callback_redirect);						
+			}else{
+				if(page){
+					self.clear_address_info(page);
+				}
+			}
+			if(location.href.indexOf('#edit-address') > -1){
+				for (var i = 1; i < 4; i++) {
+					if(self.address_arr[i-1]){
+						$('#edit-address [href=#address-item-' + i + ']').html(self.address_arr[i-1]['str'] + ' ' +
+																			 self.address_arr[i-1]['bld'] + ', ' + 
+																			 self.address_arr[i-1]['city_' + lang_address]);
+					}else{
+						$('#edit-address [href=#address-item-' + i + ']').html(LOCALE_ARRAY_ADDITIONAL.address[CURRENT_LANG] + i);	
+					}														
+				}
+				if(i < 3){
+					for (var j = i; j < 4; j++) {
+						$('#edit-address [href=#address-item-' + j + ']').html(LOCALE_ARRAY_ADDITIONAL.address[CURRENT_LANG] + j);						
+					}								
+				}										
+			}
+		} else {
+			$.ajax({
+				url: mainURL + "/user_address.php",
+				type:"GET",
+				crossDomain: true,
+				xhrFields: {
+					withCredentials: true
+				},
+				complete: function(response){
+					var data = response.responseText;
+					var address_arr = jQuery.parseJSON(data);
+					for(var i in address_arr){
+						var address = address_arr[i];
+						var en = address.str+" "+address.bld+", "+address.city_en;
+						var ru = address.str+" "+address.bld+", "+address.city_ru;
+						var ua = address.str+" "+address.bld+", "+address.city_ua;
+						$(".address-item a.js-address:eq("+i+")")
+							.data("en",en)
+							.data("ru",ru)
+							.data("ua",ua);
+
+						$(".address-item a.js-sphere:eq("+i+")")
+							.data("en","Choose sphere for "+en)
+							.data("ru","Выберите сферы для "+ru)
+							.data("ua","Виберіть галузі для "+ua);
+					}
+
+					self.address_arr = address_arr;
+					var lang_address = CURRENT_LANG;
+					if(CURRENT_LANG == 'ua')
+						lang_address = 'uk';
+					
 					if(page && self.address_arr[page-1]){
 						self.set_one_address(page, not_refresh, callback_redirect);						
-					}else{
+					} else {
 						if(page){
 							self.clear_address_info(page);
-						}					  	
-					}
+						}
+					}				
 					if(location.href.indexOf('#edit-address') > -1){
+						$('#edit-address [href=#address-item-' + 1 + ']').html(LOCALE_ARRAY_ADDITIONAL.address[CURRENT_LANG] + 1);	
 						for (var i = 1; i < 4; i++) {
 							if(self.address_arr[i-1]){
-								$('#edit-address [href=#address-item-' + i + ']').html(self.address_arr[i-1]['str'] + ' '  +
-					  																   self.address_arr[i-1]['bld'] + ', ' + 
-					  																   self.address_arr[i-1]['city_' + lang_address]);
-							}else{
+								$('#edit-address [href=#address-item-' + i + ']').html(self.address_arr[i-1]['str'] + ' ' +
+																					 self.address_arr[i-1]['bld'] + ', ' + 
+																					 self.address_arr[i-1]['city_' + lang_address]);
+							} else {
 								$('#edit-address [href=#address-item-' + i + ']').html(LOCALE_ARRAY_ADDITIONAL.address[CURRENT_LANG] + i);	
-							}														
+							}							
 						}
 						if(i < 3){
 							for (var j = i; j < 4; j++) {
 								$('#edit-address [href=#address-item-' + j + ']').html(LOCALE_ARRAY_ADDITIONAL.address[CURRENT_LANG] + j);						
 							}								
-						}										
+						}					
 					}
-				}else{
-					$.ajax({
-						url: mainURL + "/user_address.php",
-						type:"GET",
-						crossDomain: true,
-						xhrFields: {
-						   withCredentials: true
-						},
-						complete: function(response){
-							var data = response.responseText;
-							var address_arr = jQuery.parseJSON(data);
-							for(var i in address_arr){
-								var address = address_arr[i];
-								var en = address.str+" "+address.bld+", "+address.city_en;
-								var ru = address.str+" "+address.bld+", "+address.city_ru;
-								var ua = address.str+" "+address.bld+", "+address.city_ua;
-								$(".address-item a.js-address:eq("+i+")")
-									.data("en",en)
-									.data("ru",ru)
-									.data("ua",ua);
-
-								$(".address-item a.js-sphere:eq("+i+")")
-									.data("en","Choose sphere for "+en)
-									.data("ru","Выберите сферы для "+ru)
-									.data("ua","Виберіть галузі для "+ua);
-							}
-
-						  	self.address_arr = address_arr;
-						  	var lang_address = CURRENT_LANG;
-							if(CURRENT_LANG == 'ua')
-								lang_address = 'uk';
-						  	
-						  	if(page && self.address_arr[page-1]){
-								self.set_one_address(page, not_refresh, callback_redirect);						
-							}else{
-								if(page){
-									self.clear_address_info(page);
-								}
-							}				
-							if(location.href.indexOf('#edit-address') > -1){
-								$('#edit-address [href=#address-item-' + 1 + ']').html(LOCALE_ARRAY_ADDITIONAL.address[CURRENT_LANG] + 1);	
-								for (var i = 1; i < 4; i++) {
-									if(self.address_arr[i-1]){
-										$('#edit-address [href=#address-item-' + i + ']').html(self.address_arr[i-1]['str'] + ' '  +
-							  																   self.address_arr[i-1]['bld'] + ', ' + 
-							  																   self.address_arr[i-1]['city_' + lang_address]);
-									}else{
-										$('#edit-address [href=#address-item-' + i + ']').html(LOCALE_ARRAY_ADDITIONAL.address[CURRENT_LANG] + i);	
-									}							
-								}
-								if(i < 3){
-									for (var j = i; j < 4; j++) {
-										$('#edit-address [href=#address-item-' + j + ']').html(LOCALE_ARRAY_ADDITIONAL.address[CURRENT_LANG] + j);						
-									}								
-								}					
-							}
-						}
-					});
-				}				
-			},
-			set_one_address: function(page, not_refresh, callback_redirect){
-					var self = this;				
-			  		var z = page;
-					var one_address = self.address_arr[page-1];
-				  		$('#address-item-' + z + ' #delete_address').attr('style', 'display: block');
-				  						  	
-			  			function callback_country(z){
-							return function(){
-								 function callback_state(){
-								 	return function(){
-								 		function callback_county(){
-								 			return function(){
-								 				function callback_city(){
-								 					return function(){
-								 						$('#address-item-' + z + ' [name=city] option[value=' + one_address['city_id']  + ']').attr('selected', 'selected');
-								 						$('#address-item-' + z + ' [name=index] option[value=' + one_address['zip']  + ']').attr('selected', 'selected');
-								 						$('#address-item-' + z + ' [name=street]').val(one_address['str']);
-					  									$('#address-item-' + z + ' [name=house]').val(one_address['bld']);
-					  									$('#address-item-' + z + ' [name=comment]').val(one_address['oth']);
-					  									//Корректировка работы в firefox
-					  									if($('#address-item-' + z + ' [name=county] option').length == 1){
-															$('#address-item-' + z + ' [name=county]').val( $('#address-item-' + z + ' [name=county] option[selected="selected"]').val() );
-															$('#address-item-' + z + ' [name=county]').parent().children('span').html( $('#address-item-' + z + ' [name=county] option[selected="selected"]').html() );
-														}//правильно отображение области
-														if($('#address-item-' + z + ' [name=city] option').length == 1){
-															$('#address-item-' + z + ' [name=city]').val( $('#address-item-' + z + ' [name=city] option[selected="selected"]').val() );
-															$('#address-item-' + z + ' [name=city]').parent().children('span').html( $('#address-item-' + z + ' [name=city] option[selected="selected"]').html() );
-														}//правильно отображение города
-					  									if(location.href.indexOf('#address-item-' + z) > -1){
-					  										$('#address-item-' + z + ' [name=country]').selectmenu("refresh", true);
-					  										$('#address-item-' + z + ' [name=state]').selectmenu("refresh", true);
-															$('#address-item-' + z + ' [name=county]').selectmenu("refresh", true);
-															$('#address-item-' + z + ' [name=city]').selectmenu("refresh", true);
-															$('#address-item-' + z + ' [name=index]').selectmenu("refresh", true);
-															//alert($('#address-item-' + z + ' [name=index]').val());
-														}
-								 					}
-								 				}
-								 				$('#address-item-' + z + ' [name=county] option[value=' + one_address['county_id']  + ']').attr('selected', 'selected');
-								 				self.selectCity(z, one_address['city_id'], callback_city());
-								 			}						   
-								 		}
-								 	  $('#address-item-' + z + ' [name=state] option[value=' + one_address['state_id']  + ']').attr('selected', 'selected');
-									  self.selectCounty(z, one_address['county_id'], callback_county());
-									  //alert(one_address['county_en']);									  
-								 	}									
-								  //alert(county_id);
-								 }
-
-								 $('#address-item-' + z + ' [name=country] option[value=' + one_address['country_id']  + ']').attr('selected', 'selected');
-						 		self.selectState(z, one_address['state_id'], callback_state());						 					
-							}
-						}
-						if(!not_refresh){
-							self.selectCountry(z, one_address['country_id'], callback_country(z));
-						}	  			
-				  			//$('#address-item-' + z + ' [name=street]').val(one_address['str']);
-				  			//$('#address-item-' + z + ' [name=house]').val(one_address['bld']);							
-				  	
-				  	if(callback_redirect){
-				  		callback_redirect();
-				  	}
-			},
-			setOption:function(page, name,id){
-				$("#address-item-" + page + " [name="+name+"]").val(id).attr('selected', true).siblings('option').removeAttr('selected');
-				$("#address-item-" + page + " [name="+name+"]").selectmenu("refresh", true);
-			},
-			setDefault:function(){
-				for(var i = 1; i <= 3; i++){
-					$(".address-item a.js-address:eq("+ (i-1) +")")
-								.data("en","Address "+i)
-								.data("ru","Адресс "+i)
-								.data("ua","Адрес "+i);
-					 $(".address-item a.js-sphere:eq("+ (i-1) +")")
-								.data("en","Choose sphere")
-								.data("ru","Выберите сферы")
-								.data("ua","Виберіть галузі");
 				}
-				//lang_activate_el($("#edit-address"));
-			},
-			disable:function(page, name){
-				if(name == "state"){
-					$('#address-item-' + page + ' [name="state"]').parent().find("span").html(LOCALE_ARRAY_ADDITIONAL.set[CURRENT_LANG] + ' ' + LOCALE_ARRAY_ADDITIONAL.country[CURRENT_LANG]);
-					$('#address-item-' + page + ' [name="state"]').html("<option disabled>" + LOCALE_ARRAY_ADDITIONAL.set[CURRENT_LANG] + " " + LOCALE_ARRAY_ADDITIONAL.country[CURRENT_LANG] + "</option>");
-					$('#address-item-' + page + ' [name="state"]').attr("disabled","disabled");
-					$('#address-item-' + page + ' [name="state"]').val("");
+			});
+		}				
+	},
+	set_one_address: function(page, not_refresh, callback_redirect){
+		var self = this;				
+		var z = page;
+		var one_address = self.address_arr[page-1];
+		$('#address-item-' + z + ' #delete_address').attr('style', 'display: block');
 
-					name = "county";
+		function callback_country(z){
+			return function(){
+				 function callback_state(){
+				 	return function(){
+				 		function callback_county(){
+				 			return function(){
+				 				function callback_city(){
+				 					return function(){
+				 						$('#address-item-' + z + ' [name=city] option[value=' + one_address['city_id'] + ']').attr('selected', 'selected');
+				 						$('#address-item-' + z + ' [name=index] option[value=' + one_address['zip'] + ']').attr('selected', 'selected');
+				 						$('#address-item-' + z + ' [name=street]').val(one_address['str']);
+										$('#address-item-' + z + ' [name=house]').val(one_address['bld']);
+										$('#address-item-' + z + ' [name=comment]').val(one_address['oth']);
+										//Корректировка работы в firefox
+										if($('#address-item-' + z + ' [name=county] option').length == 1){
+											$('#address-item-' + z + ' [name=county]').val( $('#address-item-' + z + ' [name=county] option[selected="selected"]').val() );
+											$('#address-item-' + z + ' [name=county]').parent().children('span').html( $('#address-item-' + z + ' [name=county] option[selected="selected"]').html() );
+										}//правильно отображение области
+										if($('#address-item-' + z + ' [name=city] option').length == 1){
+											$('#address-item-' + z + ' [name=city]').val( $('#address-item-' + z + ' [name=city] option[selected="selected"]').val() );
+											$('#address-item-' + z + ' [name=city]').parent().children('span').html( $('#address-item-' + z + ' [name=city] option[selected="selected"]').html() );
+										}//правильно отображение города
+										if(location.href.indexOf('#address-item-' + z) > -1){
+											$('#address-item-' + z + ' [name=country]').selectmenu("refresh", true);
+											$('#address-item-' + z + ' [name=state]').selectmenu("refresh", true);
+											$('#address-item-' + z + ' [name=county]').selectmenu("refresh", true);
+											$('#address-item-' + z + ' [name=city]').selectmenu("refresh", true);
+											$('#address-item-' + z + ' [name=index]').selectmenu("refresh", true);
+											//alert($('#address-item-' + z + ' [name=index]').val());
+										}
+				 					}
+				 				}
+				 				$('#address-item-' + z + ' [name=county] option[value=' + one_address['county_id'] + ']').attr('selected', 'selected');
+				 				self.selectCity(z, one_address['city_id'], callback_city());
+				 			}
+				 		}
+					$('#address-item-' + z + ' [name=state] option[value=' + one_address['state_id'] + ']').attr('selected', 'selected');
+					self.selectCounty(z, one_address['county_id'], callback_county());
+					//alert(one_address['county_en']);									
+				 	}									
+				//alert(county_id);
 				}
-				if(name == "county"){
-					$('#address-item-' + page + ' [name="county"]').parent().find("span").html(LOCALE_ARRAY_ADDITIONAL.set[CURRENT_LANG] + ' ' + LOCALE_ARRAY_ADDITIONAL.state[CURRENT_LANG]);
-					$('#address-item-' + page + ' [name="county"]').html("<option disabled>" + LOCALE_ARRAY_ADDITIONAL.set[CURRENT_LANG] + " " + LOCALE_ARRAY_ADDITIONAL.state[CURRENT_LANG] + "</option>");
-					$('#address-item-' + page + ' [name="county"]').attr("disabled","disabled");
-					$('#address-item-' + page + ' [name="county"]').val("");
 
-					name = "city";
-				}
-				if(name == "city"){
-					$('#address-item-' + page + ' [name="city"]').parent().find("span").html(LOCALE_ARRAY_ADDITIONAL.set[CURRENT_LANG] + ' ' + LOCALE_ARRAY_ADDITIONAL.county[CURRENT_LANG]);
-					$('#address-item-' + page + ' [name="city"]').html("<option disabled>" + LOCALE_ARRAY_ADDITIONAL.set[CURRENT_LANG] + " " + LOCALE_ARRAY_ADDITIONAL.county[CURRENT_LANG] + "</option>");
-					$('#address-item-' + page + ' [name="city"]').attr("disabled","disabled");
-					$('#address-item-' + page + ' [name="city"]').val("");
-
-					name = "index";
-				}
-				if(name == "index"){
-					$('#address-item-' + page + ' [name="index"]').parent().find("span").html(LOCALE_ARRAY_ADDITIONAL.set[CURRENT_LANG] + ' ' + LOCALE_ARRAY_ADDITIONAL.city[CURRENT_LANG]);
-					$('#address-item-' + page + ' [name="index"]').html("<option disabled>" + LOCALE_ARRAY_ADDITIONAL.set[CURRENT_LANG] + " " + LOCALE_ARRAY_ADDITIONAL.city[CURRENT_LANG] + "</option>");
-					$('#address-item-' + page + ' [name="index"]').attr("disabled","disabled");
-					$('#address-item-' + page + ' [name="index"]').val("");
-
-				}
-			},
-			set_locale_names: function( name ){
-				switch( name ){
-					case 'country':
-						return LOCALE_ARRAY_ADDITIONAL.country[CURRENT_LANG];
-						break;
-					case 'state':
-						return LOCALE_ARRAY_ADDITIONAL.state[CURRENT_LANG];
-						break;
-					case 'county':
-						return LOCALE_ARRAY_ADDITIONAL.county[CURRENT_LANG];
-						break;
-					case 'city':
-						return LOCALE_ARRAY_ADDITIONAL.city[CURRENT_LANG];
-						break;
-					case 'index':
-						return LOCALE_ARRAY_ADDITIONAL.index[CURRENT_LANG];
-						break;
-				}
+				$('#address-item-' + z + ' [name=country] option[value=' + one_address['country_id'] + ']').attr('selected', 'selected');
+		 		self.selectState(z, one_address['state_id'], callback_state());
 			}
+		}
+		if(!not_refresh){
+			self.selectCountry(z, one_address['country_id'], callback_country(z));
+		}				
+			//$('#address-item-' + z + ' [name=street]').val(one_address['str']);
+			//$('#address-item-' + z + ' [name=house]').val(one_address['bld']);
+		if(callback_redirect){
+			callback_redirect();
+		}
+	},
+	setOption:function(page, name,id){
+		$("#address-item-" + page + " [name="+name+"]").val(id).attr('selected', true).siblings('option').removeAttr('selected');
+		$("#address-item-" + page + " [name="+name+"]").selectmenu("refresh", true);
+	},
+	setDefault:function(){
+		for(var i = 1; i <= 3; i++){
+			$(".address-item a.js-address:eq("+ (i-1) +")")
+						.data("en","Address "+i)
+						.data("ru","Адресс "+i)
+						.data("ua","Адрес "+i);
+			 $(".address-item a.js-sphere:eq("+ (i-1) +")")
+						.data("en","Choose sphere")
+						.data("ru","Выберите сферы")
+						.data("ua","Виберіть галузі");
+		}
+		//lang_activate_el($("#edit-address"));
+	},
+	disable:function(page, name){
+		if(name == "state"){
+			$('#address-item-' + page + ' [name="state"]').parent().find("span").html(LOCALE_ARRAY_ADDITIONAL.set[CURRENT_LANG] + ' ' + LOCALE_ARRAY_ADDITIONAL.country[CURRENT_LANG]);
+			$('#address-item-' + page + ' [name="state"]').html("<option disabled>" + LOCALE_ARRAY_ADDITIONAL.set[CURRENT_LANG] + " " + LOCALE_ARRAY_ADDITIONAL.country[CURRENT_LANG] + "</option>");
+			$('#address-item-' + page + ' [name="state"]').attr("disabled","disabled");
+			$('#address-item-' + page + ' [name="state"]').val("");
+
+			name = "county";
+		}
+
+		if(name == "county"){
+			$('#address-item-' + page + ' [name="county"]').parent().find("span").html(LOCALE_ARRAY_ADDITIONAL.set[CURRENT_LANG] + ' ' + LOCALE_ARRAY_ADDITIONAL.state[CURRENT_LANG]);
+			$('#address-item-' + page + ' [name="county"]').html("<option disabled>" + LOCALE_ARRAY_ADDITIONAL.set[CURRENT_LANG] + " " + LOCALE_ARRAY_ADDITIONAL.state[CURRENT_LANG] + "</option>");
+			$('#address-item-' + page + ' [name="county"]').attr("disabled","disabled");
+			$('#address-item-' + page + ' [name="county"]').val("");
+
+			name = "city";
+		}
+		if(name == "city"){
+			$('#address-item-' + page + ' [name="city"]').parent().find("span").html(LOCALE_ARRAY_ADDITIONAL.set[CURRENT_LANG] + ' ' + LOCALE_ARRAY_ADDITIONAL.county[CURRENT_LANG]);
+			$('#address-item-' + page + ' [name="city"]').html("<option disabled>" + LOCALE_ARRAY_ADDITIONAL.set[CURRENT_LANG] + " " + LOCALE_ARRAY_ADDITIONAL.county[CURRENT_LANG] + "</option>");
+			$('#address-item-' + page + ' [name="city"]').attr("disabled","disabled");
+			$('#address-item-' + page + ' [name="city"]').val("");
+			name = "index";
+		}
+		if(name == "index"){
+			$('#address-item-' + page + ' [name="index"]').parent().find("span").html(LOCALE_ARRAY_ADDITIONAL.set[CURRENT_LANG] + ' ' + LOCALE_ARRAY_ADDITIONAL.city[CURRENT_LANG]);
+			$('#address-item-' + page + ' [name="index"]').html("<option disabled>" + LOCALE_ARRAY_ADDITIONAL.set[CURRENT_LANG] + " " + LOCALE_ARRAY_ADDITIONAL.city[CURRENT_LANG] + "</option>");
+			$('#address-item-' + page + ' [name="index"]').attr("disabled","disabled");
+			$('#address-item-' + page + ' [name="index"]').val("");
+		}
+	},
+
+	set_locale_names: function( name ){
+		switch( name ){
+			case 'country':
+				return LOCALE_ARRAY_ADDITIONAL.country[CURRENT_LANG];
+				break;
+			case 'state':
+				return LOCALE_ARRAY_ADDITIONAL.state[CURRENT_LANG];
+				break;
+			case 'county':
+				return LOCALE_ARRAY_ADDITIONAL.county[CURRENT_LANG];
+				break;
+			case 'city':
+				return LOCALE_ARRAY_ADDITIONAL.city[CURRENT_LANG];
+				break;
+			case 'index':
+				return LOCALE_ARRAY_ADDITIONAL.index[CURRENT_LANG];
+				break;
+		}
+	}
 };
 
 function levenshtein(s1, s2, cost_ins, cost_rep, cost_del) {
-			  var LEVENSHTEIN_MAX_LENGTH = 1000;
+	var LEVENSHTEIN_MAX_LENGTH = 1000;
 
-			  cost_ins = 1;
-			  cost_rep = 1;
-			  cost_del = 1;
+	cost_ins = 1;
+	cost_rep = 1;
+	cost_del = 1;
 
-			  if (s1 == s2) {
-				return 0;
-			  }
+	if (s1 == s2) {
+		return 0;
+	}
 
-			  var l1 = s1.length;
-			  var l2 = s2.length;
-			  if (l1 === 0) {
-				return l2 * cost_ins;
-			  }
-			  if (l2 === 0) {
-				return l1 * cost_del;
-			  }
+	var l1 = s1.length;
+	var l2 = s2.length;
+	if (l1 === 0) {
+		return l2 * cost_ins;
+	}
+	if (l2 === 0) {
+		return l1 * cost_del;
+	}
 
 
-			  // BEGIN STATIC
-			  var split = false;
-			  try {
-				split = !('0')[0];
-			  } catch (e) {
-				// Earlier IE may not support access by string index
-				split = true;
-			  }
-			  // END STATIC
-			  if (split) {
-				s1 = s1.split('');
-				s2 = s2.split('');
-			  }
+	// BEGIN STATIC
+	var split = false;
+	try {
+		split = !('0')[0];
+	} catch (e) {
+		// Earlier IE may not support access by string index
+		split = true;
+	}
+	// END STATIC
+	if (split) {
+		s1 = s1.split('');
+		s2 = s2.split('');
+	}
 
-			  var p1 = new Array(l2 + 1);
-			  var p2 = new Array(l2 + 1);
+	var p1 = new Array(l2 + 1);
+	var p2 = new Array(l2 + 1);
 
-			  var i1, i2, c0, c1, c2, tmp;
-			  for (i2 = 0; i2 <= l2; i2++) {
-				p1[i2] = i2 * cost_ins;
-			  }
-			  for (i1 = 0; i1 < l1 ; i1++) {
-				p2[0] = p1[0] + cost_del;
-				
-				for (i2 = 0; i2 < l2; i2++) {
-				  c0 = p1[i2] + ((s1[i1] == s2[i2]) ? 0 : cost_rep);
-				  c1 = p1[i2 + 1] + cost_del;
-				  
-				  if (c1 < c0) {
-					c0 = c1;
-				  }
-				  
-				  c2 = p2[i2] + cost_ins;
-				  
-				  if (c2 < c0) {
-					c0 = c2;
-				  }
-				  
-				  p2[i2 + 1] = c0;
-				}
-				
-				tmp = p1;
-				p1 = p2;
-				p2 = tmp;
-			  }
-			  c0 = p1[l2];
-			  return c0;
+	var i1, i2, c0, c1, c2, tmp;
+	for (i2 = 0; i2 <= l2; i2++) {
+		p1[i2] = i2 * cost_ins;
+	}
+	for (i1 = 0; i1 < l1 ; i1++) {
+		p2[0] = p1[0] + cost_del;
+		
+		for (i2 = 0; i2 < l2; i2++) {
+		c0 = p1[i2] + ((s1[i1] == s2[i2]) ? 0 : cost_rep);
+		c1 = p1[i2 + 1] + cost_del;
+		
+		if (c1 < c0) {
+			c0 = c1;
+		}
+		
+		c2 = p2[i2] + cost_ins;
+		
+		if (c2 < c0) {
+			c0 = c2;
+		}
+		
+		p2[i2 + 1] = c0;
+		}
+		
+		tmp = p1;
+		p1 = p2;
+		p2 = tmp;
+	}
+	c0 = p1[l2];
+	return c0;
 }
 
 function change_nan(number){
@@ -10894,17 +10975,17 @@ console.log(window.location.toString());
 		if(location.href.search(/m=[\w&id=]+/i) > -1){
 			var matches = location.href.match(/m=[\w&id=]+/i);
 			$.ajax({
-			  url: mainURL + '/l/index.php?' + matches[0],
-			  type: "GET",
-			  xhrFields: {
-			   withCredentials: true
-			  },
-			  crossDomain: true,
-			  complete: function( response ){
-			  	auth(true);
-			  	$.mobile.navigate("#news-page");
-			  	console.log('ok');		  		 	
-			  },
+				url: mainURL + '/l/index.php?' + matches[0],
+				type: "GET",
+				xhrFields: {
+					withCredentials: true
+				},
+				crossDomain: true,
+				complete: function( response ){
+					auth(true);
+					$.mobile.navigate("#news-page");
+					console.log('ok');
+				},
 			});
 		}
 
@@ -10919,7 +11000,7 @@ console.log(window.location.toString());
 				$('#select-lang2 > option[value="' + new_lang + '"]').attr('selected', 'selected');
 				$('#lang label').attr('lang', new_lang);
 				$('#lang label').html($('#lang label').data(new_lang));
-			   /*jQuery.each(LOCALE_ARRAY, function(i, one_element) {
+			 /*jQuery.each(LOCALE_ARRAY, function(i, one_element) {
 					if($(one_element['selector'])){
 						if(one_element['value']){
 							$(one_element['selector']).attr(one_element['value'], one_element[CURRENT_LANG]);
@@ -10937,7 +11018,7 @@ console.log(window.location.toString());
 				$('#select-lang > option[value="' + new_lang + '"]').attr('selected', 'selected');
 				$('#lang label').attr('lang', new_lang);
 				$('#lang label').html($('#lang label').data(new_lang));
-			   /* jQuery.each(LOCALE_ARRAY, function(i, one_element) {
+			 /* jQuery.each(LOCALE_ARRAY, function(i, one_element) {
 					if($(one_element['selector'])){
 						if(one_element['value']){
 							$(one_element['selector']).attr(one_element['value'], one_element[CURRENT_LANG]);
@@ -10955,7 +11036,7 @@ console.log(window.location.toString());
 				type:"GET",
 				crossDomain: true,
 				xhrFields: {
-				   withCredentials: true
+					withCredentials: true
 				},
 				complete: function(response){
 					var data = response.responseText;
@@ -10980,7 +11061,7 @@ console.log(window.location.toString());
 					url: mainURL + "/list_adr_country.php",
 					type:"GET",
 					xhrFields: {
-					   withCredentials: true
+						withCredentials: true
 					},
 					crossDomain: true,
 					complete: function(response){
@@ -11059,28 +11140,28 @@ console.log(window.location.toString());
 			}
 			///////////////////////////////
 			var client = new XMLHttpRequest();
-  
-			   function upload() 
-			   {
-				  //var file = document.getElementById("uploadfile");
+
+			 function upload() 
+			 {
+				//var file = document.getElementById("uploadfile");
 				 
-				  var formData = new FormData();
-				  formData.append("av", FILE);				  
-				  client.open("post",  mainURL + "/i/up.php", true);
-				  client.setRequestHeader('Accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8');
-				  client.setRequestHeader("Content-Type", "multipart/form-data");
-				  client.send(formData);  /* Send to server */ 
-			   }
+				var formData = new FormData();
+				formData.append("av", FILE);
+				client.open("post",mainURL + "/i/up.php", true);
+				client.setRequestHeader('Accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8');
+				client.setRequestHeader("Content-Type", "multipart/form-data");
+				client.send(formData);/* Send to server */ 
+			 }
 				 
-			   client.onreadycountychange = function() 
-			   {
-				  if (client.readyState == 4 && client.status == 200) 
-				  {
-				  	console.log("send ok");
+			 client.onreadycountychange = function() 
+			 {
+				if (client.readyState == 4 && client.status == 200) 
+				{
+					console.log("send ok");
 					 //alert(client.statusText);
-				  }
-			   }
-			   upload();
+				}
+			 }
+			 upload();
 		}
 
 
@@ -11100,31 +11181,28 @@ console.log(window.location.toString());
 			}
 			///////////////////////////////
 			var client = new XMLHttpRequest();
-  
-			   function upload() 
-			   {
-				  //var file = document.getElementById("uploadfile");
-				 
-				  /* Create a FormData instance */
-				  var formData = new FormData();
-				  /* Add the file */ 
-				  formData.append("av", FILE);
 
-				  client.open("post",  mainURL + "/l/index.php?m=2", true);
-				  client.setRequestHeader("Content-Type", "multipart/form-data");
-				  client.send(formData);  /* Send to server */ 
-			   }
+			function upload(){
+				//var file = document.getElementById("uploadfile");
 				 
-			   /* Check the response status */  
-			   client.onreadystatechange = function() 
-			   {
-				  if (client.readyState == 4 && client.status == 200) 
-				  {
-				  	console.log("send ok");
+				/* Create a FormData instance */
+				var formData = new FormData();
+				/* Add the file */ 
+				formData.append("av", FILE);
+
+				client.open("post", mainURL + "/l/index.php?m=2", true);
+				client.setRequestHeader("Content-Type", "multipart/form-data");
+				client.send(formData);/* Send to server */ 
+			 }
+				 
+			 /* Check the response status */
+			 client.onreadystatechange = function(){
+				if (client.readyState == 4 && client.status == 200){
+					console.log("send ok");
 					//alert(client.statusText);
-				  }
-			   }
-			   upload();
+				}
+			 }
+			 upload();
 		}
 
 		
@@ -11132,54 +11210,54 @@ console.log(window.location.toString());
 		var SOCIAL = {
 			vk:{
 				auth: false,
-				activate:  mainURL + "/sn/vk.php",
+				activate: mainURL + "/sn/vk.php",
 				deactivate: mainURL + "/sn/sn_rm.php?sn=5",
-				sn:  mainURL + "/sn/vk_sn.php",
+				sn: mainURL + "/sn/vk_sn.php",
 				element: "a.vk",
 				ind: "5",
 				prefix_elem: "vk"
 			},
 			fb:{
 				auth: false,
-				activate:  mainURL + "/sn/fb.php",
+				activate: mainURL + "/sn/fb.php",
 				deactivate: mainURL + "/sn/sn_rm.php?sn=1",
-				sn:  mainURL + "/sn/fb_sn.php",
+				sn: mainURL + "/sn/fb_sn.php",
 				element: "a.fb",
 				ind: "1",
 				prefix_elem: "fb"
 			},
 			tw:{
 				auth: false,
-				activate:  mainURL + "/sn/tw.php",
+				activate: mainURL + "/sn/tw.php",
 				deactivate: mainURL + "/sn/sn_rm.php?sn=3",
-				sn:  mainURL + "/sn/tw_sn.php",
+				sn: mainURL + "/sn/tw_sn.php",
 				element: "a.tw",
 				ind: "3",
 				prefix_elem: "tw"
 			},
 			gp:{
 				auth: true,
-				activate:  mainURL + "/sn/gp.php",
+				activate: mainURL + "/sn/gp.php",
 				deactivate: mainURL + "/sn/sn_rm.php?sn=2",
-				sn:  mainURL + "/sn/gp_sn.php",
+				sn: mainURL + "/sn/gp_sn.php",
 				element: "a.gp",
 				ind: "2",
 				prefix_elem: "gp"
 			},
 			in:{
 				auth: false,
-				activate:  mainURL + "/sn/in.php",
+				activate: mainURL + "/sn/in.php",
 				deactivate: mainURL + "/sn/sn_rm.php?sn=4",
-				sn:  mainURL + "/sn/in_sn.php",
+				sn: mainURL + "/sn/in_sn.php",
 				element: "a.in",
 				ind: "4",
 				prefix_elem: "in"
 			},
 			ok:{
 				auth: false,
-				activate:  mainURL + "/sn/ok.php",
+				activate: mainURL + "/sn/ok.php",
 				deactivate: mainURL + "/sn/sn_rm.php?sn=6",
-				sn:  mainURL + "/sn/ok_sn.php",
+				sn: mainURL + "/sn/ok_sn.php",
 				element: "a.ok",
 				ind: "6",
 				prefix_elem: "ok"
@@ -11229,15 +11307,15 @@ console.log(window.location.toString());
 								}									
 								
 								$.ajax({
-								  url: mainURL + '/sn/sn_rm.php?sn=' + $(this).data("index"),
-								  type: "GET",
-								  xhrFields: {
-								   withCredentials: true
-								  },
-								  crossDomain: true,
-								  complete: function( response ){	  	
-									console.log('ok');
-								  }
+									url: mainURL + '/sn/sn_rm.php?sn=' + $(this).data("index"),
+									type: "GET",
+									xhrFields: {
+										withCredentials: true
+									},
+									crossDomain: true,
+									complete: function( response ){
+										console.log('ok');
+									}
 								});
 								
 							});
@@ -11297,23 +11375,23 @@ console.log(window.location.toString());
 					var url = $('#profile-page [name=url]').val();
 					
 					$.ajax({
-						url:  mainURL + "/l/index.php?m=2",
+						url: mainURL + "/l/index.php?m=2",
 						type: "POST",
 						data: {"db": db,
-							   "g": g,
-							   "fn": fn,
-							   "ln": ln,
-							   "url": url,
-							   "av": av},
+							 "g": g,
+							 "fn": fn,
+							 "ln": ln,
+							 "url": url,
+							 "av": av},
 						crossDomain: true,
 						xhrFields: {
-						   withCredentials: true
+							withCredentials: true
 						},
 						complete: function(data){
 							console.log("saved ok");
 							PROFILE.gender = g;
 							SUPER_PROFILE.gender = g;
-					  		$('#profile-page .name').html(fn + ' ' + ln);
+							$('#profile-page .name').html(fn + ' ' + ln);
 							alert(LOCALE_ARRAY_ADDITIONAL.saved_successfull[CURRENT_LANG]);
 							//alert('okay');
 						}
@@ -11337,15 +11415,15 @@ console.log(window.location.toString());
 					}
 					if(wrong_enter == 0){
 						$.ajax({
-							url:  mainURL + "/l/index.php?m=2",
+							url: mainURL + "/l/index.php?m=2",
 							type: "POST",
 							data: {"user_password_old": $('#profile-page [name=user_password_old]').val(),
-								   "user_password_new": $('#profile-page [name=user_password_new]').val(),
-								   "user_password_repeat": $('#profile-page [name=user_password_repeat]').val(),
-								   "user_edit_submit_password": "Change password"},
+								 "user_password_new": $('#profile-page [name=user_password_new]').val(),
+								 "user_password_repeat": $('#profile-page [name=user_password_repeat]').val(),
+								 "user_edit_submit_password": "Change password"},
 							crossDomain: true,
 							xhrFields: {
-							   withCredentials: true
+								withCredentials: true
 							},
 							complete: function(data){
 								if(data.responseText.indexOf("wrong") > -1){
@@ -11374,12 +11452,12 @@ console.log(window.location.toString());
 				user_rememberme:remember
 			};
 			$.ajax({
-				url:  mainURL + "/l/index.php?m=0",
+				url: mainURL + "/l/index.php?m=0",
 				type: "POST",
 				data: data,
 				crossDomain: true,
 				xhrFields: {
-				   withCredentials: true
+					withCredentials: true
 				},
 				complete: function(data){
 					if(data.responseText.indexOf("You are logged")!==-1){
@@ -11408,7 +11486,7 @@ console.log(window.location.toString());
 				type: "POST",
 				data: data,
 				xhrFields: {
-				   withCredentials: true
+					withCredentials: true
 				},
 				complete: function(data){
 					var resp = data.responseText;
@@ -11455,11 +11533,11 @@ console.log(window.location.toString());
 				}
 
 			$.ajax({
-				url:  mainURL + "/l/index.php?m=1",
+				url: mainURL + "/l/index.php?m=1",
 				type: "POST",
 				data: data,
 				xhrFields: {
-				   withCredentials: true
+					withCredentials: true
 				},
 				crossDomain: true,
 				complete: function(data){
@@ -11483,107 +11561,106 @@ console.log(window.location.toString());
 			});
 			return false;
 		});
-		
+
 		function update_img(selector,url){
 			if(!url){
 				var url = $(selector).attr("src");
-				}
+			}
 			$(selector).attr("src", url+"?timestamp=" + new Date().getTime());
 		}
-		
+
 		var PROFILE = {
 			auth : false,
 			profile_obj: [],
 			getProfile:function(){
-					var that = this;					
-					console.log("profile_obj");
-					console.log(that.profile_obj);
-					if(that.profile_obj && !that.profile_obj.error){
-						console.log('yeah');
-						that.email = that.profile_obj.email;
-						that.login = that.profile_obj.login;
-						that.avatar = that.profile_obj.avatar;
-						that.ID = that.profile_obj.id;
-						that.birth = that.profile_obj.birth;
-						that.first_name = that.profile_obj.user_first;
-						that.last_name = that.profile_obj.user_last;
-						that.gender = that.profile_obj.gender;
-						that.osmd = that.profile_obj.osmd;
-						that.go = that.profile_obj.go;
-						that.nco = that.profile_obj.nco;
-						that.payment = that.profile_obj.payment;
-   						that.bankid = that.profile_obj.bankid;
+				var that = this;					
+				console.log("profile_obj");
+				console.log(that.profile_obj);
+				if(that.profile_obj && !that.profile_obj.error){
+					console.log('yeah');
+					that.email = that.profile_obj.email;
+					that.login = that.profile_obj.login;
+					that.avatar = that.profile_obj.avatar;
+					that.ID = that.profile_obj.id;
+					that.birth = that.profile_obj.birth;
+					that.first_name = that.profile_obj.user_first;
+					that.last_name = that.profile_obj.user_last;
+					that.gender = that.profile_obj.gender;
+					that.osmd = that.profile_obj.osmd;
+					that.go = that.profile_obj.go;
+					that.nco = that.profile_obj.nco;
+					that.payment = that.profile_obj.payment;
+					that.bankid = that.profile_obj.bankid;
 
-						SUPER_PROFILE.gender = that.gender;
-						SUPER_PROFILE.id = that.profile_obj.id;
-						SUPER_PROFILE.nco = that.profile_obj.nco;
-						for (var i in SOCIAL){
-							if(typeof SOCIAL[i] != "object") continue;
-							var soc = SOCIAL[i];
-							for(var b in that.profile_obj){
-								if(b != i) continue;								
-								if(that.profile_obj[b] != 0){
-									soc.auth = true;
-								}else{
-									soc.auth = false;
-								}	
-								//soc.auth = that.profile_obj[b]?true:false;
+					SUPER_PROFILE.gender = that.gender;
+					SUPER_PROFILE.id = that.profile_obj.id;
+					SUPER_PROFILE.nco = that.profile_obj.nco;
+					for (var i in SOCIAL){
+						if(typeof SOCIAL[i] != "object") continue;
+						var soc = SOCIAL[i];
+						for(var b in that.profile_obj){
+							if(b != i) continue;								
+							if(that.profile_obj[b] != 0){
+								soc.auth = true;
+							}else{
+								soc.auth = false;
+							}	
+							//soc.auth = that.profile_obj[b]?true:false;
 
 							}
 						}
-						
-						that.updateMenu();
-						SOCIAL.init();
-					}else{
-						$.ajax({
-							url: mainURL + "/profile.php",
-							type:"GET",
-							crossDomain: true,
-							xhrFields: {
-							   withCredentials: true
-							},
-							complete: function(response){
-								var data = response.responseText;
-								that.profile_obj = jQuery.parseJSON(data)[0];
-								that.email = that.profile_obj.email;
-								that.login = that.profile_obj.login;
-								that.avatar = that.profile_obj.avatar;
-								that.ID = that.profile_obj.id;
-								that.birth = that.profile_obj.birth;
-								that.first_name = that.profile_obj.user_first;
-								that.last_name = that.profile_obj.user_last;
-								that.gender = that.profile_obj.gender;
-								that.osmd = that.profile_obj.osmd;
-								that.go = that.profile_obj.go;
-								that.nco = that.profile_obj.nco;
-								that.payment = that.profile_obj.payment;
-		   						that.bankid = that.profile_obj.bankid;
+					
+					that.updateMenu();
+					SOCIAL.init();
+				}else{
+					$.ajax({
+						url: mainURL + "/profile.php",
+						type:"GET",
+						crossDomain: true,
+						xhrFields: {
+							withCredentials: true
+						},
+						complete: function(response){
+							var data = response.responseText;
+							that.profile_obj = jQuery.parseJSON(data)[0];
+							that.email = that.profile_obj.email;
+							that.login = that.profile_obj.login;
+							that.avatar = that.profile_obj.avatar;
+							that.ID = that.profile_obj.id;
+							that.birth = that.profile_obj.birth;
+							that.first_name = that.profile_obj.user_first;
+							that.last_name = that.profile_obj.user_last;
+							that.gender = that.profile_obj.gender;
+							that.osmd = that.profile_obj.osmd;
+							that.go = that.profile_obj.go;
+							that.nco = that.profile_obj.nco;
+							that.payment = that.profile_obj.payment;
+	 						that.bankid = that.profile_obj.bankid;
 
-								SUPER_PROFILE.gender = that.gender;
-								SUPER_PROFILE.id = that.profile_obj.id;
-								for (var i in SOCIAL){
-									if(typeof SOCIAL[i] != "object") continue;
-									var soc = SOCIAL[i];
-									for(var b in that.profile_obj){
-										if(b != i) continue;								
-										if(that.profile_obj[b] != 0){
-											soc.auth = true;
-											console.log(SOCIAL[i]);
-											console.log(SOCIAL[i].auth);
-										}else{
-											soc.auth = false;
-										}	
-										//soc.auth = that.profile_obj[b]?true:false;
-
-									}
+							SUPER_PROFILE.gender = that.gender;
+							SUPER_PROFILE.id = that.profile_obj.id;
+							for (var i in SOCIAL){
+								if(typeof SOCIAL[i] != "object") continue;
+								var soc = SOCIAL[i];
+								for(var b in that.profile_obj){
+									if(b != i) continue;
+									if(that.profile_obj[b] != 0){
+										soc.auth = true;
+										console.log(SOCIAL[i]);
+										console.log(SOCIAL[i].auth);
+									}else{
+										soc.auth = false;
+									}	
+									//soc.auth = that.profile_obj[b]?true:false;
 								}
-								that.updateMenu();
-								SOCIAL.init();					
 							}
-						}); 	
-						
-					}
-				},
+							that.updateMenu();
+							SOCIAL.init();
+						}
+					}); 	
+					
+				}
+			},
 			logout:function(){
 				var self = this;
 				auth(false);
@@ -11592,7 +11669,7 @@ console.log(window.location.toString());
 					type:"GET",
 					crossDomain: true,
 					xhrFields: {
-					   withCredentials: true
+						withCredentials: true
 					},
 					complete: function(response){
 						self.auth = false;
@@ -11626,11 +11703,11 @@ console.log(window.location.toString());
 						}
 						var match_array = this.birth.match(/[0-9]+/ig);
 						var year_val = match_array[0];
-						$('#profile-page [name=year]  option[value=' + year_val + ']').prop('selected', true);
+						$('#profile-page [name=year] option[value=' + year_val + ']').prop('selected', true);
 						var month_val = match_array[1];
-						$('#profile-page [name=month]  option[value=' + month_val + ']').prop('selected', true);
+						$('#profile-page [name=month] option[value=' + month_val + ']').prop('selected', true);
 						var date_val = match_array[2];
-						$('#profile-page [name=date]  option[value=' + date_val + ']').prop('selected', true);
+						$('#profile-page [name=date] option[value=' + date_val + ']').prop('selected', true);
 						$('#profile-page select').selectmenu().selectmenu("refresh", true);
 						$(".user-info .email").html(this.email);
 						//$(".user-info .avatar").css("background-image","url('"+this.avatar+"')");
@@ -11640,12 +11717,12 @@ console.log(window.location.toString());
 						if(this.go != "0"){
 							ribbons += '<img style = "margin: 3px;" class="ui-corner-all" src="images/trust-icon-community.png">';
 						} else {
-							ribbons += '<a href="#community"><img style = "margin: 3px; filter: alpha(Opacity=30); opacity: 0.3;"  src="images/trust-icon-community.png"></a>';
+							ribbons += '<a href="#community"><img style = "margin: 3px; filter: alpha(Opacity=30); opacity: 0.3;" src="images/trust-icon-community.png"></a>';
 						}
 						if(this.osmd != "0"){
 							ribbons += '<img style = "margin: 3px;" class="ui-corner-all" src="images/trust-icon-house.png">';
 						} else {
-							ribbons += '<a href="#house"><img style = "margin: 3px; filter: alpha(Opacity=30); opacity: 0.3;"  class="ui-corner-all" src="images/trust-icon-house.png"></a>';
+							ribbons += '<a href="#house"><img style = "margin: 3px; filter: alpha(Opacity=30); opacity: 0.3;" class="ui-corner-all" src="images/trust-icon-house.png"></a>';
 						}
 						if(this.payment != "0"){
 							ribbons += '<img style = "margin: 3px;" class="ui-corner-all" src="images/trust-icon-wallet.png">';
@@ -11673,8 +11750,7 @@ console.log(window.location.toString());
 
 						$('#profile-page #ribbons').html( ribbons );
 						$("#left-panel").addClass("auth-panel");
-						}
-					else{
+					} else {
 						$("#left-panel").removeClass("auth-panel");
 						$(".user-info .username").html("Guest");
 						$(".user-info .email").html("");
@@ -11682,8 +11758,7 @@ console.log(window.location.toString());
 						$(".user-info .avatar").css("background-image","");
 						$(".user-info .id").html("");
 						$(".user-info .name").html("");
-
-						}
+					}
 				}
 		};
 

@@ -656,39 +656,19 @@
     <div role="main" class="ui-content">
         <a id = "findgps-1" class="ui-btn ui-corner-all ui-shadow" href="#">Find an address using GPS</a><form accept-charset="UTF-8" onsubmit = 'ADRESS.save_address(1); return false;'>
         <div>
-            <label>Country</label><select required name="country">
-            <!--<option value="">Select country required</option>
-            <option value="Ukraine">Ukraine</option>
-            <option value="Ukraine">Ukraine</option>-->
-            </select>
+            <label>Country</label><select required name="country"></select>
         </div>
         <div>
-            <label>State</label><select required name="state">
-            <!--<option value="Odeska oblast">Odeska oblast</option>
-            <option value="Odeska oblast">Odeska oblast</option>
-            <option value="Odeska oblast">Odeska oblast</option>-->
-            </select>
+            <label>State</label><select required name="state"></select>
         </div>
         <div>
-            <label>County</label><select required name="county">
-            <!--<option value="Ovidiopolsky">Ovidiopolsky</option>
-            <option value="Ovidiopolsky">Ovidiopolsky</option>
-            <option value="Ovidiopolsky">Ovidiopolsky</option>-->
-            </select>
+            <label>County</label><select required name="county"></select>
         </div>
         <div>
-            <label>City</label><select required name="city">
-            <!--<option value="Odesa">Odesa</option>
-            <option value="Kiev">Kiev</option>
-            <option value="Odesa">Odesa</option>-->
-            </select>
+            <label>City</label><select required name="city"></select>
         </div>
         <div>
-            <label>Index</label><select required name="index">
-            <!--<option value="65091">65091</option>
-            <option value="65092">65092</option>
-            <option value="65093">65093</option>-->
-            </select>
+            <label>Index</label><select required name="index"></select>
         </div>
         <div class="text-field">
             <label>Street</label>
@@ -710,6 +690,10 @@
         <div class="ui-checkbox">
             <label class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Address official registration</label><input type="checkbox" name="off_address" value="1" data-enhanced="true" />
         </div>
+        <div class="gmap">
+            
+        </div>
+
         <button class="ui-btn ui-corner-all ui-shadow btn-save">Save address</button></form>
         <button id = "delete_address" style = "display:none" class="ui-btn ui-corner-all ui-shadow btn-delete">Delete address</button>
     </div>
@@ -2737,7 +2721,7 @@
         <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#profile-page')" href="#profile-page">Back</a>
     </div>
     <div role="main" class="ui-content">
-        <a class="ui-btn ui-btn-corner-all ui-btn-icon-right" onclick="location.href='/sn/bankid.php'" href="/sn/bankid.php"></a>
+        <div class="bankid_button ui-btn ui-btn-corner-all ui-btn-icon-right" onclick="location.href='/sn/bankid.php'" ></div>
     </div>
 </div>
 
