@@ -3,24 +3,25 @@
     <head>
         <meta charset="utf-8">
         <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
-        <meta name="description" content="">
+        <meta name="description" content="Civil Society App javascript application">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Civil Society App</title>
+        <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&language=en"></script>
         <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" href="vendor/jquery.mobile-1.4.5/jquery.mobile.structure-1.4.5.min.css?t=1">
+        <link rel="stylesheet" href="/vendor/jquery.mobile-1.4.5/jquery.mobile.structure-1.4.5.min.css?t=1">
         <link rel="stylesheet" href="/leaflet/leaflet.css" />
         <link rel="stylesheet" href="vendor/jquery-te-1.4.0/jquery-te-1.4.0.css?t=1">
-        <link rel="stylesheet" href="stylesheets/app.css?t=1">
+        <link rel="stylesheet" href="/stylesheets/app.css?t=1">
         <script src="vendor/jquery-1.11.2.min.js?t=1"></script>
         <script src="vendor/jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.js?t=1"></script>
-        <script src="vendor/jquerymobile-swipeupdown.js?t=1"></script>
-        <script src="vendor/jquery-te-1.4.0/jquery-te-1.4.0.min.js?t=1"></script>
-        <script src="vendor/Chart.min.js?t=1"></script>
-        <script src="javascripts/locale.js?t=1"></script>
-        <script src="javascripts/app.js?t=1"></script>
-        <script src="javascripts/jquery.form.min.js?t=1"></script>
-        <script src="javascripts/connect.js?t=1"></script>
-        <script src="javascripts/purl.js?t=1"></script>
+        <script src="/vendor/jquerymobile-swipeupdown.js?t=1"></script>
+        <script src="/vendor/jquery-te-1.4.0/jquery-te-1.4.0.min.js?t=1"></script>
+        <script src="/vendor/Chart.min.js?t=1"></script>
+        <script src="/javascripts/locale.js?t=1"></script>
+        <script src="/javascripts/app.js?t=1"></script>
+        <script src="/javascripts/jquery.form.min.js?t=1"></script>
+        <script src="/javascripts/connect.js?t=1"></script>
+        <script src="/javascripts/purl.js?t=1"></script>
         <script src="/leaflet/leaflet.js"></script>
         <script src="https://maps.google.com/maps/api/js?sensor=false&language=en"></script>
         <!-- Facebook Pixel Code -->
@@ -58,6 +59,19 @@
 
     </head>
     <body>
+
+<style>
+  .mapCanvas {
+    width: 100%;
+    height: 400px;
+  }
+  .infoPanel {
+    margin-left: 10px;
+  }
+  .infoPanel div {
+    margin-bottom: 5px;
+  }
+</style>
 
 <div id="main-page" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
@@ -149,7 +163,8 @@
         <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#')" href='#'>Back</a><!--<a class="ui-btn ui-btn-right ui-icon-check ui-btn-icon-right" href="#">Save</a>-->
     </div>
     <div role="main" class="ui-content">
-        <form action="" accept-charset="UTF-8" id="register-form" method="post">
+        <div class="left_col">
+            <form action="" accept-charset="UTF-8" id="register-form" method="post">
                 <div class="text-field">
                     <label>Username (only letters and numbers,2 to 64 characters)</label>
                     <div class="ui-input-text">
@@ -328,18 +343,20 @@
                 </fieldset>
 
                 <div class="captcha">
-                    <img id = "captcha" src="" alt="captcha">
+                    <img id = "captcha" src="" alt="captcha" />
                 </div>
                 <div class="text-field">
                     <label>Please enter these characters</label>
                     <div class="ui-input-text">
-
                         <input type="text" required name="captcha" placeholder="Captcha" pattern=".{4}" data-enhanced="true" />
                     </div>
                 </div>
                 <div>
                     <input type="submit" value="Register" class="ui-btn ui-btn-corner-all ui-shadow" />
-                </div></form>
+                </div>
+            </form>
+        </div>
+        <div class="right_col"></div>
     </div>
 </div>
 
@@ -357,7 +374,8 @@
         </div>
     </div>
     <div role="main" class="ui-content">
-        <form action="" accept-charset="UTF-8" method="post">
+        <div class="left_col">
+            <form action="" accept-charset="UTF-8" method="post">
                 <div class="text-field">
                     <label>Enter your login to restore access</label>
                     <div class="ui-input-text">
@@ -366,7 +384,10 @@
                 </div>
                 <div class="button-fixed">
                     <input type="submit" value="Restore access" class="ui-btn ui-btn-corner-all ui-shadow" />
-                </div></form>
+                </div>
+            </form>
+        </div>
+        <div class="right_col"></div>
     </div>
 </div>
 
@@ -376,249 +397,250 @@
         <a class="ui-btn ui-btn-left ui-icon-bars ui-btn-corner-all ui-btn-icon-notext" href="#left-panel">Menu</a><a class="ui-btn ui-btn-right ui-icon-check ui-btn-icon-right" href="#">Save</a>
     </div>
     <div role="main" class="ui-content">
-        <div class="user-info">
-            <div class="avatar" style = "cursor:pointer">
-                <img id = "avatar" src="" />
+        <div class="left_col">
+            <div class="user-info">
+                <div class="avatar" style = "cursor:pointer">
+                    <img id = "avatar" src="" />
+                </div>
+                <div class="info">
+                    <div class="name"></div>
+                    <div class="id"></div>
+                    <div class="email">Email: <span></span>
+                    </div>
+                    <div class="login">
+                        <span>Login:</span> <span></span>
+                    </div>
+                </div>
             </div>
-            <div class="info">
-                <div class="name">
-                </div>
-                <div class="id">
-                </div>
-                <div class="email">
-                    Email: <span></span>
-                </div>
-                <div class="login">
-                    <span>Login:</span> <span></span>
+
+            <div class="add-address">
+                <div class="title"></div>
+                <a class="ui-btn ui-btn-icon-right" href="#edit-address">Address</a>
+            </div>
+    		<div class="pass-btn">
+                <a class="ui-btn ui-corner-all ui-shadow" data-rel="popup" data-transition="pop" href="#change-password">Change password here</a>
+            </div>
+            <div data-role="popup" id="change-password" data-history="false">
+                <div class="change-password">
+					<div class="text-field">
+                        <div class="ui-input-text">
+                            <input type="password" name="user_password_old" placeholder="Enter old password " data-enhanced="true" />
+                        </div>
+                        <div class="ui-input-text">
+                            <input type="password" name="user_password_new" placeholder="Enter new password " data-enhanced="true" />
+                        </div>
+                        <div class="ui-input-text">
+                            <input type="password" name="user_password_repeat" placeholder="Accept password" data-enhanced="true" />
+                        </div>
+                        <div class="btn-save">
+                            <button id = "change_pass_button" class="ui-btn ui-corner-all ui-shadow">Save</button>
+                        </div>
+                    </div>
+	            </div>
+			</div>
+    		<div class="btn-next-page">
+             	<div class="title">Select sphere which are interest you</div>
+                <a class="ui-btn ui-btn-icon-right" href="#spheres-address">Choose sphere</a>
+            </div>
+
+            <div class="social-wrap">
+                <div class="title">Sign in by social Networks to increace <br> your authorisation status</div>
+                <div class="ui-grid-b">
+                    <div class="ui-block-a">
+                        <a class="gp active" data-index = "2" href="#"><span>Activate</span></a>
+                    </div>
+                    <div class="ui-block-b">
+                        <a class="fb active" data-index = "1" href="#"><span>Activate</span></a>
+                    </div>
+                    <div class="ui-block-b">
+                        <a class="in active" data-index = "4" href="#"><span>Activate</span></a>
+                    </div>
+
+    <!--            <div class="ui-block-a">
+                        <a class="vk" data-index = "5" href="#"><span>Deactivate</span></a>
+                    </div>
+                    <div class="ui-block-c">
+                        <a class="tw active" data-index = "3" href="#"><span>Activate</span></a>
+                    </div>
+                    <div class="ui-block-c">
+                        <a class="ok active" data-index = "6" href="#"><span>Activate</span></a>
+                    </div>
+     -->
                 </div>
             </div>
-        </div>
-        <div class="add-address">
-            <div class="title"></div>
-            <a class="ui-btn ui-btn-icon-right" href="#edit-address">Address</a>
-        </div>
-		<div class="pass-btn">
-            <a class="ui-btn ui-corner-all ui-shadow" data-rel="popup" data-transition="pop" href="#change-password">Change password here</a>
-        </div>
-        <div data-role="popup" id="change-password" data-history="false">
-            <div class="change-password">
+            <div id = "ribbons_title"></div>
+            <div id = "ribbons"></div>
+            <form style = "display:none" id = "picture_form" action = "https://gurtom.mobi/i/up.php" method="post" enctype="multipart/form-data">
+                Select image to upload:
+                <input type="hidden" name="MAX_FILE_SIZE" value="3000000">
+                <input type="file" name="picture">
+                <input type="text" name="type" value="0">
+                <input type="submit" value="upload" name="submit">
+            </form>
+            <form action="" accept-charset="UTF-8" method="post">
                 <div class="text-field">
+                    <label>Your name and last name</label>
                     <div class="ui-input-text">
-                        <input type="password" name="user_password_old" placeholder="Enter old password " data-enhanced="true" />
-                    </div>
-                    <div class="ui-input-text">
-                        <input type="password" name="user_password_new" placeholder="Enter new password " data-enhanced="true" />
+                        <input type="text" name="fn" placeholder="First name" data-enhanced="true" />
                     </div>
                     <div class="ui-input-text">
-                        <input type="password" name="user_password_repeat" placeholder="Accept password" data-enhanced="true" />
-                    </div>
-                    <div class="btn-save">
-                        <button id = "change_pass_button" class="ui-btn ui-corner-all ui-shadow">Save</button>
+                        <input type="text" name="ln" placeholder="Last name" data-enhanced="true" />
                     </div>
                 </div>
-            </div>
+
+                <fieldset class="radio-wrap gender" data-role="controlgroup" data-type="horizontal">
+                    <legend>Gender</legend>
+                    <div class="ui-radio">
+                        <label id = 'male' class="ui-btn ui-btn-inherit ui-radio-off">Male</label><input type="radio" name="gender" value = "0" data-enhanced="true">
+                    </div>
+                    <div class="ui-radio">
+                        <label id = 'female' class="ui-btn ui-btn-inherit ui-radio-off">Female</label><input type="radio" name="gender" value = "1" data-enhanced="true">
+                    </div>
+                </fieldset> 
+
+                <fieldset class="date-group" data-role="controlgroup" data-type="horizontal">
+                    <legend>Enter your date of birth</legend>
+                    <select name="date">
+                        <option value="01">1</option>
+                        <option value="02">2</option>
+                        <option value="03">3</option>
+                        <option value="04">4</option>
+                        <option value="05">5</option>
+                        <option value="06">6</option>
+                        <option value="07">7</option>
+                        <option value="08">8</option>
+                        <option value="09">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                        <option value="21">21</option>
+                        <option value="22">22</option>
+                        <option value="23">23</option>
+                        <option value="24">24</option>
+                        <option value="25">25</option>
+                        <option value="26">26</option>
+                        <option value="27">27</option>
+                        <option value="28">28</option>
+                        <option value="29">29</option>
+                        <option value="30">30</option>
+                        <option value="31">31</option>
+                    </select>
+                    <select name="month">
+                        <option value="01">January</option>
+                        <option value="02">February</option>
+                        <option value="03">March</option>
+                        <option value="04">April</option>
+                        <option value="05">May</option>
+                        <option value="06">June</option>
+                        <option value="07">July</option>
+                        <option value="08">August</option>
+                        <option value="09">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                    <select name="year">
+                        <option value="1930">1930</option>
+                        <option value="1931">1931</option>
+                        <option value="1932">1932</option>
+                        <option value="1933">1933</option>
+                        <option value="1934">1934</option>
+                        <option value="1935">1935</option>
+                        <option value="1936">1936</option>
+                        <option value="1937">1937</option>
+                        <option value="1938">1938</option>
+                        <option value="1939">1939</option>
+                        <option value="1940">1940</option>
+                        <option value="1941">1941</option>
+                        <option value="1942">1942</option>
+                        <option value="1943">1943</option>
+                        <option value="1944">1944</option>
+                        <option value="1945">1945</option>
+                        <option value="1946">1946</option>
+                        <option value="1947">1947</option>
+                        <option value="1948">1948</option>
+                        <option value="1949">1949</option>
+                        <option value="1950">1950</option>
+                        <option value="1951">1951</option>
+                        <option value="1952">1952</option>
+                        <option value="1953">1953</option>
+                        <option value="1954">1954</option>
+                        <option value="1955">1955</option>
+                        <option value="1956">1956</option>
+                        <option value="1957">1957</option>
+                        <option value="1958">1958</option>
+                        <option value="1959">1959</option>
+                        <option value="1960">1960</option>
+                        <option value="1961">1961</option>
+                        <option value="1962">1962</option>
+                        <option value="1963">1963</option>
+                        <option value="1964">1964</option>
+                        <option value="1965">1965</option>
+                        <option value="1966">1966</option>
+                        <option value="1967">1967</option>
+                        <option value="1968">1968</option>
+                        <option value="1969">1969</option>
+                        <option value="1970">1970</option>
+                        <option value="1971">1971</option>
+                        <option value="1972">1972</option>
+                        <option value="1973">1973</option>
+                        <option value="1974">1974</option>
+                        <option value="1975">1975</option>
+                        <option value="1976">1976</option>
+                        <option value="1977">1977</option>
+                        <option value="1978">1978</option>
+                        <option value="1979">1979</option>
+                        <option value="1980">1980</option>
+                        <option value="1981">1981</option>
+                        <option value="1982">1982</option>
+                        <option value="1983">1983</option>
+                        <option value="1984">1984</option>
+                        <option value="1985">1985</option>
+                        <option value="1986">1986</option>
+                        <option value="1987">1987</option>
+                        <option value="1988">1988</option>
+                        <option value="1989">1989</option>
+                        <option value="1990">1990</option>
+                        <option value="1991">1991</option>
+                        <option value="1992">1992</option>
+                        <option value="1993">1993</option>
+                        <option value="1994">1994</option>
+                        <option value="1995">1995</option>
+                        <option value="1996">1996</option>
+                        <option value="1997">1997</option>
+                        <option value="1998">1998</option>
+                        <option value="1999">1999</option>
+                        <option value="2000">2000</option>
+                        <option value="2001">2001</option>
+                        <option value="2002">2002</option>
+                        <option value="2003">2003</option>
+                        <option value="2004">2004</option>
+                        <option value="2005">2005</option>
+                    </select>
+                </fieldset>
+                <!--
+                <div class="text-field">
+                    <label>Add url of your avatar</label>
+                    <div class="ui-input-text">
+                        <input type="text" name="url" placeholder="Url" data-enhanced="true" />
+                    </div>
+                </div>
+                -->
+                <div class="btn-next-page">
+                    <a class="ui-btn ui-btn-icon-right menu-icon-options" data-link = "#options-page" href="#options-page">Options</a>
+                </div>
+            </form>
         </div>
-		<div class="btn-next-page">
-         	<div class="title">
-                Select sphere which are interest you
-            </div>
-            <a class="ui-btn ui-btn-icon-right" href="#spheres-address">Choose sphere</a>
-        </div>
-        <div class="social-wrap">
-            <div class="title">
-                Sign in by social Networks to increace <br> your authorisation status
-            </div>
-            <div class="ui-grid-b">
-                <div class="ui-block-a">
-                    <a class="gp active" data-index = "2" href="#"><span>Activate</span></a>
-                </div>
-                <div class="ui-block-b">
-                    <a class="fb active" data-index = "1" href="#"><span>Activate</span></a>
-                </div>
-                <div class="ui-block-b">
-                    <a class="in active" data-index = "4" href="#"><span>Activate</span></a>
-                </div>
-<!--                 <div class="ui-block-a">
-                    <a class="vk" data-index = "5" href="#"><span>Deactivate</span></a>
-                </div>
-                <div class="ui-block-c">
-                    <a class="tw active" data-index = "3" href="#"><span>Activate</span></a>
-                </div>
-                <div class="ui-block-c">
-                    <a class="ok active" data-index = "6" href="#"><span>Activate</span></a>
-                </div>
- -->
-            </div>
-        </div>
-        <div id = "ribbons_title"></div>
-        <div id = "ribbons"></div>
-        <form style = "display:none" id = "picture_form" action = "https://gurtom.mobi/i/up.php" method="post" enctype="multipart/form-data">
-            Select image to upload:
-            <input type="hidden" name="MAX_FILE_SIZE" value="3000000">
-            <input type="file" name="picture">
-            <input type="text" name="type" value="0">
-            <input type="submit" value="upload" name="submit">
-        </form>
-        <form action="" accept-charset="UTF-8" method="post">
-            <div class="text-field">
-                <label>Your name and last name</label>
-                <div class="ui-input-text">
-                    <input type="text" name="fn" placeholder="First name" data-enhanced="true" />
-                </div>
-                <div class="ui-input-text">
-                    <input type="text" name="ln" placeholder="Last name" data-enhanced="true" />
-                </div>
-            </div>
-            <fieldset class="radio-wrap gender" data-role="controlgroup" data-type="horizontal">
-                <legend>Gender</legend>
-                <div class="ui-radio">
-                    <label id = 'male' class="ui-btn ui-btn-inherit ui-radio-off">Male</label><input type="radio" name="gender" value = "0" data-enhanced="true">
-                </div>
-                <div class="ui-radio">
-                    <label id = 'female' class="ui-btn ui-btn-inherit ui-radio-off">Female</label><input type="radio" name="gender" value = "1" data-enhanced="true">
-                </div>
-            </fieldset>             
-            <fieldset class="date-group" data-role="controlgroup" data-type="horizontal">
-                <legend>Enter your date of birth</legend>
-                <select name="date">
-                    <option value="01">1</option>
-                    <option value="02">2</option>
-                    <option value="03">3</option>
-                    <option value="04">4</option>
-                    <option value="05">5</option>
-                    <option value="06">6</option>
-                    <option value="07">7</option>
-                    <option value="08">8</option>
-                    <option value="09">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                    <option value="13">13</option>
-                    <option value="14">14</option>
-                    <option value="15">15</option>
-                    <option value="16">16</option>
-                    <option value="17">17</option>
-                    <option value="18">18</option>
-                    <option value="19">19</option>
-                    <option value="20">20</option>
-                    <option value="21">21</option>
-                    <option value="22">22</option>
-                    <option value="23">23</option>
-                    <option value="24">24</option>
-                    <option value="25">25</option>
-                    <option value="26">26</option>
-                    <option value="27">27</option>
-                    <option value="28">28</option>
-                    <option value="29">29</option>
-                    <option value="30">30</option>
-                    <option value="31">31</option>
-                </select>
-                <select name="month">
-                    <option value="01">January</option>
-                    <option value="02">February</option>
-                    <option value="03">March</option>
-                    <option value="04">April</option>
-                    <option value="05">May</option>
-                    <option value="06">June</option>
-                    <option value="07">July</option>
-                    <option value="08">August</option>
-                    <option value="09">September</option>
-                    <option value="10">October</option>
-                    <option value="11">November</option>
-                    <option value="12">December</option>
-                </select>
-                <select name="year">
-                    <option value="1930">1930</option>
-                    <option value="1931">1931</option>
-                    <option value="1932">1932</option>
-                    <option value="1933">1933</option>
-                    <option value="1934">1934</option>
-                    <option value="1935">1935</option>
-                    <option value="1936">1936</option>
-                    <option value="1937">1937</option>
-                    <option value="1938">1938</option>
-                    <option value="1939">1939</option>
-                    <option value="1940">1940</option>
-                    <option value="1941">1941</option>
-                    <option value="1942">1942</option>
-                    <option value="1943">1943</option>
-                    <option value="1944">1944</option>
-                    <option value="1945">1945</option>
-                    <option value="1946">1946</option>
-                    <option value="1947">1947</option>
-                    <option value="1948">1948</option>
-                    <option value="1949">1949</option>
-                    <option value="1950">1950</option>
-                    <option value="1951">1951</option>
-                    <option value="1952">1952</option>
-                    <option value="1953">1953</option>
-                    <option value="1954">1954</option>
-                    <option value="1955">1955</option>
-                    <option value="1956">1956</option>
-                    <option value="1957">1957</option>
-                    <option value="1958">1958</option>
-                    <option value="1959">1959</option>
-                    <option value="1960">1960</option>
-                    <option value="1961">1961</option>
-                    <option value="1962">1962</option>
-                    <option value="1963">1963</option>
-                    <option value="1964">1964</option>
-                    <option value="1965">1965</option>
-                    <option value="1966">1966</option>
-                    <option value="1967">1967</option>
-                    <option value="1968">1968</option>
-                    <option value="1969">1969</option>
-                    <option value="1970">1970</option>
-                    <option value="1971">1971</option>
-                    <option value="1972">1972</option>
-                    <option value="1973">1973</option>
-                    <option value="1974">1974</option>
-                    <option value="1975">1975</option>
-                    <option value="1976">1976</option>
-                    <option value="1977">1977</option>
-                    <option value="1978">1978</option>
-                    <option value="1979">1979</option>
-                    <option value="1980">1980</option>
-                    <option value="1981">1981</option>
-                    <option value="1982">1982</option>
-                    <option value="1983">1983</option>
-                    <option value="1984">1984</option>
-                    <option value="1985">1985</option>
-                    <option value="1986">1986</option>
-                    <option value="1987">1987</option>
-                    <option value="1988">1988</option>
-                    <option value="1989">1989</option>
-                    <option value="1990">1990</option>
-                    <option value="1991">1991</option>
-                    <option value="1992">1992</option>
-                    <option value="1993">1993</option>
-                    <option value="1994">1994</option>
-                    <option value="1995">1995</option>
-                    <option value="1996">1996</option>
-                    <option value="1997">1997</option>
-                    <option value="1998">1998</option>
-                    <option value="1999">1999</option>
-                    <option value="2000">2000</option>
-                    <option value="2001">2001</option>
-                    <option value="2002">2002</option>
-                    <option value="2003">2003</option>
-                    <option value="2004">2004</option>
-                    <option value="2005">2005</option>
-                </select>
-            </fieldset>
-            <!--
-            <div class="text-field">
-                <label>Add url of your avatar</label>
-                <div class="ui-input-text">
-                    <input type="text" name="url" placeholder="Url" data-enhanced="true" />
-                </div>
-            </div>
-            -->
-            <div class="btn-next-page">
-                <a class="ui-btn ui-btn-icon-right menu-icon-options" data-link = "#options-page" href="#options-page">Options</a>
-            </div>
-        </form>
     </div>
+    <div class="right_col"></div>
 </div>
 
 <div id="edit-address" data-role="page">
@@ -627,25 +649,28 @@
         <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#profile-page')" href="#">Back</a>
     </div>
     <div role="main" class="ui-content">
-        <div class="address-item">
-            <div class="btn-next-page">
-                <div class="title">
-                    Add up to three address to recieve acces to voting of your regions
+        <div class="left_col">
+            <div class="address-item">
+                <div class="btn-next-page">
+                    <div class="title">
+                        Add up to three address to recieve acces to voting of your regions
+                    </div>
+                    <a class="ui-btn ui-btn-icon-right" href="#address-item-1"></a>
                 </div>
-                <a class="ui-btn ui-btn-icon-right" href="#address-item-1"></a>
+            </div>
+            <div class="address-item">
+                <div class="btn-next-page">
+                    <a class="ui-btn ui-btn-icon-right" href="#address-item-2">Address 2</a>
+                </div>
+            </div>
+            <div class="address-item">
+                <div class="btn-next-page">
+                    <a class="ui-btn ui-btn-icon-right" href="#address-item-3">Address 3</a>
+                </div>
             </div>
         </div>
-        <div class="address-item">
-            <div class="btn-next-page">
-                <a class="ui-btn ui-btn-icon-right" href="#address-item-2">Address 2</a>
-            </div>
-        </div>
-        <div class="address-item">
-            <div class="btn-next-page">
-                <a class="ui-btn ui-btn-icon-right" href="#address-item-3">Address 3</a>
-            </div>
-        </div>
-    </div>
+        <div class="right_col"></div>
+    </div>    
 </div>
 
 <div id="address-item-1" data-role="page">
@@ -654,48 +679,56 @@
         <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#edit-address')" href="#edit-address">Back</a>
     </div>
     <div role="main" class="ui-content">
-        <a id = "findgps-1" class="ui-btn ui-corner-all ui-shadow" href="#">Find an address using GPS</a><form accept-charset="UTF-8" onsubmit = 'ADRESS.save_address(1); return false;'>
-        <div>
-            <label>Country</label><select required name="country"></select>
-        </div>
-        <div>
-            <label>State</label><select required name="state"></select>
-        </div>
-        <div>
-            <label>County</label><select required name="county"></select>
-        </div>
-        <div>
-            <label>City</label><select required name="city"></select>
-        </div>
-        <div>
-            <label>Index</label><select required name="index"></select>
-        </div>
-        <div class="text-field">
-            <label>Street</label>
-            <div class="ui-input-text">
-                <input required type="text" name="street" data-enhanced="true" />
-            </div>
-        </div>
-        <div class="text-field">
-            <label>Number of House</label>
-            <div class="ui-input-text">
-                <input required type="text" name="house" data-enhanced="true" />
-            </div>
-        </div>
-        <div class="text-field">
-            <label>Add some comments</label>
-            <div class="ui-input-text"><textarea name="comment" rows="" cols="" class="ui-input-text" data-enhanced="true"></textarea>
-            </div>
-        </div>
-        <div class="ui-checkbox">
-            <label class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Address official registration</label><input type="checkbox" name="off_address" value="1" data-enhanced="true" />
-        </div>
-        <div class="gmap">
-            
-        </div>
+        <div class="left_col">
+        	<div class="mapCanvas" id = "mapCanvas_1"></div>
+            <a id = "findgps-1" class="ui-btn ui-corner-all ui-shadow" href="#">Find an address using GPS</a>
 
-        <button class="ui-btn ui-corner-all ui-shadow btn-save">Save address</button></form>
-        <button id = "delete_address" style = "display:none" class="ui-btn ui-corner-all ui-shadow btn-delete">Delete address</button>
+            <form accept-charset="UTF-8" onsubmit = 'ADRESS.save_address(1); return false;'>
+
+                <div>
+                    <label>Country</label><select required name="country"></select>
+                </div>
+                <div>
+                    <label>State</label><select required name="state"></select>
+                </div>
+                <div>
+                    <label>County</label><select required name="county"></select>
+                </div>
+                <div>
+                    <label>City</label><select required name="city"></select>
+                </div>
+                <div>
+                    <label>Index</label><select required name="index"></select>
+                </div>
+                <div class="text-field">
+                    <label>Street</label>
+                    <div class="ui-input-text">
+                        <input required type="text" name="street" data-enhanced="true" />
+                    </div>
+                </div>
+                <div class="text-field">
+                    <label>Number of House</label>
+                    <div class="ui-input-text">
+                        <input required type="text" name="house" data-enhanced="true" />
+                    </div>
+                </div>
+                <div class="text-field">
+                    <label>Add some comments</label>
+                    <div class="ui-input-text">
+                        <textarea name="comment" rows="" cols="" class="ui-input-text" data-enhanced="true"></textarea>
+                    </div>
+                </div>
+                <div class="ui-checkbox">
+                    <label class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Address official registration</label><input type="checkbox" name="off_address" value="1" data-enhanced="true" />
+                </div>
+
+				<div class="gmap"></div>
+                <button class="ui-btn ui-corner-all ui-shadow btn-save">Save address</button>
+            </form>
+
+            <button id = "delete_address" style = "display:none" class="ui-btn ui-corner-all ui-shadow btn-delete">Delete address</button>
+        </div>
+        <div class="right_col"></div>
     </div>
 </div>
 
@@ -705,64 +738,50 @@
         <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#edit-address')" href="#edit-address">Back</a>
     </div>
     <div role="main" class="ui-content">
-        <a id = "findgps-2" class="ui-btn ui-corner-all ui-shadow" href="#">Find an address using GPS</a><form accept-charset="UTF-8" onsubmit = 'ADRESS.save_address(2); return false;'>
-        <div>
-            <label>Country</label><select required name="country">
-            <!--<option value="">Select country required</option>
-            <option value="Ukraine">Ukraine</option>
-            <option value="Ukraine">Ukraine</option>-->
-            </select>
+        <div class="left_col">
+			<div class="mapCanvas" id = "mapCanvas_2"></div>
+            <a id = "findgps-2" class="ui-btn ui-corner-all ui-shadow" href="#">Find an address using GPS</a>
+			<form accept-charset="UTF-8" onsubmit = 'ADRESS.save_address(2); return false;'>
+		        <div>
+		            <label>Country</label><select required name="country"></select>
+		        </div>
+		        <div>
+		            <label>State</label><select required name="state"></select>
+		        </div>
+		        <div>
+		            <label>County</label><select required name="county"></select>
+		        </div>
+		        <div>
+		            <label>City</label><select required name="city"></select>
+		        </div>
+		        <div>
+		            <label>Index</label><select required name="index"></select>
+		        </div>
+		        <div class="text-field">
+		            <label>Street</label>
+		            <div class="ui-input-text">
+		                <input required type="text" name="street" data-enhanced="true" />
+		            </div>
+		        </div>
+		        <div class="text-field">
+		            <label>Number of House</label>
+		            <div class="ui-input-text">
+		                <input required type="text" name="house" data-enhanced="true" />
+		            </div>
+		        </div>
+		        <div class="text-field">
+		            <label>Add some comments</label>
+		            <div class="ui-input-text"><textarea name="comment" rows="" cols="" class="ui-input-text" data-enhanced="true"></textarea>
+		            </div>
+		        </div>
+		        <div class="ui-checkbox">
+		            <label class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Address official registration</label><input type="checkbox" name="off_address" value="1" data-enhanced="true" />
+		        </div>
+		        <button class="ui-btn ui-corner-all ui-shadow btn-save">Save address</button>
+			</form>
+            <button id = "delete_address" style = "display:none" class="ui-btn ui-corner-all ui-shadow btn-delete">Delete address</button>
         </div>
-        <div>
-            <label>State</label><select required name="state">
-            <!--<option value="Odeska oblast">Odeska oblast</option>
-            <option value="Odeska oblast">Odeska oblast</option>
-            <option value="Odeska oblast">Odeska oblast</option>-->
-            </select>
-        </div>
-        <div>
-            <label>County</label><select required name="county">
-            <!--<option value="Ovidiopolsky">Ovidiopolsky</option>
-            <option value="Ovidiopolsky">Ovidiopolsky</option>
-            <option value="Ovidiopolsky">Ovidiopolsky</option>-->
-            </select>
-        </div>
-        <div>
-            <label>City</label><select required name="city">
-            <!--<option value="Odesa">Odesa</option>
-            <option value="Kiev">Kiev</option>
-            <option value="Odesa">Odesa</option>-->
-            </select>
-        </div>
-        <div>
-            <label>Index</label><select required name="index">
-            <!--<option value="65091">65091</option>
-            <option value="65092">65092</option>
-            <option value="65093">65093</option>-->
-            </select>
-        </div>
-        <div class="text-field">
-            <label>Street</label>
-            <div class="ui-input-text">
-                <input required type="text" name="street" data-enhanced="true" />
-            </div>
-        </div>
-        <div class="text-field">
-            <label>Number of House</label>
-            <div class="ui-input-text">
-                <input required type="text" name="house" data-enhanced="true" />
-            </div>
-        </div>
-        <div class="text-field">
-            <label>Add some comments</label>
-            <div class="ui-input-text"><textarea name="comment" rows="" cols="" class="ui-input-text" data-enhanced="true"></textarea>
-            </div>
-        </div>
-        <div class="ui-checkbox">
-            <label class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Address official registration</label><input type="checkbox" name="off_address" value="1" data-enhanced="true" />
-        </div>
-        <button class="ui-btn ui-corner-all ui-shadow btn-save">Save address</button></form>
-        <button id = "delete_address" style = "display:none" class="ui-btn ui-corner-all ui-shadow btn-delete">Delete address</button>
+        <div class="right_col"></div>
     </div>
 </div>
 
@@ -772,64 +791,50 @@
         <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#edit-address')" href="#edit-address">Back</a>
     </div>
     <div role="main" class="ui-content">
-        <a id = "findgps-3" class="ui-btn ui-corner-all ui-shadow" href="#">Find an address using GPS</a><form accept-charset="UTF-8" onsubmit = 'ADRESS.save_address(3); return false;'>
-        <div>
-            <label>Country</label><select required name="country">
-            <!--<option value="">Select country required</option>
-            <option value="Ukraine">Ukraine</option>
-            <option value="Ukraine">Ukraine</option>-->
-            </select>
+        <div class="left_col">
+		    <div class="mapCanvas" id = "mapCanvas_3"></div>
+            <a id = "findgps-3" class="ui-btn ui-corner-all ui-shadow" href="#">Find an address using GPS</a>
+			<form accept-charset="UTF-8" onsubmit = 'ADRESS.save_address(3); return false;'>
+		        <div>
+		            <label>Country</label><select required name="country"></select>
+		        </div>
+		        <div>
+		            <label>State</label><select required name="state"></select>
+		        </div>
+		        <div>
+		            <label>County</label><select required name="county"></select>
+		        </div>
+		        <div>
+		            <label>City</label><select required name="city"></select>
+		        </div>
+		        <div>
+		            <label>Index</label><select required name="index"></select>
+		        </div>
+		        <div class="text-field">
+		            <label>Street</label>
+		            <div class="ui-input-text">
+		                <input required type="text" name="street" data-enhanced="true" />
+		            </div>
+		        </div>
+		        <div class="text-field">
+		            <label>Number of House</label>
+		            <div class="ui-input-text">
+		                <input required type="text" name="house" data-enhanced="true" />
+		            </div>
+		        </div>
+		        <div class="text-field">
+		            <label>Add some comments</label>
+		            <div class="ui-input-text"><textarea name="comment" rows="" cols="" class="ui-input-text" data-enhanced="true"></textarea>
+		            </div>
+		        </div>
+		        <div class="ui-checkbox">
+		            <label class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Address official registration</label><input type="checkbox" name="off_address" value="1" data-enhanced="true" />
+		        </div>
+		        <button class="ui-btn ui-corner-all ui-shadow btn-save">Save address</button>
+			</form>
+            <button id = "delete_address" style = "display:none" class="ui-btn ui-corner-all ui-shadow btn-delete">Delete address</button>
         </div>
-        <div>
-            <label>State</label><select required name="state">
-            <!--<option value="Odeska oblast">Odeska oblast</option>
-            <option value="Odeska oblast">Odeska oblast</option>
-            <option value="Odeska oblast">Odeska oblast</option>-->
-            </select>
-        </div>
-        <div>
-            <label>County</label><select required name="county">
-            <!--<option value="Ovidiopolsky">Ovidiopolsky</option>
-            <option value="Ovidiopolsky">Ovidiopolsky</option>
-            <option value="Ovidiopolsky">Ovidiopolsky</option>-->
-            </select>
-        </div>
-        <div>
-            <label>City</label><select required name="city">
-            <!--<option value="Odesa">Odesa</option>
-            <option value="Kiev">Kiev</option>
-            <option value="Odesa">Odesa</option>-->
-            </select>
-        </div>
-        <div>
-            <label>Index</label><select required name="index">
-            <!--<option value="65091">65091</option>
-            <option value="65092">65092</option>
-            <option value="65093">65093</option>-->
-            </select>
-        </div>
-        <div class="text-field">
-            <label>Street</label>
-            <div class="ui-input-text">
-                <input required type="text" name="street" data-enhanced="true" />
-            </div>
-        </div>
-        <div class="text-field">
-            <label>Number of House</label>
-            <div class="ui-input-text">
-                <input required type="text" name="house" data-enhanced="true" />
-            </div>
-        </div>
-        <div class="text-field">
-            <label>Add some comments</label>
-            <div class="ui-input-text"><textarea name="comment" rows="" cols="" class="ui-input-text" data-enhanced="true"></textarea>
-            </div>
-        </div>
-        <div class="ui-checkbox">
-            <label class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Address official registration</label><input type="checkbox" name="off_address" value="1" data-enhanced="true" />
-        </div>
-        <button class="ui-btn ui-corner-all ui-shadow btn-save">Save address</button></form>
-        <button id = "delete_address" style = "display:none" class="ui-btn ui-corner-all ui-shadow btn-delete">Delete address</button>
+        <div class="right_col"></div>
     </div>
 </div>
 
@@ -849,13 +854,16 @@
         <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back('#profile-page')" href="#">Back</a>
     </div>
     <div role="main" class="ui-content">
-        <form action="" accept-charset="UTF-8" method="post" onsubmit = "SPHERES.save_and_delete_spheres(); return false;">
-            <fieldset id = "sphere_form">
-            </fieldset>
-            <div class="btn-save">
-                <input type="submit" value="Save" class="ui-btn ui-btn-corner-all ui-shadow" />
-            </div>
-        </form>
+        <div class="left_col">
+            <form action="" accept-charset="UTF-8" method="post" onsubmit = "SPHERES.save_and_delete_spheres(); return false;">
+                <fieldset id = "sphere_form">
+                </fieldset>
+                <div class="btn-save">
+                    <input type="submit" value="Save" class="ui-btn ui-btn-corner-all ui-shadow" />
+                </div>
+            </form>
+        </div>
+        <div class="right_col"></div>
     </div>
 </div>
 
@@ -865,10 +873,13 @@
         <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back('#filter-page')" href="#">Back</a>
     </div>
     <div role="main" class="ui-content">
-        <form action="" accept-charset="UTF-8" method="post" onsubmit = "">
-            <fieldset id = "sphere_form">
-            </fieldset>
-        </form>
+        <div class="left_col">
+            <form action="" accept-charset="UTF-8" method="post" onsubmit = "">
+                <fieldset id = "sphere_form">
+                </fieldset>
+            </form>
+        </div>
+        <div class="right_col"></div>
     </div>
 </div>
 
@@ -879,13 +890,16 @@
          <a class="ui-btn ui-btn-right ui-icon-check ui-btn-icon-right" href="#" onclick = "$('#spheres-trust-vote form').submit()">Save</a>
     </div>
     <div id = "sphere_main" role="main" class="ui-content">
-        <form action="" accept-charset="UTF-8" method="post" onsubmit = "SPHERES.save_and_delete_spheres(); return false;">
-            <fieldset id = "sphere_form">
-            </fieldset>
-            <div style = "display:none;" class="btn-save">
-                <input type="submit" value="Save" class="ui-btn ui-btn-corner-all ui-shadow" />
-            </div>
-        </form>
+        <div class="left_col">
+            <form action="" accept-charset="UTF-8" method="post" onsubmit = "SPHERES.save_and_delete_spheres(); return false;">
+                <fieldset id = "sphere_form">
+                </fieldset>
+                <div class="btn-save">
+                    <input type="submit" value="Save" class="ui-btn ui-btn-corner-all ui-shadow" />
+                </div>
+            </form>
+        </div>
+        <div class="right_col"></div>
     </div>
 </div>
 
@@ -970,44 +984,45 @@
         </div>
     </div>
     <div role="main" class="ui-content">
-        <form action="" accept-charset="UTF-8" method="post">
-			<fieldset class="date-group" data-role="controlgroup" data-type="horizontal">
-				<legend>Enter first date for sort</legend>
-				<select name="start_date"></select>
-				<select name="start_month" ></select>
-				<select name="start_year" ></select>
-			</fieldset>
-			<fieldset class="date-group" data-role="controlgroup" data-type="horizontal">
-				<legend>Enter last date for sort</legend>
-				<select name="end_date"></select>
-				<select name="end_month" ><option value="01"></option></select>
-				<select name="end_year"></select>
-			</fieldset>
-			<div style = "display: none" class="btn-next-page">
-				<a class="ui-btn ui-btn-icon-right" href="#">Choose priority</a>
-			</div>
-			<div class="ui-grid-a">
-				<div  onclick = "PROGRAMS.filter_data(); $.mobile.navigate('#programs-page')" class="ui-block-a">
-					<div  class="ui-input-btn ui-btn ui-btn-icon-right filter-save">
-						<span>Save filter</span>
-						<input type="button" value="" data-enhanced="true" />
-					</div>
-				</div>
-				<div onclick = "PROGRAMS.init(); $.mobile.navigate('#programs-page')" class="ui-block-b">
-					<div  class="ui-input-btn ui-btn ui-btn-icon-right filter-clear">
-						<span>Clear filter</span>
-						<input type="button" value="" data-enhanced="true" />
-					</div>
-				</div>
-			</div>
-		</form>
+    
+            <form action="" accept-charset="UTF-8" method="post">
+    			<fieldset class="date-group" data-role="controlgroup" data-type="horizontal">
+    				<legend>Enter first date for sort</legend>
+    				<select name="start_date"></select>
+    				<select name="start_month" ></select>
+    				<select name="start_year" ></select>
+    			</fieldset>
+    			<fieldset class="date-group" data-role="controlgroup" data-type="horizontal">
+    				<legend>Enter last date for sort</legend>
+    				<select name="end_date"></select>
+    				<select name="end_month" ><option value="01"></option></select>
+    				<select name="end_year"></select>
+    			</fieldset>
+    			<div style = "display: none" class="btn-next-page">
+    				<a class="ui-btn ui-btn-icon-right" href="#">Choose priority</a>
+    			</div>
+    			<div class="ui-grid-a">
+    				<div  onclick = "PROGRAMS.filter_data(); $.mobile.navigate('#programs-page')" class="ui-block-a">
+    					<div  class="ui-input-btn ui-btn ui-btn-icon-right filter-save">
+    						<span>Save filter</span>
+    						<input type="button" value="" data-enhanced="true" />
+    					</div>
+    				</div>
+    				<div onclick = "PROGRAMS.init(); $.mobile.navigate('#programs-page')" class="ui-block-b">
+    					<div  class="ui-input-btn ui-btn ui-btn-icon-right filter-clear">
+    						<span>Clear filter</span>
+    						<input type="button" value="" data-enhanced="true" />
+    					</div>
+    				</div>
+    			</div>
+    		</form>
 	</div>
 </div>
 
 <div id="projects-page" data-role="page">
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1 id = "ui_title">Projects</h1>
-        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back('#social-entrepreneurship')" href="#">Back</a>
+        <a id = "menu_link" class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back('#social-entrepreneurship')" href="#">Back</a>
         <a id = "my_activities_link" style = "display:none" class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back('#my-activities-page')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#programs-help">Ask</a>
         <div id="programs-help" class="help-popup" data-role="popup" data-history="false">
             <div class="title">
@@ -1841,25 +1856,241 @@
         </div>
     </div>
     <div role="main" class="ui-content">
+        <div class="left_col">
+            <div class="btn-next-page">
+                <a class="ui-btn ui-btn-icon-right icon-votings" data-link = "#my-votings-page" onclick = "$.mobile.navigate('#my-votings-page')" href="#">My votings</a>
+            </div>
+            <div class="btn-next-page">
+                <a class="ui-btn ui-btn-icon-right icon-programs" data-link = "#my-programs-page" onclick = "$.mobile.navigate('#programs-page?my_program=true')" href="#">My programs</a>
+            </div>
+            <div class="btn-next-page">
+                <a class="ui-btn ui-btn-icon-right icon-projects" data-link = "#my_project_propositions-page" onclick = "$.mobile.navigate('#projects-page?my_project_propositions=true')" href="#">My projects on Call</a>
+            </div>
+            <div class="btn-next-page">
+                <a class="ui-btn ui-btn-icon-right icon-votings" data-link = "#weighted-votings-page" onclick = "$.mobile.navigate('#weighted-votings-page?my=1')" href="#">My weighted votins on programs</a>
+            </div>
+            <div class="btn-next-page">
+                <a class="ui-btn ui-btn-icon-right icon-projects" data-link = "#my_project-page" onclick = "$.mobile.navigate('#projects-page?my_project=true')" href="#">My projects</a>
+            </div>
+            <div class="btn-next-page">
+                <a class="ui-btn ui-btn-icon-right icon-requests" data-link = "#my_request-page" onclick = "$.mobile.navigate('#requests-page?my_request=true')" href="#">My requests</a>
+            </div>
+            <div class="btn-next-page">
+                <a class="ui-btn ui-btn-icon-right icon-votings" data-link = "#my-groups" onclick = "$.mobile.navigate('#my-groups')" href="#">My groups</a>
+            </div>
+        </div>
+        <div class="right_col"></div>
+    </div>
+</div>
 
-        <div class="btn-next-page">
-            <a class="ui-btn ui-btn-icon-right icon-votings" data-link = "#my-votings-page" onclick = "$.mobile.navigate('#my-votings-page')" href="#">My votings</a>
+
+<div id="my-groups" data-role="page">
+    <div data-role="header" data-position="fixed" data-tap-toggle="false">
+        <h1>My groups</h1>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#my-activities-page')" href="#my-activities-page">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#my-spheres-help">Ask</a>
+        <div id="my-spheres-help" class="help-popup" data-role="popup" data-history="false">
+            <div class="title">
+                Description
+            </div>
+            <div class="text">
+               Help
+            </div>
         </div>
-        <div class="btn-next-page">
-            <a class="ui-btn ui-btn-icon-right icon-programs" data-link = "#my-programs-page" onclick = "$.mobile.navigate('#programs-page?my_program=true')" href="#">My programs</a>
+    </div>
+    <div role="main" class="ui-content">
+        <div class="left_col">
+
+            <div class="ui-input-search ui-input-has-clear">
+                <input onkeyup="ORG_LIST.init(true)" id = "searched_string_org" class = "search_string" type="search" name="" placeholder="Search.." data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" onclick = "$('#my-spheres .search_string').val(''); $('#my-spheres .search_string').keyup();" href="">Clear text</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />
+            </div>
+
+            <a class="ui-btn ui-corner-all ui-shadow" href="#create-org">Create group/org</a>
+            <div class="vote-list news-list" id = 'org_list'>
+                <div class="item ui-corner-all news-icon news-icon-num-4" onclick="$.mobile.navigate('#my-spheres-options?id=1')" style="cursor:pointer">
+                    <div class="img"><object type="image/svg+xml" data="https://gurtom.mobi/uploads/news.svg">Your browser does not support SVG</object>
+                    </div>
+                    <div class="info">
+                        <div class="date">
+                            2015-06-08 01:20:47
+                        </div>
+                        <div class="title">
+                            Студенти Могилянки
+                        </div>
+                        <div class="author">
+                            <span>Опубліковано</span> <strong></strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item ui-corner-all news-icon news-icon-num-4" onclick="$.mobile.navigate('#')" style="cursor:pointer">
+                    <div class="img"><object type="image/svg+xml" data="https://gurtom.mobi/uploads/news.svg">Your browser does not support SVG</object>
+                    </div>
+                    <div class="info">
+                        <div class="date">
+                            2015-06-08 01:20:47
+                        </div>
+                        <div class="title">
+                            Проба
+                        </div>
+                        <div class="author">
+                            <span>Опубліковано</span> <strong></strong>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
-        <div class="btn-next-page">
-            <a class="ui-btn ui-btn-icon-right icon-projects" data-link = "#my_project_propositions-page" onclick = "$.mobile.navigate('#projects-page?my_project_propositions=true')" href="#">My projects on Call</a>
+        <div class="right_col"></div>
+    </div>
+</div>
+
+<div id="my-spheres-options" data-role="page">
+    <div data-role="header" data-position="fixed" data-tap-toggle="false">
+        <h1>My spheres options</h1>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#my-spheres')" href="#my-spheres">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#my-spheres-options-help">Ask</a>
+        <div id="my-spheres-options-help" class="help-popup" data-role="popup" data-history="false">
+            <div class="title">
+                Description
+            </div>
+            <div class="text">
+               Help
+            </div>
         </div>
-        <div class="btn-next-page">
-            <a class="ui-btn ui-btn-icon-right icon-votings" data-link = "#weighted-votings-page" onclick = "$.mobile.navigate('#weighted-votings-page?my=1')" href="#">My weighted votins on programs</a>
+    </div>
+    <div role="main" class="ui-content">
+        <div class="left_col">
+
+            <a class="ui-btn ui-corner-all ui-shadow" href="#create-sphere">Create sphere</a>
+
+            <a class="ui-btn ui-corner-all ui-shadow" href="#membership-manage">Manage user list</a>
+
+            <a class="ui-btn ui-corner-all ui-shadow" href="#membership-ask">Ask for membership</a>
+
+            <a class="ui-btn ui-corner-all ui-shadow" href="#membership-stop">Stop membership</a>
+
+            <div class="vote-list news-list" id = 'spheres_list'>
+                
+                <div class="item ui-corner-all news-icon news-icon-num-4" onclick="$.mobile.navigate('#my-sphere-options&id=1')" style="cursor:pointer">
+                    <div class="img"><object type="image/svg+xml" data="https://gurtom.mobi/uploads/news.svg">Your browser does not support SVG</object>
+                    </div>
+                    <div class="info">
+                        <div class="date">
+                            2015-06-08 01:20:47
+                        </div>
+                        <div class="title">
+                            Загальне
+                        </div>
+                        <div class="author">
+                            <span>Опубліковано</span> <strong></strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item ui-corner-all news-icon news-icon-num-4" onclick="$.mobile.navigate('#')" style="cursor:pointer">
+                    <div class="img"><object type="image/svg+xml" data="https://gurtom.mobi/uploads/news.svg">Your browser does not support SVG</object>
+                    </div>
+                    <div class="info">
+                        <div class="date">
+                            2015-06-08 01:20:47
+                        </div>
+                        <div class="title">
+                            Предмети
+                        </div>
+                        <div class="author">
+                            <span>Опубліковано</span> <strong></strong>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
-        <div class="btn-next-page">
-            <a class="ui-btn ui-btn-icon-right icon-projects" data-link = "#my_project-page" onclick = "$.mobile.navigate('#projects-page?my_project=true')" href="#">My projects</a>
+        <div class="right_col"></div>
+    </div>
+</div>
+
+<div id="membership-manage" data-role="page">
+    <div data-role="header" data-position="fixed" data-tap-toggle="false">
+        <h1>Manege users</h1>
+        <a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#my-spheres-options')" href="#my-spheres-options">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#my-votings-help">Ask</a>
+        <div id="my-votings-help" class="help-popup" data-role="popup" data-history="false">
+            <div class="title">
+                Description
+            </div>
+            <div class="text">
+               Help
+            </div>
         </div>
-        <div class="btn-next-page">
-            <a class="ui-btn ui-btn-icon-right icon-requests" data-link = "#my_request-page" onclick = "$.mobile.navigate('#requests-page?my_request=true')" href="#">My requests</a>
+    </div>
+    <div role="main" class="ui-content">
+        <div class="left_col">
+
+            <div class="ui-checkbox">
+                <label id = "members_checkbox" data-checked = "false" onclick = "MEMBERS_LIST.filter_by_id(false)" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">New calls only</label><input type="checkbox" name="members_checkbox" value="0" data-enhanced="true" />
+            </div>
+
+            <div class="ui-input-search ui-input-has-clear">
+                <input onkeyup="MEMBERS_LIST.init(true)" id = "searched_string_members" id = "search_string" type="search" name="" placeholder="Search.." data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" onclick = "$('#my-spheres-options .search_string').val(''); $('#my-spheres-options .search_string').keyup();" href="">Clear text</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />
+            </div>
+
+            <div class="items-list" id = 'members_list'>
+                
+                <div class="item ui-corner-all">
+                    <div class="ui-block-a">
+                        <div class="avatar">
+                            <img src="https://gurtom.mobi/uploads/avatar.svg" />
+                        </div>
+                    </div>
+                    <div class="ui-block-b">
+                        <div class="id">ID: 307 a-xomenko</div>
+                        <div class="name">Oleksandr Khomenko</div>
+                    </div>
+                    <div class="ui-grid-a">
+                        <div class="ui-block-b">
+                            <div></div>
+                            <div><img class="ui-corner-all" src="images/trust-icon-email.png" /></div>
+                        </div>
+                        <div class="osmd-list">
+                            <div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item ui-corner-all">
+                    <div class="ui-block-a">
+                        <div class="avatar">
+                            <img src="https://gurtom.mobi/uploads/1/0/155ea2a73e973b_OENIHFGJKPQML.jpeg" />
+                        </div>
+                    </div>
+                    <div class="ui-block-b">
+                        <div class="id">ID: 1 admin</div>
+                        <div class="name">Andre`s Morrison</div>
+                        <a class="ui-btn ui-shadow ui-corner-all" href="#" onclick="MEMEBERS_LIST.approve(1);">Approve</a>
+                        <a class="ui-btn ui-shadow ui-corner-all btn-delete" href="#" onclick="MEMEBERS_LIST.decline('1');">Decline</a>
+                    </div>
+                    <div class="ui-grid-a">
+                        <div class="ui-block-b">
+                            <div>
+                                <img class="ui-corner-all" src="images/trust-icon-gp.png" />
+                            </div>
+                            <div>
+                                <img class="ui-corner-all" src="images/trust-icon-email.png" />
+                                <img class="ui-corner-all" src="images/trust-icon-community.png" />
+                                <img class="ui-corner-all" src="images/trust-icon-house.png" />
+                                <img class="ui-corner-all" src="images/trust-icon-wallet.png" />
+                            </div>
+                        </div>
+                        <div class="osmd-list">
+                            <div></div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            </div>
         </div>
+        <div class="right_col"></div>
     </div>
 </div>
 
@@ -2378,7 +2609,7 @@
         </div>
     </div>
     <div role="main" class="ui-content">
-        <form action="" accept-charset="UTF-8" method="post" onsubmit = "CREATE_VOTE.send_data(); return false;">
+        <form action="" accept-charset="UTF-8" method="post" onsubmit = "CREATE_VOTE.sendFormData(); return false;">
             <div class="text-field">
                 <label>Name your voting*</label>
                 <div class="ui-input-text">
@@ -2398,6 +2629,9 @@
             </div>
             <div class="ui-input-file">
                 <input style = "cursor:pointer" id = "img" name="" data-enhanced="true" /><span>Upload avatar of yor vote*</span>
+            </div>
+            <div id = "image_div_create_vote" style = "display:none">
+                <center><img height = "100px" src = ""></center>
             </div>
             <div class="text-field">
                 <label>Minimum support amount</label>
@@ -2620,10 +2854,11 @@
         <form style = "display:none" id = "picture_form_create_vote" action = "https://gurtom.mobi/i/up.php" method="post" enctype="multipart/form-data">
             Select image to upload:
             <input type="hidden" name="MAX_FILE_SIZE" value="10000000">
-            <input type="file" name="picture">
+            <input type="file" onchange = "CREATE_VOTE.send_data();" name="picture">
             <input type="text" name="type" value="1">
             <input type="submit" value="upload" name="submit">
         </form>
+        <input type="hidden" name="response_img_create_vote" id = "response_img_create_vote" value="">
     </div>
 </div>
 
@@ -2654,8 +2889,10 @@
         </div>
     </div>
     <div role="main" class="ui-content">
-        <div id = "news_list" class="news-list">
+        <div class="left_col">
+            <div id = "news_list" class="news-list"></div>
         </div>
+        <div class="right_col"><iframe width="560" height="315" src="https://www.youtube.com/embed/vd8m_M3SKP0?rel=0" frameborder="0" allowfullscreen></iframe></div>
     </div>
 </div>
 

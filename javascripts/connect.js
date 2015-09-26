@@ -8,6 +8,108 @@ var g_lat = 0;
 var g_lng = 0;
 
 
+///////////////////////////////////////////////////////////////////Неоптимизированная карта для старницы Адресов
+
+
+var GoogleMapsAdress = {
+	geocoder: new google.maps.Geocoder(),
+	marker: false,
+	map: false,
+	geocodePosition: function(pos) {
+		var self = this;
+	  self.geocoder.geocode({
+	    latLng: pos
+	  }, function(responses) {
+	    if (responses && responses.length > 0) {
+	      self.updateMarkerAddress(responses[0].formatted_address);
+	    } else {
+	      self.updateMarkerAddress('Cannot determine address at this location.');
+	    }
+	  });
+	},
+	updateMarkerStatus: function(str) {
+		var self = this;
+	},
+	updateMarkerPosition: function(latLng) {
+		var self = this;
+	},
+	setCheckBoxes: function(latLng){
+		var geocoder = new google.maps.Geocoder();
+		var latLng = new google.maps.LatLng(latLng.lat(), latLng.lng());
+		if(location.href.indexOf('#address-item-') > -1){
+			var match_array = location.href.match(/item-[0-9]*/i);
+			var object_id = match_array[0].match(/[0-9]+/i);
+		}
+		if(geocoder){
+			geocoder.geocode({'latLng': latLng,'language': 'en'},function(results, status) {
+			if (status == google.maps.GeocoderStatus.OK) {
+				 var address = results[0].address_components;
+				 var country = ADRESS.getGPSByType(address,"country");
+				 var state = ADRESS.getGPSByType(address,"administrative_area_level_1");
+				 var county = ADRESS.getGPSByType(address,"administrative_area_level_3");
+				 var city = ADRESS.getGPSByType(address,"locality");
+				 //console.log('build: ' + results[0].address_components[0].long_name);
+				 var street = ADRESS.getGPSByType(address,"route");
+				 var build = ADRESS.getGPSByType(address,"street_number");
+				 ADRESS.gpsSet(object_id, country,state,county,city,street,build, latLng.lat(), latLng.lng());
+			} else {
+				console.log(LOCALE_ARRAY_ADDITIONAL.gps_not_activated[CURRENT_LANG]);
+			}
+			});
+		}
+	},
+	moveMarker: function(height, length){
+		var self = this;
+		self.marker.setPosition( new google.maps.LatLng( height, length ) );
+		self.map.panTo( new google.maps.LatLng( height, length ) );
+	},
+	updateMarkerAddress: function(str) {
+		var self = this;
+	},
+	initialize: function() {
+		var self = this;
+		if(location.href.indexOf('#address-item-') > -1){
+			var match_array = location.href.match(/item-[0-9]*/i);
+			var object_id = match_array[0].match(/[0-9]+/i);
+		}
+	  var latLng = new google.maps.LatLng(50.447753, 30.52292799999998);
+	  self.map = new google.maps.Map(document.getElementById('mapCanvas_' + object_id), {
+	    zoom: 8,
+	    center: latLng,
+	    mapTypeId: google.maps.MapTypeId.ROADMAP
+	  });
+	  self.marker = new google.maps.Marker({
+	    position: latLng,
+	    title: 'Point A',
+	    map: self.map,
+	    draggable: true
+	  });
+	  
+	  // Update current position info.
+	  self.updateMarkerPosition(latLng);
+	  self.geocodePosition(latLng);
+	  
+	  // Add dragging event listeners.
+	  google.maps.event.addListener(self.marker, 'dragstart', function() {
+	    self.updateMarkerAddress('Dragging...');
+	  });
+	  
+	  google.maps.event.addListener(self.marker, 'drag', function() {
+	    self.updateMarkerStatus('Dragging...');
+	    self.updateMarkerPosition(self.marker.getPosition());
+	  });
+	  
+	  google.maps.event.addListener(self.marker, 'dragend', function() {
+	    self.updateMarkerStatus('Drag ended');
+	    self.geocodePosition(self.marker.getPosition());
+	    self.setCheckBoxes(self.marker.getPosition());
+	  });
+	}
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
 $.mobile.defaultPageTransition = 'none';
 function inner_back(link){
 	if(link){
@@ -196,6 +298,7 @@ window.onload = function(){
 				location.href.indexOf('#requests-page?my_request=true') > -1 ||
 				location.href.indexOf('#address-item') > -1 ||
 				location.href.indexOf('#edit-address') > -1 ||
+				location.href.indexOf('#balances-pif-page') > -1 ||
 				location.href.indexOf('#spheres-trust-vote') > -1) && SUPER_PROFILE.auth == false){
 			ask_login();
 		}
@@ -223,6 +326,8 @@ window.onload = function(){
 			 location.href.indexOf('#address-item-3') > -1 ) && SUPER_PROFILE.auth == true){
 			if(ADRESS){
 				ADRESS.init();
+				// Onload handler to fire off the app.
+				GoogleMapsAdress.initialize();
 			}
 		}
 
@@ -305,8 +410,15 @@ window.onload = function(){
 			}
 		}else{
 			var img = "";
-			alert(LOCALE_ARRAY_ADDITIONAL.please_enter_image_voting[CURRENT_LANG]);
-			error = 1;
+		}
+		if(error == 0){
+			$('#create-vote #response_img_create_vote').val(img);
+			$('#create-vote #image_div_create_vote').attr('style', 'display:block');
+			$('#create-vote #image_div_create_vote img').attr('src', img);							
+		}else{
+			$('#create-vote #response_img_create_vote').val("");
+			$('#create-vote #image_div_create_vote').attr('style', 'display:none');
+			$('#create-vote #image_div_create_vote img').attr('src', '');
 		}
 		/*if(response){
 			if(response.indexOf('File is larger than the specified amount set') > -1){
@@ -320,98 +432,6 @@ window.onload = function(){
 			alert(LOCALE_ARRAY_ADDITIONAL.please_enter_image_voting[CURRENT_LANG]);
 			error = 1;
 		}*/
-		if($('#create-vote [name=name]').val() == "" && error != 1){
-			alert(LOCALE_ARRAY_ADDITIONAL.please_enter_name_voting[CURRENT_LANG]);
-			error = 1;
-		}
-		if($('#create-vote [name=sprt]').val() == "" && error != 1){
-			alert(LOCALE_ARRAY_ADDITIONAL.please_enter_supporters_voting[CURRENT_LANG]);
-			error = 1;
-		}
-		if($('#create-vote [name=descr]').val() == "" && error != 1){
-			alert(LOCALE_ARRAY_ADDITIONAL.please_enter_description_voting[CURRENT_LANG]);
-			error = 1;
-		}
-		if($('#create-vote [name=descr]').val() == "" && error != 1){
-			alert(LOCALE_ARRAY_ADDITIONAL.please_enter_description_voting[CURRENT_LANG]);
-			error = 1;
-		}
-		if($('#create-vote [name=sph]').val() == "" && error != 1){
-			alert(LOCALE_ARRAY_ADDITIONAL.please_enter_sphere_voting[CURRENT_LANG]);
-			error = 1;
-		}
-		if(error != 1){
-			var start_date = $('#create-vote [name=s_time_year]').val() + "-" 
-							+ $('#create-vote [name=s_time_month]').val() + "-" 
-							+ $('#create-vote [name=s_time_date]').val();
-			var end_date = $('#create-vote [name=f_time_year]').val() + "-" 
-						+ $('#create-vote [name=f_time_month]').val() + "-" 
-						+ $('#create-vote [name=f_time_date]').val();
-			if($('#create-vote #v0').hasClass('ui-checkbox-on')){
-				var v0 = 1;
-			}else{
-				var v0 = 0;
-			}
-			if($('#create-vote #v1').hasClass('ui-checkbox-on')){
-				var v1 = 1;
-			}else{
-				var v1 = 0;
-			}
-			if($('#create-vote #v2').hasClass('ui-checkbox-on')){
-				var v2 = 1;
-			}else{
-				var v2 = 0;
-			}
-			if($('#create-vote #v3').hasClass('ui-checkbox-on')){
-				var v3 = 1;
-			}else{
-				var v3 = 0;
-			}
-			if($('#create-vote #v4').hasClass('ui-checkbox-on')){
-				var v4 = 1;
-			}else{
-				var v4 = 0;
-			}
-			if($('#create-vote #v5').hasClass('ui-checkbox-on')){
-				var v5 = 1;
-			}else{
-				var v5 = 0;
-			}
-
-			$.ajax({
-				url: mainURL + "/mc_add.php",
-				type: "POST",
-				data: {"img": img,
-					 "sph": $('#create-vote [name=sph]').val(),
-					 "name": $('#create-vote [name=name]').val(),
-					 "s_time": start_date,
-					 "f_time": end_date, 
-					 "descr": $('#create-vote .jqte_editor').html(),
-					 "sprt": $('#create-vote [name=sprt]').val(),
-					 "v0": v0,
-					 "v1": v1,
-					 "v2": v2,
-					 "v3": v3,
-					 "v4": v4,
-					 "v5": v5,
-					 "age_from": 	$('#create-vote [name=age_from]').val(),
-					 "age_to": $('#create-vote [name=age_to]').val()},
-				crossDomain: true,
-				xhrFields: {
-					withCredentials: true
-				},
-				complete: function(response){
-					var id = JSON.parse(response.responseText);
-					id = id[0].id;
-					alert(LOCALE_ARRAY_ADDITIONAL.voting_created[CURRENT_LANG]);
-					$.mobile.navigate("#vote-page?vote=" + id);
-					//console.log("saved ok, id = " + id);
-					//alert('okay');
-				}
-			});
-
-			console.log(mainURL + response.responseText);
-		}
 		
 	}});
 
@@ -520,6 +540,7 @@ window.onhashchange = function(){
 			location.href.indexOf('#requests-page?my_request=true') > -1 ||
 			location.href.indexOf('#address-item') > -1 ||
 			location.href.indexOf('#edit-address') > -1 ||
+			location.href.indexOf('#balances-pif-page') > -1 ||
 			location.href.indexOf('#spheres-trust-vote') > -1) && SUPER_PROFILE.auth == false){
 		ask_login();
 	}
@@ -627,6 +648,7 @@ window.onhashchange = function(){
 		 location.href.indexOf('#address-item-3') > -1 ) && SUPER_PROFILE.auth == true){
 		if(ADRESS){
 			ADRESS.init();
+			GoogleMapsAdress.initialize();
 		}
 	}
 
@@ -1594,6 +1616,126 @@ var CREATE_VOTE = {
 		var self = this;
 
 		$( "#picture_form_create_vote" ).submit();
+	},
+	sendFormData: function()
+	{	
+		var error = 0;
+		var img = $('#create-vote #response_img_create_vote').val();
+		if($('#create-vote [name=name]').val() == ""){
+			alert(LOCALE_ARRAY_ADDITIONAL.please_enter_name_voting[CURRENT_LANG]);
+			error = 1;
+		}
+		if($('#create-vote [name=sprt]').val() == "" && error != 1){
+			alert(LOCALE_ARRAY_ADDITIONAL.please_enter_supporters_voting[CURRENT_LANG]);
+			error = 1;
+		}
+		if($('#create-vote [name=descr]').val() == "" && error != 1){
+			alert(LOCALE_ARRAY_ADDITIONAL.please_enter_description_voting[CURRENT_LANG]);
+			error = 1;
+		}
+		if($('#create-vote [name=descr]').val() == "" && error != 1){
+			alert(LOCALE_ARRAY_ADDITIONAL.please_enter_description_voting[CURRENT_LANG]);
+			error = 1;
+		}
+		if($('#create-vote [name=sph]').val() == "" && error != 1){
+			alert(LOCALE_ARRAY_ADDITIONAL.please_enter_sphere_voting[CURRENT_LANG]);
+			error = 1;
+		}
+		if(error != 1){
+			var start_date = $('#create-vote [name=s_time_year]').val() + "-" 
+							+ $('#create-vote [name=s_time_month]').val() + "-" 
+							+ $('#create-vote [name=s_time_date]').val();
+			var end_date = $('#create-vote [name=f_time_year]').val() + "-" 
+						+ $('#create-vote [name=f_time_month]').val() + "-" 
+						+ $('#create-vote [name=f_time_date]').val();
+			if($('#create-vote #v0').hasClass('ui-checkbox-on')){
+				var v0 = 1;
+			}else{
+				var v0 = 0;
+			}
+			if($('#create-vote #v1').hasClass('ui-checkbox-on')){
+				var v1 = 1;
+			}else{
+				var v1 = 0;
+			}
+			if($('#create-vote #v2').hasClass('ui-checkbox-on')){
+				var v2 = 1;
+			}else{
+				var v2 = 0;
+			}
+			if($('#create-vote #v3').hasClass('ui-checkbox-on')){
+				var v3 = 1;
+			}else{
+				var v3 = 0;
+			}
+			if($('#create-vote #v4').hasClass('ui-checkbox-on')){
+				var v4 = 1;
+			}else{
+				var v4 = 0;
+			}
+			if($('#create-vote #v5').hasClass('ui-checkbox-on')){
+				var v5 = 1;
+			}else{
+				var v5 = 0;
+			}
+
+			$.ajax({
+				url: mainURL + "/mc_add.php",
+				type: "POST",
+				data: {"img": img,
+					 "sph": $('#create-vote [name=sph]').val(),
+					 "name": $('#create-vote [name=name]').val(),
+					 "s_time": start_date,
+					 "f_time": end_date, 
+					 "descr": $('#create-vote .jqte_editor').html(),
+					 "sprt": $('#create-vote [name=sprt]').val(),
+					 "v0": v0,
+					 "v1": v1,
+					 "v2": v2,
+					 "v3": v3,
+					 "v4": v4,
+					 "v5": v5,
+					 "age_from": 	$('#create-vote [name=age_from]').val(),
+					 "age_to": $('#create-vote [name=age_to]').val()},
+				crossDomain: true,
+				xhrFields: {
+					withCredentials: true
+				},
+				complete: function(response){
+					if(response && response.responseText.indexOf('error') == -1){
+						var id = JSON.parse(response.responseText);
+						id = id[0].id;
+						alert(LOCALE_ARRAY_ADDITIONAL.voting_created[CURRENT_LANG]);
+						$.mobile.navigate("#vote-page?vote=" + id);
+					}else{
+						if( response.responseText.indexOf('error') > -1 ){
+							var error_arr = JSON.parse(response.responseText);
+							switch(CURRENT_LANG){
+								case 'en':
+									alert(error_arr[0].error);
+									break;
+								case 'ru':
+									alert(error_arr[0].error_ru);
+									break;
+								case 'ua':
+									alert(error_arr[0].error_uk);
+									break;
+							}
+						}
+					}
+					/*if(response){
+						var id = JSON.parse(response.responseText);
+						id = id[0].id;
+						alert(LOCALE_ARRAY_ADDITIONAL.voting_created[CURRENT_LANG]);
+						$.mobile.navigate("#vote-page?vote=" + id);
+					}*/
+					//console.log("saved ok, id = " + id);
+					//alert('okay');
+				}
+			});
+
+			//console.log(mainURL + response.responseText);
+		}
 	}
 };
 
@@ -5055,7 +5197,7 @@ var funds = {
 	current_fund_history: function(){
 		if(location.href.indexOf('#balances-pif-page?fund=') > -1){
 			var match_array = location.href.match(/=([a-zA-Z0-9а-яА-Я]*)/i)[1];
-			var fund_id = match_array[0].match(/[^=][0-9]*/i);
+			var fund_id = match_array.match(/[^=][0-9]*/i);
 			var url = mainURL + '/fund_user_cf.php?fund_id=' + fund_id;
 
 			$.ajax({
@@ -6535,8 +6677,8 @@ var TRUST_LIST = {
 			}
 		}
 		ui_string += '</fieldset>\
-						<div style = "display:none;" class="btn-save">\
-								<input type="submit" value="Save" class="ui-btn ui-btn-corner-all ui-shadow" />\
+						<div class="btn-save">\
+								<input type="submit" value="' + LOCALE_ARRAY_ADDITIONAL.save_trust_sphere[CURRENT_LANG] + '" class="ui-btn ui-btn-corner-all ui-shadow" />\
 							</div>\
 							</form>';
 		$('#spheres-trust-vote #sphere_main').html(ui_string);
@@ -6597,7 +6739,7 @@ var TRUST_LIST = {
 				}				
 			}
 		}
-		ui_string += '<button onclick = "$.mobile.navigate(\'#trust-list\')" class="btn-delete ui-btn ui-shadow ui-corner-all">Delete filter</button>';
+		ui_string += '<button onclick = "$.mobile.navigate(\'#trust-list\')" class="btn-delete ui-btn ui-shadow ui-corner-all">' + LOCALE_ARRAY_ADDITIONAL.delete_button_trust_spheres_filter[CURRENT_LANG] + '</button>';
 		$('#spheres-trust #sphere_form').html(ui_string);
 		var arr = $('#spheres-trust #sphere_form .container option');
 		for (var i = 0; i < arr.length; i++) {
@@ -8177,7 +8319,7 @@ var VOTINGS = {
 				if(i == 0){
 					var name_chart = LOCALE_ARRAY_ADDITIONAL.auth_by_email[CURRENT_LANG];
 				}else{
-					var name_chart = LOCALE_ARRAY_ADDITIONAL.by_passport[CURRENT_LANG];
+					var name_chart = LOCALE_ARRAY_ADDITIONAL.co_owners[CURRENT_LANG];
 				}
 			}				
 			if(i == 1 || i == 4){
@@ -8185,15 +8327,15 @@ var VOTINGS = {
 				if(i == 1){
 					var name_chart = LOCALE_ARRAY_ADDITIONAL.social_network[CURRENT_LANG];
 				}else{
-					var name_chart = LOCALE_ARRAY_ADDITIONAL.community[CURRENT_LANG];
+					var name_chart = LOCALE_ARRAY_ADDITIONAL.by_payment[CURRENT_LANG];
 				}
 			}				
 			if(i == 2 || i == 5){
 				var selector_chart = "ui-block-c";
 				if(i == 2){
-					var name_chart = LOCALE_ARRAY_ADDITIONAL.by_payment[CURRENT_LANG];
+					var name_chart = LOCALE_ARRAY_ADDITIONAL.community[CURRENT_LANG];
 				}else{
-					var name_chart = LOCALE_ARRAY_ADDITIONAL.co_owners[CURRENT_LANG];
+					var name_chart = LOCALE_ARRAY_ADDITIONAL.by_passport[CURRENT_LANG];
 				}
 			}				
 			charts += self.build_one_chart( selector_chart, i+1, data_for_build['plus' + i], data_for_build['minus' + i], data_for_build['abstained' + i], name_chart);
@@ -9998,8 +10140,9 @@ var ADRESS = {
 
 		window.ADRESS = ADRESS;
 		this.getCurrent(false,false, false);
-		
+
 	},
+
 	levFind:function(source,obj){
 		var clone = jQuery.extend(true, {}, obj);
 		var arr = $.map(clone, function(value, index) {
@@ -10047,6 +10190,7 @@ var ADRESS = {
 		}
 
 		var res = this.levFind(source,list_place);
+		console.log(source + ' 1 ' + self.city);
 
 		self.setOption(page, name,res.id);
 
@@ -10093,12 +10237,12 @@ var ADRESS = {
 			$('#address-item-' + page + ' .btn-save.ui-btn.ui-shadow.ui-corner-all').click();
 		});
 		$("#findgps-" + page).click(function(){
-				$.mobile.loading( "show", {
+			$.mobile.loading( "show", {
 				//text: "foo",
 				//textVisible: true,
 				theme: "z"
 				//html: ""
-				});
+			});
 			navigator.geolocation.getCurrentPosition(function (pos) {
 				var lat = pos.coords.latitude;
 				var lng = pos.coords.longitude;
@@ -10109,29 +10253,31 @@ var ADRESS = {
 					g_lng = lng;
 					console.log(lat);
 					console.log(lng);
+					GoogleMapsAdress.moveMarker(lat, lng, page);
 					var geocoder = new google.maps.Geocoder();
 					var latLng = new google.maps.LatLng(lat, lng);
+
 					if(geocoder){
 						geocoder.geocode({'latLng': latLng,'language': 'en'},function(results, status) {
-						if (status == google.maps.GeocoderStatus.OK) {
-							 console.log(results);
-							 var address = results[0].address_components;
+							if (status == google.maps.GeocoderStatus.OK) {
+								console.log(results);
+								var address = results[0].address_components;
 
-							 var country = self.getGPSByType(address,"country");
-							 var state = self.getGPSByType(address,"administrative_area_level_1");
-							 var county = self.getGPSByType(address,"administrative_area_level_3");
-							 var city = self.getGPSByType(address,"locality");
-							 //console.log('build: ' + results[0].address_components[0].long_name);
-							 var street = self.getGPSByType(address,"route");
-							 var build = self.getGPSByType(address,"street_number");
-							 ADRESS.gpsSet(page, country,state,county,city,street,build, lat, lng);
-						} else {
-							alert(LOCALE_ARRAY_ADDITIONAL.gps_not_activated[CURRENT_LANG]);
-						}
-					});
+								var country = self.getGPSByType(address,"country");
+								var state = self.getGPSByType(address,"administrative_area_level_1");
+								var county = self.getGPSByType(address,"administrative_area_level_3");
+								var city = self.getGPSByType(address,"locality");
+								//console.log('build: ' + results[0].address_components[0].long_name);
+								var street = self.getGPSByType(address,"route");
+								var build = self.getGPSByType(address,"street_number");
+								ADRESS.gpsSet(page, country,state,county,city,street,build, lat, lng);
+							} else {
+								alert(LOCALE_ARRAY_ADDITIONAL.gps_not_activated[CURRENT_LANG]);
+							}
+						});
+					}
 				}
-			}
-		});
+			});
 		});
 		$("#address-item-" + page + " [name=house]").change(function(){
 			var value = $(this).val();
@@ -10150,15 +10296,12 @@ var ADRESS = {
 					withCredentials: true
 				},
 				crossDomain: true,
-				dataType: 'jsonp',
-				contentType: "application/json",
+    			dataType: 'jsonp',
 				complete: function(result){
 					console.log(result);
-					l_res = jQuery.parseJSON(result);
-					console.log(l_res.results[0].geometry.location.lat);
-					console.log(l_res.results[0].geometry.location.lng);
-					//console.log(result.results[0].geometry.location.lat);
-					//console.log(result.results[0].geometry.location.lng);
+					l_res = jQuery.parseJSON(result);						
+					console.log((result.results[0]).geometry.location.lat+0.00003);
+					console.log((result.results[0]).geometry.location.lng);
 				},
 			});
 
@@ -10197,13 +10340,33 @@ var ADRESS = {
 		}
 
 		$.ajax({
-			url: mainURL + '/user_address_add.php?ida=' + ida
-														+ ('&c=' + $('#address-item-' + page + ' [name=city]').val()).replace("'", "`")
-														+ ('&str=' + $('#address-item-' + page + ' [name=street]').val()).replace("'", "`")
-														+ '&bld=' + $('#address-item-' + page + ' [name=house]').val()
-														+ '&oth=' + $('#address-item-' + page + ' [name=comment]').val()
-														+ '&zip=' + $('#address-item-' + page + ' [name=index]').val()
-														+ '&reg_adr=' + reg_adr + '&lat=' + g_lat + '&lng=' + g_lng,
+			url: mainURL 
+				+ '/user_address_add.php?ida=' 
+				+ ida 
+				+ ('&c=' 
+				+ $('#address-item-' 
+				+ page 
+				+ ' [name=city]').val()).replace("'", "`")
+				+ ('&str=' 
+				+ $('#address-item-' 
+				+ page 
+				+ ' [name=street]').val()).replace("'", "`")
+				+ '&bld=' 
+				+ $('#address-item-' 
+				+ page 
+				+ ' [name=house]').val()
+				+ '&oth=' 
+				+ $('#address-item-' 
+				+ page 
+				+ ' [name=comment]').val()
+				+ '&zip=' 
+				+ $('#address-item-' 
+				+ page 
+				+ ' [name=index]').val()
+				+ '&reg_adr=' 
+				+ reg_adr 
+				+ '&lat=' + g_lat 
+				+ '&lng=' + g_lng,
 			type: "GET",
 			xhrFields: {
 				withCredentials: true
@@ -10685,18 +10848,19 @@ var ADRESS = {
 			if(location.href.indexOf('#edit-address') > -1){
 				for (var i = 1; i < 4; i++) {
 					if(self.address_arr[i-1]){
-						$('#edit-address [href=#address-item-' + i + ']').html(self.address_arr[i-1]['str'] + ' ' +
-																			 self.address_arr[i-1]['bld'] + ', ' + 
-																			 self.address_arr[i-1]['city_' + lang_address]);
+						$('#edit-address [href=#address-item-' + i + ']').html(self.address_arr[i-1]['str'] 
+							+ ' ' 
+							+ self.address_arr[i-1]['bld'] + ', ' 
+							+ self.address_arr[i-1]['city_' + lang_address]);
 					}else{
 						$('#edit-address [href=#address-item-' + i + ']').html(LOCALE_ARRAY_ADDITIONAL.address[CURRENT_LANG] + i);	
-					}														
+					}
 				}
 				if(i < 3){
 					for (var j = i; j < 4; j++) {
-						$('#edit-address [href=#address-item-' + j + ']').html(LOCALE_ARRAY_ADDITIONAL.address[CURRENT_LANG] + j);						
-					}								
-				}										
+						$('#edit-address [href=#address-item-' + j + ']').html(LOCALE_ARRAY_ADDITIONAL.address[CURRENT_LANG] + j);		
+					}
+				}
 			}
 		} else {
 			$.ajax({
@@ -10741,22 +10905,22 @@ var ADRESS = {
 						$('#edit-address [href=#address-item-' + 1 + ']').html(LOCALE_ARRAY_ADDITIONAL.address[CURRENT_LANG] + 1);	
 						for (var i = 1; i < 4; i++) {
 							if(self.address_arr[i-1]){
-								$('#edit-address [href=#address-item-' + i + ']').html(self.address_arr[i-1]['str'] + ' ' +
-																					 self.address_arr[i-1]['bld'] + ', ' + 
-																					 self.address_arr[i-1]['city_' + lang_address]);
+								$('#edit-address [href=#address-item-' + i + ']').html(self.address_arr[i-1]['str'] + ' ' 
+									+ self.address_arr[i-1]['bld'] + ', ' 
+									+ self.address_arr[i-1]['city_' + lang_address]);
 							} else {
-								$('#edit-address [href=#address-item-' + i + ']').html(LOCALE_ARRAY_ADDITIONAL.address[CURRENT_LANG] + i);	
-							}							
+								$('#edit-address [href=#address-item-' + i + ']').html(LOCALE_ARRAY_ADDITIONAL.address[CURRENT_LANG] + i);
+							}
 						}
 						if(i < 3){
 							for (var j = i; j < 4; j++) {
-								$('#edit-address [href=#address-item-' + j + ']').html(LOCALE_ARRAY_ADDITIONAL.address[CURRENT_LANG] + j);						
-							}								
-						}					
+								$('#edit-address [href=#address-item-' + j + ']').html(LOCALE_ARRAY_ADDITIONAL.address[CURRENT_LANG] + j);
+							}
+						}
 					}
 				}
 			});
-		}				
+		}
 	},
 	set_one_address: function(page, not_refresh, callback_redirect){
 		var self = this;				
