@@ -18,13 +18,13 @@ var GoogleMapsAdress = {
 	geocodePosition: function(pos) {
 		var self = this;
 	  self.geocoder.geocode({
-	    latLng: pos
+		latLng: pos
 	  }, function(responses) {
-	    if (responses && responses.length > 0) {
-	      self.updateMarkerAddress(responses[0].formatted_address);
-	    } else {
-	      self.updateMarkerAddress('Cannot determine address at this location.');
-	    }
+		if (responses && responses.length > 0) {
+		  self.updateMarkerAddress(responses[0].formatted_address);
+		} else {
+		  self.updateMarkerAddress('Cannot determine address at this location.');
+		}
 	  });
 	},
 	updateMarkerStatus: function(str) {
@@ -74,15 +74,15 @@ var GoogleMapsAdress = {
 		}
 	  var latLng = new google.maps.LatLng(50.447753, 30.52292799999998);
 	  self.map = new google.maps.Map(document.getElementById('mapCanvas_' + object_id), {
-	    zoom: 8,
-	    center: latLng,
-	    mapTypeId: google.maps.MapTypeId.ROADMAP
+		zoom: 8,
+		center: latLng,
+		mapTypeId: google.maps.MapTypeId.ROADMAP
 	  });
 	  self.marker = new google.maps.Marker({
-	    position: latLng,
-	    title: 'Point A',
-	    map: self.map,
-	    draggable: true
+		position: latLng,
+		title: 'Point A',
+		map: self.map,
+		draggable: true
 	  });
 	  
 	  // Update current position info.
@@ -91,18 +91,18 @@ var GoogleMapsAdress = {
 	  
 	  // Add dragging event listeners.
 	  google.maps.event.addListener(self.marker, 'dragstart', function() {
-	    self.updateMarkerAddress('Dragging...');
+		self.updateMarkerAddress('Dragging...');
 	  });
 	  
 	  google.maps.event.addListener(self.marker, 'drag', function() {
-	    self.updateMarkerStatus('Dragging...');
-	    self.updateMarkerPosition(self.marker.getPosition());
+		self.updateMarkerStatus('Dragging...');
+		self.updateMarkerPosition(self.marker.getPosition());
 	  });
 	  
 	  google.maps.event.addListener(self.marker, 'dragend', function() {
-	    self.updateMarkerStatus('Drag ended');
-	    self.geocodePosition(self.marker.getPosition());
-	    self.setCheckBoxes(self.marker.getPosition());
+		self.updateMarkerStatus('Drag ended');
+		self.geocodePosition(self.marker.getPosition());
+		self.setCheckBoxes(self.marker.getPosition());
 	  });
 	}
 }
@@ -10142,7 +10142,6 @@ var ADRESS = {
 		this.getCurrent(false,false, false);
 
 	},
-
 	levFind:function(source,obj){
 		var clone = jQuery.extend(true, {}, obj);
 		var arr = $.map(clone, function(value, index) {
@@ -10256,7 +10255,6 @@ var ADRESS = {
 					GoogleMapsAdress.moveMarker(lat, lng, page);
 					var geocoder = new google.maps.Geocoder();
 					var latLng = new google.maps.LatLng(lat, lng);
-
 					if(geocoder){
 						geocoder.geocode({'latLng': latLng,'language': 'en'},function(results, status) {
 							if (status == google.maps.GeocoderStatus.OK) {
@@ -10296,7 +10294,7 @@ var ADRESS = {
 					withCredentials: true
 				},
 				crossDomain: true,
-    			dataType: 'jsonp',
+				dataType: 'jsonp',
 				complete: function(result){
 					console.log(result);
 					l_res = jQuery.parseJSON(result);						
@@ -10340,33 +10338,13 @@ var ADRESS = {
 		}
 
 		$.ajax({
-			url: mainURL 
-				+ '/user_address_add.php?ida=' 
-				+ ida 
-				+ ('&c=' 
-				+ $('#address-item-' 
-				+ page 
-				+ ' [name=city]').val()).replace("'", "`")
-				+ ('&str=' 
-				+ $('#address-item-' 
-				+ page 
-				+ ' [name=street]').val()).replace("'", "`")
-				+ '&bld=' 
-				+ $('#address-item-' 
-				+ page 
-				+ ' [name=house]').val()
-				+ '&oth=' 
-				+ $('#address-item-' 
-				+ page 
-				+ ' [name=comment]').val()
-				+ '&zip=' 
-				+ $('#address-item-' 
-				+ page 
-				+ ' [name=index]').val()
-				+ '&reg_adr=' 
-				+ reg_adr 
-				+ '&lat=' + g_lat 
-				+ '&lng=' + g_lng,
+			url: mainURL + '/user_address_add.php?ida=' + ida
+														+ ('&c=' + $('#address-item-' + page + ' [name=city]').val()).replace("'", "`")
+														+ ('&str=' + $('#address-item-' + page + ' [name=street]').val()).replace("'", "`")
+														+ '&bld=' + $('#address-item-' + page + ' [name=house]').val()
+														+ '&oth=' + $('#address-item-' + page + ' [name=comment]').val()
+														+ '&zip=' + $('#address-item-' + page + ' [name=index]').val()
+														+ '&reg_adr=' + reg_adr + '&lat=' + g_lat + '&lng=' + g_lng,
 			type: "GET",
 			xhrFields: {
 				withCredentials: true
@@ -10848,10 +10826,9 @@ var ADRESS = {
 			if(location.href.indexOf('#edit-address') > -1){
 				for (var i = 1; i < 4; i++) {
 					if(self.address_arr[i-1]){
-						$('#edit-address [href=#address-item-' + i + ']').html(self.address_arr[i-1]['str'] 
-							+ ' ' 
-							+ self.address_arr[i-1]['bld'] + ', ' 
-							+ self.address_arr[i-1]['city_' + lang_address]);
+						$('#edit-address [href=#address-item-' + i + ']').html(self.address_arr[i-1]['str'] + ' ' +
+																			 self.address_arr[i-1]['bld'] + ', ' + 
+																			 self.address_arr[i-1]['city_' + lang_address]);
 					}else{
 						$('#edit-address [href=#address-item-' + i + ']').html(LOCALE_ARRAY_ADDITIONAL.address[CURRENT_LANG] + i);	
 					}
@@ -10905,9 +10882,9 @@ var ADRESS = {
 						$('#edit-address [href=#address-item-' + 1 + ']').html(LOCALE_ARRAY_ADDITIONAL.address[CURRENT_LANG] + 1);	
 						for (var i = 1; i < 4; i++) {
 							if(self.address_arr[i-1]){
-								$('#edit-address [href=#address-item-' + i + ']').html(self.address_arr[i-1]['str'] + ' ' 
-									+ self.address_arr[i-1]['bld'] + ', ' 
-									+ self.address_arr[i-1]['city_' + lang_address]);
+								$('#edit-address [href=#address-item-' + i + ']').html(self.address_arr[i-1]['str'] + ' ' +
+																					 self.address_arr[i-1]['bld'] + ', ' + 
+																					 self.address_arr[i-1]['city_' + lang_address]);
 							} else {
 								$('#edit-address [href=#address-item-' + i + ']').html(LOCALE_ARRAY_ADDITIONAL.address[CURRENT_LANG] + i);
 							}
