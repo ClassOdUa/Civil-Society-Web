@@ -891,8 +891,15 @@
 <div id="spheres-trust-vote" data-role="page">
 	<div data-role="header" data-position="fixed" data-tap-toggle="false">
 		<h1>Spheres</h1>
-		<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back('#trust-list')" href="#">Back</a>
-		 <a class="ui-btn ui-btn-right ui-icon-check ui-btn-icon-right" href="#" onclick = "$('#spheres-trust-vote form').submit()">Save</a>
+		<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back('#trust-list')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#spheres-trust-vote-help">Ask</a>
+		<div id="spheres-trust-vote-help" class="help-popup" data-role="popup" data-history="false">
+			<div class="title">
+				Description
+			</div>
+			<div class="text">
+				help text
+			</div>
+		</div>
 	</div>
 	<div id = "sphere_main" role="main" class="ui-content">
 		<div class="left_col">

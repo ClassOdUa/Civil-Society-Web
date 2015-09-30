@@ -6,7 +6,7 @@ var mainURL = 'https://gurtom.mobi';
 var HISTORY_INNER = [location.href];
 var g_lat = 0;
 var g_lng = 0;
-
+var OLD_ID_COOKIE = -1;
 
 ///////////////////////////////////////////////////////////////////Неоптимизированная карта для старницы Адресов
 
@@ -23,7 +23,18 @@ var GoogleMapsAdress = {
 		latLng: pos
 	  }, function(responses) {
 		if (responses && responses.length > 0) {
-		  self.updateMarkerAddress(responses[0].formatted_address);
+		    self.updateMarkerAddress(responses[0].formatted_address);
+		    jQuery.each(LOCALE_ARRAY, function(i, one_element) {
+				if($(one_element['selector'])){
+					if(one_element['value']){
+						$(one_element['selector']).attr(one_element['value'], one_element[CURRENT_LANG]);
+					}else{
+						$(one_element['selector']).html(one_element[CURRENT_LANG]);
+					}
+						
+				}
+			});
+		    console.log(responses);
 		} else {
 		  self.updateMarkerAddress('Cannot determine address at this location.');
 		}
@@ -184,6 +195,13 @@ function lang_activate_el(element){
 
 window.onload = function(){
 	lang_activate_el();
+	if(readCookie('id_cookie') == null){
+		createCookie('id_cookie', -1);
+	}
+	setInterval(function(){
+		//console.log('interval');
+		SUPER_PROFILE.checkUser();
+	}, 5000);
 	setTimeout(function(){
 		COMMON_OBJECT.init_common_listeners();
 		
@@ -236,6 +254,7 @@ window.onload = function(){
 
 		if(location.href.indexOf('#votings-page') > -1 || location.href.indexOf('#vote-page?vote=') > -1){
 			VOTINGS.init();
+			$('#votings-page select').selectmenu().selectmenu("refresh", true);
 		}
 
 		if((location.href.indexOf('#my-votings-page') > -1 || location.href.indexOf('#my-vote-page?vote=') > -1) && SUPER_PROFILE.auth == true){
@@ -362,6 +381,20 @@ window.onload = function(){
 	//PIF.get_pif_array();
 
 	$('#picture_form').ajaxForm({url: mainURL + '/i/up.php', type: 'post', success: function(response) {
+		if( response.indexOf('error') > -1 ){
+			var error_arr = JSON.parse(response);
+			switch(CURRENT_LANG){
+				case 'en':
+					alert(error_arr[0].error);
+					break;
+				case 'ru':
+					alert(error_arr[0].error_ru);
+					break;
+				case 'ua':
+					alert(error_arr[0].error_uk);
+					break;
+			}
+		}
 		$.ajax({
 			url: mainURL + "/profile.php",
 			type:"GET",
@@ -371,9 +404,10 @@ window.onload = function(){
 			},
 			complete: function(response){
 			//var data = response.responseText;
-			if(response && response.responseText.indexOf('error') == -1){
+			if(response.responseText.indexOf('error') == -1 && !jQuery.parseJSON(response.responseText)[0].error){
 				var profile_obj = jQuery.parseJSON(response.responseText)[0];
 				$('#profile-page #avatar').attr('src', mainURL + profile_obj.avatar);
+				$('#menu_avatar').html('<img id="avatar" src="' + mainURL + profile_obj.avatar + '">');
 				console.log( mainURL + '/' + profile_obj.avatar);
 			}else{
 				if( response.responseText.indexOf('error') > -1 ){
@@ -388,17 +422,12 @@ window.onload = function(){
 						case 'ua':
 							alert(error_arr[0].error_uk);
 							break;
+						}
 					}
-				}
+					$('#menu_avatar').html('');
+				}					
 			}
-			/*if(data.indexOf('File is larger than the specified amount set') > -1){
-				alert(LOCALE_ARRAY_ADDITIONAL.bad_size[CURRENT_LANG]);
-			}else{
-				var profile_obj = jQuery.parseJSON(data)[0];
-				$('#profile-page #avatar').attr('src', mainURL + profile_obj.avatar);
-				console.log( mainURL + '/' + profile_obj.avatar);
-			}*/						
-		}});
+		});
 	}});
 
 
@@ -673,6 +702,7 @@ window.onhashchange = function(){
 	if(location.href.indexOf('#create-vote') > -1 && SUPER_PROFILE.auth == true){
 		set_dates_range('#create-vote [name=s_time_date]', '#create-vote [name=s_time_month]', '#create-vote [name=s_time_year]', new Date().getFullYear(), 2, "current");
 		set_dates_range('#create-vote [name=f_time_date]', '#create-vote [name=f_time_month]', '#create-vote [name=f_time_year]', new Date().getFullYear(), 2, "current");
+		$.mobile.loading( "hide" );
 	}
 	/*if(location.href.indexOf('#filter-page') > -1 && SUPER_PROFILE.auth == true){
 		set_dates_range('#filter-page [name=start_date]', '#filter-page [name=start_month]', '#filter-page [name=start_year]', 1990, 2, 'current');
@@ -800,17 +830,17 @@ window.onhashchange = function(){
 	}*/
 
 function createCookie(name, value, days) {
-				var expires;
+		var expires = '';
 
-				if (days) {
-					var date = new Date();
-					date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-					expires = "; expires=" + date.toGMTString();
-				} else {
-					expires = "";
-				}
-				document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value) + expires + "; path=/";
-			}
+		/*if (days) {
+			var date = new Date();
+			date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+			expires = "; expires=" + date.toGMTString();
+		} else {
+			expires = "";
+		}*/
+		document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value) + expires + "; path=/";
+	}
 
 function readCookie(name) {
 	var nameEQ = encodeURIComponent(name) + "=";
@@ -1087,7 +1117,12 @@ var COMMON_OBJECT = {
 var SUPER_PROFILE = {
 	auth: false,
 	gender: 0,
-	id: 0
+	id: 0,
+	checkUser: function(){
+		if(readCookie('id_cookie') != OLD_ID_COOKIE){
+			location.reload(true);
+		}
+	}
 };
 
 var NCO_OBJECT = {
@@ -6462,14 +6497,31 @@ var TRUST_LIST = {
 			},
 			crossDomain: true,
 			complete: function( response ){
+				$.mobile.loading( "hide" );
 				//console.log(response);
-				self.trust_array = JSON.parse( response.responseText );
-				console.log('trust');	
-				console.log(self.trust_array);
-				self.build_elements();
-				self.set_spheres_and_listeners();
-				SPHERES.initial();
-				$.mobile.loading( "hide" );	
+				if(response && response.responseText.indexOf('error') == -1){
+					self.trust_array = JSON.parse( response.responseText );
+					console.log('trust');	
+					console.log(self.trust_array);
+					self.build_elements();
+					self.set_spheres_and_listeners();
+					SPHERES.initial();
+				}else{
+					if( response.responseText.indexOf('error') > -1 ){
+						var error_arr = JSON.parse(response.responseText);
+						switch(CURRENT_LANG){
+							case 'en':
+								alert(error_arr[0].error);
+								break;
+							case 'ru':
+								alert(error_arr[0].error_ru);
+								break;
+							case 'ua':
+								alert(error_arr[0].error_uk);
+								break;
+						}
+					}
+				}	
 			},
 		});
 	},
@@ -6812,6 +6864,20 @@ var TRUST_LIST = {
 			crossDomain: true,
 			complete: function( response ){
 				$.mobile.loading( "hide" );
+				if( response.responseText.indexOf('error') > -1 ){
+					var error_arr = JSON.parse(response.responseText);
+					switch(CURRENT_LANG){
+						case 'en':
+							alert(error_arr[0].error);
+							break;
+						case 'ru':
+							alert(error_arr[0].error_ru);
+							break;
+						case 'ua':
+							alert(error_arr[0].error_uk);
+							break;
+					}
+				}
 			},
 		});
 	},
@@ -6825,7 +6891,21 @@ var TRUST_LIST = {
 			},
 			crossDomain: true,
 			complete: function( response ){
-					$.mobile.loading( "hide" );
+				$.mobile.loading( "hide" );
+				if( response.responseText.indexOf('error') > -1 ){
+					var error_arr = JSON.parse(response.responseText);
+					switch(CURRENT_LANG){
+						case 'en':
+							alert(error_arr[0].error);
+							break;
+						case 'ru':
+							alert(error_arr[0].error_ru);
+							break;
+						case 'ua':
+							alert(error_arr[0].error_uk);
+							break;
+					}
+				}
 			},
 		});
 	},
@@ -7159,7 +7239,7 @@ var SPHERES = {
 						if(SPHERES.spheres[i].objects[0].org == ''){
 							//console.log('equal one');
 							ui_string += '<div class = "content_value">\
-											<select onchange = "$.mobile.navigate(\'#create-vote\'); $(\'#create-vote [name=sph]\').val($(this).val()); $(\'#create_vote_sphere\').html(\'' + LOCALE_ARRAY_ADDITIONAL.choose_sphere[CURRENT_LANG] + ': ' + SPHERES.spheres[i].name + '\');" name = "' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
+											<select onchange = "$.mobile.loading( \'show\', {theme: \'z\'}); $.mobile.navigate(\'#create-vote\'); $(\'#create-vote [name=sph]\').val($(this).val()); $(\'#create_vote_sphere\').html(\'' + LOCALE_ARRAY_ADDITIONAL.choose_sphere[CURRENT_LANG] + ': ' + SPHERES.spheres[i].name + '\');" name = "' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
 												<option>' + SPHERES.spheres[i].name + '</option>';
 							
 							for (var j = 0; j < SPHERES.spheres[i].objects[0].sph.length; j++) {
@@ -7177,7 +7257,7 @@ var SPHERES = {
 							ui_string += '<div id = "' + SPHERES.spheres[i].selector_name + '_content" style = "display:none;">';
 							for (var k = 0; k < SPHERES.spheres[i].objects.length; k++) {
 								ui_string += '<div class = "content_value">\
-											<select onchange = "$.mobile.navigate(\'#create-vote\'); $(\'#create-vote [name=sph]\').val($(this).val()); $(\'#create_vote_sphere\').html(\'' + LOCALE_ARRAY_ADDITIONAL.choose_sphere[CURRENT_LANG] + ': ' + SPHERES.spheres[i].name + '\');" data-mini="true" name ="' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
+											<select onchange = "$.mobile.loading( \'show\', {theme: \'z\'}); $.mobile.navigate(\'#create-vote\'); $(\'#create-vote [name=sph]\').val($(this).val()); $(\'#create_vote_sphere\').html(\'' + LOCALE_ARRAY_ADDITIONAL.choose_sphere[CURRENT_LANG] + ': ' + SPHERES.spheres[i].name + '\');" data-mini="true" name ="' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
 												<option>' + SPHERES.spheres[i].objects[k].org + '</option>';
 								
 								for (var j = 0; j < SPHERES.spheres[i].objects[k].sph.length; j++) {
@@ -8667,7 +8747,26 @@ var VOTINGS = {
 							self.switch_page_for_build(object_id, 1);
 						}
 					}
-					self.init(cb(object_id));
+					if(response && response.responseText.indexOf('error') == -1){
+						self.init(cb(object_id));
+						console.log('response.responseText');
+						console.log(response.responseText);
+					}else{
+						if( response.responseText.indexOf('error') > -1 ){
+							var error_arr = JSON.parse(response.responseText);
+							switch(CURRENT_LANG){
+								case 'en':
+									alert(error_arr[0].error);
+									break;
+								case 'ru':
+									alert(error_arr[0].error_ru);
+									break;
+								case 'ua':
+									alert(error_arr[0].error_uk);
+									break;
+							}
+						}
+					}
 					console.log('ok');
 				},
 			});
@@ -9882,8 +9981,25 @@ var MY_VOTINGS = {
 							self.switch_page_for_build(object_id, 1);
 						}
 					}
-					self.init(cb(object_id));
-					console.log('ok');
+					if(response && response.responseText.indexOf('error') == -1){
+						self.init(cb(object_id));
+						console.log('ok');
+					}else{
+						if( response.responseText.indexOf('error') > -1 ){
+							var error_arr = JSON.parse(response.responseText);
+							switch(CURRENT_LANG){
+								case 'en':
+									alert(error_arr[0].error);
+									break;
+								case 'ru':
+									alert(error_arr[0].error_ru);
+									break;
+								case 'ua':
+									alert(error_arr[0].error_uk);
+									break;
+							}
+						}
+					}					
 				},
 			});
 		}, 100);
@@ -10590,7 +10706,60 @@ var ADRESS = {
 	getState:function(page, idc,cb){
 		var self = this;
 		if(self.state){
-			$("#address-item-" + page + " [name=state]").html('');
+			$.ajax({
+			url: mainURL + "/list_adr_state.php?idc="+idc,
+			type:"GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			async: true,
+			crossDomain: true,
+			complete: function(response){
+				var data = response.responseText;
+				self.state = jQuery.parseJSON(data);
+				$("#address-item-" + page + " [name=state]").html('');
+				$("#address-item-" + page + " [name=state]").show();
+				for(var i = 0; i < self.state.length; i++){
+					var c = self.state[i];
+					var option = document.createElement("option");
+					$(option).val(c.id);
+					if(CURRENT_LANG){
+						switch(CURRENT_LANG){
+							case 'ua':
+								$(option).html(c.name_uk);
+								break;
+							case 'en':
+								$(option).html(c.name_en);
+								break;
+							case 'ru':
+								$(option).html(c.name_ru);
+								break;
+						}
+					}else{
+						switch(DEFAULT_LANG){
+							case 'ua':
+								$(option).html(c.name_uk);
+								break;
+							case 'en':
+								$(option).html(c.name_en);
+								break;
+							case 'ru':
+								$(option).html(c.name_ru);
+								break;
+						}
+					}
+
+						$("#address-item-" + page + " [name=state]").append(option);
+					
+					}
+					//lang_activate_el("#address-item-" + page + " [name=state]");
+					if(cb){
+						cb(self.state);
+					}
+				}
+			});
+
+			/*$("#address-item-" + page + " [name=state]").html('');
 				$("#address-item-" + page + " [name=state]").show();
 				for(var i = 0; i < self.state.length; i++){
 					var c = self.state[i];
@@ -10627,7 +10796,7 @@ var ADRESS = {
 				//lang_activate_el("#address-item-" + page + " [name=state]");
 				if(cb){
 					cb(self.state);
-				}
+				}*/
 		} else {
 			$.ajax({
 			url: mainURL + "/list_adr_state.php?idc="+idc,
@@ -10944,6 +11113,9 @@ var ADRESS = {
 											$('#address-item-' + z + ' [name=city]').val( $('#address-item-' + z + ' [name=city] option[selected="selected"]').val() );
 											$('#address-item-' + z + ' [name=city]').parent().children('span').html( $('#address-item-' + z + ' [name=city] option[selected="selected"]').html() );
 										}//правильно отображение города
+											$('#address-item-' + z + ' [name=index]').val( $('#address-item-' + z + ' [name=index] option[selected="selected"]').val() );
+											$('#address-item-' + z + ' [name=index]').parent().children('span').html( $('#address-item-' + z + ' [name=index] option[selected="selected"]').html() );
+										//правильно отображение индекса
 										if(location.href.indexOf('#address-item-' + z) > -1){
 											$('#address-item-' + z + ' [name=country]').selectmenu("refresh", true);
 											$('#address-item-' + z + ' [name=state]').selectmenu("refresh", true);
@@ -11750,6 +11922,9 @@ console.log(window.location.toString());
 					that.payment = that.profile_obj.payment;
 					that.bankid = that.profile_obj.bankid;
 
+					createCookie('id_cookie', that.profile_obj.id);
+					OLD_ID_COOKIE = that.profile_obj.id;
+
 					SUPER_PROFILE.gender = that.gender;
 					SUPER_PROFILE.id = that.profile_obj.id;
 					SUPER_PROFILE.nco = that.profile_obj.nco;
@@ -11795,6 +11970,9 @@ console.log(window.location.toString());
 							that.payment = that.profile_obj.payment;
 	 						that.bankid = that.profile_obj.bankid;
 
+	 						createCookie('id_cookie', that.profile_obj.id);
+	 						OLD_ID_COOKIE = that.profile_obj.id;
+
 							SUPER_PROFILE.gender = that.gender;
 							SUPER_PROFILE.id = that.profile_obj.id;
 							for (var i in SOCIAL){
@@ -11839,6 +12017,8 @@ console.log(window.location.toString());
 						PIF.pif_array = [];
 						}
 					})
+				createCookie('id_cookie', -1);
+				OLD_ID_COOKIE = -1;
 			},
 			updateMenu:function(){
 					if(this.auth){
