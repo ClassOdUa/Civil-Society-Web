@@ -15,6 +15,8 @@ var GoogleMapsAdress = {
 	geocoder: new google.maps.Geocoder(),
 	marker: false,
 	map: false,
+	lt_value: false,
+	ln_value: false,
 	geocodePosition: function(pos) {
 		var self = this;
 	  self.geocoder.geocode({
@@ -34,32 +36,38 @@ var GoogleMapsAdress = {
 		var self = this;
 	},
 	setCheckBoxes: function(latLng){
+		var self = this;
+		self.lt_value = latLng.lat();
+	    self.ln_value = latLng.lng();
 		var geocoder = new google.maps.Geocoder();
 		var latLng = new google.maps.LatLng(latLng.lat(), latLng.lng());
 		if(location.href.indexOf('#address-item-') > -1){
 			var match_array = location.href.match(/item-[0-9]*/i);
 			var object_id = match_array[0].match(/[0-9]+/i);
-		}
-		if(geocoder){
-			geocoder.geocode({'latLng': latLng,'language': 'en'},function(results, status) {
-			if (status == google.maps.GeocoderStatus.OK) {
-				 var address = results[0].address_components;
-				 var country = ADRESS.getGPSByType(address,"country");
-				 var state = ADRESS.getGPSByType(address,"administrative_area_level_1");
-				 var county = ADRESS.getGPSByType(address,"administrative_area_level_3");
-				 var city = ADRESS.getGPSByType(address,"locality");
-				 //console.log('build: ' + results[0].address_components[0].long_name);
-				 var street = ADRESS.getGPSByType(address,"route");
-				 var build = ADRESS.getGPSByType(address,"street_number");
-				 ADRESS.gpsSet(object_id, country,state,county,city,street,build, latLng.lat(), latLng.lng());
-			} else {
-				console.log(LOCALE_ARRAY_ADDITIONAL.gps_not_activated[CURRENT_LANG]);
+
+			if(geocoder){
+				geocoder.geocode({'latLng': latLng,'language': 'en'},function(results, status) {
+				if (status == google.maps.GeocoderStatus.OK) {
+					 var address = results[0].address_components;
+					 var country = ADRESS.getGPSByType(address,"country");
+					 var state = ADRESS.getGPSByType(address,"administrative_area_level_1");
+					 var county = ADRESS.getGPSByType(address,"administrative_area_level_3");
+					 var city = ADRESS.getGPSByType(address,"locality");
+					 //console.log('build: ' + results[0].address_components[0].long_name);
+					 var street = ADRESS.getGPSByType(address,"route");
+					 var build = ADRESS.getGPSByType(address,"street_number");
+					 ADRESS.gpsSet(object_id, country,state,county,city,street,build, latLng.lat(), latLng.lng());
+				} else {
+					console.log(LOCALE_ARRAY_ADDITIONAL.gps_not_activated[CURRENT_LANG]);
+				}
+				});
 			}
-			});
 		}
 	},
 	moveMarker: function(height, length){
 		var self = this;
+		self.lt_value = height;
+	    self.ln_value = length;
 		self.marker.setPosition( new google.maps.LatLng( height, length ) );
 		self.map.panTo( new google.maps.LatLng( height, length ) );
 	},
@@ -72,7 +80,16 @@ var GoogleMapsAdress = {
 			var match_array = location.href.match(/item-[0-9]*/i);
 			var object_id = match_array[0].match(/[0-9]+/i);
 		}
-	  var latLng = new google.maps.LatLng(50.447753, 30.52292799999998);
+		if(ADRESS.address_arr[object_id-1] && ADRESS.address_arr[object_id-1].lat != 0.00000000){
+			var lt = ADRESS.address_arr[object_id-1].lat;
+			var ln = ADRESS.address_arr[object_id-1].lng;
+		}else{
+			var lt = 50.447753;
+			var ln = 30.5229279;
+		}
+	  var latLng = new google.maps.LatLng(lt, ln);
+	  self.lt_value = lt;
+	  self.ln_value = ln;
 	  self.map = new google.maps.Map(document.getElementById('mapCanvas_' + object_id), {
 		zoom: 8,
 		center: latLng,
@@ -6844,11 +6861,11 @@ var SPHERES = {
 			selector_name: "maidan",
 			type: 7,
 			objects: []},
-			/*{name: "Candidates\' rating (Public proposal)",
+			{name: "Candidates\' rating (Public proposal)",
 			selector_name: "candidates_proposal",
 			type: 8,
 			objects: []},
-			{name: "Candidates\' rating (Political Parties)",
+			/*{name: "Candidates\' rating (Political Parties)",
 			selector_name: "candidates_parties",
 			type: 9,
 			objects: []},
@@ -6865,8 +6882,8 @@ var SPHERES = {
 		self.spheres[4].name = LOCALE_ARRAY_ADDITIONAL.type_primaries[CURRENT_LANG];
 		self.spheres[5].name = LOCALE_ARRAY_ADDITIONAL.elections[CURRENT_LANG];
 		self.spheres[6].name = LOCALE_ARRAY_ADDITIONAL.type_maidan[CURRENT_LANG];
-		/*self.spheres[7].name = LOCALE_ARRAY_ADDITIONAL.candidates_proposal[CURRENT_LANG];
-		self.spheres[8].name = LOCALE_ARRAY_ADDITIONAL.candidates_parties[CURRENT_LANG];
+		self.spheres[7].name = LOCALE_ARRAY_ADDITIONAL.candidates_proposal[CURRENT_LANG];
+		/*self.spheres[8].name = LOCALE_ARRAY_ADDITIONAL.candidates_parties[CURRENT_LANG];
 		self.spheres[9].name = LOCALE_ARRAY_ADDITIONAL.local_self_goverments[CURRENT_LANG];*/
 	},
 	initial: function(callback_function, forced_initial){
@@ -10344,7 +10361,7 @@ var ADRESS = {
 														+ '&bld=' + $('#address-item-' + page + ' [name=house]').val()
 														+ '&oth=' + $('#address-item-' + page + ' [name=comment]').val()
 														+ '&zip=' + $('#address-item-' + page + ' [name=index]').val()
-														+ '&reg_adr=' + reg_adr + '&lat=' + g_lat + '&lng=' + g_lng,
+														+ '&reg_adr=' + reg_adr + '&lat=' + GoogleMapsAdress.lt_value + '&lng=' + GoogleMapsAdress.ln_value,
 			type: "GET",
 			xhrFields: {
 				withCredentials: true

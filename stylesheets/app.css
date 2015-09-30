@@ -1473,7 +1473,7 @@ label.ui-btn {
     padding: 0 1em; }
 #vote-page .img img, #vote-page-full .img img, #my-vote-page .img img, #program-page .img img, #request-page .img img, #project-page .img img, #weighted-vote-page .img img {
   display: block;
-  max-width: 100%; }
+  max-width: 100%;}
 #vote-page .stars-wrap, #vote-page-full .stars-wrap, #my-vote-page .stars-wrap, #program-page .stars-wrap, #request-page .stars-wrap, #project-page .stars-wrap, #weighted-vote-page .stars-wrap {
   margin: 1.5em 0;
   padding: 0.75em 0;
