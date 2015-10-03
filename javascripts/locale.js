@@ -1467,7 +1467,7 @@ var LOCALE_ARRAY = [
 {selector: '#votings-page [name=sort] option:eq(4)',
 	en: 'Sort by start date',
 	ru: 'Сортировать по дате начала',
-	ua: 'Сортувати за даьл. початку'},
+	ua: 'Сортувати за датою початку'},
 {selector: '#votings-page [name=sort] option:eq(5)',
 	en: 'Sort by rating again',
 	ru: 'Сортировать за рейтингов снова',

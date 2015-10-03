@@ -6,7 +6,7 @@ var mainURL = 'https://gurtom.mobi';
 var HISTORY_INNER = [location.href];
 var g_lat = 0;
 var g_lng = 0;
-var OLD_ID_COOKIE = -1;
+//var OLD_ID_COOKIE = -1;
 
 ///////////////////////////////////////////////////////////////////Неоптимизированная карта для старницы Адресов
 
@@ -195,13 +195,13 @@ function lang_activate_el(element){
 
 window.onload = function(){
 	lang_activate_el();
-	if(readCookie('id_cookie') == null){
+	/*if(readCookie('id_cookie') == null){
 		createCookie('id_cookie', -1);
 	}
 	setInterval(function(){
 		//console.log('interval');
 		SUPER_PROFILE.checkUser();
-	}, 5000);
+	}, 5000);*/
 	setTimeout(function(){
 		COMMON_OBJECT.init_common_listeners();
 		
@@ -1119,9 +1119,9 @@ var SUPER_PROFILE = {
 	gender: 0,
 	id: 0,
 	checkUser: function(){
-		if(readCookie('id_cookie') != OLD_ID_COOKIE){
+		/*if(readCookie('id_cookie') != OLD_ID_COOKIE){
 			location.reload(true);
-		}
+		}*/
 	}
 };
 
@@ -2651,13 +2651,13 @@ var PROJECTS = {
 							<div class="social-wrap">\
 								<div class="ui-grid-b">\
 									<div class="ui-block-a">\
-										<a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
+										<a target="_blank" class="vk" href="https://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
 									</div>\
 									<div class="ui-block-b">\
-										<a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href) + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
+										<a target="_blank" class="fb" href="https://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href) + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
 									</div>\
 									<div class="ui-block-c">\
-										<a target="_blank" class="tw" href="http://twitter.com/share?url=' + encodeURIComponent(location.href) + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
+										<a target="_blank" class="tw" href="https://twitter.com/share?url=' + encodeURIComponent(location.href) + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
 									</div>\
 									<div class="ui-block-a">\
 										<a target="_blank" class="gp" href="https://plus.google.com/share?url=' + encodeURIComponent(location.href) + '"></a>\
@@ -2666,7 +2666,7 @@ var PROJECTS = {
 										<a target="_blank" class="in" href="https://www.linkedin.com/cws/share?url=' + encodeURIComponent(location.href) + '"></a>\
 									</div>\
 									<div class="ui-block-c">\
-										<a target="_blank" class="ok" href="http://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href) + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
+										<a target="_blank" class="ok" href="https://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href) + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
 									</div>\
 								</div>\
 							</div>\
@@ -2923,13 +2923,13 @@ var PROJECTS = {
 							<div class="social-wrap">\
 								<div class="ui-grid-b">\
 									<div class="ui-block-a">\
-										<a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
+										<a target="_blank" class="vk" href="https://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
 									</div>\
 									<div class="ui-block-b">\
-										<a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href) + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
+										<a target="_blank" class="fb" href="https://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href) + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
 									</div>\
 									<div class="ui-block-c">\
-										<a target="_blank" class="tw" href="http://twitter.com/share?url=' + encodeURIComponent(location.href) + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
+										<a target="_blank" class="tw" href="https://twitter.com/share?url=' + encodeURIComponent(location.href) + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
 									</div>\
 									<div class="ui-block-a">\
 										<a target="_blank" class="gp" href="https://plus.google.com/share?url=' + encodeURIComponent(location.href) + '"></a>\
@@ -2938,7 +2938,7 @@ var PROJECTS = {
 										<a target="_blank" class="in" href="https://www.linkedin.com/cws/share?url=' + encodeURIComponent(location.href) + '"></a>\
 									</div>\
 									<div class="ui-block-c">\
-										<a target="_blank" class="ok" href="http://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href) + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
+										<a target="_blank" class="ok" href="https://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href) + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
 									</div>\
 								</div>\
 							</div>\
@@ -3824,13 +3824,13 @@ var PROGRAMS = {
 							<div class="social-wrap">\
 								<div class="ui-grid-b">\
 									<div class="ui-block-a">\
-										<a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(data_for_build.title) + '&image=' + mainURL + data_for_build.img + '"></a>\
+										<a target="_blank" class="vk" href="https://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(data_for_build.title) + '&image=' + mainURL + data_for_build.img + '"></a>\
 									</div>\
 									<div class="ui-block-b">\
-										<a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href) + '&t=' + encodeURIComponent(data_for_build.title) + '"></a>\
+										<a target="_blank" class="fb" href="https://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href) + '&t=' + encodeURIComponent(data_for_build.title) + '"></a>\
 									</div>\
 									<div class="ui-block-c">\
-										<a target="_blank" class="tw" href="http://twitter.com/share?url=' + encodeURIComponent(location.href) + '&text=' + encodeURIComponent(data_for_build.title) + '"></a>\
+										<a target="_blank" class="tw" href="https://twitter.com/share?url=' + encodeURIComponent(location.href) + '&text=' + encodeURIComponent(data_for_build.title) + '"></a>\
 									</div>\
 									<div class="ui-block-a">\
 										<a target="_blank" class="gp" href="https://plus.google.com/share?url=' + encodeURIComponent(location.href) + '"></a>\
@@ -3839,7 +3839,7 @@ var PROGRAMS = {
 										<a target="_blank" class="in" href="https://www.linkedin.com/cws/share?url=' + encodeURIComponent(location.href) + '"></a>\
 									</div>\
 									<div class="ui-block-c">\
-										<a target="_blank" class="ok" href="http://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href) + '&st.comments=' + encodeURIComponent(data_for_build.title) + '"></a>\
+										<a target="_blank" class="ok" href="https://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href) + '&st.comments=' + encodeURIComponent(data_for_build.title) + '"></a>\
 									</div>\
 								</div>\
 							</div>\
@@ -4766,13 +4766,13 @@ var REQUESTS = {
 							<div class="social-wrap">\
 								<div class="ui-grid-b">\
 									<div class="ui-block-a">\
-										<a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
+										<a target="_blank" class="vk" href="https://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
 									</div>\
 									<div class="ui-block-b">\
-										<a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href) + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
+										<a target="_blank" class="fb" href="https://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href) + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
 									</div>\
 									<div class="ui-block-c">\
-										<a target="_blank" class="tw" href="http://twitter.com/share?url=' + encodeURIComponent(location.href) + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
+										<a target="_blank" class="tw" href="https://twitter.com/share?url=' + encodeURIComponent(location.href) + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
 									</div>\
 									<div class="ui-block-a">\
 										<a target="_blank" class="gp" href="https://plus.google.com/share?url=' + encodeURIComponent(location.href) + '"></a>\
@@ -4781,7 +4781,7 @@ var REQUESTS = {
 										<a target="_blank" class="in" href="https://www.linkedin.com/cws/share?url=' + encodeURIComponent(location.href) + '"></a>\
 									</div>\
 									<div class="ui-block-c">\
-										<a target="_blank" class="ok" href="http://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href) + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
+										<a target="_blank" class="ok" href="https://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href) + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
 									</div>\
 								</div>\
 							</div>\
@@ -5874,13 +5874,13 @@ var WEIGHTED_VOTINGS = {
 												<div class="social-wrap">\
 													<div class="ui-grid-b">\
 														<div class="ui-block-a">\
-															<a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
+															<a target="_blank" class="vk" href="https://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
 														</div>\
 														<div class="ui-block-b">\
-															<a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href) + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
+															<a target="_blank" class="fb" href="https://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href) + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
 														</div>\
 														<div class="ui-block-c">\
-															<a target="_blank" class="tw" href="http://twitter.com/share?url=' + encodeURIComponent(location.href) + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
+															<a target="_blank" class="tw" href="https://twitter.com/share?url=' + encodeURIComponent(location.href) + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
 														</div>\
 														<div class="ui-block-a">\
 															<a target="_blank" class="gp" href="https://plus.google.com/share?url=' + encodeURIComponent(location.href) + '"></a>\
@@ -5889,7 +5889,7 @@ var WEIGHTED_VOTINGS = {
 															<a target="_blank" class="in" href="https://www.linkedin.com/cws/share?url=' + encodeURIComponent(location.href) + '"></a>\
 														</div>\
 														<div class="ui-block-c">\
-															<a target="_blank" class="ok" href="http://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href) + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
+															<a target="_blank" class="ok" href="https://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href) + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
 														</div>\
 													</div>\
 												</div>\
@@ -6071,13 +6071,13 @@ var WEIGHTED_VOTINGS = {
 											<div class="social-wrap">\
 												<div class="ui-grid-b">\
 													<div class="ui-block-a">\
-														<a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
+														<a target="_blank" class="vk" href="https://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
 													</div>\
 													<div class="ui-block-b">\
-														<a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href) + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
+														<a target="_blank" class="fb" href="https://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href) + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
 													</div>\
 													<div class="ui-block-c">\
-														<a target="_blank" class="tw" href="http://twitter.com/share?url=' + encodeURIComponent(location.href) + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
+														<a target="_blank" class="tw" href="https://twitter.com/share?url=' + encodeURIComponent(location.href) + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
 													</div>\
 													<div class="ui-block-a">\
 														<a target="_blank" class="gp" href="https://plus.google.com/share?url=' + encodeURIComponent(location.href) + '"></a>\
@@ -6086,7 +6086,7 @@ var WEIGHTED_VOTINGS = {
 														<a target="_blank" class="in" href="https://www.linkedin.com/cws/share?url=' + encodeURIComponent(location.href) + '"></a>\
 													</div>\
 													<div class="ui-block-c">\
-														<a target="_blank" class="ok" href="http://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href) + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
+														<a target="_blank" class="ok" href="https://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href) + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
 													</div>\
 												</div>\
 											</div>\
@@ -8251,13 +8251,13 @@ var VOTINGS = {
 												<div class="social-wrap">\
 													<div class="ui-grid-b">\
 														<div class="ui-block-a">\
-															<a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
+															<a target="_blank" class="vk" href="https://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
 														</div>\
 														<div class="ui-block-b">\
-															<a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href) + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
+															<a target="_blank" class="fb" href="https://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href) + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
 														</div>\
 														<div class="ui-block-c">\
-															<a target="_blank" class="tw" href="http://twitter.com/share?url=' + encodeURIComponent(location.href) + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
+															<a target="_blank" class="tw" href="https://twitter.com/share?url=' + encodeURIComponent(location.href) + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
 														</div>\
 														<div class="ui-block-a">\
 															<a target="_blank" class="gp" href="https://plus.google.com/share?url=' + encodeURIComponent(location.href) + '"></a>\
@@ -8266,7 +8266,7 @@ var VOTINGS = {
 															<a target="_blank" class="in" href="https://www.linkedin.com/cws/share?url=' + encodeURIComponent(location.href) + '"></a>\
 														</div>\
 														<div class="ui-block-c">\
-															<a target="_blank" class="ok" href="http://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href) + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
+															<a target="_blank" class="ok" href="https://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href) + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
 														</div>\
 													</div>\
 												</div>\
@@ -8482,13 +8482,13 @@ var VOTINGS = {
 											<div class="social-wrap">\
 												<div class="ui-grid-b">\
 													<div class="ui-block-a">\
-														<a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
+														<a target="_blank" class="vk" href="https://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
 													</div>\
 													<div class="ui-block-b">\
-														<a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href) + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
+														<a target="_blank" class="fb" href="https://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href) + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
 													</div>\
 													<div class="ui-block-c">\
-														<a target="_blank" class="tw" href="http://twitter.com/share?url=' + encodeURIComponent(location.href) + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
+														<a target="_blank" class="tw" href="https://twitter.com/share?url=' + encodeURIComponent(location.href) + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
 													</div>\
 													<div class="ui-block-a">\
 														<a target="_blank" class="gp" href="https://plus.google.com/share?url=' + encodeURIComponent(location.href) + '"></a>\
@@ -8497,7 +8497,7 @@ var VOTINGS = {
 														<a target="_blank" class="in" href="https://www.linkedin.com/cws/share?url=' + encodeURIComponent(location.href) + '"></a>\
 													</div>\
 													<div class="ui-block-c">\
-														<a target="_blank" class="ok" href="http://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href) + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
+														<a target="_blank" class="ok" href="https://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href) + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
 													</div>\
 												</div>\
 											</div>\
@@ -8781,8 +8781,25 @@ var VOTINGS = {
 			},
 			crossDomain: true,
 			complete: function( response ){
-				 console.log("Deleted id:" + voting_id);
-				 $.mobile.navigate(return_page);	
+				if(response && response.responseText.indexOf('error') == -1){
+					console.log("Deleted id:" + voting_id);
+			 		$.mobile.navigate(return_page);
+				}else{
+					if( response.responseText.indexOf('error') > -1 ){
+						var error_arr = JSON.parse(response.responseText);
+						switch(CURRENT_LANG){
+							case 'en':
+								alert(error_arr[0].error);
+								break;
+							case 'ru':
+								alert(error_arr[0].error_ru);
+								break;
+							case 'ua':
+								alert(error_arr[0].error_uk);
+								break;
+						}
+					}
+				}	
 			},
 		});
 	},
@@ -9498,13 +9515,13 @@ var MY_VOTINGS = {
 												<div class="social-wrap">\
 													<div class="ui-grid-b">\
 														<div class="ui-block-a">\
-															<a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href).replace('my-', '') + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
+															<a target="_blank" class="vk" href="https://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href).replace('my-', '') + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
 														</div>\
 														<div class="ui-block-b">\
-															<a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href).replace('my-', '') + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
+															<a target="_blank" class="fb" href="https://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href).replace('my-', '') + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
 														</div>\
 														<div class="ui-block-c">\
-															<a target="_blank" class="tw" href="http://twitter.com/share?url=' + encodeURIComponent(location.href).replace('my-', '') + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
+															<a target="_blank" class="tw" href="https://twitter.com/share?url=' + encodeURIComponent(location.href).replace('my-', '') + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
 														</div>\
 														<div class="ui-block-a">\
 															<a target="_blank" class="gp" href="https://plus.google.com/share?url=' + encodeURIComponent(location.href).replace('my-', '') + '"></a>\
@@ -9513,7 +9530,7 @@ var MY_VOTINGS = {
 															<a target="_blank" class="in" href="https://www.linkedin.com/cws/share?url=' + encodeURIComponent(location.href).replace('my-', '') + '"></a>\
 														</div>\
 														<div class="ui-block-c">\
-															<a target="_blank" class="ok" href="http://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href).replace('my-', '') + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
+															<a target="_blank" class="ok" href="https://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href).replace('my-', '') + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
 														</div>\
 													</div>\
 												</div>\
@@ -9723,13 +9740,13 @@ var MY_VOTINGS = {
 											<div class="social-wrap">\
 												<div class="ui-grid-b">\
 													<div class="ui-block-a">\
-														<a target="_blank" class="vk" href="http://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
+														<a target="_blank" class="vk" href="https://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
 													</div>\
 													<div class="ui-block-b">\
-														<a target="_blank" class="fb" href="http://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href) + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
+														<a target="_blank" class="fb" href="https://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href) + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
 													</div>\
 													<div class="ui-block-c">\
-														<a target="_blank" class="tw" href="http://twitter.com/share?url=' + encodeURIComponent(location.href) + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
+														<a target="_blank" class="tw" href="https://twitter.com/share?url=' + encodeURIComponent(location.href) + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
 													</div>\
 													<div class="ui-block-a">\
 														<a target="_blank" class="gp" href="https://plus.google.com/share?url=' + encodeURIComponent(location.href) + '"></a>\
@@ -9738,7 +9755,7 @@ var MY_VOTINGS = {
 														<a target="_blank" class="in" href="https://www.linkedin.com/cws/share?url=' + encodeURIComponent(location.href) + '"></a>\
 													</div>\
 													<div class="ui-block-c">\
-														<a target="_blank" class="ok" href="http://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href) + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
+														<a target="_blank" class="ok" href="https://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href) + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
 													</div>\
 												</div>\
 											</div>\
@@ -11922,8 +11939,8 @@ console.log(window.location.toString());
 					that.payment = that.profile_obj.payment;
 					that.bankid = that.profile_obj.bankid;
 
-					createCookie('id_cookie', that.profile_obj.id);
-					OLD_ID_COOKIE = that.profile_obj.id;
+					//createCookie('id_cookie', that.profile_obj.id);
+					//OLD_ID_COOKIE = that.profile_obj.id;
 
 					SUPER_PROFILE.gender = that.gender;
 					SUPER_PROFILE.id = that.profile_obj.id;
@@ -11970,8 +11987,8 @@ console.log(window.location.toString());
 							that.payment = that.profile_obj.payment;
 	 						that.bankid = that.profile_obj.bankid;
 
-	 						createCookie('id_cookie', that.profile_obj.id);
-	 						OLD_ID_COOKIE = that.profile_obj.id;
+	 						//createCookie('id_cookie', that.profile_obj.id);
+	 						//OLD_ID_COOKIE = that.profile_obj.id;
 
 							SUPER_PROFILE.gender = that.gender;
 							SUPER_PROFILE.id = that.profile_obj.id;
@@ -12017,8 +12034,8 @@ console.log(window.location.toString());
 						PIF.pif_array = [];
 						}
 					})
-				createCookie('id_cookie', -1);
-				OLD_ID_COOKIE = -1;
+				//createCookie('id_cookie', -1);
+				//OLD_ID_COOKIE = -1;
 			},
 			updateMenu:function(){
 					if(this.auth){
