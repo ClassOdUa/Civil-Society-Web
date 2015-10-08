@@ -2599,6 +2599,14 @@ label.ui-btn {
     -o-background-size: 19px 21px;
     -webkit-background-size: 19px 21px;
     background-size: 19px 21px; }
+
+  #my-activities-page .btn-next-page .ui-btn.menu-icon-trust:before {
+    background-image: url(../images/svg/menu-icon-trust.svg);
+    -moz-background-size: 21px 21px;
+    -o-background-size: 21px 21px;
+    -webkit-background-size: 21px 21px;
+    background-size: 21px 21px; }
+
   #my-activities-page .btn-next-page .ui-btn.icon-votings:before {
     background-image: url(../images/svg/menu-icon-votings.svg);
     -moz-background-size: 19px 21px;

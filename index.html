@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="">
 	<head>
+		<link rel="image_src" href="https://gurtom.mobi/images/logo.png" / >
 		<meta charset="utf-8">
 		<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
-		<meta name="description" content="Civil Society App javascript application">
+		<meta name="description" lang="en" content="The power of peoples' cooperation in the digital era. Application for communities.">
+		<meta name="description" lang="uk" content="Влада співробітництва людей в цифрову епоху. Додаток для громад. Програма суспільної взаємодії">
+		<meta name="description" lang="ru" content="Власть сотрудничества людей в цифровую эпоху. Программа для сообществ.">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Civil Society App</title>
+		<title>Civil Society | Громадянське суспільство | Гражданское общество</title>
 		<link href="https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" href="/vendor/jquery.mobile-1.4.5/jquery.mobile.structure-1.4.5.min.css?t=1">
 		<link rel="stylesheet" href="/leaflet/leaflet.css" />
@@ -662,12 +665,12 @@
 			</div>
 			<div class="address-item">
 				<div class="btn-next-page">
-					<a class="ui-btn ui-btn-icon-right" href="#address-item-2">Address 2</a>
+					<a class="ui-btn ui-btn-icon-right" href="#address-item-2"></a>
 				</div>
 			</div>
 			<div class="address-item">
 				<div class="btn-next-page">
-					<a class="ui-btn ui-btn-icon-right" href="#address-item-3">Address 3</a>
+					<a class="ui-btn ui-btn-icon-right" href="#address-item-3"></a>
 				</div>
 			</div>
 		</div>
@@ -1528,51 +1531,6 @@
 	</div>
 </div>
 
-<div id="decision-making" data-role="page">
-	<div data-role="header" data-position="fixed" data-tap-toggle="false">
-		<h1>Decision-making</h1>
-		<a class="ui-btn ui-btn-left ui-icon-bars ui-btn-corner-all ui-btn-icon-notext" href="#left-panel">Menu</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#decision-making-help">Ask</a>
-		<div id="decision-making-help" class="help-popup" data-role="popup" data-history="false">
-			<div class="title">
-				Description
-			</div>
-			<div class="text">
-				help text
-			</div>
-		</div>
-	</div>
-	<div role="main" class="ui-content">
-		<div class="left_col">
-			<div class="btn-next-page">
-				<a class="ui-btn ui-btn-icon-right menu-icon-trust" data-link = "#trust-list" href="#trust-list">Trust List</a>
-			</div>
-
-			<div class="btn-next-page">
-				<a class="ui-btn ui-btn-icon-right icon-votings" data-link = "#public-proposals" href="#public-proposals">Public proposals</a>
-			</div>
-
-			<div class="btn-next-page">
-				<a class="ui-btn ui-btn-icon-right icon-votings" data-link = "#local-self-governments" href="#local-self-governments">Issues of local self-governments</a>
-			</div>
-			
-
-			<div class="btn-next-page">
-				<a class="ui-btn ui-btn-icon-right icon-votings" data-link = "#co-owners" href="#co-owners">Solutions with other co-owners and co-investors</a>
-			</div>
-			
-			
-			<div class="btn-next-page">
-				<a class="ui-btn ui-btn-icon-right icon-votings" data-link = "#parties" href="#parties">Political parties, NGOs volunteering groups</a>
-			</div>
-			
-			<div class="btn-next-page">
-				<a class="ui-btn ui-btn-icon-right icon-votings" data-link = "#primaries" href="#primaries">Primaries, elections, exit-polls</a>
-			</div>
-		</div>
-		<div class="right_col"></div>
-	</div>
-</div>
-
 <div id="public-proposals" data-role="page">
 	<div data-role="header" data-position="fixed" data-tap-toggle="false">
 		<h1>Public proposals</h1>
@@ -1870,6 +1828,9 @@
 	</div>
 	<div role="main" class="ui-content">
 		<div class="left_col">
+			<div class="btn-next-page">
+				<a class="ui-btn ui-btn-icon-right menu-icon-trust" data-link = "#trust-list" onclick="$.mobile.navigate('#trust-list')" href="#trust-list">Trust List</a>
+			</div>
 			<div class="btn-next-page">
 				<a class="ui-btn ui-btn-icon-right icon-votings" data-link = "#my-votings-page" onclick = "$.mobile.navigate('#my-votings-page')" href="#">My votings</a>
 			</div>
@@ -2403,14 +2364,14 @@
 
 <div id="votings-page" data-role="page">
 	<div data-role="header" data-position="fixed" data-tap-toggle="false">
-		<h1>Votings by spheres</h1>
-		<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back('#public-proposals')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#votings-help">Ask</a>
-		<div id="votings-help" class="help-popup" data-role="popup" data-history="false">
+		<h1>Decision-making</h1>
+		<a class="ui-btn ui-btn-left ui-icon-bars ui-btn-corner-all ui-btn-icon-notext" href="#left-panel">Menu</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#decision-making-help">Ask</a>
+		<div id="decision-making-help" class="help-popup" data-role="popup" data-history="false">
 			<div class="title">
 				Description
 			</div>
 			<div class="text">
-			   Help
+				help text
 			</div>
 		</div>
 	</div>
@@ -2438,17 +2399,26 @@
 								<option value="0">Sort up</option>
 							</select>
 						</div>
-						<div id = "solo_filter" onclick = "$.mobile.navigate('#filter-page'); VOTINGS.activated_hard_filter = 1;  $('#votings-page #activated_filter').css('display', 'block'); $('#votings-page #solo_filter').css('display', 'none');" class="ui-grid-solo">
-							<div class="ui-block-a">
-								<div class="ui-input-btn ui-btn ui-btn-icon-right filter-normal">
-									<span >Filter</span><input type="button" value="" data-enhanced="true" />
-								</div>
-							</div>
-						</div>
-						<div style = "display:none" id = "activated_filter" class="ui-grid-a">
-							<div class="ui-block-a">
-								<div id = "filter_activator" onclick = "VOTINGS.activated_hard_filter = 1; $.mobile.navigate('#filter-page');" class="ui-input-btn ui-btn ui-btn-icon-right filter-active">
-									<span>Filter is activated</span><input type="button" value="" data-enhanced="true" />
+
+						<fieldset class="date-group" data-role="controlgroup" data-type="horizontal">
+							<legend>Enter first date for sort</legend>
+							<select class="options_date" name="start_date"></select>
+							<select class="options_month" name="start_month" ></select>
+							<select class="options_year" name="start_year" ></select>
+						</fieldset>
+						<fieldset class="date-group" data-role="controlgroup" data-type="horizontal">
+							<legend>Enter last date for sort</legend>
+							<select class="options_date" name="end_date"></select>
+							<select class="options_month" name="end_month" ></select>
+							<select class="options_year" name="end_year"></select>
+						</fieldset>
+
+						<fieldset class = "sphere_form"></fieldset>
+
+						<div class="ui-grid-a">
+							<div  onclick = "" class="ui-block-a">
+								<div  class="ui-input-btn ui-btn ui-btn-icon-right filter-save">
+									<span>Save filter</span><input type="button" value="" data-enhanced="true" />
 								</div>
 							</div>
 							<div class="ui-block-b">
@@ -2462,6 +2432,7 @@
 			</div>
 			<div role="main" class="ui-content">
 				<a  id = "filter_slider"  class="ui-btn ui-corner-all ui-shadow" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>
+				<a class="ui-btn ui-corner-all ui-shadow create-vote" href="#create-vote">Создать голосование</a>
 				<div class="votings-list" id = 'votings_list'></div>
 			</div>
 		</div>
@@ -2516,12 +2487,13 @@
 									 <span>Clear filter</span><input type="button" value="" onclick = "MY_VOTINGS.init()" data-enhanced="true" />
 								</div>
 							</div>
-						</div></form>
+						</div>
+					</form>
 		</div>
 	</div>
 	<div role="main" class="ui-content">
 	<a  id = "filter_slider"  class="ui-btn ui-corner-all ui-shadow" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>		
-		<a class="ui-btn ui-corner-all ui-shadow" href="#create-vote">Создать голосование</a>
+		<a class="ui-btn ui-corner-all ui-shadow create-vote" href="#create-vote">Создать голосование</a>
 		<div class="votings-list" id = 'votings_list'>
 		</div>
 	</div>
@@ -2576,36 +2548,37 @@
 	</div>
 	<div role="main" class="ui-content">
 		<form action="" accept-charset="UTF-8" method="post">
-				<fieldset class="date-group" data-role="controlgroup" data-type="horizontal">
-					<legend>Enter first date for sort</legend><select name="start_date">
-					</select><select name="start_month" >
-					</select><select name="start_year" >
-					</select>
-				</fieldset>
-				<fieldset class="date-group" data-role="controlgroup" data-type="horizontal">
-					<legend>Enter last date for sort</legend>
-					<select name="end_date"></select>
-					<select name="end_month" ><option value="01"></option></select>
-					<select name="end_year"></select>
-				</fieldset>
-				<div class="btn-next-page">
-					<a class="ui-btn ui-btn-icon-right" id = "choose_spheres" href="#spheres-filters">Choose spheres</a>
-				</div>
-				<div style = "display: none" class="btn-next-page">
-					<a class="ui-btn ui-btn-icon-right" href="#">Choose priority</a>
-				</div>
-				<div class="ui-grid-a">
-					<div  onclick = "VOTINGS.filter_data(); $.mobile.navigate('#votings-page')" class="ui-block-a">
-						<div  class="ui-input-btn ui-btn ui-btn-icon-right filter-save">
-							<span>Save filter</span><input type="button" value="" data-enhanced="true" />
-						</div>
+			<fieldset class="date-group" data-role="controlgroup" data-type="horizontal">
+				<legend>Enter first date for sort</legend><select name="start_date">
+				</select><select name="start_month" >
+				</select><select name="start_year" >
+				</select>
+			</fieldset>
+			<fieldset class="date-group" data-role="controlgroup" data-type="horizontal">
+				<legend>Enter last date for sort</legend>
+				<select name="end_date"></select>
+				<select name="end_month" ><option value="01"></option></select>
+				<select name="end_year"></select>
+			</fieldset>
+			<div class="btn-next-page">
+				<a class="ui-btn ui-btn-icon-right" id = "choose_spheres" href="#spheres-filters">Choose spheres</a>
+			</div>
+			<div style = "display: none" class="btn-next-page">
+				<a class="ui-btn ui-btn-icon-right" href="#">Choose priority</a>
+			</div>
+			<div class="ui-grid-a">
+				<div  onclick = "VOTINGS.filter_data(); $.mobile.navigate('#votings-page')" class="ui-block-a">
+					<div  class="ui-input-btn ui-btn ui-btn-icon-right filter-save">
+						<span>Save filter</span><input type="button" value="" data-enhanced="true" />
 					</div>
-					<div onclick = "VOTINGS.init(); $.mobile.navigate('#votings-page')" class="ui-block-b">
-						<div  class="ui-input-btn ui-btn ui-btn-icon-right filter-clear">
-							<span>Clear filter</span><input type="button" value="" data-enhanced="true" />
-						</div>
+				</div>
+				<div onclick = "VOTINGS.init(); $.mobile.navigate('#votings-page')" class="ui-block-b">
+					<div  class="ui-input-btn ui-btn ui-btn-icon-right filter-clear">
+						<span>Clear filter</span><input type="button" value="" data-enhanced="true" />
 					</div>
-				</div></form>
+				</div>
+			</div>
+		</form>
 	</div>
 </div>
 
@@ -2980,7 +2953,7 @@
 		<h1>
 			Trust list
 		</h1>
-		<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#decision-making')" href="#decision-making">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#trust-help">Ask</a>
+		<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#my-activities-page')" href="#my-activities-page">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#trust-help">Ask</a>
 		<div id="trust-help" class="help-popup" data-role="popup" data-history="false">
 			<div class="title">
 				Description
@@ -3083,7 +3056,9 @@
 			<a class="menu-icon-news" data-link = "#news-page" href="#news-page">News</a>
 		</li>
 		<li>
-			<a class="menu-icon-votings" data-link = "#decision-making" href="#decision-making">Decision-making</a>
+			<a class="menu-icon-votings" 
+			data-link = "#votings-page" 
+			onclick = "$.mobile.navigate('#votings-page')" href="#votings-page">Decision-making</a>
 		</li>
 		<li>
 			<a class="menu-icon-programs" data-link = "#social-investment" href="#social-investment">Social Investment</a>

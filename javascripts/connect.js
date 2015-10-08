@@ -236,6 +236,13 @@ window.onload = function(){
 
 		$("#profile-page #avatar, #menu_avatar img").css("margin-top",-(($("#menu_avatar img").height() - $("#menu_avatar").height())/2) +"px");
 
+		set_dates_range('.options_date', '.options_month', '.options_year', new Date().getFullYear(), 2, 'current', 'current');
+
+/*		set_dates_range('#votings-page [name=end_date]', '#votings-page [name=end_month]', '#votings-page [name=end_year]', 
+			new Date().getFullYear(), 2, 'current');*/
+
+		//НАХЕРА БЫЛО ПЛОДИТЬ СУЩНОСТИ? Почему не определить все классами?
+
 		set_dates_range('#filter-page [name=start_date]', '#filter-page [name=start_month]', '#filter-page [name=start_year]', new Date().getFullYear(), 2, 'current', 'current');
 		set_dates_range('#filter-page [name=end_date]', '#filter-page [name=end_month]', '#filter-page [name=end_year]', new Date().getFullYear(), 2, 'current');
 
@@ -570,6 +577,7 @@ window.onhashchange = function(){
 	if(UI_STATE_DIALOG == 0 && location.href.indexOf('ui-state=dialog') > -1){
 		UI_STATE_DIALOG = 1;
 	}
+	
 	HISTORY_INNER.push(location.href);
 	if( ( location.href.indexOf('#trust-list') > -1 ||
 			location.href.indexOf('#create-item') > -1 ||
@@ -6652,7 +6660,7 @@ var TRUST_LIST = {
 				if(one_trust.t_l[i].subtype){
 					subtype = ': ' + one_trust.t_l[i].subtype;
 				}
-				elements_string += '<div>' + type_sphere + sphere + subtype + '</div>';
+				elements_string += '<div>' + type_sphere + subtype +sphere +  '</div>';
 				
 			}
 			elements_string += '</div>';
@@ -6929,7 +6937,7 @@ var SPHERES = {
 			selector_name: "public_organization",
 			type: 4,
 			objects: []},
-			{name: "Public primaries",
+			/*{name: "Public primaries",
 			selector_name: "primaries",
 			type: 5,
 			objects: []},
@@ -6945,7 +6953,7 @@ var SPHERES = {
 			selector_name: "candidates_proposal",
 			type: 8,
 			objects: []},
-			/*{name: "Candidates\' rating (Political Parties)",
+			{name: "Candidates\' rating (Political Parties)",
 			selector_name: "candidates_parties",
 			type: 9,
 			objects: []},
@@ -6959,11 +6967,11 @@ var SPHERES = {
 		self.spheres[1].name = LOCALE_ARRAY_ADDITIONAL.local_self_goverments_indicative[CURRENT_LANG];
 		self.spheres[2].name = LOCALE_ARRAY_ADDITIONAL.co_owners[CURRENT_LANG];
 		self.spheres[3].name = LOCALE_ARRAY_ADDITIONAL.type_public_orrganization[CURRENT_LANG];
-		self.spheres[4].name = LOCALE_ARRAY_ADDITIONAL.type_primaries[CURRENT_LANG];
+		/*self.spheres[4].name = LOCALE_ARRAY_ADDITIONAL.type_primaries[CURRENT_LANG];
 		self.spheres[5].name = LOCALE_ARRAY_ADDITIONAL.elections[CURRENT_LANG];
 		self.spheres[6].name = LOCALE_ARRAY_ADDITIONAL.type_maidan[CURRENT_LANG];
 		self.spheres[7].name = LOCALE_ARRAY_ADDITIONAL.candidates_proposal[CURRENT_LANG];
-		/*self.spheres[8].name = LOCALE_ARRAY_ADDITIONAL.candidates_parties[CURRENT_LANG];
+		self.spheres[8].name = LOCALE_ARRAY_ADDITIONAL.candidates_parties[CURRENT_LANG];
 		self.spheres[9].name = LOCALE_ARRAY_ADDITIONAL.local_self_goverments[CURRENT_LANG];*/
 	},
 	initial: function(callback_function, forced_initial){
@@ -6981,18 +6989,20 @@ var SPHERES = {
 				complete: function( response ){
 						self.spheres_array = JSON.parse( response.responseText );	
 						self.normalize_array();
-						if(location.href.indexOf('#spheres-filters') > -1){
+						if(location.href.indexOf('#votings-page') > -1){
 							self.set_spheres_filters();
-							$('#spheres-filters #sphere_form select').selectmenu().selectmenu("refresh", true);
-						}
-						if(location.href.indexOf('#spheres-address') > -1){
+							$('.sphere_form select').selectmenu().selectmenu("refresh", true);
+							VOTINGS.activated_hard_filter = 1;
+						} else if(location.href.indexOf('#spheres-filters') > -1){
+							self.set_spheres_filters();
+							$('#spheres-filters .sphere_form select').selectmenu().selectmenu("refresh", true);
+						} else if(location.href.indexOf('#spheres-address') > -1){
 							self.set_spheres_and_listeners();
-							$('#spheres-address #sphere_form select').selectmenu().selectmenu("refresh", true);
+							$('#spheres-address .sphere_form select').selectmenu().selectmenu("refresh", true);
 							$('#spheres-address').enhanceWithin();
-						}
-						if(location.href.indexOf('#spheres-create-vote') > -1){
+						} else if(location.href.indexOf('#spheres-create-vote') > -1){
 							self.set_spheres_create_vote();
-							$('#spheres-create-vote #sphere_form select').selectmenu().selectmenu("refresh", true);
+							$('#spheres-create-vote .sphere_form select').selectmenu().selectmenu("refresh", true);
 						}		
 						$.mobile.loading( "hide" );
 						
@@ -7002,22 +7012,24 @@ var SPHERES = {
 				},
 			});
 		}else{
-			if(location.href.indexOf('#spheres-filters') > -1){
+			if(location.href.indexOf('#votings-page') > -1){
+				self.set_spheres_filters();
+				$('.sphere_form select').selectmenu().selectmenu("refresh", true);
+			} else if(location.href.indexOf('#spheres-filters') > -1){
 				self.set_spheres_filters();
 				console.log('#spheres-filters');
 				$('#spheres-filters #sphere_form select').selectmenu().selectmenu("refresh", true);
-			}
-			if(location.href.indexOf('#spheres-address') > -1){
+			} else if(location.href.indexOf('#spheres-address') > -1){
 				self.set_spheres_and_listeners();
 				console.log('#spheres-address');
 				$('#spheres-address #sphere_form select').selectmenu().selectmenu("refresh", true);
 				$('#spheres-address').enhanceWithin();
-			}
-			if(location.href.indexOf('#spheres-create-vote') > -1){
+			} else if(location.href.indexOf('#spheres-create-vote') > -1){
 				self.set_spheres_create_vote();
 				console.log('#spheres-create-vote');
 				$('#spheres-create-vote #sphere_form select').selectmenu().selectmenu("refresh", true);
 			}		
+
 			$.mobile.loading( "hide" );
 			
 			if(callback_function)
@@ -7176,7 +7188,7 @@ var SPHERES = {
 				if(SPHERES.spheres[i].objects[0].org == ''){
 					//console.log('equal one');
 					ui_string += '<div class = "content_value">\
-									<select onchange = "$.mobile.navigate(\'#filter-page\'); VOTINGS.filter_data($(this).val(), 0, \'' + SPHERES.spheres[i].selector_name + '\')" name = "' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
+									<select onchange = "VOTINGS.filter_data($(this).val(), 0, \'' + SPHERES.spheres[i].selector_name + '\')" name = "' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
 										<option>' + SPHERES.spheres[i].name + '</option>';
 					
 					for (var j = 0; j < SPHERES.spheres[i].objects[0].sph.length; j++) {
@@ -7187,14 +7199,14 @@ var SPHERES = {
 								</div>';
 				}else{
 					//console.log('equal more than one');
-					var varable = '#spheres-filters #' + SPHERES.spheres[i].selector_name + '_content';
+					var varable = '.sphere_form #' + SPHERES.spheres[i].selector_name + '_content';
 					ui_string += '<div onclick = "SPHERES.show_mini_spheres(\'' + varable + '\');">\
 									<select disabled class = "container" name="' + SPHERES.spheres[i].selector_name + '"><option value="' + SPHERES.spheres[i].name + '">' + SPHERES.spheres[i].name + '</option></select>\
 								</div>';
 					ui_string += '<div id = "' + SPHERES.spheres[i].selector_name + '_content" style = "display:none;">';
 					for (var k = 0; k < SPHERES.spheres[i].objects.length; k++) {
 						ui_string += '<div class = "content_value">\
-									<select onchange = "$.mobile.navigate(\'#filter-page\'); VOTINGS.filter_data($(this).val(), 0, \'' + SPHERES.spheres[i].selector_name + '\')" data-mini="true" name ="' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
+									<select onchange = "VOTINGS.filter_data($(this).val(), 0, \'' + SPHERES.spheres[i].selector_name + '\')" data-mini="true" name ="' + SPHERES.spheres[i].selector_name + '" data-native-menu="false">\
 										<option>' + SPHERES.spheres[i].objects[k].org + '</option>';
 						
 						for (var j = 0; j < SPHERES.spheres[i].objects[k].sph.length; j++) {
@@ -7207,6 +7219,13 @@ var SPHERES = {
 				}				
 			}
 		}
+
+		$('.sphere_form').html(ui_string);
+		var arr = $('.sphere_form .container option');
+		for (var i = 0; i < arr.length; i++) {
+			$(arr[i]).hide();
+		}
+
 		$('#spheres-filters #sphere_form').html(ui_string);
 		var arr = $('#spheres-filters #sphere_form .container option');
 		for (var i = 0; i < arr.length; i++) {
@@ -7747,7 +7766,7 @@ var VOTINGS = {
 		$('#votings-page #searched_string').val('');
 
 		$.mobile.loading( "show", {theme: "z"});
-
+		SPHERES.initial()
 		if(location.href.indexOf('#votings-page?program=') > -1){
 			var match_array = location.href.match(/#votings-page\?program=[0-9]*/i);
 			var object_id = match_array[0].match(/[0-9]+/i);
@@ -7758,7 +7777,7 @@ var VOTINGS = {
 				var object_id = match_array[0].match(/[0-9]+/i);
 				var url = mainURL + '/mc.php?type=' + object_id;
 			}else{
-				var url = mainURL + '/mc.php?sph=0';
+				var url = mainURL + '/mc.php?';
 			}			
 		}
 
@@ -7780,7 +7799,7 @@ var VOTINGS = {
 				$('#votings-page #solo_filter').css('display', 'block');	 
 				if(call_back){
 					call_back();
-				} 	
+				} 
 			},
 		});
 	},
@@ -7831,12 +7850,12 @@ var VOTINGS = {
 		}
 
 		if(self.activated_hard_filter){
-			var start_date = $('#filter-page [name=start_year]').val() + "-" 
-							+ $('#filter-page [name=start_month]').val() + "-" 
-							+ $('#filter-page [name=start_date]').val();
-			var end_date = $('#filter-page [name=end_year]').val() + "-" 
-						+ $('#filter-page [name=end_month]').val() + "-" 
-						+ $('#filter-page [name=end_date]').val();
+			var start_date = $('#votings-page [name=start_year]').val() + "-" 
+							+ $('#votings-page [name=start_month]').val() + "-" 
+							+ $('#votings-page [name=start_date]').val();
+			var end_date = $('#votings-page [name=end_year]').val() + "-" 
+						+ $('#votings-page [name=end_month]').val() + "-" 
+						+ $('#votings-page [name=end_date]').val();
 			url += '&start=' + start_date + '&finish=' + end_date;
 			
 			if(self.sphere_filter >= 0){
@@ -9176,12 +9195,12 @@ var MY_VOTINGS = {
 		}
 
 		if(self.activated_hard_filter){
-			var start_date = $('#filter-page [name=start_year]').val() + "-" 
-							+ $('#filter-page [name=start_month]').val() + "-" 
-							+ $('#filter-page [name=start_date]').val();
-			var end_date = $('#filter-page [name=end_year]').val() + "-" 
-						+ $('#filter-page [name=end_month]').val() + "-" 
-						+ $('#filter-page [name=end_date]').val();
+			var start_date = $('#votings-page [name=start_year]').val() + "-" 
+							+ $('#votings-page [name=start_month]').val() + "-" 
+							+ $('#votings-page [name=start_date]').val();
+			var end_date = $('#votings-page [name=end_year]').val() + "-" 
+						+ $('#votings-page [name=end_month]').val() + "-" 
+						+ $('#votings-page [name=end_date]').val();
 			url += '&start=' + start_date + '&finish=' + end_date;
 			
 			if(self.sphere_filter >= 0){
