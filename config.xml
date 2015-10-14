@@ -17,10 +17,6 @@
       Hardeep Shoker
     </author>
 
-    <gap:plugin name="com.cordova.plugins.sms" version="0.1.2" />
-    
-    <gap:plugin name="org.apache.cordova.geolocation" version="0.3.10" />
 
-    <gap:plugin name="com.telerik.plugins.nativepagetransitions" version="0.2.2" />
 
 </widget>
