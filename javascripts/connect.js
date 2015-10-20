@@ -34,7 +34,7 @@ var GoogleMapsAdress = {
 						
 				}
 			});
-		    console.log(responses);
+		    //console.log(responses);
 		} else {
 		  self.updateMarkerAddress('Cannot determine address at this location.');
 		}
@@ -69,7 +69,7 @@ var GoogleMapsAdress = {
 					 var build = ADRESS.getGPSByType(address,"street_number");
 					 ADRESS.gpsSet(object_id, country,state,county,city,street,build, latLng.lat(), latLng.lng());
 				} else {
-					console.log(LOCALE_ARRAY_ADDITIONAL.gps_not_activated[CURRENT_LANG]);
+					//console.log(LOCALE_ARRAY_ADDITIONAL.gps_not_activated[CURRENT_LANG]);
 				}
 				});
 			}
@@ -136,7 +136,7 @@ var GoogleMapsAdress = {
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
 
 $.mobile.defaultPageTransition = 'none';
 function inner_back(link){
@@ -174,26 +174,22 @@ function lang_activate_el(element){
 				
 		}
 	});
-	/*$(element).find(":data("+lang+"),[data-"+lang+"]").each(function(){
-
-		
-		$(this).html($(this).data(lang));
-		$(this).attr("lang",lang);
-	});
-	$(element).find(":data(ph"+lang+"),[data-sl"+lang+"]").each(function(){
-		var placeholder = $(this).data("ph"+lang);
-		$(this).attr("placeholder",placeholder);
-		$(this).attr("lang",lang);
-	});
-	$(element).find(":data(sl"+lang+"),[data-sl"+lang+"]").each(function(){
-		var value = $(this).data("sl"+lang);
-		console.log(value);
-		$(this).parent().find("span").html(value);
-		$(this).parent().find("span").html(value);
-	});*/
 }
 
 window.onload = function(){
+
+	if(location.href.indexOf('&lang=') > -1){
+		var lang_array = location.href.match(/&lang=[0-9]/i);
+		var lang_id = lang_array[0].match(/[0-9]+/i);
+		if(lang_id == 1) {
+			lang_activate_el('en');
+		} else if(lang_id == 2) {
+			lang_activate_el('ua');
+		} else if(lang_id == 3) {
+			lang_activate_el('ru');
+		}
+	}
+
 	lang_activate_el();
 	/*if(readCookie('id_cookie') == null){
 		createCookie('id_cookie', -1);
@@ -217,6 +213,7 @@ window.onload = function(){
 					
 			}
 		});
+
 		if( (location.href.indexOf('#spheres-address') > -1 ||
 			 location.href.indexOf('#spheres-trust') > -1 ||
 			 location.href.indexOf('#spheres-create-vote') > -1 ||
@@ -226,7 +223,7 @@ window.onload = function(){
 		}
 
 		if(location.href.indexOf('#balances-pif-page') > -1){
-			console.log('#balances-pif-page');
+			//console.log('#balances-pif-page');
 			funds.current_fund_history();
 		}
 
@@ -275,39 +272,42 @@ window.onload = function(){
 		}
 
 		if(location.href.indexOf('#news-page') > -1){
-			console.log('load news');
+			//console.log('load news');
 			NEWS.init();
 		}
 
 		if(location.href.indexOf('#my-tasks-page') > -1){
-			console.log('load tasks');
+			//console.log('load tasks');
 			TASKS.init();
 		}
 
 /*		if(location.href.indexOf('#map-page') > -1){
-			console.log('load map');
+			//console.log('load map');
 			MAP.init();
 		}*/
 
+		if(location.href.indexOf('#my-groups') > -1){
+			GROUPS.init();
+		}
 
 		if(location.href.indexOf('#wallet') > -1){
 			WALLET.init();
 		}
 
 		if(location.href.indexOf('#programs-page') > -1){
-			console.log('load programs');
+			//console.log('load programs');
 			PROGRAMS.init();
 			$('#programs-page select').selectmenu().selectmenu("refresh", true);
 		}
 
 		if(location.href.indexOf('#projects-page') > -1){
-			console.log('load projects');
+			//console.log('load projects');
 			PROJECTS.init();
 			$('#projects-page select').selectmenu().selectmenu("refresh", true);
 		}
 
 		if(location.href.indexOf('#requests-page') > -1){
-			console.log('load requests');
+			//console.log('load requests');
 			REQUESTS.init();
 			$('#requests-page select').selectmenu().selectmenu("refresh", true);
 		}
@@ -317,7 +317,7 @@ window.onload = function(){
 		}
 
 		if(location.href.indexOf('#my-fund-page') > -1){
-			console.log('load fund');
+			//console.log('load fund');
 			function temp_callback(){
 				return function(){
 					PIF.get_pif_array();
@@ -357,7 +357,7 @@ window.onload = function(){
 
 		if(location.href.indexOf('#trust-list') > -1 && SUPER_PROFILE.auth == true){
 			if(!$('#trusted_checkbox').hasClass('ui-checkbox-on')){
-				console.log('checkbpx off');
+				//console.log('checkbpx off');
 				$('#trust-list input[name=trusted_checkbox]').checkboxradio().prop('checked', true).checkboxradio( 'refresh' );
 			}
 			TRUST_LIST.init(false, 'p_s');
@@ -415,7 +415,7 @@ window.onload = function(){
 				var profile_obj = jQuery.parseJSON(response.responseText)[0];
 				$('#profile-page #avatar').attr('src', mainURL + profile_obj.avatar);
 				$('#menu_avatar').html('<img id="avatar" src="' + mainURL + profile_obj.avatar + '">');
-				console.log( mainURL + '/' + profile_obj.avatar);
+				//console.log( mainURL + '/' + profile_obj.avatar);
 			}else{
 				if( response.responseText.indexOf('error') > -1 ){
 					var error_arr = JSON.parse(response.responseText);
@@ -495,7 +495,7 @@ window.onload = function(){
 		if(response){
 			if(response.indexOf('error') == -1){
 				var img = response;
-				console.log(img);
+				//console.log(img);
 			}else{
 				if( response.indexOf('error') > -1 ){
 					var error_arr = JSON.parse(response);
@@ -564,7 +564,7 @@ window.onload = function(){
 		$('#lang label').html($('#lang label').data(CURRENT_LANG));
 		$('#select-lang').selectmenu("refresh", true);
 	}catch(e){
-		console.log('exception catched, all ok');
+		//console.log('exception catched, all ok');
 	}
 };
 
@@ -577,7 +577,7 @@ window.onhashchange = function(){
 	if(UI_STATE_DIALOG == 0 && location.href.indexOf('ui-state=dialog') > -1){
 		UI_STATE_DIALOG = 1;
 	}
-	
+
 	HISTORY_INNER.push(location.href);
 	if( ( location.href.indexOf('#trust-list') > -1 ||
 			location.href.indexOf('#create-item') > -1 ||
@@ -646,10 +646,14 @@ window.onhashchange = function(){
 		WALLET.init();
 	}
 
+	if(location.href.indexOf('#my-groups') > -1){
+		GROUPS.init();
+	}
+
 	if(location.href.indexOf('#programs-page') > -1
 		&& PROGRAMS.activated_hard_filter != 1
 		&& PROGRAMS.activated_easy_filter != 1){
-		console.log('load programs');
+		//console.log('load programs');
 		PROGRAMS.init();
 		$('#programs-page select').selectmenu().selectmenu("refresh", true);
 	}
@@ -657,20 +661,20 @@ window.onhashchange = function(){
 	if(location.href.indexOf('#projects-page') > -1
 		&& PROJECTS.activated_hard_filter != 1
 		&& PROJECTS.activated_easy_filter != 1){
-		console.log('load projects');
+		//console.log('load projects');
 		PROJECTS.init();
 	}
 
 	if(location.href.indexOf('#requests-page') > -1
 		&& REQUESTS.activated_hard_filter != 1
 		&& REQUESTS.activated_easy_filter != 1){
-		console.log('load requests');
+		//console.log('load requests');
 		REQUESTS.init();
 		$('#requests-page select').selectmenu().selectmenu("refresh", true);
 	}
 
 	if(location.href.indexOf('#my-fund-page') > -1 && location.href.indexOf('&ui-state=dialog') == -1){
-			console.log('load fund');
+			//console.log('load fund');
 			function temp_callback(){
 				return function(){
 					PIF.get_pif_array();
@@ -690,7 +694,7 @@ window.onhashchange = function(){
 
 	if(location.href.indexOf('#trust-list') > -1 && SUPER_PROFILE.auth == true){
 		if(!$('#trusted_checkbox').hasClass('ui-checkbox-on')){
-			console.log('checkbpx off');
+			//console.log('checkbpx off');
 			$('#trust-list input[name=trusted_checkbox]').checkboxradio().prop('checked', true).checkboxradio( 'refresh' );
 		}
 		TRUST_LIST.init(false, 'p_s');
@@ -706,17 +710,12 @@ window.onhashchange = function(){
 		}
 	}
 
-
 	if(location.href.indexOf('#create-vote') > -1 && SUPER_PROFILE.auth == true){
 		set_dates_range('#create-vote [name=s_time_date]', '#create-vote [name=s_time_month]', '#create-vote [name=s_time_year]', new Date().getFullYear(), 2, "current");
 		set_dates_range('#create-vote [name=f_time_date]', '#create-vote [name=f_time_month]', '#create-vote [name=f_time_year]', new Date().getFullYear(), 2, "current");
 		$.mobile.loading( "hide" );
 	}
-	/*if(location.href.indexOf('#filter-page') > -1 && SUPER_PROFILE.auth == true){
-		set_dates_range('#filter-page [name=start_date]', '#filter-page [name=start_month]', '#filter-page [name=start_year]', 1990, 2, 'current');
-		set_dates_range('#filter-page [name=end_date]', '#filter-page [name=end_month]', '#filter-page [name=end_year]', 1990, 2, 'current');
-	}*/
-	
+
 
 	if(location.href.indexOf('#profile-page') > -1 && SUPER_PROFILE.auth == true){
 		switch(SUPER_PROFILE.gender){
@@ -823,7 +822,7 @@ window.onhashchange = function(){
 		$('#select-lang > option[value="' + new_lang + '"]').attr('selected', 'selected');
 		$('#select-lang').selectmenu("refresh", true);
 	}catch(e){
-		console.log('exception catched, all ok');
+		//console.log('exception catched, all ok');
 	}
 
 	if(UI_STATE_DIALOG == 1 && location.href.indexOf('ui-state=dialog') == -1){
@@ -1047,16 +1046,17 @@ var COMMON_OBJECT = {
 			window.addEventListener("scroll", COMMON_OBJECT.custom_listeners );	
 	},
 	custom_swipe: function(object){
-		console.log($(object).data('show'));
+		//console.log($(object).data('show'));
 		switch($(object).data('show')){
-			/*case 0:
-			console.log(2);
+			case 0:
+			//console.log(2);
 				$.mobile.activePage.find('.filters-panel').find('.filters-panel-inner').attr('style', 'display: none');
-				$(object).html('Filter');
-				$(object).data('show', 1);
-				break;*/
+				$('.filter_slider_btn').show();
+/*				$(object).html('Filter');
+				$(object).data('show', 1);*/
+				break;
 			case 1:
-			console.log(3);
+			//console.log(3);
 				$(object).attr('style', 'display: none');
 				$.mobile.activePage.find('.filters-panel').find('.filters-panel-inner').slideDown(500);
 				//$(object).html('Hide filter');
@@ -1587,7 +1587,7 @@ var HISTORY_PAGE = {
 			crossDomain: true,
 			complete: function( response ){
 				var funds_list = JSON.parse( response.responseText );
-				console.log('history');	
+				//console.log('history');	
 				$.mobile.loading( "hide" );
 
 				var ui_funds = '';
@@ -1852,9 +1852,9 @@ var PIF = {
 			self.pif_array = funds.arr;
 			COMMON_OBJECT.free_callbacker( temp_callback() );
 		}else{
-			console.log(force_get_array);
-			console.log(funds.arr);
-			console.log('pif here');
+			//console.log(force_get_array);
+			//console.log(funds.arr);
+			//console.log('pif here');
 			$.ajax({
 				url: mainURL + "/fund_user.php",
 				type: "GET",
@@ -1986,7 +1986,7 @@ var PROJECTS = {
 			var url = mainURL + '/project.php?filter=' + encodeURIComponent(tag_filter);
 			$('#projects-page #menu_link').attr('style', 'display:block');
 			$('#projects-page #my_activities_link').attr('style', 'display:none');
-			console.log(tag_filter);
+			//console.log(tag_filter);
 		}else if(location.href.indexOf('#projects-page?program=') > -1){
 			var match_array = location.href.match(/#projects-page\?program=[0-9]*/i);
 			var object_id = match_array[0].match(/[0-9]+/i);
@@ -2020,8 +2020,6 @@ var PROJECTS = {
 			$('#programs-page #my_activities_link').attr('style', 'display:none');
 		}
 
-		
-
 		$.mobile.loading( "show", {theme: "z"});
 		$.ajax({
 			url: url,
@@ -2031,13 +2029,13 @@ var PROJECTS = {
 			},
 			crossDomain: true,
 			complete: function( response ){
-				//console.log(response);
+				////console.log(response);
 				self.data_array = JSON.parse( response.responseText );
 				if(self.data_array.length == 0){
 					//alert(LOCALE_ARRAY_ADDITIONAL.no_data[CURRENT_LANG] && self.activated_hard_filter == 1);
 					$('#projects-page #projects-list').html('<center>Empty</center>');
 				}	
-				console.log( self.data_array );
+				//console.log( self.data_array );
 				$.mobile.loading( "hide" );
 				self.check_current_url( 1 );
 				self.build_elements();
@@ -2055,10 +2053,8 @@ var PROJECTS = {
 
 			if(location.href.indexOf('#projects-page?tags_filter=') > -1){
 				var tag_filter = location.href.match(/=([a-zA-Z0-9а-яА-Я]*)/i)[1];
-				
-
 				var url = mainURL + '/project.php?filter=' + encodeURIComponent(tag_filter) + '&ls=' + self.data_last_item;
-				console.log(tag_filter);
+				//console.log(tag_filter);
 			}else if(location.href.indexOf('#projects-page?program=') > -1){
 				var match_array = location.href.match(/#projects-page\?program=[0-9]*/i);
 				var object_id = match_array[0].match(/[0-9]+/i);
@@ -2080,10 +2076,10 @@ var PROJECTS = {
 				},
 				crossDomain: true,
 				complete: function( response ){
-					//console.log(response);
+					////console.log(response);
 					
 					var query_array = JSON.parse( response.responseText );	
-					console.log( self.data_array );
+					//console.log( self.data_array );
 					if(query_array.length > 0){
 						self.data_array = self.data_array.concat(query_array);
 						self.data_last_item += query_array.length;
@@ -2164,7 +2160,7 @@ var PROJECTS = {
 			},
 			crossDomain: true,
 			complete: function( response ){
-				console.log(url);
+				//console.log(url);
 				self.data_array = JSON.parse( response.responseText );	
 				$.mobile.loading( "hide" );
 				//self.check_current_url( 1 );
@@ -2206,6 +2202,7 @@ var PROJECTS = {
 					break;
 			}*/
 		});
+
 		if(reinit){
 			$('#projects-page #projects-list').append(elements_string);
 		}else{
@@ -2583,7 +2580,7 @@ var PROJECTS = {
 
 		if(data_for_build.status == 0){
 			var status_item = '<div class="status yellow">\
-									' + LOCALE_ARRAY_ADDITIONAL.collect_cash_to[CURRENT_LANG] + ' ' + data_for_build.ts_closed + '\
+									' + LOCALE_ARRAY_ADDITIONAL.collect_cash_to[CURRENT_LANG] + ' ' + data_for_build.dt_expired + '\
 								</div>';						
 		}else{
 			var status_item = '<div class="status green">\
@@ -3048,7 +3045,7 @@ var PROJECTS = {
 			},
 			complete: function(data){
 				alert(LOCALE_ARRAY_ADDITIONAL.saved_successfull[CURRENT_LANG]);
-				console.log("saved ok");
+				//console.log("saved ok");
 				//alert('okay');
 			}
 		});
@@ -3071,7 +3068,7 @@ var PROJECTS = {
 				return_element = JSON.parse( response.responseText );
 				data_for_build = return_element[0];
 				self.data_array = data_for_build;
-				console.log(self.data_array);
+				//console.log(self.data_array);
 				if(project_proposition){
 					self.current_collect_cash_project_proposition( data_for_build, 0, type_trigger);
 				}else{
@@ -3133,7 +3130,7 @@ var PROJECTS = {
 						$('#' + selector + '-page #my_amount_current').html( parseInt( $('#' + selector + '-page #my_amount_current').html() ) + parseInt( amount ) );
 						
 						$('#' + selector + '-page select').selectmenu().selectmenu("refresh", true);
-						console.log("donate ok");
+						//console.log("donate ok");
 					}else{
 						alert(LOCALE_ARRAY_ADDITIONAL.fund_closed[CURRENT_LANG]);
 					}
@@ -3169,7 +3166,7 @@ var PROJECTS = {
 			crossDomain: true,
 			complete: function( response ){
 					var funds_list = JSON.parse( response.responseText );
-					console.log('project_proposition or project');	
+					//console.log('project_proposition or project');	
 					$.mobile.loading( "hide" );
 
 					var ui_funds = '';
@@ -3272,7 +3269,7 @@ var PROJECTS = {
 			},
 			complete: function(data){
 				alert(LOCALE_ARRAY_ADDITIONAL.return_donate_successfull[CURRENT_LANG]);
-				console.log(return_page);
+				//console.log(return_page);
 				PIF.get_pif_array(true);
 				$.mobile.navigate(return_page);
 				//alert('okay');
@@ -3288,7 +3285,7 @@ var PROJECTS = {
 			},
 			crossDomain: true,
 			complete: function( response ){
-				 console.log("Deleted id:" + voting_id);
+				 //console.log("Deleted id:" + voting_id);
 				 $.mobile.navigate(return_page);
 			},
 		});
@@ -3317,7 +3314,7 @@ var PROGRAMS = {
 			var tag_filter = location.href.match(/=([a-zA-Z0-9а-яА-Я]*)/i)[1];
 			
 			var url = mainURL + '/program.php?filter=' + encodeURIComponent(tag_filter);
-			console.log(tag_filter);
+			//console.log(tag_filter);
 			$('#programs-page #menu_link').attr('style', 'display:block');
 			$('#programs-page #my_activities_link').attr('style', 'display:none');
 		}else if(location.href.indexOf('#programs-page?my_program=true') > -1){
@@ -3342,12 +3339,12 @@ var PROGRAMS = {
 			},
 			crossDomain: true,
 			complete: function( response ){
-					console.log(response);
+					//console.log(response);
 					self.data_array = JSON.parse( response.responseText );
 					if(self.data_array.length == 0 && self.activated_hard_filter == 1){
 						alert(LOCALE_ARRAY_ADDITIONAL.no_data[CURRENT_LANG]);
 					}	
-					console.log( self.data_array );
+					//console.log( self.data_array );
 					$.mobile.loading( "hide" );
 					self.check_current_url( 1 );
 					self.build_elements();
@@ -3370,7 +3367,7 @@ var PROGRAMS = {
 				
 
 				var url = mainURL + '/program.php?filter=' + encodeURIComponent(tag_filter) + '&ls=' + self.data_last_item;
-				console.log(tag_filter);
+				//console.log(tag_filter);
 			}else if(location.href.indexOf('#programs-page?my_program=true') > -1){
 				var url = mainURL + '/program.php?my=1&ls=' + self.data_last_item;
 			}else{
@@ -3386,10 +3383,10 @@ var PROGRAMS = {
 				},
 				crossDomain: true,
 				complete: function( response ){
-						//console.log(response);
+						////console.log(response);
 					
 						var query_array =JSON.parse( response.responseText );
-						console.log( self.data_array );
+						//console.log( self.data_array );
 						if(query_array.length > 0){
 							self.data_array = self.data_array.concat(query_array);
 							self.data_last_item += query_array.length;
@@ -3406,7 +3403,7 @@ var PROGRAMS = {
 		self.activated_easy_filter = 1;
 		/*if(sphere_id >= 0){
 			self.sphere_filter = sphere_id;
-			console.log(sphere_id);
+			//console.log(sphere_id);
 			for (var i = 0; i < SPHERES.spheres.length; i++) {
 				if(SPHERES.spheres[i].selector_name == name_sphere){
 					var type_sphere = SPHERES.spheres[i].name;
@@ -3476,7 +3473,7 @@ var PROGRAMS = {
 			},
 			crossDomain: true,
 			complete: function( response ){
-					console.log(url);
+					//console.log(url);
 					self.data_array = JSON.parse( response.responseText );	
 					$.mobile.loading( "hide" );
 					//self.check_current_url( 1 );
@@ -3897,7 +3894,7 @@ var PROGRAMS = {
 				return_element = JSON.parse( response.responseText );
 				data_for_build = return_element[0];
 				self.data_array = data_for_build;
-				console.log(self.data_array);
+				//console.log(self.data_array);
 				switch(data_for_build.status){
 					case '0':
 						self.current_collect_cash( data_for_build, 0, type_trigger);
@@ -3957,7 +3954,7 @@ var PROGRAMS = {
 						$('#' + selector + '-page select').selectmenu().selectmenu("refresh", true);
 						PIF.get_pif_array(true);
 						$('#weighted_voting_link').attr('onclick', '$.mobile.navigate(\'#weighted-votings-page?program=' + object_id + '\')');
-						console.log("donate ok");
+						//console.log("donate ok");
 					}else{
 						alert(LOCALE_ARRAY_ADDITIONAL.fund_closed[CURRENT_LANG]);
 					}
@@ -3981,9 +3978,9 @@ var PROGRAMS = {
 				crossDomain: true,
 				complete: function( response ){
 					var funds_list = JSON.parse( response.responseText );
-					console.log('program');
-					console.log('funds_list');
-					console.log(funds_list);	
+					//console.log('program');
+					//console.log('funds_list');
+					//console.log(funds_list);	
 					$.mobile.loading( "hide" );
 
 					var ui_funds = '';
@@ -4079,7 +4076,7 @@ var PROGRAMS = {
 			},
 			complete: function(data){
 				alert(LOCALE_ARRAY_ADDITIONAL.return_donate_successfull[CURRENT_LANG]);
-				console.log(return_page);
+				//console.log(return_page);
 				PIF.get_pif_array(true);
 				$('#weighted_voting_link').attr('onclick', 'alert(\'' + LOCALE_ARRAY_ADDITIONAL.only_for_donators[CURRENT_LANG] + '\');');
 				$.mobile.navigate(return_page);
@@ -4096,7 +4093,7 @@ var PROGRAMS = {
 			},
 			crossDomain: true,
 			complete: function( response ){
-				 console.log("Deleted id:" + voting_id);
+				 //console.log("Deleted id:" + voting_id);
 				 $.mobile.navigate(return_page);	
 			},
 		});
@@ -4127,7 +4124,7 @@ var REQUESTS = {
 			var tag_filter = location.href.match(/=([a-zA-Z0-9а-яА-Я]*)/i)[1];
 			
 			var url = mainURL + '/request.php?filter=' + encodeURIComponent(tag_filter);
-			console.log(tag_filter);
+			//console.log(tag_filter);
 		}else if(location.href.indexOf('#requests-page?my_request=true') > -1){
 			var url = mainURL + '/request.php?my=1';
 			$('#requests-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.my_requests[CURRENT_LANG]);
@@ -4148,12 +4145,12 @@ var REQUESTS = {
 			},
 			crossDomain: true,
 			complete: function( response ){
-				//console.log(response);
+				////console.log(response);
 				self.data_array = JSON.parse( response.responseText );
 				if(self.data_array.length == 0 && self.activated_hard_filter == 1){
 					alert(LOCALE_ARRAY_ADDITIONAL.no_data[CURRENT_LANG]);
 				}	
-				console.log( self.data_array );
+				//console.log( self.data_array );
 				$.mobile.loading( "hide" );
 				self.check_current_url( 1 );
 				self.build_elements();
@@ -4172,7 +4169,7 @@ var REQUESTS = {
 				
 
 				var url = mainURL + '/request.php?filter=' + encodeURIComponent(tag_filter) + '&ls=' + self.data_last_item;
-				console.log(tag_filter);
+				//console.log(tag_filter);
 			}else if(location.href.indexOf('#requests-page?my_request=true') > -1){
 				var url = mainURL + '/request.php?my=1&ls=' + self.data_last_item;
 			}else{
@@ -4188,10 +4185,10 @@ var REQUESTS = {
 				},
 				crossDomain: true,
 				complete: function( response ){
-					//console.log(response);
+					////console.log(response);
 				
 					var query_array = JSON.parse( response.responseText );	
-					console.log( self.data_array );
+					//console.log( self.data_array );
 					if(query_array.length > 0){
 						self.data_array = self.data_array.concat(query_array);
 						self.data_last_item += query_array.length;
@@ -4208,7 +4205,7 @@ var REQUESTS = {
 		self.activated_easy_filter = 1;
 		/*if(sphere_id >= 0){
 			self.sphere_filter = sphere_id;
-			console.log(sphere_id);
+			//console.log(sphere_id);
 			for (var i = 0; i < SPHERES.spheres.length; i++) {
 				if(SPHERES.spheres[i].selector_name == name_sphere){
 					var type_sphere = SPHERES.spheres[i].name;
@@ -4287,7 +4284,7 @@ var REQUESTS = {
 			},
 			crossDomain: true,
 			complete: function( response ){
-				console.log(url);
+				//console.log(url);
 				self.data_array = JSON.parse( response.responseText );	
 				$.mobile.loading( "hide" );
 				//self.check_current_url( 1 );
@@ -4311,7 +4308,7 @@ var REQUESTS = {
 			},
 			crossDomain: true,
 			complete: function( response ){
-					console.log("all ok!");	 
+					//console.log("all ok!");	 
 			},
 		});
 		switch($('#support').data('supported')){
@@ -4885,7 +4882,7 @@ var REQUESTS = {
 			},
 			complete: function(data){
 				alert(LOCALE_ARRAY_ADDITIONAL.saved_successfull[CURRENT_LANG]);
-				console.log("saved ok");
+				//console.log("saved ok");
 				//alert('okay');
 			}
 		});
@@ -4904,7 +4901,7 @@ var REQUESTS = {
 				return_element = JSON.parse( response.responseText );
 				data_for_build = return_element[0];
 				self.data_array = data_for_build;
-				console.log(self.data_array);
+				//console.log(self.data_array);
 				switch(data_for_build.status){
 					case '0':
 						self.current_collect_cash( data_for_build, 0, type_trigger);
@@ -4962,7 +4959,7 @@ var REQUESTS = {
 						$('#' + selector + '-page #amount_up').html( parseInt( $('#' + selector + '-page #amount_up').html() ) + parseInt( amount ));
 						$('#' + selector + '-page #my_amount_current').html( parseInt( $('#' + selector + '-page #my_amount_current').html() ) + parseInt( amount ) );
 						$('#' + selector + '-page select').selectmenu().selectmenu("refresh", true);
-						console.log("donate ok");
+						//console.log("donate ok");
 					}else{
 						alert(LOCALE_ARRAY_ADDITIONAL.fund_closed[CURRENT_LANG]);
 					}					
@@ -4987,7 +4984,7 @@ var REQUESTS = {
 				crossDomain: true,
 				complete: function( response ){
 					var funds_list = JSON.parse( response.responseText );
-					console.log('request');	
+					//console.log('request');	
 					$.mobile.loading( "hide" );
 
 					var ui_funds = '';
@@ -5090,7 +5087,7 @@ var REQUESTS = {
 			},
 			complete: function(data){
 				alert(LOCALE_ARRAY_ADDITIONAL.return_donate_successfull[CURRENT_LANG]);
-				console.log(return_page);
+				//console.log(return_page);
 				PIF.get_pif_array(true);
 				$.mobile.navigate(return_page);
 				//alert('okay');
@@ -5106,7 +5103,7 @@ var REQUESTS = {
 			},
 			crossDomain: true,
 			complete: function( response ){
-				 console.log("Deleted id:" + voting_id);
+				 //console.log("Deleted id:" + voting_id);
 				 $.mobile.navigate(return_page);	
 			},
 		});
@@ -5133,7 +5130,7 @@ var funds = {
 				self.arr = JSON.parse(data.responseText);
 				self.build_page(self.arr);
 				if(callback_function){
-					console.log('callback');
+					//console.log('callback');
 					callback_function();
 					
 				}
@@ -5268,12 +5265,12 @@ var funds = {
 				},
 				crossDomain: true,
 				complete: function( response ){
-					//console.log(response);
+					////console.log(response);
 					var fund_array = JSON.parse( response.responseText );
 					if(fund_array.length == 0){
 						$('#balances-pif-page #content_table').html( '<center><h2>' + LOCALE_ARRAY_ADDITIONAL.no_pif_history[CURRENT_LANG] + '</h1></center>' ).enhanceWithin();
 					}else{
-						console.log( fund_array );
+						//console.log( fund_array );
 							$.mobile.loading( "hide" );
 							var ui_elements = '';
 
@@ -5292,10 +5289,10 @@ var funds = {
 										var general_span = '<span>(' + LOCALE_ARRAY_ADDITIONAL.personal_fund[CURRENT_LANG] + ' ' + fund_id + ' - Проектное предложение ' + one_fund.fund_id + ')</span>';
 										break;
 									case '4':
-										var general_span = '<span>(' + LOCALE_ARRAY_ADDITIONAL.personal_fund[CURRENT_LANG] + ' ' + fund_id + ' - Проект ' + one_fund.fund_id + ')</span>';
+										var general_span = one_fund.title + '<br /><span>' + LOCALE_ARRAY_ADDITIONAL.personal_fund[CURRENT_LANG] + ' ' + fund_id + ' => ' +LOCALE_ARRAY_ADDITIONAL.project[CURRENT_LANG] + ' ' + one_fund.idt + ' ' + LOCALE_ARRAY_ADDITIONAL.fund[CURRENT_LANG] + ' ' + one_fund.fund_id + '</span>';
 										break;
 									case '5':
-										var general_span = '<span>(' + LOCALE_ARRAY_ADDITIONAL.personal_fund[CURRENT_LANG] + ' ' + fund_id + ' - Заявка ' + one_fund.fund_id + ')</span>';
+										var general_span = one_fund.title + '<br /><span>' + LOCALE_ARRAY_ADDITIONAL.personal_fund[CURRENT_LANG] + ' ' + fund_id + ' => ' +LOCALE_ARRAY_ADDITIONAL.request[CURRENT_LANG] + ' ' + one_fund.idt + ' ' + LOCALE_ARRAY_ADDITIONAL.fund[CURRENT_LANG] + ' ' + one_fund.fund_id + '</span>';
 										break;
 								}
 								switch(one_fund.cur){
@@ -5346,10 +5343,15 @@ var funds = {
 			if(amount > parsed_int ) {
 				alert(LOCALE_ARRAY_ADDITIONAL.please_enter_valid_amount[CURRENT_LANG]);
 			}else{
-				console.log( parsed_int );
+				//console.log( parsed_int );
 				$.ajax({
-					url: mainURL + '/fund_return_by_type.php?fund_id=' + fund_id + '&currency=' + currency + '&amount=' + amount + '&type=' + type + '&id=' + id,
-					type: "GET",
+					url: mainURL + '/fund_return_by_type.php',
+					type: "POST",
+					data: {	"fund_id": fund_id,
+				 			"currency": currency,
+				 			"amount": amount,
+				 			"type": type,
+				 			"id": id},
 					xhrFields: {
 						withCredentials: true
 					},
@@ -5396,7 +5398,7 @@ var funds = {
 						$('#my-fund-page #select_pif option[value=' + $('#transaction-page [name=fund_id]').val() + ']').html('#' + $('#transaction-page [name=fund_id]').val() + ' >> ' + response_data[0].saldo + ' ' + PIF.get_currency_name_by_id( $('#transaction-page [name=fund_id] option[value=' + $('#transaction-page [name=fund_id]').val() + ']').data('currency') ) );
 						$('#transaction-page select').selectmenu().selectmenu("refresh", true);
 						$('#my-fund-page select').selectmenu().selectmenu("refresh", true);
-						console.log("saved ok");
+						//console.log("saved ok");
 					}
 				}
 			});
@@ -5454,12 +5456,12 @@ var WEIGHTED_VOTINGS = {
 				},
 				crossDomain: true,
 				complete: function( response ){
-					//console.log(response);
+					////console.log(response);
 					self.votings_array = JSON.parse( response.responseText );
 					if(self.votings_array.length == 0 && self.activated_hard_filter == 1){
 						alert(LOCALE_ARRAY_ADDITIONAL.no_data[CURRENT_LANG]);
 					}	
-					console.log( self.votings_array );
+					//console.log( self.votings_array );
 					$.mobile.loading( "hide" );
 					self.check_current_url( 1 );
 					self.build_elements();
@@ -5471,11 +5473,11 @@ var WEIGHTED_VOTINGS = {
 	},
 	filter_data: function(sphere_id, reinit, name_sphere){
 		var self = this;
-		console.log(name_sphere);
+		//console.log(name_sphere);
 		self.activated_easy_filter = 1;
 		if(sphere_id >= 0){
 			self.sphere_filter = sphere_id;
-			console.log(sphere_id);
+			//console.log(sphere_id);
 			for (var i = 0; i < SPHERES.spheres.length; i++) {
 				if(SPHERES.spheres[i].selector_name == name_sphere){
 					var type_sphere = SPHERES.spheres[i].name;
@@ -5540,7 +5542,7 @@ var WEIGHTED_VOTINGS = {
 			},
 			crossDomain: true,
 			complete: function( response ){
-				//console.log(response);
+				////console.log(response);
 				self.votings_array = JSON.parse( response.responseText );	
 				$.mobile.loading( "hide" );
 				self.check_current_url( 1 );
@@ -5582,10 +5584,10 @@ var WEIGHTED_VOTINGS = {
 				},
 				crossDomain: true,
 				complete: function( response ){
-						//console.log(response);
+						////console.log(response);
 					
 						var query_array = JSON.parse( response.responseText );	
-						console.log( self.votings_array );
+						//console.log( self.votings_array );
 						if(query_array.length > 0){
 							self.votings_array = self.votings_array.concat(query_array);
 							self.voting_last_item += query_array.length;
@@ -6128,7 +6130,7 @@ var WEIGHTED_VOTINGS = {
 		$( ui_string ).appendTo( '#weighted-vote-page' );
 
 		$('#weighted-vote-page').enhanceWithin();
-		console.log('window on load');
+		//console.log('window on load');
 		setTimeout(function(){
 			if(data_for_build.user_vote){
 				switch(data_for_build.user_vote){
@@ -6136,19 +6138,19 @@ var WEIGHTED_VOTINGS = {
 						$('#weighted-vote-page .ui-btn.btn-yes').removeClass("ui-radio-off");
 						$('#weighted-vote-page .ui-btn.btn-yes').addClass("ui-btn-active ui-radio-on");
 						$('#weighted-vote-page .ui-btn.btn-yes').data('checked', 0);
-						console.log('yeeees');
+						//console.log('yeeees');
 						break;
 					case '3':
 						$('#weighted-vote-page .ui-btn.btn-abstain').removeClass("ui-radio-off");
 						$('#weighted-vote-page .ui-btn.btn-abstain').addClass("ui-btn-active ui-radio-on");
 						$('#weighted-vote-page .ui-btn.btn-abstain').data('checked', 0);
-						console.log('abstained');
+						//console.log('abstained');
 						break;
 					case '2':
 						$('#weighted-vote-page .ui-btn.btn-no').removeClass("ui-radio-off");
 						$('#weighted-vote-page .ui-btn.btn-no').addClass("ui-btn-active ui-radio-on");
 						$('#weighted-vote-page .ui-btn.btn-no').data('checked', 0);
-						console.log('minus');
+						//console.log('minus');
 						break;
 				}
 			}
@@ -6186,7 +6188,7 @@ var WEIGHTED_VOTINGS = {
 				data_for_build = one_voting;
 			}
 		});
-		console.log('test3');
+		//console.log('test3');
 		if(!data_for_build){
 
 			data_for_build = self.get_one_element(object_id, type_trigger);
@@ -6233,8 +6235,8 @@ var WEIGHTED_VOTINGS = {
 			complete: function( response ){
 				return_element = JSON.parse( response.responseText );
 				data_for_build = return_element[0];
-				console.log('data_for_build');
-				console.log(data_for_build);
+				//console.log('data_for_build');
+				//console.log(data_for_build);
 				switch(data_for_build.status){
 					case '0':
 						self.current_vote_page_voting_period( data_for_build, 0, type_trigger);
@@ -6325,7 +6327,7 @@ var WEIGHTED_VOTINGS = {
 				crossDomain: true,
 				complete: function( response ){
 						self.get_one_element(object_id);
-						console.log('ok');
+						//console.log('ok');
 				},
 			});
 		}, 100);
@@ -6339,7 +6341,7 @@ var WEIGHTED_VOTINGS = {
 			},
 			crossDomain: true,
 			complete: function( response ){
-				 console.log("Deleted id:" + voting_id);
+				 //console.log("Deleted id:" + voting_id);
 				 $.mobile.navigate(return_page);	
 			},
 		});
@@ -6460,6 +6462,13 @@ var TRUST_LIST = {
 	init: function(next_used, parameter){
 		var self = this;
 		$.mobile.loading( "show", {theme: "z"});
+
+		if(parameter == 's'){
+				var url = mainURL + '/trust.php';					
+		}else if(parameter == 'p_s'){
+				var url = mainURL + '/trust.php?p_s=1';
+		}
+
 		if(parameter){
 			if(parameter == 's'){
 				var url = mainURL + '/trust.php';					
@@ -6481,6 +6490,7 @@ var TRUST_LIST = {
 				}
 			}
 		}
+
 		if($('#trust-list #searched_string').val() != ''){
 			if(url.indexOf('?') > -1){
 				url += "&s=" + $('#trust-list #searched_string').val();
@@ -6488,6 +6498,7 @@ var TRUST_LIST = {
 				url += "?s=" + $('#trust-list #searched_string').val();
 			}
 		}
+
 		if(location.href.indexOf('sphere=') > -1){
 			var match_array = location.href.match(/sphere=[0-9]*/i);
 			var object_id = match_array[0].match(/[0-9]+/i);
@@ -6497,6 +6508,7 @@ var TRUST_LIST = {
 				url += "?sph=" + object_id;
 			}
 		}
+
 		$.ajax({
 			url: url,
 			type: "GET",
@@ -6509,8 +6521,8 @@ var TRUST_LIST = {
 				//console.log(response);
 				if(response && response.responseText.indexOf('error') == -1){
 					self.trust_array = JSON.parse( response.responseText );
-					console.log('trust');	
-					console.log(self.trust_array);
+					//console.log('trust');	
+					//console.log(self.trust_array);
 					self.build_elements();
 					self.set_spheres_and_listeners();
 					SPHERES.initial();
@@ -6778,8 +6790,8 @@ var TRUST_LIST = {
 		var self = this;
 		var ui_string = '<legend>' + LOCALE_ARRAY_ADDITIONAL.choose_sphere[CURRENT_LANG] + '</legend>';
 		//var founded_matches;
-		console.log( 'spheres trust' );
-		console.log( SPHERES.spheres_array );
+		//console.log( 'spheres trust' );
+		//console.log( SPHERES.spheres_array );
 		for ( var i = 0; i < SPHERES.spheres.length; i++ ) {
 			if(SPHERES.spheres[i].objects.length > 0){
 				if(SPHERES.spheres[i].objects[0].org == ''){
@@ -6857,7 +6869,7 @@ var TRUST_LIST = {
 		for (var i = 0; i < spheres_option_selected.length; i++) {
 			self.save_sphere(id_user, $(spheres_option_selected[i]).val());
 		}
-		console.log('was saved');
+		//console.log('was saved');
 		//alert('сохранено!');
 		//$.mobile.navigate("#edit-address");
 	},
@@ -7017,16 +7029,16 @@ var SPHERES = {
 				$('.sphere_form select').selectmenu().selectmenu("refresh", true);
 			} else if(location.href.indexOf('#spheres-filters') > -1){
 				self.set_spheres_filters();
-				console.log('#spheres-filters');
+				//console.log('#spheres-filters');
 				$('#spheres-filters #sphere_form select').selectmenu().selectmenu("refresh", true);
 			} else if(location.href.indexOf('#spheres-address') > -1){
 				self.set_spheres_and_listeners();
-				console.log('#spheres-address');
+				//console.log('#spheres-address');
 				$('#spheres-address #sphere_form select').selectmenu().selectmenu("refresh", true);
 				$('#spheres-address').enhanceWithin();
 			} else if(location.href.indexOf('#spheres-create-vote') > -1){
 				self.set_spheres_create_vote();
-				console.log('#spheres-create-vote');
+				//console.log('#spheres-create-vote');
 				$('#spheres-create-vote #sphere_form select').selectmenu().selectmenu("refresh", true);
 			}		
 
@@ -7133,7 +7145,7 @@ var SPHERES = {
 		for (var i = 0; i < spheres_option_selected.length; i++) {
 			self.save_sphere($(spheres_option_selected[i]).val());
 		}
-		console.log("was saved");
+		//console.log("was saved");
 		//alert('сохранено!');
 		//$.mobile.navigate("#edit-address");
 	},
@@ -7290,7 +7302,7 @@ var SPHERES = {
 						
 					}
 				}
-				console.log('second');
+				//console.log('second');
 				$('#spheres-create-vote #sphere_form').html(ui_string);
 				var arr = $('#spheres-create-vote #sphere_form .container option');
 				for (var i = 0; i < arr.length; i++) {
@@ -7331,7 +7343,7 @@ var NEWS = {
 				//console.log(response);
 				self.news_list = JSON.parse( response.responseText );
 				self.build_elements();
-				console.log(self.news_list);
+				//console.log(self.news_list);
 				$.mobile.loading( "hide" );	
 			},
 		});
@@ -7414,6 +7426,9 @@ var NEWS = {
 									</div>\
 								</div>';
 		});
+
+		$('.right_col').html(LOCALE_ARRAY_ADDITIONAL.news_right[CURRENT_LANG]);
+
 		if(reinit){
 			$('#news-page #news_list').append(elements_string);
 		}else{
@@ -7436,14 +7451,14 @@ var TASKS = {
 			},
 			crossDomain: true,
 			complete: function( response ){
-				console.log(response);
+				//console.log(response);
 				var query_array = JSON.parse( response.responseText );
 				if(query_array.length > 0){
 					self.tasks_list = self.tasks_list.concat(query_array);
 					self.build_elements(true, query_array);
 					self.tasks_last_item += query_array.length;
 				}
-				console.log(self.tasks_list);
+				//console.log(self.tasks_list);
 			},
 		});
  		$.mobile.loading( "hide" );	
@@ -7460,7 +7475,7 @@ var TASKS = {
 			},
 			crossDomain: true,
 			complete: function( response ){
-				console.log(response);
+				//console.log(response);
 				var query_array = JSON.parse( response.responseText );
 				if(query_array.length > 0){
 					self.tasks_list = self.tasks_list.concat(query_array);
@@ -7510,14 +7525,14 @@ var MAP = {
 			},
 			crossDomain: true,
 			complete: function( response ){
-				console.log(response);
+				//console.log(response);
 				var query_array = JSON.parse( response.responseText );
 				if(query_array.length > 0){
 					self.markss_list = self.marks_list.concat(query_array);
 					self.build_elements(true, query_array);
 					self.marks_last_item += query_array.length;
 				}
-				console.log(self.marks_list);
+				//console.log(self.marks_list);
 			},
 		});
 		$.mobile.loading( "hide" );
@@ -7533,14 +7548,14 @@ var MAP = {
 			},
 			crossDomain: true,
 			complete: function( response ){
-				console.log(response);
+				//console.log(response);
 				var query_array = JSON.parse( response.responseText );
 				if(query_array.length > 0){
 					self.markss_list = self.marks_list.concat(query_array);
 					self.build_elements(true, query_array);
 					self.marks_last_item += query_array.length;
 				}
-				console.log(self.marks_list);
+				//console.log(self.marks_list);
 			},
 		});
 		$.mobile.loading( "hide" );
@@ -7587,6 +7602,112 @@ var WALLET = {
 		});
 	}
 };
+
+var GROUPS = {
+	items_list: [],
+	last_item: 0,
+	init: function(){
+		var self = this;
+
+		console.log(SUPER_PROFILE.payment);
+		if(SUPER_PROFILE.payment){
+			$('#btn_group_create').show();
+		} else {
+			$('#btn_group_create').hide();
+		}
+
+		$.mobile.loading( "show", {theme: "z"});
+		$.ajax({
+			url: mainURL + '/groups.php?ls=' + self.last_item,
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				//console.log(response);
+				self.items_list = JSON.parse(response.responseText);
+				if(self.items_list.length > 0){
+					//self.items_list = self.items_list.concat(query_array);
+					LIST_OF_ITEM.build_items_list(0, '#org_list', self.items_list);
+					self.items_list += 10;
+				}
+				$.mobile.loading( "hide" );	
+			},
+		});
+	},
+
+}
+
+var LIST_OF_ITEM = {
+	build_items_list: function(p_reinit, p_selector_list, p_items_list){
+		var self = this;
+		var l_elements_string = '';
+
+		jQuery.each(p_items_list, function(i, l_one_item) {
+			var l_onclick_event = '';
+			var l_date = '';
+			var l_title = '';
+			var l_image = '';
+			var l_img = '';
+			var l_author = '';
+			var l_city = '';
+			var l_icon_right = '';
+			switch( parseInt(l_one_item.type_id) ){
+				case 4:
+					l_onclick_event = 'onclick="$.mobile.navigate(\'#my-spheres-options?id=' + l_one_item.id + '\')" style="cursor:pointer"';
+					l_date = l_one_item.ts;
+					l_title = '<b>ID: ' + l_one_item.id + ' :: ' + l_one_item.org + '</b>';
+					l_image = mainURL + '/uploads/news.svg';
+
+					switch( [CURRENT_LANG] ){
+						case "en":
+							l_city = l_one_item.city_en;
+				 		break;
+						case "ua":
+							l_city = l_one_item.city_uk;
+				 		break;
+				 		case "ru":
+							l_city = l_one_item.city_ru;
+				 		break;
+				 	}
+
+					l_author = '<b>' + l_city + '</b>';
+					l_icon_right = 'news-icon news-icon-num-4';
+					break;
+			}
+
+
+			if(l_image.indexOf('svg') > -1){
+				var l_img = '<object type="image/svg+xml" data="' + l_image + '">Your browser does not support SVG</object>';
+			}else{
+				var l_img = '<img src="' + l_image + '" />';
+			}
+
+			l_elements_string += '<div ' + l_onclick_event + ' class="item ui-corner-all ' + l_icon_right + '">\
+									<div class="img">' + l_img + '</div>\
+									<div class="info">\
+										<div class="date">' + l_date + '</div>\
+										<div class="title">' + l_title + '</div>\
+										<div class="author">' + l_author + '</div>\
+									</div>\
+								</div>';
+		});
+
+		//console.log(l_elements_string);
+
+		if(p_reinit){
+			$(p_selector_list).append(l_elements_string);
+		}else{
+			$(p_selector_list).html(l_elements_string);
+		}
+	},
+	build_item: function(p_reinit, p_back_to, p_item){
+		var self = this;
+		var l_elements_string = '';
+
+	},
+}
 
 /*var FILTERS = {
 	activated: 0,
@@ -7719,8 +7840,8 @@ var WALLET = {
 						+ $('#filter-page [name=end_date]').val();
 			var half_filtered_array = self.filtered_array;
 
-			console.log('half_filtered');
-			console.log(half_filtered_array);
+			//console.log('half_filtered');
+			//console.log(half_filtered_array);
 			self.filtered_array = [];
 			
 			jQuery.each(half_filtered_array, function(i, one_voting) {
@@ -7728,18 +7849,18 @@ var WALLET = {
 					if(self.serched_sphere >= 0){
 						if(self.serched_sphere == one_voting.type){
 							self.filtered_array[self.filtered_array.length] = one_voting;
-							console.log('finded');
+							//console.log('finded');
 						}
-						console.log(' half finded');
+						//console.log(' half finded');
 					}else{
 						self.filtered_array[self.filtered_array.length] = one_voting;
-						console.log('not finded' + self.serched_sphere);
+						//console.log('not finded' + self.serched_sphere);
 					}
 				}
 			});
 
-			console.log('full_filtered');
-			console.log(self.filtered_array);
+			//console.log('full_filtered');
+			//console.log(self.filtered_array);
 			VOTINGS.build_elements(1);
 		}
 	},
@@ -7753,7 +7874,7 @@ var WALLET = {
 var VOTINGS = {
 	votings_array: [],
 	voters_list: [],
-	voting_last_item: 10,
+	voting_last_item: 0,
 	activated_easy_filter: 0,
 	activated_hard_filter: 0,
 	sphere_filter: -1,
@@ -7762,7 +7883,7 @@ var VOTINGS = {
 		self.activated_easy_filter = 0;
 		self.activated_hard_filter = 0;
 		self.sphere_filter = 0;
-		self.voting_last_item = 10;
+		self.voting_last_item = 0;
 		$('#votings-page #searched_string').val('');
 
 		$.mobile.loading( "show", {theme: "z"});
@@ -7776,10 +7897,42 @@ var VOTINGS = {
 				var match_array = location.href.match(/#votings-page\?type=[0-9]*/i);
 				var object_id = match_array[0].match(/[0-9]+/i);
 				var url = mainURL + '/mc.php?type=' + object_id;
+
+			}else if(location.href.indexOf('#votings-page?filter=') > -1){
+				self.activated_easy_filter = 1;
+				var match_array = location.href.match(/filter=[%a-zA-Z0-9]*/i);
+				var object_search = match_array[0].match(/filter=[%a-zA-Z0-9]*/i);
+
+				var url = mainURL + '/mc.php?' + object_search + '&ls=' + self.voting_last_item;
+
 			}else{
 				var url = mainURL + '/mc.php?';
-			}			
+			}
+
+			if(location.href.indexOf('&sph=') > -1){
+				var match_array_sph = location.href.match(/&sph=[0-9]*/i);
+				url += match_array_sph[0];
+			}
+
+			if(location.href.indexOf('&type=') > -1){
+				var match_array_type = location.href.match(/&type=[0-9]*/i);
+				url += match_array_type[0];
+			}
+
+			if(location.href.indexOf('&sort=') > -1){
+				var match_array_sort = location.href.match(/&sort=[0-9]*/i);
+				url += match_array_sort[0];
+			}
+
+			if(location.href.indexOf('&direct=') > -1){
+				var match_array_direct = location.href.match(/&direct=[0-9]*/i);
+				url += match_array_direct[0];
+			}
+
 		}
+
+		//console.log('init:' + url);
+
 
 		$.ajax({
 			url: url,
@@ -7791,7 +7944,7 @@ var VOTINGS = {
 			complete: function( response ){
 				//console.log(response);
 				self.votings_array = JSON.parse( response.responseText );	
-				console.log( self.votings_array );
+				//console.log( self.votings_array );
 				$.mobile.loading( "hide" );
 				self.check_current_url( 1 );
 				self.build_elements();
@@ -7802,14 +7955,18 @@ var VOTINGS = {
 				} 
 			},
 		});
+
+		$('.right_col').html(LOCALE_ARRAY_ADDITIONAL.right_col_votings_page[CURRENT_LANG]);
 	},
 	filter_data: function(sphere_id, reinit, name_sphere){
 		var self = this;
-		console.log(name_sphere);
+		//console.log(name_sphere);
+		$.mobile.loading( "show", {theme: "z"});
+
 		self.activated_easy_filter = 1;
 		if(sphere_id >= 0){
 			self.sphere_filter = sphere_id;
-			console.log(sphere_id);
+			//console.log(sphere_id);
 			for (var i = 0; i < SPHERES.spheres.length; i++) {
 				if(SPHERES.spheres[i].selector_name == name_sphere){
 					var type_sphere = SPHERES.spheres[i].name;
@@ -7818,9 +7975,8 @@ var VOTINGS = {
 			}
 			$('#filter-page #choose_spheres').html(LOCALE_ARRAY_ADDITIONAL.choose_sphere[CURRENT_LANG] + ': ' + type_sphere);
 		}
-		$.mobile.loading( "show", {theme: "z"});
 
-		var url = mainURL + '/mc.php?sph=0';
+		var url = mainURL + '/mc.php?';
 
 		if($('#votings-page #searched_string').val() != ""){
 			url += '&filter=' + $('#votings-page #searched_string').val();
@@ -7830,6 +7986,12 @@ var VOTINGS = {
 
 		if(l_sort >= 0 && l_sort < 6){
 			url += '&sort=' + l_sort;
+		}
+
+		var l_status = $('#votings-page [name=status] option:selected').val();
+
+		if(l_status > -1 && l_status < 5){
+			url += '&status=' + l_status;
 		}
 
 		var l_sort_dir = $('#votings-page [name=sort_direction]').val();
@@ -7849,26 +8011,52 @@ var VOTINGS = {
 				break;
 		}
 
-		if(self.activated_hard_filter){
+		if($('.start_date_checkbox').is(':checked')){
+
 			var start_date = $('#votings-page [name=start_year]').val() + "-" 
 							+ $('#votings-page [name=start_month]').val() + "-" 
 							+ $('#votings-page [name=start_date]').val();
+			url += '&start=' + start_date;
+		}
+
+		if($('.finish_date_checkbox').is(':checked')){
+
 			var end_date = $('#votings-page [name=end_year]').val() + "-" 
 						+ $('#votings-page [name=end_month]').val() + "-" 
 						+ $('#votings-page [name=end_date]').val();
-			url += '&start=' + start_date + '&finish=' + end_date;
-			
-			if(self.sphere_filter >= 0){
-				url += '&sph=' + self.sphere_filter;
-			}
+			url += '&finish=' + end_date;
 		}
 
 		if(reinit){
-			url += '&ls=' + self.voting_last_item;
+			var object_search = '';
+			if(location.href.indexOf('filter=') > -1){
+				var match_array = location.href.match(/filter=[%a-zA-Z0-9]*/i);
+				url += '&' + match_array[0].match(/filter=[%a-zA-Z0-9]*/i);
+			}
+
+
+
+			if(location.href.indexOf('&sph=') > -1){
+				var match_array_sph = location.href.match(/&sph=[0-9]*/i);
+				url += match_array_sph[0];
+			}
+
+			if(location.href.indexOf('&type=') > -1){
+				var match_array_type = location.href.match(/&type=[0-9]*/i);
+				url += match_array_type[0];
+			}
+
 			self.voting_last_item += 10;	
-		}else{
-			self.voting_last_item = 10;
+
+			url += '&ls=' + self.voting_last_item;
 		}
+
+		if(self.sphere_filter > 0){
+			//console.log(self.sphere_filter);
+			url += '&sph=' + self.sphere_filter;
+		} 
+
+		console.log('filter:' + url);
 
 		$.ajax({
 			url: url,
@@ -7880,21 +8068,25 @@ var VOTINGS = {
 			complete: function( response ){
 				//console.log(response);
 				self.votings_array = JSON.parse( response.responseText );	
-				$.mobile.loading( "hide" );
-				self.check_current_url( 1 );
-				if(reinit){
-					self.build_elements( "", true );	
-				}else{
-					self.build_elements();	
-				}
-				if(self.votings_array.length == 0 && reinit != 1 && self.activated_hard_filter == 1){
+				if(self.votings_array.length > 0){
+					self.check_current_url( 1 );
+					if(reinit){
+						self.build_elements( "", true );	
+					}else{
+						self.build_elements();	
+					}
+				} else if(self.votings_array.length == 0 && reinit != 1 && self.activated_hard_filter == 1){
 					alert(LOCALE_ARRAY_ADDITIONAL.no_data[CURRENT_LANG]);
-				} 	
+				}
+				$.mobile.loading( "hide" );
 			},
 		});
 	},
 	reinit: function(){
 		var self = this;
+		if(location.href.indexOf('#votings-page?filter=') > -1){
+			self.activated_easy_filter = 1;
+		}
 		if(self.activated_easy_filter == 1 || self.activated_hard_filter == 1){
 			self.filter_data(-1, 1);
 		}else{
@@ -7903,10 +8095,29 @@ var VOTINGS = {
 			if(location.href.indexOf('#votings-page?type=') > -1){
 				var match_array = location.href.match(/#votings-page\?type=[0-9]*/i);
 				var object_id = match_array[0].match(/[0-9]+/i);
-				var url = mainURL + '/mc.php?type=' + object_id + '&sph=0&ls=' + self.voting_last_item;
+				var url = mainURL + '/mc.php?type=' + object_id + '&ls=' + self.voting_last_item;
+
+			}else if(location.href.indexOf('#votings-page?filter=') > -1){
+				var match_array = location.href.match(/#votings-page\?filter=[%a-zA-Z0-9]*/i);
+				var object_search = match_array[0].match(/filter=[%a-zA-Z0-9]*/i);
+				
+				var url = mainURL + '/mc.php?' + object_search + '&ls=' + self.voting_last_item;
+
 			}else{
-				var url = mainURL + '/mc.php?sph=0&ls=' + self.voting_last_item;
+				var url = mainURL + '/mc.php?ls=' + self.voting_last_item;
 			}
+
+			if(location.href.indexOf('&sph=') > -1){
+				var match_array_sph = location.href.match(/&sph=[0-9]*/i);
+				url += match_array_sph[0];
+			}
+
+			if(location.href.indexOf('&type=') > -1){
+				var match_array_type = location.href.match(/&type=[0-9]*/i);
+				url += match_array_type[0];
+			}
+
+			//console.log('REinit:' + url);
 
 			$.ajax({
 				url: url,
@@ -7916,10 +8127,10 @@ var VOTINGS = {
 				},
 				crossDomain: true,
 				complete: function( response ){
-					//console.log(response);
+					//console.log('REinit:' + response);
 				
 					var query_array =JSON.parse( response.responseText );	
-					console.log( self.votings_array );					
+					//console.log( self.votings_array );					
 					if(query_array.length > 0){
 						self.votings_array = self.votings_array.concat(query_array);
 						self.voting_last_item += query_array.length;
@@ -7940,7 +8151,7 @@ var VOTINGS = {
 			},
 			crossDomain: true,
 			complete: function( response ){
-				console.log("all ok!");	 
+				//console.log("all ok!");	 
 			},
 		});
 		switch($('#support').data('supported')){
@@ -7986,6 +8197,7 @@ var VOTINGS = {
 					break;
 			}
 		});
+
 		if(reinit){
 			$('#votings-page #votings_list').append(elements_string);
 		}else{
@@ -8084,9 +8296,7 @@ var VOTINGS = {
 											<span>' + LOCALE_ARRAY_ADDITIONAL.all_voters[CURRENT_LANG] + '</span> <strong>' + percents_object.sum_values + '</strong>\
 										</div>\
 										<div class="voting-line clearfix">\
-											<span class="left" style="width: ' + parseInt(percents_object.plus_percent) + '%">' + parseInt(one_voting.vote_yes) + '</span><span class="middle" style="width: ' 
-																			 + parseInt(percents_object.abstained_percent) + '%">' + parseInt(one_voting.vote_nth) + '</span><span class="right" style="width: ' 
-																			 + parseInt(percents_object.minus_percent) + '%">' + parseInt(one_voting.vote_no) + '</span>\
+											<span class="left" style="width: ' + parseInt(percents_object.plus_percent) + '%">' + parseInt(one_voting.vote_yes) + '</span><span class="middle" style="width: ' + parseInt(percents_object.abstained_percent) + '%">' + parseInt(one_voting.vote_nth) + '</span><span class="right" style="width: ' + parseInt(percents_object.minus_percent) + '%">' + parseInt(one_voting.vote_no) + '</span>\
 										</div>\
 									</div>\
 								</a>\
@@ -8119,9 +8329,7 @@ var VOTINGS = {
 											<span>' + LOCALE_ARRAY_ADDITIONAL.all_voters[CURRENT_LANG] + '</span> <strong>' + percents_object.sum_values + '</strong>\
 										</div>\
 										<div class="voting-line clearfix">\
-											<span class="left" style="width: ' + parseInt(percents_object.plus_percent) + '%">' + parseInt(one_voting.vote_yes) + '</span><span class="middle" style="width: ' 
-																			 + parseInt(percents_object.abstained_percent) + '%">' + parseInt(one_voting.vote_nth) + '</span><span class="right" style="width: ' 
-																			 + parseInt(percents_object.minus_percent) + '%">' + parseInt(one_voting.vote_no) + '</span>\
+											<span class="left" style="width: ' + parseInt(percents_object.plus_percent) + '%">' + parseInt(one_voting.vote_yes) + '</span><span class="middle" style="width: ' + parseInt(percents_object.abstained_percent) + '%">' + parseInt(one_voting.vote_nth) + '</span><span class="right" style="width: ' + parseInt(percents_object.minus_percent) + '%">' + parseInt(one_voting.vote_no) + '</span>\
 										</div>\
 									</div>\
 								</a>\
@@ -8240,6 +8448,7 @@ var VOTINGS = {
 									</div>\
 								</div>\
 								<div role="main" class="ui-content">\
+								<div class="left_col">\
 									<div class="vote-item">\
 										<div class="img">\
 											<img width="100%" src="' + mainURL + data_for_build.img + '" />\
@@ -8273,7 +8482,7 @@ var VOTINGS = {
 															<a target="_blank" class="vk" href="https://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
 														</div>\
 														<div class="ui-block-b">\
-															<a target="_blank" class="fb" href="https://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href) + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
+															<a target="_blank" class="fb" href="https://www.facebook.com/dialog/feed?app_id=1576819145899302&redirect_uri=' + encodeURIComponent(location.href) + '&picture=' + encodeURIComponent(mainURL + data_for_build.img) + '&caption=' + encodeURIComponent(LOCALE_ARRAY_ADDITIONAL.vote[CURRENT_LANG] + ' ID:' + data_for_build.id + ' : ' + data_for_build.name) + '&description=' + encodeURIComponent(data_for_build.description) + ' ' + mainURL + '#vote-page?vote=' + data_for_build.id + '&lang=2"></a>\
 														</div>\
 														<div class="ui-block-c">\
 															<a target="_blank" class="tw" href="https://twitter.com/share?url=' + encodeURIComponent(location.href) + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
@@ -8297,7 +8506,8 @@ var VOTINGS = {
 											' + create_request_button + '\
 										</div>\
 									</div>\
-								</div>';
+								</div>\
+								<div class="right_col"></div></div>';
 		
 		//$('#vote-page').html(ui_string);
 		//$.mobile.navigate("#vote-page");
@@ -8364,39 +8574,42 @@ var VOTINGS = {
 		var only_buttons = '';
 		if(finished == 0){
 			only_buttons = '<fieldset class="vote-radio-group" data-role="controlgroup" data-type="horizontal">\
-															<legend>' + LOCALE_ARRAY_ADDITIONAL.yes_no_i_do_not_know[CURRENT_LANG] + '</legend>\
-															<div class="ui-radio ' + selected_class_yes + '">\
-																<label data-checked = "' + checked_yes + '" onclick = "VOTINGS.vote_for_voting(' + data_for_build.id + ')" class="ui-btn ui-radio-off btn-yes">' + LOCALE_ARRAY_ADDITIONAL.yes[CURRENT_LANG] + '</label><input type="radio" name="vote" value="yes" data-enhanced="true">\
-															</div>\
-															<div class="ui-radio ' + selected_class_abstain + '">\
-																<label data-checked = "' + checked_abstain + '" onclick = "VOTINGS.vote_for_voting(' + data_for_build.id + ')" class="ui-btn ui-radio-off btn-abstain">' + LOCALE_ARRAY_ADDITIONAL.abstain[CURRENT_LANG] + '</label><input type="radio" name="vote" value="abstain" data-enhanced="true">\
-															</div>\
-															<div class="ui-radio ' + selected_class_no + '" >\
-																<label data-checked = "' + checked_no + '" onclick = "VOTINGS.vote_for_voting(' + data_for_build.id + ')" class="ui-btn ui-radio-off btn-no">' + LOCALE_ARRAY_ADDITIONAL.no[CURRENT_LANG] + '</label><input type="radio" name="vote" value="no" data-enhanced="true">\
-															</div>\
-														</fieldset>\
-														<div class="ui-checkbox' + selected_class_checkbox + '">\
-															<label class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">' + LOCALE_ARRAY_ADDITIONAL.turn_to_open_anonymous[CURRENT_LANG] + '</label><input type="checkbox" name="" value="1" data-enhanced="true" />\
-														</div>';
+			<legend>' + LOCALE_ARRAY_ADDITIONAL.yes_no_i_do_not_know[CURRENT_LANG] + '</legend>\
+			<div class="ui-radio ' + selected_class_yes + '">\
+				<label data-checked = "' + checked_yes + '" onclick = "VOTINGS.vote_for_voting(' + data_for_build.id + ')" class="ui-btn ui-radio-off btn-yes">' + LOCALE_ARRAY_ADDITIONAL.yes[CURRENT_LANG] + '</label><input type="radio" name="vote" value="yes" data-enhanced="true">\
+			</div>\
+			<div class="ui-radio ' + selected_class_abstain + '">\
+				<label data-checked = "' + checked_abstain + '" onclick = "VOTINGS.vote_for_voting(' + data_for_build.id + ')" class="ui-btn ui-radio-off btn-abstain">' + LOCALE_ARRAY_ADDITIONAL.abstain[CURRENT_LANG] + '</label><input type="radio" name="vote" value="abstain" data-enhanced="true">\
+			</div>\
+			<div class="ui-radio ' + selected_class_no + '" >\
+				<label data-checked = "' + checked_no + '" onclick = "VOTINGS.vote_for_voting(' + data_for_build.id + ')" class="ui-btn ui-radio-off btn-no">' + LOCALE_ARRAY_ADDITIONAL.no[CURRENT_LANG] + '</label><input type="radio" name="vote" value="no" data-enhanced="true">\
+			</div>\
+		</fieldset>\
+		<div class="ui-checkbox' + selected_class_checkbox + '">\
+			<label class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">' + LOCALE_ARRAY_ADDITIONAL.turn_to_open_anonymous[CURRENT_LANG] + '</label><input type="checkbox" name="" value="1" data-enhanced="true" />\
+		</div>';
 		}
 		var voting_buttons = '';
 		var status_vote = '';
-		if(SUPER_PROFILE.auth == true){
-			voting_buttons = '<form action="" accept-charset="UTF-8" method="post">\
-														' + only_buttons + '\
-														<div class="selected-text">\
-															' + status_current_voting + '\
-														</div></form>\ ';
+		if(finished == 0){
 			status_vote = '<div class="status blue">\
-								<span>' + LOCALE_ARRAY_ADDITIONAL.time_voting[CURRENT_LANG] + data_for_build.start + ' - ' + data_for_build.finish +
+								<span>' + LOCALE_ARRAY_ADDITIONAL.time_voting[CURRENT_LANG] + ' ' + data_for_build.start + ' - ' + data_for_build.finish +
 						 '</span></div>\ ';
 		}else{
-			status_vote = '<div class="status green">\
+			if(finished == 1){
+				status_vote = '<div class="status green">\
 								<span>' + LOCALE_ARRAY_ADDITIONAL.voting_finished[CURRENT_LANG] + '</span>\
 							</div>\ ';
-			if(finished == 0 && SUPER_PROFILE.auth == false){
-				voting_buttons = 'Please register to vote this voting <a href = "#registration">Register</a>';
 			}
+		}
+		if(finished == 0 && SUPER_PROFILE.auth == true){
+			voting_buttons = '<form action="" accept-charset="UTF-8" method="post">\
+						' + only_buttons + '\
+						<div class="selected-text">\
+							' + status_current_voting + '\
+							</div></form>\ ';
+		}else if(SUPER_PROFILE.auth == false){
+			voting_buttons = LOCALE_ARRAY_ADDITIONAL.regiter_now[CURRENT_LANG];
 		}
 
 		switch(data_for_build.stars){
@@ -8458,95 +8671,98 @@ var VOTINGS = {
 		}
 		var ui_string = '';
 		ui_string = '<div data-role="header" data-position="fixed" data-tap-toggle="false">\
-							<h1>' + LOCALE_ARRAY_ADDITIONAL.vote[CURRENT_LANG] + '</h1>\
-								<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back(\'#votings-page\')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#vote-help">Ask</a>\
-								<div id="vote-help" class="help-popup" data-role="popup" data-history="false">\
-									<div class="title">\
-										' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
-									</div>\
-									<div class="text">\
-										' + LOCALE_ARRAY_ADDITIONAL.help_voting_period_finished[CURRENT_LANG] + '\
-									</div>\
+						<h1>' + LOCALE_ARRAY_ADDITIONAL.vote[CURRENT_LANG] + '</h1>\
+							<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back(\'#votings-page\')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#vote-help">Ask</a>\
+							<div id="vote-help" class="help-popup" data-role="popup" data-history="false">\
+								<div class="title">\
+									' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
+								</div>\
+								<div class="text">\
+									' + LOCALE_ARRAY_ADDITIONAL.help_voting_period_finished[CURRENT_LANG] + '\
 								</div>\
 							</div>\
-							<div role="main" class="ui-content">\
-								<div class="vote-item">\
-									<div class="img">\
-										<img width="100%" src="' + mainURL + data_for_build.img + '" />\
+						</div>\
+						<div role="main" class="ui-content">\
+						<div class="left_col">\
+							<div class="vote-item">\
+								<div class="img">\
+									<img width="100%" src="' + mainURL + data_for_build.img + '" />\
+								</div>\
+								<div class="vote-item-inner">\
+									<div class="stars-wrap">' + stars_ui +											
+									'</div>\
+									 <div class="id">\
+										ID: <strong>' + data_for_build.id + ' : ' + data_for_build.name + '</strong>\
 									</div>\
-									<div class="vote-item-inner">\
-										<div class="stars-wrap">' + stars_ui +											
-										'</div>\
-										 <div class="id">\
-											ID: <strong>' + data_for_build.id + ' : ' + data_for_build.name + '</strong>\
+									<div class="username">\
+										' + LOCALE_ARRAY_ADDITIONAL.by[CURRENT_LANG] + ' @<strong>' + data_for_build.author + '</strong>\
+									</div>\
+									<div class="address">\
+										' + LOCALE_ARRAY_ADDITIONAL.sphere[CURRENT_LANG] + ' - ' + type_sphere + ' - ' + organization + data_for_build.sphere + '\
+									</div>\
+									<div class="num-votes-support">\
+										' + LOCALE_ARRAY_ADDITIONAL.number_of_votes_support[CURRENT_LANG] + '\
+										<div class="counter">\
+											<span>' + data_for_build.sprtd + '</span>\
 										</div>\
-										<div class="username">\
-											' + LOCALE_ARRAY_ADDITIONAL.by[CURRENT_LANG] + ' @<strong>' + data_for_build.author + '</strong>\
-										</div>\
-										<div class="address">\
-											' + LOCALE_ARRAY_ADDITIONAL.sphere[CURRENT_LANG] + ' - ' + type_sphere + ' - ' + organization + data_for_build.sphere + '\
-										</div>\
-										<div class="num-votes-support">\
-											' + LOCALE_ARRAY_ADDITIONAL.number_of_votes_support[CURRENT_LANG] + '\
-											<div class="counter">\
-												<span>' + data_for_build.sprtd + '</span>\
-											</div>\
-										</div>' + status_vote + 
-										'<div class="desc">' + data_for_build.description + ' </div>\
-										<div class="discuss-btn">\
-											<a class="ui-btn ui-corner-all ui-shadow" onclick="window.open(\'' + data_for_build.chat + '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_voting[CURRENT_LANG] + '</a>\
-										</div>\
-										<div class="btn-login-soc">\
-											<button data-role="button" class="ui-btn ui-corner-all ui-shadow share-btn">' + LOCALE_ARRAY_ADDITIONAL.share_by_social_newtworks[CURRENT_LANG] + '</button>\
-											<div class="social-wrap">\
-												<div class="ui-grid-b">\
-													<div class="ui-block-a">\
-														<a target="_blank" class="vk" href="https://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
-													</div>\
-													<div class="ui-block-b">\
-														<a target="_blank" class="fb" href="https://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href) + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
-													</div>\
-													<div class="ui-block-c">\
-														<a target="_blank" class="tw" href="https://twitter.com/share?url=' + encodeURIComponent(location.href) + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
-													</div>\
-													<div class="ui-block-a">\
-														<a target="_blank" class="gp" href="https://plus.google.com/share?url=' + encodeURIComponent(location.href) + '"></a>\
-													</div>\
-													<div class="ui-block-b">\
-														<a target="_blank" class="in" href="https://www.linkedin.com/cws/share?url=' + encodeURIComponent(location.href) + '"></a>\
-													</div>\
-													<div class="ui-block-c">\
-														<a target="_blank" class="ok" href="https://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href) + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
-													</div>\
+									</div>' + status_vote + 
+									'<div class="desc">' + data_for_build.description + ' </div>\
+									<div class="discuss-btn">\
+										<a class="ui-btn ui-corner-all ui-shadow" onclick="window.open(\'' + data_for_build.chat + '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_voting[CURRENT_LANG] + '</a>\
+									</div>\
+									<div class="btn-login-soc">\
+										<button data-role="button" class="ui-btn ui-corner-all ui-shadow share-btn">' + LOCALE_ARRAY_ADDITIONAL.share_by_social_newtworks[CURRENT_LANG] + '</button>\
+										<div class="social-wrap">\
+											<div class="ui-grid-b">\
+												<div class="ui-block-a">\
+													<a target="_blank" class="vk" href="https://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
+												</div>\
+												<div class="ui-block-b">\
+													<a target="_blank" class="fb" href="https://www.facebook.com/dialog/feed?app_id=1576819145899302&redirect_uri=' + encodeURIComponent(location.href) + '&picture=' + encodeURIComponent(mainURL + data_for_build.img) + '&caption=' + encodeURIComponent(LOCALE_ARRAY_ADDITIONAL.vote[CURRENT_LANG] + ' ID:' + data_for_build.id + ' : ' + data_for_build.name) + '&description=' + encodeURIComponent(data_for_build.description) + ' ' + mainURL + '#vote-page?vote=' + data_for_build.id + '&lang=2"></a>\
+												</div>\
+												<div class="ui-block-c">\
+													<a target="_blank" class="tw" href="https://twitter.com/share?url=' + encodeURIComponent(location.href) + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
+												</div>\
+												<div class="ui-block-a">\
+													<a target="_blank" class="gp" href="https://plus.google.com/share?url=' + encodeURIComponent(location.href) + '"></a>\
+												</div>\
+												<div class="ui-block-b">\
+													<a target="_blank" class="in" href="https://www.linkedin.com/cws/share?url=' + encodeURIComponent(location.href) + '"></a>\
+												</div>\
+												<div class="ui-block-c">\
+													<a target="_blank" class="ok" href="https://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href) + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
 												</div>\
 											</div>\
 										</div>\
-										<div class="sms-btn">\
-											<a class="ui-btn ui-corner-all ui-shadow" href="#">SMS</a>\
+									</div>\
+									<div class="sms-btn">\
+										<a class="ui-btn ui-corner-all ui-shadow" href="#">SMS</a>\
+									</div>\
+									' + create_project_button + '\
+									' + create_request_button + '\
+									<div class="results-wrap">\
+										<div class="results-label">\
+											' + LOCALE_ARRAY_ADDITIONAL.result_of_votes[CURRENT_LANG] + ':\
 										</div>\
-										' + create_project_button + '\
-										' + create_request_button + '\
-										<div class="results-wrap">\
-											<div class="results-label">\
-												' + LOCALE_ARRAY_ADDITIONAL.result_of_votes[CURRENT_LANG] + ':\
-											</div>\
-											<div class="num-voters">\
-												' + LOCALE_ARRAY_ADDITIONAL.number_of_voters[CURRENT_LANG] + ' - ' + percents_object.sum_values + '\
-											</div>\
-											<div class="voting-line clearfix">\
-												<span class="left" style="width: ' + parseInt(percents_object.plus_percent) + '%">' + parseInt(data_for_build.vote_yes) + '</span><span class="middle" style="width: ' 
-																				 + parseInt(percents_object.abstained_percent) + '%">' + parseInt(data_for_build.vote_nth) + '</span><span class="right" style="width: ' 
-																				 + parseInt(percents_object.minus_percent) + '%">' + parseInt(data_for_build.vote_no) + '</span>\
-											</div>\
-											<div class="ui-grid-b charts-wrap">\
-												' + charts + '\
-											</div>\
-										</div>\ ' + voting_buttons + ' <div class="btn-next-page">\
-											<a class="ui-btn ui-btn-icon-right" href="#" onclick = " $.mobile.navigate(\'#voters-page?voting=' + data_for_build.id + '\'); VOTINGS.get_open_voters_list(' + data_for_build.id + ');">' + LOCALE_ARRAY_ADDITIONAL.view_list_public_voters[CURRENT_LANG] + '</a>\
+										<div class="num-voters">\
+											' + LOCALE_ARRAY_ADDITIONAL.number_of_voters[CURRENT_LANG] + ' - ' + percents_object.sum_values + '\
 										</div>\
+										<div class="voting-line clearfix">\
+											<span class="left" style="width: ' + parseInt(percents_object.plus_percent) + '%">' + parseInt(data_for_build.vote_yes) + '</span><span class="middle" style="width: ' 
+																			 + parseInt(percents_object.abstained_percent) + '%">' + parseInt(data_for_build.vote_nth) + '</span><span class="right" style="width: ' 
+																			 + parseInt(percents_object.minus_percent) + '%">' + parseInt(data_for_build.vote_no) + '</span>\
+										</div>\
+										<div class="ui-grid-b charts-wrap">\
+											' + charts + '\
+										</div>\
+									</div>\ ' + voting_buttons + ' <div class="btn-next-page">\
+										<a class="ui-btn ui-btn-icon-right" href="#" onclick = " $.mobile.navigate(\'#voters-page?voting=' + data_for_build.id + '\'); VOTINGS.get_open_voters_list(' + data_for_build.id + ');">' + LOCALE_ARRAY_ADDITIONAL.view_list_public_voters[CURRENT_LANG] + '</a>\
 									</div>\
 								</div>\
-							</div></div>';
+							</div>\
+						</div>\
+						<div class="right_col"></div>\
+						</div>';
 
 		//self.build_circle_chart();
 		//$.mobile.navigate("#vote-page");
@@ -8554,8 +8770,11 @@ var VOTINGS = {
 		$('#vote-page').html('');					
 		$( ui_string ).appendTo( '#vote-page' );
 
+		document.title = data_for_build.id + " : " + data_for_build.name;
+
+
 		$('#vote-page').enhanceWithin();
-		console.log('window on load');
+		//console.log('window on load');
 		setTimeout(function(){
 			if(data_for_build.user_vote){
 				switch(data_for_build.user_vote){
@@ -8563,19 +8782,19 @@ var VOTINGS = {
 						$('#vote-page .ui-btn.btn-yes').removeClass("ui-radio-off");
 						$('#vote-page .ui-btn.btn-yes').addClass("ui-btn-active ui-radio-on");
 						$('#vote-page .ui-btn.btn-yes').data('checked', 0);
-						console.log('yeeees');
+						//console.log('yeeees');
 						break;
 					case '3':
 						$('#vote-page .ui-btn.btn-abstain').removeClass("ui-radio-off");
 						$('#vote-page .ui-btn.btn-abstain').addClass("ui-btn-active ui-radio-on");
 						$('#vote-page .ui-btn.btn-abstain').data('checked', 0);
-						console.log('abstained');
+						//console.log('abstained');
 						break;
 					case '2':
 						$('#vote-page .ui-btn.btn-no').removeClass("ui-radio-off");
 						$('#vote-page .ui-btn.btn-no').addClass("ui-btn-active ui-radio-on");
 						$('#vote-page .ui-btn.btn-no').data('checked', 0);
-						console.log('minus');
+						//console.log('minus');
 						break;
 				}
 			}
@@ -8634,6 +8853,9 @@ var VOTINGS = {
 					break;
 			}
 
+
+		document.title = data_for_build.id + " : " + data_for_build.name;
+
 		$('#vote-page .btn-login-soc button').on('click', function(e){
 			$(this).next().fadeToggle(300);
 			if($('.overlay').length < 1) {
@@ -8649,18 +8871,19 @@ var VOTINGS = {
 	get_one_element: function(vote_id, type_trigger){
 		var self = this;
 		var return_element;
+		console.log('sw');
 		$.ajax({
-			url: mainURL + '/mc.php?sph=0&id=' + vote_id,
+			url: mainURL + '/mc.php?id=' + vote_id,
 			type: "GET",
 			xhrFields: {
 				withCredentials: true
 			},
 			crossDomain: true,
 			complete: function( response ){
-				return_element = JSON.parse( response.responseText );
+				var return_element = JSON.parse( response.responseText );
 				data_for_build = return_element[0];
 				if(data_for_build){
-					console.log(data_for_build);
+					//console.log(data_for_build);
 					switch(data_for_build.status){
 						case '0':
 							self.current_vote_page_collect_supports( data_for_build, 0, type_trigger);
@@ -8676,6 +8899,7 @@ var VOTINGS = {
 							break;
 					}
 				}else{
+					alert(LOCALE_ARRAY_ADDITIONAL.no_such_vote[CURRENT_LANG]);
 					$.mobile.navigate('#votings-page');
 					return false;
 				}
@@ -8693,6 +8917,7 @@ var VOTINGS = {
 				});
 			},
 		});
+
 		return return_element[0];
 	},
 	check_current_url:function(type_trigger){
@@ -8768,8 +8993,8 @@ var VOTINGS = {
 					}
 					if(response && response.responseText.indexOf('error') == -1){
 						self.init(cb(object_id));
-						console.log('response.responseText');
-						console.log(response.responseText);
+						//console.log('response.responseText');
+						//console.log(response.responseText);
 					}else{
 						if( response.responseText.indexOf('error') > -1 ){
 							var error_arr = JSON.parse(response.responseText);
@@ -8778,15 +9003,15 @@ var VOTINGS = {
 									alert(error_arr[0].error);
 									break;
 								case 'ru':
-									alert(error_arr[0].error_ru);
+									alert(error_arr[2].error_ru);
 									break;
 								case 'ua':
-									alert(error_arr[0].error_uk);
+									alert(error_arr[1].error_uk);
 									break;
 							}
 						}
 					}
-					console.log('ok');
+					//console.log('ok');
 				},
 			});
 		}, 100);
@@ -8801,7 +9026,7 @@ var VOTINGS = {
 			crossDomain: true,
 			complete: function( response ){
 				if(response && response.responseText.indexOf('error') == -1){
-					console.log("Deleted id:" + voting_id);
+					//console.log("Deleted id:" + voting_id);
 			 		$.mobile.navigate(return_page);
 				}else{
 					if( response.responseText.indexOf('error') > -1 ){
@@ -8849,8 +9074,8 @@ var VOTINGS = {
 		return chart;
 	},
 	build_circle_chart:function(data_values_array, type_trigger){
-		console.log('data_array0: ' );
-				 			 console.log(data_values_array[0] );
+		//console.log('data_array123123123123123: ' );
+				 			 //console.log(data_values_array[0] );
 		if(location.href.indexOf("vote-page") > -1 && type_trigger == 1){
 			if(document.getElementById("chart-1") || 
 			 document.getElementById("chart-2") ||
@@ -9023,7 +9248,7 @@ var VOTINGS = {
 								<img src="' + mainURL + one_voter.avatar + '" />\
 							</div>\
 							<div class="id">\
-								ID:' + one_voter.id + '\
+								ID:' + one_voter.user_id + '\
 							</div>\
 							<div class="name">\
 								' + one_voter.name + '\
@@ -9076,7 +9301,7 @@ var VOTINGS = {
 				},
 				crossDomain: true,
 				complete: function( response ){
-					 console.log("Okay");
+					 //console.log("Okay");
 					 $('#vote-page #create_project_button').attr('style', 'display: none');
 					 $('#vote-page #create_request_button').attr('style', 'display: none');
 				},
@@ -9111,7 +9336,7 @@ var MY_VOTINGS = {
 			complete: function( response ){
 				//console.log(response);
 				self.votings_array = JSON.parse( response.responseText );	
-				console.log( self.votings_array );
+				//console.log( self.votings_array );
 				$.mobile.loading( "hide" );
 				$('#my-votings-page #activated_filter').css('display', 'none'); 
 				$('#my-votings-page #solo_filter').css('display', 'block');	
@@ -9136,7 +9361,7 @@ var MY_VOTINGS = {
 			complete: function( response ){
 				//console.log(response);
 				var query_array =JSON.parse( response.responseText );	
-				console.log( query_array );					
+				//console.log( query_array );					
 				if(query_array.length > 0){
 					self.votings_array = self.votings_array.concat(query_array);
 					self.voting_last_item += query_array.length;
@@ -9150,11 +9375,11 @@ var MY_VOTINGS = {
 	},
 	filter_data: function(sphere_id, reinit, name_sphere){
 		var self = this;
-		console.log(name_sphere);
+		//console.log(name_sphere);
 		self.activated_easy_filter = 1;
 		if(sphere_id >= 0){
 			self.sphere_filter = sphere_id;
-			console.log(sphere_id);
+			//console.log(sphere_id);
 			for (var i = 0; i < SPHERES.spheres.length; i++) {
 				if(SPHERES.spheres[i].selector_name == name_sphere){
 					var type_sphere = SPHERES.spheres[i].name;
@@ -9280,7 +9505,7 @@ var MY_VOTINGS = {
 			},
 			crossDomain: true,
 			complete: function( response ){
-				console.log("all ok!");	 
+				//console.log("all ok!");	 
 				switch($('#my_support').data('my_supported')){
 					case 1:
 						$('#my_support').html(LOCALE_ARRAY_ADDITIONAL.support[CURRENT_LANG]);
@@ -9813,7 +10038,7 @@ var MY_VOTINGS = {
 		$( ui_string ).appendTo( '#my-vote-page' );
 
 		$('#my-vote-page').enhanceWithin();
-		console.log('window on load');
+		//console.log('window on load');
 		setTimeout(function(){
 			if(data_for_build.user_vote){
 				switch(data_for_build.user_vote){
@@ -9821,19 +10046,19 @@ var MY_VOTINGS = {
 						$('#my-vote-page .ui-btn.btn-yes').removeClass("ui-radio-off");
 						$('#my-vote-page .ui-btn.btn-yes').addClass("ui-btn-active ui-radio-on");
 						$('#my-vote-page .ui-btn.btn-yes').data('checked', 0);
-						console.log('yeeees');
+						//console.log('yeeees');
 						break;
 					case '3':
 						$('#my-vote-page .ui-btn.btn-abstain').removeClass("ui-radio-off");
 						$('#my-vote-page .ui-btn.btn-abstain').addClass("ui-btn-active ui-radio-on");
 						$('#my-vote-page .ui-btn.btn-abstain').data('checked', 0);
-						console.log('abstained');
+						//console.log('abstained');
 						break;
 					case '2':
 						$('#my-vote-page .ui-btn.btn-no').removeClass("ui-radio-off");
 						$('#my-vote-page .ui-btn.btn-no').addClass("ui-btn-active ui-radio-on");
 						$('#my-vote-page .ui-btn.btn-no').data('checked', 0);
-						console.log('minus');
+						//console.log('minus');
 						break;
 				}
 			}
@@ -10019,7 +10244,7 @@ var MY_VOTINGS = {
 					}
 					if(response && response.responseText.indexOf('error') == -1){
 						self.init(cb(object_id));
-						console.log('ok');
+						//console.log('ok');
 					}else{
 						if( response.responseText.indexOf('error') > -1 ){
 							var error_arr = JSON.parse(response.responseText);
@@ -10067,8 +10292,8 @@ var MY_VOTINGS = {
 		return chart;
 	},
 	build_circle_chart:function(data_values_array, type_trigger){
-		console.log('data_array0: ' );
-				 			 console.log(data_values_array[0] );
+		//console.log('data_array0: ' );
+				 			 //console.log(data_values_array[0] );
 		if(location.href.indexOf("my-vote-page") > -1 && type_trigger == 1){
 			if(document.getElementById("chart-1") || 
 					document.getElementById("chart-2") ||
@@ -10358,7 +10583,7 @@ var ADRESS = {
 		}
 
 		var res = this.levFind(source,list_place);
-		console.log(source + ' 1 ' + self.city);
+		//console.log(source + ' 1 ' + self.city);
 
 		self.setOption(page, name,res.id);
 
@@ -10419,15 +10644,15 @@ var ADRESS = {
 				} else {
 					g_lat = lat;
 					g_lng = lng;
-					console.log(lat);
-					console.log(lng);
+					//console.log(lat);
+					//console.log(lng);
 					GoogleMapsAdress.moveMarker(lat, lng, page);
 					var geocoder = new google.maps.Geocoder();
 					var latLng = new google.maps.LatLng(lat, lng);
 					if(geocoder){
 						geocoder.geocode({'latLng': latLng,'language': 'en'},function(results, status) {
 							if (status == google.maps.GeocoderStatus.OK) {
-								console.log(results);
+								//console.log(results);
 								var address = results[0].address_components;
 
 								var country = self.getGPSByType(address,"country");
@@ -10465,10 +10690,10 @@ var ADRESS = {
 				crossDomain: true,
 				dataType: 'jsonp',
 				complete: function(result){
-					console.log(result);
+					//console.log(result);
 					l_res = jQuery.parseJSON(result);						
-					console.log((result.results[0]).geometry.location.lat+0.00003);
-					console.log((result.results[0]).geometry.location.lng);
+					//console.log((result.results[0]).geometry.location.lat+0.00003);
+					//console.log((result.results[0]).geometry.location.lng);
 				},
 			});
 
@@ -10694,7 +10919,7 @@ var ADRESS = {
 				crossDomain: true,
 				complete: function(response){
 					var data = response.responseText;
-					// console.log(data);
+					// //console.log(data);
 					self.country = jQuery.parseJSON(data);
 					//console.log(self.country);
 					$("#address-item-" + page + " [name=country]").html('');
@@ -10899,7 +11124,7 @@ var ADRESS = {
 			crossDomain: true,
 			complete: function(response){
 				var data = response.responseText;
-			 // console.log(data);
+			 // //console.log(data);
 				self.county = jQuery.parseJSON(data);
 				$("#address-item-" + page + " [name=county]").html('');
 				$("#address-item-" + page + " [name=county]").show();
@@ -11334,7 +11559,7 @@ function change_nan(number){
 	return number;
 }
 
-console.log(window.location.toString());
+//console.log(window.location.toString());
 
 (function($){
 	$(function(){
@@ -11350,7 +11575,7 @@ console.log(window.location.toString());
 				complete: function( response ){
 					auth(true);
 					$.mobile.navigate("#news-page");
-					console.log('ok');
+					//console.log('ok');
 				},
 			});
 		}
@@ -11496,11 +11721,11 @@ console.log(window.location.toString());
 			}else{
 				if((event.target.files[0].type == 'image/jpeg' || event.target.files[0].type == 'image/png') && event.target.files[0].size < 150000){
 					FILE = event.target.files[0];
-					console.log('format:' + event.target.files[0].type);
-					console.log('size:' + event.target.files[0].size );
+					//console.log('format:' + event.target.files[0].type);
+					//console.log('size:' + event.target.files[0].size );
 				}else{
-					console.log('format:' + event.target.files[0].type);
-					console.log('size:' + event.target.files[0].size );
+					//console.log('format:' + event.target.files[0].type);
+					//console.log('size:' + event.target.files[0].size );
 					alert(LOCALE_ARRAY_ADDITIONAL.bad_format_or_size[CURRENT_LANG]);
 				}
 			}
@@ -11523,7 +11748,7 @@ console.log(window.location.toString());
 			 {
 				if (client.readyState == 4 && client.status == 200) 
 				{
-					console.log("send ok");
+					//console.log("send ok");
 					 //alert(client.statusText);
 				}
 			 }
@@ -11537,11 +11762,11 @@ console.log(window.location.toString());
 			}else{
 				if((event.target.files[0].type == 'image/jpeg' || event.target.files[0].type == 'image/png')){
 					FILE = event.target.files[0];
-					console.log('format:' + event.target.files[0].type);
-					console.log('size:' + event.target.files[0].size );
+					//console.log('format:' + event.target.files[0].type);
+					//console.log('size:' + event.target.files[0].size );
 				}else{
-					console.log('format:' + event.target.files[0].type);
-					console.log('size:' + event.target.files[0].size );
+					//console.log('format:' + event.target.files[0].type);
+					//console.log('size:' + event.target.files[0].size );
 					alert(LOCALE_ARRAY_ADDITIONAL.bad_format_or_size[CURRENT_LANG]);
 				}
 			}
@@ -11564,7 +11789,7 @@ console.log(window.location.toString());
 			 /* Check the response status */
 			 client.onreadystatechange = function(){
 				if (client.readyState == 4 && client.status == 200){
-					console.log("send ok");
+					//console.log("send ok");
 					//alert(client.statusText);
 				}
 			 }
@@ -11642,10 +11867,10 @@ console.log(window.location.toString());
 							$button.attr("onclick", "location.href='" + soc.activate + "'");
 							$button.addClass("active");
 							$button.html('<span>' + LOCALE_ARRAY_ADDITIONAL.activate[CURRENT_LANG] + '</span>');
-							console.log('non active');
+							//console.log('non active');
 							}
 						else{
-							console.log('active');
+							//console.log('active');
 							$button.attr("href","");
 							$button.removeClass("active");
 							$button.html('<span>' + LOCALE_ARRAY_ADDITIONAL.deactivate[CURRENT_LANG] + '</span>');
@@ -11680,7 +11905,7 @@ console.log(window.location.toString());
 									},
 									crossDomain: true,
 									complete: function( response ){
-										console.log('ok');
+										//console.log('ok');
 									}
 								});
 								
@@ -11754,7 +11979,7 @@ console.log(window.location.toString());
 							withCredentials: true
 						},
 						complete: function(data){
-							console.log("saved ok");
+							//console.log("saved ok");
 							PROFILE.gender = g;
 							SUPER_PROFILE.gender = g;
 							$('#profile-page .name').html(fn + ' ' + ln);
@@ -11795,10 +12020,10 @@ console.log(window.location.toString());
 								if(data.responseText.indexOf("wrong") > -1){
 									alert(LOCALE_ARRAY_ADDITIONAL.old_password_is_wrong[CURRENT_LANG]);
 								}else{
-									console.log('Password was changed!');
+									//console.log('Password was changed!');
 									$.mobile.navigate("#profile-page");
 								}
-								console.log(data);
+								//console.log(data);
 							}
 						});
 					}
@@ -11940,10 +12165,10 @@ console.log(window.location.toString());
 			profile_obj: [],
 			getProfile:function(){
 				var that = this;					
-				console.log("profile_obj");
-				console.log(that.profile_obj);
+				//console.log("profile_obj");
+				//console.log(that.profile_obj);
 				if(that.profile_obj && !that.profile_obj.error){
-					console.log('yeah');
+					//console.log('yeah');
 					that.email = that.profile_obj.email;
 					that.login = that.profile_obj.login;
 					that.avatar = that.profile_obj.avatar;
@@ -11964,6 +12189,7 @@ console.log(window.location.toString());
 					SUPER_PROFILE.gender = that.gender;
 					SUPER_PROFILE.id = that.profile_obj.id;
 					SUPER_PROFILE.nco = that.profile_obj.nco;
+					SUPER_PROFILE.payment = that.profile_obj.payment;
 					for (var i in SOCIAL){
 						if(typeof SOCIAL[i] != "object") continue;
 						var soc = SOCIAL[i];
@@ -12011,6 +12237,7 @@ console.log(window.location.toString());
 
 							SUPER_PROFILE.gender = that.gender;
 							SUPER_PROFILE.id = that.profile_obj.id;
+							SUPER_PROFILE.payment = that.profile_obj.payment;
 							for (var i in SOCIAL){
 								if(typeof SOCIAL[i] != "object") continue;
 								var soc = SOCIAL[i];
@@ -12018,8 +12245,8 @@ console.log(window.location.toString());
 									if(b != i) continue;
 									if(that.profile_obj[b] != 0){
 										soc.auth = true;
-										console.log(SOCIAL[i]);
-										console.log(SOCIAL[i].auth);
+										//console.log(SOCIAL[i]);
+										//console.log(SOCIAL[i].auth);
 									}else{
 										soc.auth = false;
 									}	

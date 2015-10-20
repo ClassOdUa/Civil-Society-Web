@@ -1,17 +1,26 @@
 <!DOCTYPE html>
 <html lang="">
 	<head>
-		<link rel="image_src" href="https://gurtom.mobi/images/logo.png" / >
+		<meta property="og:title" content="Software for Democracy: Civil Society app | Громадянське суспільство | Гражданское общество" />
+		<meta property="og:description" content="Software for Democracy. Влада співробітництва людей в цифрову епоху. Додаток для громад. Програма суспільної взаємодії" />
+		<meta property="og:image" content="https://gurtom.mobi/images/logo.png" />
+		<meta property="og:locale:alternate" content="en_US" />
+		<meta property="og:locale:alternate" content="uk_UA" />
+		<meta property="og:locale:alternate" content="ru_RU" />
+		<link rel="image_src" href="https://gurtom.mobi/images/logo.png" />
 		<meta charset="utf-8">
 		<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
-		<meta name="description" lang="en" content="The power of peoples' cooperation in the digital era. Application for communities.">
-		<meta name="description" lang="uk" content="Влада співробітництва людей в цифрову епоху. Додаток для громад. Програма суспільної взаємодії">
-		<meta name="description" lang="ru" content="Власть сотрудничества людей в цифровую эпоху. Программа для сообществ.">
+		<meta name="description" lang="en" content="Software for Democracy. The power of peoples' cooperation in the digital era. Software for communities." />
+		<meta name="description" lang="uk" content="Software for Democracy. Влада співробітництва людей в цифрову епоху. Додаток для громад. Програма суспільної взаємодії" />
+		<meta name="description" lang="ru" content="Software for Democracy. Власть сотрудничества людей в цифровую эпоху. Программа для сообществ." />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Civil Society | Громадянське суспільство | Гражданское общество</title>
+		<meta name="title" lang="en" content="Software for Democracy: Civil Society app" />
+		<meta name="title" lang="uk" content="Software for Democracy: Громадянське суспільство" />
+		<meta name="title" lang="ru" content="Software for Democracy: Гражданское общество" />
+		<title>Software for Democracy: Civil Society app | Громадянське суспільство | Гражданское общество</title>
 		<link href="https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" href="/vendor/jquery.mobile-1.4.5/jquery.mobile.structure-1.4.5.min.css?t=1">
-		<link rel="stylesheet" href="/leaflet/leaflet.css" />
+		<link rel="stylesheet" href="/leaflet/leaflet.css">
 		<link rel="stylesheet" href="/vendor/jquery-te-1.4.0/jquery-te-1.4.0.css?t=1">
 		<link rel="stylesheet" href="/stylesheets/app.css?t=1">
 		<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false&language=en"></script>
@@ -27,38 +36,7 @@
 		<script src="/javascripts/purl.js?t=1"></script>
 		<script src="/leaflet/leaflet.js"></script>
 
-		<!-- Facebook Pixel Code -->
-		<script>
-		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
-		document,'script','//connect.facebook.net/en_US/fbevents.js');
 
-		fbq('init', '1507304576258056');
-		fbq('track', 'PageView');
-		</script>
-		<noscript><img height="1" width="1" style="display:none"
-		src="https://www.facebook.com/tr?id=1507304576258056&ev=PageView&noscript=1"
-		/></noscript>
-		<!-- End Facebook Pixel Code -->
-		<!-- Facebook Conversion Code for Checkouts - gurtom -->
-		<script>(function() {
-		var _fbq = window._fbq || (window._fbq = []);
-		if (!_fbq.loaded) {
-		var fbds = document.createElement('script');
-		fbds.async = true;
-		fbds.src = '//connect.facebook.net/en_US/fbds.js';
-		var s = document.getElementsByTagName('script')[0];
-		s.parentNode.insertBefore(fbds, s);
-		_fbq.loaded = true;
-		}
-		})();
-		window._fbq = window._fbq || [];
-		window._fbq.push(['track', '6030081345521', {'value':'0.00','currency':'USD'}]);
-		</script>
-		<noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?ev=6030081345521&amp;cd[value]=0.00&amp;cd[currency]=USD&amp;noscript=1" /></noscript>
-		<!-- end FB -->
 
 	</head>
 	<body>
@@ -97,7 +75,7 @@
 	<div role="main" class="ui-content">
 		<div class="left_col">
 			<div id="logo">
-				<img src="images/logo.png" />
+				<img src="/images/logo.png" />
 			</div>
 			<div class="name">
 				<h1>
@@ -1860,8 +1838,8 @@
 <div id="my-groups" data-role="page">
 	<div data-role="header" data-position="fixed" data-tap-toggle="false">
 		<h1>My groups</h1>
-		<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#my-activities-page')" href="#my-activities-page">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#my-spheres-help">Ask</a>
-		<div id="my-spheres-help" class="help-popup" data-role="popup" data-history="false">
+		<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#my-activities-page')" href="#my-activities-page">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#my-groups-help">Ask</a>
+		<div id="my-groups-help" class="help-popup" data-role="popup" data-history="false">
 			<div class="title">
 				Description
 			</div>
@@ -1877,40 +1855,9 @@
 				<input onkeyup="ORG_LIST.init(true)" id = "searched_string_org" class = "search_string" type="search" name="" placeholder="Search.." data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" onclick = "$('#my-spheres .search_string').val(''); $('#my-spheres .search_string').keyup();" href="">Clear text</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />
 			</div>
 
-			<a class="ui-btn ui-corner-all ui-shadow" href="#create-org">Create group/org</a>
+			<a id="btn_group_create" class="ui-btn ui-corner-all ui-shadow" href="#create-org">Create group/org</a>
+
 			<div class="vote-list news-list" id = 'org_list'>
-				<div class="item ui-corner-all news-icon news-icon-num-4" onclick="$.mobile.navigate('#my-spheres-options?id=1')" style="cursor:pointer">
-					<div class="img"><object type="image/svg+xml" data="https://gurtom.mobi/uploads/news.svg">Your browser does not support SVG</object>
-					</div>
-					<div class="info">
-						<div class="date">
-							2015-06-08 01:20:47
-						</div>
-						<div class="title">
-							Студенти Могилянки
-						</div>
-						<div class="author">
-							<span>Опубліковано</span> <strong></strong>
-						</div>
-					</div>
-				</div>
-
-				<div class="item ui-corner-all news-icon news-icon-num-4" onclick="$.mobile.navigate('#')" style="cursor:pointer">
-					<div class="img"><object type="image/svg+xml" data="https://gurtom.mobi/uploads/news.svg">Your browser does not support SVG</object>
-					</div>
-					<div class="info">
-						<div class="date">
-							2015-06-08 01:20:47
-						</div>
-						<div class="title">
-							Проба
-						</div>
-						<div class="author">
-							<span>Опубліковано</span> <strong></strong>
-						</div>
-					</div>
-				</div>
-
 			</div>
 		</div>
 		<div class="right_col"></div>
@@ -2031,7 +1978,7 @@
 				<div class="item ui-corner-all">
 					<div class="ui-block-a">
 						<div class="avatar">
-							<img src="https://gurtom.mobi/uploads/1/0/155ea2a73e973b_OENIHFGJKPQML.jpeg" />
+							<img src="https://gurtom.mobi/images/logo.png" />
 						</div>
 					</div>
 					<div class="ui-block-b">
@@ -2399,26 +2346,37 @@
 								<option value="0">Sort up</option>
 							</select>
 						</div>
-
+						<div>
+							<select onchange="VOTINGS.filter_data()" name="status" placeholder="Select status">
+								<option value='-1'>Default</option>
+								<option value='0'>Colleting support (New)</option>
+								<option value='1'>Voting begun</option>
+								<option value='2'>Voting finished</option>
+								<option value='3'>Not supported</option>
+							</select>
+						</div>
+						
 						<fieldset class="date-group" data-role="controlgroup" data-type="horizontal">
-							<legend>Enter first date for sort</legend>
+							<legend>Select voting date from</legend>
 							<select class="options_date" name="start_date"></select>
 							<select class="options_month" name="start_month" ></select>
 							<select class="options_year" name="start_year" ></select>
+							<input onclick = "VOTINGS.filter_data()" class="ui-btn ui-btn-inherit ui-btn-icon-left start_date_checkbox" type="checkbox" name="start_date_checkbox" value="0" data-enhanced="true" />
 						</fieldset>
 						<fieldset class="date-group" data-role="controlgroup" data-type="horizontal">
-							<legend>Enter last date for sort</legend>
+							<legend>Select voting date to</legend>
 							<select class="options_date" name="end_date"></select>
 							<select class="options_month" name="end_month" ></select>
 							<select class="options_year" name="end_year"></select>
+							<input type="checkbox" onclick = "VOTINGS.filter_data()" class="ui-btn ui-btn-inherit ui-btn-icon-left finish_date_checkbox" name="finish_date_checkbox" value="0" data-enhanced="true" />
 						</fieldset>
 
 						<fieldset class = "sphere_form"></fieldset>
 
 						<div class="ui-grid-a">
-							<div  onclick = "" class="ui-block-a">
+							<div onclick = "COMMON_OBJECT.custom_swipe(this)" data-show = "0" class="ui-block-a">
 								<div  class="ui-input-btn ui-btn ui-btn-icon-right filter-save">
-									<span>Save filter</span><input type="button" value="" data-enhanced="true" />
+									<span>Close filter</span><input type="button" value="" data-enhanced="true" />
 								</div>
 							</div>
 							<div class="ui-block-b">
@@ -2431,7 +2389,7 @@
 				</div>
 			</div>
 			<div role="main" class="ui-content">
-				<a  id = "filter_slider"  class="ui-btn ui-corner-all ui-shadow" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>
+				<a  id = "filter_slider"  class="ui-btn ui-corner-all ui-shadow filter_slider_btn" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>
 				<a class="ui-btn ui-corner-all ui-shadow create-vote" href="#create-vote">Создать голосование</a>
 				<div class="votings-list" id = 'votings_list'></div>
 			</div>
@@ -2494,8 +2452,7 @@
 	<div role="main" class="ui-content">
 	<a  id = "filter_slider"  class="ui-btn ui-corner-all ui-shadow" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>		
 		<a class="ui-btn ui-corner-all ui-shadow create-vote" href="#create-vote">Создать голосование</a>
-		<div class="votings-list" id = 'votings_list'>
-		</div>
+		<div class="votings-list" id = 'votings_list'></div>
 	</div>
 </div>
 
@@ -2607,6 +2564,9 @@
 				<label>Description*</label>
 				<textarea name="descr" rows="" cols="" class="" data-role="none"></textarea>
 			</div>
+
+
+			
 			<div class="btn-next-page">
 				<a id = "create_vote_sphere" class="ui-btn ui-btn-icon-right" href="#spheres-create-vote">Choose spheres*</a>
 				<input  type = "hidden" name = "sph" value = "">
@@ -2641,22 +2601,22 @@
 			<fieldset class="checkbox-group" data-role="controlgroup">
 				<legend>Choose status of authorisation</legend>
 				<div class="ui-checkbox">
-					<label id = "v0" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Email</label><input type="checkbox" name="" value="1" data-enhanced="true" />
+					<label id = "v0" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-on">Email</label><input type="checkbox" name="" value="1" data-enhanced="true" data-cacheval="false"/>
 				</div>
 				<div class="ui-checkbox">
-					<label id = "v1" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Social Network</label><input type="checkbox" name="" value="1" data-enhanced="true" />
+					<label id = "v1" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-on">Social Network</label><input type="checkbox" name="" value="1" data-enhanced="true" />
 				</div>
 				<div class="ui-checkbox">
-					<label id = "v2" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">By payment</label><input type="checkbox" name="" value="1" data-enhanced="true" />
+					<label id = "v2" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-on">By payment</label><input type="checkbox" name="" value="1" data-enhanced="true" />
 				</div>
 				<div class="ui-checkbox">
-					<label id = "v3" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">By passport</label><input type="checkbox" name="" value="1" data-enhanced="true" />
+					<label id = "v3" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-on">By passport</label><input type="checkbox" name="" value="1" data-enhanced="true" />
 				</div>
 				<div class="ui-checkbox">
-					<label id = "v4" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Community</label><input type="checkbox" name="" value="1" data-enhanced="true" />
+					<label id = "v4" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-on">Community</label><input type="checkbox" name="" value="1" data-enhanced="true" />
 				</div>
 				<div class="ui-checkbox">
-					<label id = "v5" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Сo-owners</label><input type="checkbox" name="" value="1" data-enhanced="true" />
+					<label id = "v5" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-on">Сo-owners</label><input type="checkbox" name="" value="1" data-enhanced="true" />
 				</div>
 			</fieldset>
 			<fieldset class="select-group" data-role="controlgroup" data-type="horizontal">
@@ -2878,7 +2838,7 @@
 		<div class="left_col">
 			<div id = "news_list" class="news-list"></div>
 		</div>
-		<div class="right_col"><iframe width="560" height="315" src="https://www.youtube.com/embed/tmdzF_F95R4?rel=0" frameborder="0" allowfullscreen></iframe></div>
+		<div class="right_col"></div>
 	</div>
 </div>
 
@@ -2934,6 +2894,7 @@
 	</div>
 	<div role="main" class="ui-content">
 		<div id="auth_title"></div>
+		<div id="wallet-description"></div>
 		<div id="auth_wallet"></div>
 	</div>
 </div>
@@ -2995,7 +2956,7 @@
 <div id="balances-pif-page" data-role="page">
 	<div data-role="header" data-position="fixed" data-tap-toggle="false">
 		<h1 class="long-title">Personal Fund History</h1>
-		<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#balances-pif-help">Ask</a>
+		<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#my-fund-page')" href="#my-fund-page">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#balances-pif-help">Ask</a>
 		<div id="balances-pif-help" class="help-popup" data-role="popup" data-history="false">
 			<div class="title">
 				Description
