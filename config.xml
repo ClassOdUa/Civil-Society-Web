@@ -2,15 +2,15 @@
     <widget xmlns   = "http://www.w3.org/ns/widgets"
     xmlns:gap   = "http://phonegap.com/ns/1.0"
     id          = "mobi.gurtom"
-    versionCode = "0.7.54"
-    version     = "0.7.54" >
+    versionCode = "0.7.77"
+    version     = "0.7.77" >
 
     <!-- versionCode is optional and Android only -->
 
     <name>Civil Society App</name>
 
     <description>
-      An example for phonegap build docs.
+      Software for democracy - the common governance by the civil society
     </description>
 
     <author href="https://gurtom.mobi" email="gurtom.mobi@gmail.com">
