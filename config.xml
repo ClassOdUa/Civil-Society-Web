@@ -17,6 +17,4 @@
       Andrii Pertsiukh
     </author>
 
-    <gap:plugin name="com.telerik.plugins.nativepagetransitions" version="0.2.2" />
-
 </widget>
