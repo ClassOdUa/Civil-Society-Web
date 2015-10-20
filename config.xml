@@ -2,7 +2,7 @@
     <widget xmlns   = "http://www.w3.org/ns/widgets"
     xmlns:gap   = "http://phonegap.com/ns/1.0"
     id          = "mobi.gurtom"
-    versionCode = "2"
+    versionCode = "3"
     version     = "0.7.54" >
 
     <!-- versionCode is optional and Android only -->
