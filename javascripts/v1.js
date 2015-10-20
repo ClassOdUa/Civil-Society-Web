@@ -730,6 +730,7 @@ window.onhashchange = function(){
 
 
 	if(location.href.indexOf('#profile-page') > -1 && SUPER_PROFILE.auth == true){
+		$('#select-lang2').selectmenu("refresh", true);
 		switch(SUPER_PROFILE.gender){
 			case "0":
 				$('#profile-page #female').attr('class', 'ui-btn ui-btn-inherit ui-first-child ui-radio-off');
@@ -801,10 +802,6 @@ window.onhashchange = function(){
 		}else if(page){
 			ADRESS.enable(page, 'state');
 		}
-	}
-
-	if(location.href.indexOf('#options-page') > -1){
-		$('#select-lang2').selectmenu("refresh", true);
 	}
 
 	if(location.href.indexOf('#transaction-page') > -1){

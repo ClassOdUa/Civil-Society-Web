@@ -2255,8 +2255,8 @@ label.ui-btn {
   #spheres-address .btn-save .ui-btn {
     background-color: #388e3c; }
 
-#options-page .choose-language {
-  margin: 1em 0; }
+.choose-language { margin: 1em 0; }
+
 #options-page .ui-checkbox label {
   font-weight: 300; }
 

@@ -3,7 +3,7 @@
     xmlns:gap   = "http://phonegap.com/ns/1.0"
     id          = "mobi.gurtom"
     versionCode = "3"
-    version     = "0.7.54" >
+    version     = "0.7.77" >
 
     <!-- versionCode is optional and Android only -->
 

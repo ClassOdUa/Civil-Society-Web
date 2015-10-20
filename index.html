@@ -32,7 +32,7 @@
 		<script src="./javascripts/locale.js?t=1"></script>
 		<script src="./javascripts/app.js?t=1"></script>
 		<script src="./javascripts/jquery.form.min.js?t=1"></script>
-		<script src="./javascripts/connect.js?t=1"></script>
+		<script src="./javascripts/v1.js?t=1"></script>
 		<script src="./javascripts/purl.js?t=1"></script>
 		<script src="./leaflet/leaflet.js"></script>
 
@@ -393,6 +393,14 @@
 					</div>
 				</div>
 			</div>
+			<div class="choose-language">
+				<select id = "select-lang2" name="select-name2">
+					<option value="en">Choose language</option>
+					<option value="en">English</option>
+					<option value="ru">Русский</option>
+					<option value="ua">Українська</option>
+				</select>
+			</div>
 			<div class="add-address">
 				<div class="title"></div>
 				<a class="ui-btn ui-btn-icon-right" href="#edit-address">Address</a>
@@ -616,14 +624,15 @@
 						<input type="text" name="url" placeholder="Url" data-enhanced="true" />
 					</div>
 				</div>
-				-->
+				
 				<div class="btn-next-page">
 					<a class="ui-btn ui-btn-icon-right menu-icon-options" data-link = "#options-page" href="#options-page">Options</a>
 				</div>
+				-->
 			</form>
 		</div>
+		<div class="right_col"></div>
 	</div>
-	<div class="right_col"></div>
 </div>
 
 <div id="edit-address" data-role="page">
@@ -2842,6 +2851,7 @@
 	</div>
 </div>
 
+<!--
 <div id="options-page" data-role="page">
 	<div data-role="header" data-position="fixed" data-tap-toggle="false">
 		<h1>Options</h1>
@@ -2866,6 +2876,7 @@
 		</form>
 	</div>
 </div>
+-->
 
 <div id="community" data-role="page">
 	<div data-role="header" data-position="fixed" data-tap-toggle="false">
