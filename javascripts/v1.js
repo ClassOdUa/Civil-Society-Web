@@ -408,10 +408,10 @@ window.onload = function(){
 			$.ajax({
 				url: "./profile.php",
 				type:"GET",
-				crossDomain: true,
+/*				crossDomain: true,
 				xhrFields: {
 					withCredentials: true
-				},
+				},*/
 				complete: function(response){
 				//var data = response.responseText;
 				if(response.responseText.indexOf('error') == -1 && !jQuery.parseJSON(response.responseText)[0].error){
@@ -952,10 +952,10 @@ function nko_create_page_data(){
 	$.ajax({
 		url: "./nco.php",
 		type: "GET",
+/*	 	crossDomain: true,
 		xhrFields: {
 	 		withCredentials: true
-		},
-	 	crossDomain: true,
+		},*/
 		complete: function( response ){
 			data_for_build = JSON.parse( response.responseText );
 
@@ -1100,13 +1100,13 @@ var COMMON_OBJECT = {
 		$.ajax({
 			url: "./l/index.php",
 			type: "POST",
+/*			crossDomain: true,
+			xhrFields: {
+				withCredentials: true
+			},*/
 			data: {"m": the_m,
 				 "id": the_id,
 				 "verification_code": the_verification_code },
-			crossDomain: true,
-			xhrFields: {
-				withCredentials: true
-			},
 			complete: function(response){
 				if(response && response.responseText.indexOf('error') == -1){
 					window.location.replace("./index.html");
@@ -1149,10 +1149,10 @@ var NCO_OBJECT = {
 			type: "POST",
 			data: {"type": object_type,
 				 "id": object_id},
-			crossDomain: true,
+/*			crossDomain: true,
 			xhrFields: {
 				withCredentials: true
-			},
+			},*/
 			complete: function(data){
 				$(page + ' #create_nco_button').css('display', 'none');
 			}
@@ -1305,10 +1305,10 @@ var CREATE_ITEM = {
 					 "nco": $('#create-item [name=nco]').val(),
 					 "curr": $('#create-item [name=curr]').val(),
 					 "amount": $('#create-item [name=amount]').val()},
-				crossDomain: true,
+/*				crossDomain: true,
 				xhrFields: {
 					withCredentials: true
-				},
+				},*/
 				complete: function(response){
 					if(response && response.responseText.indexOf('error') == -1){
 						alert(LOCALE_ARRAY_ADDITIONAL.saved_successfull[CURRENT_LANG]);
@@ -1353,10 +1353,10 @@ var CREATE_ITEM = {
 					 "title": $('#create-item [name=title ]').val(),
 					 "tags": $('#create-item [name=tags]').val(),
 					 "curr": $('#create-item [name=curr]').val()},
-				crossDomain: true,
+/*				crossDomain: true,
 				xhrFields: {
 					withCredentials: true
-				},
+				},*/
 				complete: function(response){
 					if(response && response.responseText.indexOf('error') == -1){
 						alert(LOCALE_ARRAY_ADDITIONAL.saved_successfull[CURRENT_LANG]);
@@ -1411,10 +1411,10 @@ var CREATE_ITEM = {
 					 "nco": $('#create-item [name=nco]').val(),
 					 "curr": $('#create-item [name=curr]').val(),
 					 "amount": $('#create-item [name=amount]').val()},
-				crossDomain: true,
+/*				crossDomain: true,
 				xhrFields: {
 					withCredentials: true
-				},
+				},*/
 				complete: function(response){
 					if(response && response.responseText.indexOf('error') == -1){
 						alert(LOCALE_ARRAY_ADDITIONAL.saved_successfull[CURRENT_LANG]);
@@ -1468,10 +1468,10 @@ var CREATE_ITEM = {
 					 "start": start,
 					 "finish": finish, 
 					 "tags": $('#create-item [name=tags]').val()},
-				crossDomain: true,
+/*				crossDomain: true,
 				xhrFields: {
 					withCredentials: true
-				},
+				},*/
 				complete: function(response){
 					if(response && response.responseText.indexOf('error') == -1){
 						alert(LOCALE_ARRAY_ADDITIONAL.saved_successfull[CURRENT_LANG]);
@@ -1526,10 +1526,10 @@ var CREATE_ITEM = {
 							 "nco": $('#create-item [name=nco]').val(),
 							 "curr": $('#create-item [name=curr]').val(),
 							 "amount": $('#create-item [name=amount]').val()},
-						crossDomain: true,
+/*						crossDomain: true,
 						xhrFields: {
 							withCredentials: true
-						},
+						},*/
 						complete: function(response){
 							if(response && response.responseText.indexOf('error') == -1){
 								alert(LOCALE_ARRAY_ADDITIONAL.saved_successfull[CURRENT_LANG]);
@@ -1590,10 +1590,10 @@ var HISTORY_PAGE = {
 		$.ajax({
 			url: './fund_public_cf.php?type=4&id=' + object_id,
 			type: "GET",
+/*			crossDomain: true,
 			xhrFields: {
 				withCredentials: true
-			},
-			crossDomain: true,
+			},*/
 			complete: function( response ){
 				var funds_list = JSON.parse( response.responseText );
 				//console.log('history');	
@@ -1766,10 +1766,10 @@ var CREATE_VOTE = {
 					 "v5": v5,
 					 "age_from": 	$('#create-vote [name=age_from]').val(),
 					 "age_to": $('#create-vote [name=age_to]').val()},
-				crossDomain: true,
+/*				crossDomain: true,
 				xhrFields: {
 					withCredentials: true
-				},
+				},*/
 				complete: function(response){
 					if(response && response.responseText.indexOf('error') == -1){
 						var id = JSON.parse(response.responseText);
@@ -1867,10 +1867,10 @@ var PIF = {
 			$.ajax({
 				url: "./fund_user.php",
 				type: "GET",
+/*			 	crossDomain: true,
 				xhrFields: {
 			 		withCredentials: true
-				},
-			 	crossDomain: true,
+				},*/
 				complete: function( response ){
 					self.pif_array = JSON.parse( response.responseText );	
 					COMMON_OBJECT.free_callbacker( temp_callback() );
@@ -2033,10 +2033,10 @@ var PROJECTS = {
 		$.ajax({
 			url: url,
 			type: "GET",
+/*			crossDomain: true,
 			xhrFields: {
 				withCredentials: true
-			},
-			crossDomain: true,
+			},*/
 			complete: function( response ){
 				////console.log(response);
 				self.data_array = JSON.parse( response.responseText );
@@ -2080,10 +2080,10 @@ var PROJECTS = {
 			$.ajax({
 				url: url,
 				type: "GET",
+/*				crossDomain: true,
 				xhrFields: {
 					withCredentials: true
-				},
-				crossDomain: true,
+				}*/,
 				complete: function( response ){
 					////console.log(response);
 					
@@ -2164,10 +2164,10 @@ var PROJECTS = {
 		$.ajax({
 			url: url,
 			type: "GET",
+/*			crossDomain: true,
 			xhrFields: {
 				withCredentials: true
-			},
-			crossDomain: true,
+			},*/
 			complete: function( response ){
 				//console.log(url);
 				self.data_array = JSON.parse( response.responseText );	
@@ -2235,10 +2235,10 @@ var PROJECTS = {
 				$.ajax({
 					url: "./stars_add.php?id=" + vote_id + "&stars=0&obj=" + obj_type,
 					type: "GET",
+/*					crossDomain: true,
 					xhrFields: {
 						withCredentials: true
-					},
-					crossDomain: true,
+					},*/
 					complete: function( response ){
 						
 					}
@@ -2249,10 +2249,10 @@ var PROJECTS = {
 			$.ajax({
 				url: "./stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=" + obj_type,
 				type: "GET",
+/*				crossDomain: true,
 				xhrFields: {
 					withCredentials: true
-				},
-				crossDomain: true,
+				},*/
 				complete: function( response ){
 					
 				}
@@ -3048,10 +3048,10 @@ var PROJECTS = {
 			data: {"type": object_type,
 				 "id": object_id,
 				 "nco": nco_id},
-			crossDomain: true,
+/*			crossDomain: true,
 			xhrFields: {
 				withCredentials: true
-			},
+			},*/
 			complete: function(data){
 				alert(LOCALE_ARRAY_ADDITIONAL.saved_successfull[CURRENT_LANG]);
 				//console.log("saved ok");
@@ -3069,10 +3069,10 @@ var PROJECTS = {
 		$.ajax({
 			url: url,
 			type: "GET",
+/*			crossDomain: true,
 			xhrFields: {
 				withCredentials: true
-			},
-			crossDomain: true,
+			},*/
 			complete: function( response ){
 				return_element = JSON.parse( response.responseText );
 				data_for_build = return_element[0];
@@ -3125,10 +3125,10 @@ var PROJECTS = {
 				 "type": type_id,
 				 "id": object_id,
 				 "open": open},
-			crossDomain: true,
+/*			crossDomain: true,
 			xhrFields: {
 				withCredentials: true
-			},
+			},*/
 			complete: function(data){
 				if(data){
 					var response_data = JSON.parse(data.responseText);
@@ -3169,10 +3169,10 @@ var PROJECTS = {
 			$.ajax({
 			url: './fund_public_cf.php?type=' + type + '&id=' + object_id,
 			type: "GET",
+/*			crossDomain: true,
 			xhrFields: {
 				withCredentials: true
-			},
-			crossDomain: true,
+			},*/
 			complete: function( response ){
 					var funds_list = JSON.parse( response.responseText );
 					//console.log('project_proposition or project');	
@@ -3272,10 +3272,10 @@ var PROJECTS = {
 				 "amount": amount,
 				 "type": type,
 				 "id": type_id},
-			crossDomain: true,
+/*			crossDomain: true,
 			xhrFields: {
 				withCredentials: true
-			},
+			},*/
 			complete: function(data){
 				alert(LOCALE_ARRAY_ADDITIONAL.return_donate_successfull[CURRENT_LANG]);
 				//console.log(return_page);
@@ -3343,10 +3343,10 @@ var PROGRAMS = {
 		$.ajax({
 			url: url,
 			type: "GET",
+/*			crossDomain: true,
 			xhrFields: {
 				withCredentials: true
-			},
-			crossDomain: true,
+			},*/
 			complete: function( response ){
 					//console.log(response);
 					self.data_array = JSON.parse( response.responseText );
@@ -3387,10 +3387,10 @@ var PROGRAMS = {
 			$.ajax({
 				url: url,
 				type: "GET",
+/*				crossDomain: true,
 				xhrFields: {
 				 withCredentials: true
-				},
-				crossDomain: true,
+				},*/
 				complete: function( response ){
 						////console.log(response);
 					
@@ -3477,10 +3477,10 @@ var PROGRAMS = {
 		$.ajax({
 			url: url,
 			type: "GET",
+/*			crossDomain: true,
 			xhrFields: {
 				withCredentials: true
-			},
-			crossDomain: true,
+			},*/
 			complete: function( response ){
 					//console.log(url);
 					self.data_array = JSON.parse( response.responseText );	
@@ -3542,10 +3542,10 @@ var PROGRAMS = {
 				$.ajax({
 					url: "./stars_add.php?id=" + vote_id + "&stars=0&obj=2",
 					type: "GET",
+/*					crossDomain: true,
 					xhrFields: {
 						withCredentials: true
-					},
-					crossDomain: true,
+					},*/
 					complete: function( response ){
 						
 					}
@@ -3556,10 +3556,10 @@ var PROGRAMS = {
 			$.ajax({
 				url: "./stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=2",
 				type: "GET",
+/*				crossDomain: true,
 				xhrFields: {
 					withCredentials: true
-				},
-				crossDomain: true,
+				},*/
 				complete: function( response ){
 					
 				}
@@ -3895,10 +3895,10 @@ var PROGRAMS = {
 		$.ajax({
 			url: './program.php?id=' + data_id,
 			type: "GET",
+/*			crossDomain: true,
 			xhrFields: {
 				withCredentials: true
-			},
-			crossDomain: true,
+			},*/
 			complete: function( response ){
 				return_element = JSON.parse( response.responseText );
 				data_for_build = return_element[0];
@@ -3948,10 +3948,10 @@ var PROGRAMS = {
 				 "type": type_id,
 				 "id": object_id,
 				 "open": open},
-			crossDomain: true,
+/*			crossDomain: true,
 			xhrFields: {
 				withCredentials: true
-			},
+			},*/
 			complete: function(data){
 				if(data){
 					var response_data = JSON.parse(data.responseText);
@@ -3981,10 +3981,10 @@ var PROGRAMS = {
 			$.ajax({
 				url: './fund_public_cf.php?type=2&id=' + object_id,
 				type: "GET",
+/*				crossDomain: true,
 				xhrFields: {
 					withCredentials: true
-				},
-				crossDomain: true,
+				},*/
 				complete: function( response ){
 					var funds_list = JSON.parse( response.responseText );
 					//console.log('program');
@@ -4079,10 +4079,10 @@ var PROGRAMS = {
 				 "amount": amount,
 				 "type": type,
 				 "id": type_id},
-			crossDomain: true,
+/*			crossDomain: true,
 			xhrFields: {
 				withCredentials: true
-			},
+			},*/
 			complete: function(data){
 				alert(LOCALE_ARRAY_ADDITIONAL.return_donate_successfull[CURRENT_LANG]);
 				//console.log(return_page);
@@ -4149,10 +4149,10 @@ var REQUESTS = {
 		$.ajax({
 			url: url,
 			type: "GET",
+/*			crossDomain: true,
 			xhrFields: {
 			 withCredentials: true
-			},
-			crossDomain: true,
+			},*/
 			complete: function( response ){
 				////console.log(response);
 				self.data_array = JSON.parse( response.responseText );
@@ -4189,10 +4189,10 @@ var REQUESTS = {
 			$.ajax({
 				url: url,
 				type: "GET",
+/*				crossDomain: true,
 				xhrFields: {
 					withCredentials: true
-				},
-				crossDomain: true,
+				},*/
 				complete: function( response ){
 					////console.log(response);
 				
@@ -4288,10 +4288,10 @@ var REQUESTS = {
 		$.ajax({
 			url: url,
 			type: "GET",
+/*			crossDomain: true,
 			xhrFields: {
 				withCredentials: true
-			},
-			crossDomain: true,
+			},*/
 			complete: function( response ){
 				//console.log(url);
 				self.data_array = JSON.parse( response.responseText );	
@@ -4378,10 +4378,10 @@ var REQUESTS = {
 				$.ajax({
 					url: "./stars_add.php?id=" + vote_id + "&stars=0&obj=5",
 					type: "GET",
+/*					crossDomain: true,
 					xhrFields: {
 						withCredentials: true
-					},
-					crossDomain: true,
+					},*/
 					complete: function( response ){
 						
 					}
@@ -4392,10 +4392,10 @@ var REQUESTS = {
 			$.ajax({
 				url: "./stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=5",
 				type: "GET",
+/*				crossDomain: true,
 				xhrFields: {
 					withCredentials: true
-				},
-				crossDomain: true,
+				},*/
 				complete: function( response ){
 					
 				}
@@ -4885,10 +4885,10 @@ var REQUESTS = {
 			data: {"type": object_type,
 				 "id": object_id,
 				 "nco": nco_id},
-			crossDomain: true,
+/*			crossDomain: true,
 			xhrFields: {
 				withCredentials: true
-			},
+			},*/
 			complete: function(data){
 				alert(LOCALE_ARRAY_ADDITIONAL.saved_successfull[CURRENT_LANG]);
 				//console.log("saved ok");
@@ -4902,10 +4902,10 @@ var REQUESTS = {
 		$.ajax({
 			url: './request.php?id=' + data_id,
 			type: "GET",
+/*			crossDomain: true,
 			xhrFields: {
 				withCredentials: true
-			},
-			crossDomain: true,
+			},*/
 			complete: function( response ){
 				return_element = JSON.parse( response.responseText );
 				data_for_build = return_element[0];
@@ -4955,10 +4955,10 @@ var REQUESTS = {
 				 "type": type_id,
 				 "id": object_id,
 				 "open": open},
-			crossDomain: true,
+/*			crossDomain: true,
 			xhrFields: {
 				withCredentials: true
-			},
+			},*/
 			complete: function(data){
 				if(data){
 					var response_data = JSON.parse(data.responseText);
@@ -4987,10 +4987,10 @@ var REQUESTS = {
 			$.ajax({
 				url: './fund_public_cf.php?type=5&id=' + object_id,
 				type: "GET",
+/*				crossDomain: true,
 				xhrFields: {
 					withCredentials: true
-				},
-				crossDomain: true,
+				},*/
 				complete: function( response ){
 					var funds_list = JSON.parse( response.responseText );
 					//console.log('request');	
@@ -5090,10 +5090,10 @@ var REQUESTS = {
 				 "amount": amount,
 				 "type": type,
 				 "id": type_id},
-			crossDomain: true,
+/*			crossDomain: true,
 			xhrFields: {
 				withCredentials: true
-			},
+			},*/
 			complete: function(data){
 				alert(LOCALE_ARRAY_ADDITIONAL.return_donate_successfull[CURRENT_LANG]);
 				//console.log(return_page);
@@ -5131,10 +5131,10 @@ var funds = {
 		$.ajax({
 			url: "./fund_user.php",
 			type: "GET",
-			crossDomain: true,
+/*			crossDomain: true,
 			xhrFields: {
 				withCredentials: true
-			},
+			},*/
 			complete: function(data){
 				self.arr = JSON.parse(data.responseText);
 				self.build_page(self.arr);
@@ -5180,10 +5180,10 @@ var funds = {
 		$.ajax({
 			url: "./sn/donation.php?fund_id="+id,
 			type: "GET",
-			crossDomain: true,
+/*			crossDomain: true,
 			xhrFields: {
 				withCredentials: true
-			},
+			},*/
 			complete: function(data){
 				if(data.responseText.indexOf('Incorrect') > -1){
 					self.set_pay_button('');
@@ -5206,10 +5206,10 @@ var funds = {
 			$.ajax({
 				url: "./fund_user_add.php?currency="+currency,
 				type: "GET",
-				crossDomain: true,
+/*				crossDomain: true,
 				xhrFields: {
 					withCredentials: true
-				},
+				},*/
 				complete: function(data){
 					try{
 						var funds = JSON.parse(data.responseText);
@@ -5269,10 +5269,10 @@ var funds = {
 			$.ajax({
 				url: url,
 				type: "GET",
+/*				crossDomain: true,
 				xhrFields: {
 					withCredentials: true
-				},
-				crossDomain: true,
+				},*/
 				complete: function( response ){
 					////console.log(response);
 					var fund_array = JSON.parse( response.responseText );
@@ -5361,10 +5361,10 @@ var funds = {
 				 			"amount": amount,
 				 			"type": type,
 				 			"id": id},
+/*					crossDomain: true,
 					xhrFields: {
 						withCredentials: true
-					},
-					crossDomain: true,
+					},*/
 					complete: function( response ){
 							$('#balances-pif-page [data-id-amount=' + id + ']').html( parsed_int - amount );
 					}
@@ -5395,10 +5395,10 @@ var funds = {
 					 "currency": $('#transaction-page [name=fund_id] option[value=' + $('#transaction-page [name=fund_id]').val() + ']').data('currency'),
 					 "amount": $('#transaction-page [name=amount]').val(),
 					 "user_id": $('#transaction-page [name=user_id]').val()},
-				crossDomain: true,
+/*				crossDomain: true,
 				xhrFields: {
 					withCredentials: true
-				},
+				},*/
 				complete: function(data){
 					if(data){
 						var response_data = JSON.parse(data.responseText);
@@ -5460,10 +5460,10 @@ var WEIGHTED_VOTINGS = {
 			$.ajax({
 				url: url,
 				type: "GET",
+/*				crossDomain: true,
 				xhrFields: {
 					withCredentials: true
-				},
-				crossDomain: true,
+				},*/
 				complete: function( response ){
 					////console.log(response);
 					self.votings_array = JSON.parse( response.responseText );
@@ -5546,10 +5546,10 @@ var WEIGHTED_VOTINGS = {
 		$.ajax({
 			url: url,
 			type: "GET",
+/*			crossDomain: true,
 			xhrFields: {
 				withCredentials: true
-			},
-			crossDomain: true,
+			},*/
 			complete: function( response ){
 				////console.log(response);
 				self.votings_array = JSON.parse( response.responseText );	
@@ -5588,10 +5588,10 @@ var WEIGHTED_VOTINGS = {
 			$.ajax({
 				url: url,
 				type: "GET",
+/*				crossDomain: true,
 				xhrFields: {
 					withCredentials: true
-				},
-				crossDomain: true,
+				},*/
 				complete: function( response ){
 						////console.log(response);
 					
@@ -5653,10 +5653,10 @@ var WEIGHTED_VOTINGS = {
 				$.ajax({
 					url: "./stars_add.php?id=" + vote_id + "&stars=0&obj=6",
 					type: "GET",
+/*					crossDomain: true,
 					xhrFields: {
 						withCredentials: true
-					},
-					crossDomain: true,
+					},*/
 					complete: function( response ){
 						
 					}
@@ -5667,10 +5667,10 @@ var WEIGHTED_VOTINGS = {
 			$.ajax({
 				url: "./stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=6",
 				type: "GET",
+/*				crossDomain: true,
 				xhrFields: {
 					withCredentials: true
-				},
-				crossDomain: true,
+				},*/
 				complete: function( response ){
 					
 				}
@@ -6237,10 +6237,10 @@ var WEIGHTED_VOTINGS = {
 		$.ajax({
 			url: './weighted_votings.php?id=' + vote_id,
 			type: "GET",
+/*			crossDomain: true,
 			xhrFields: {
 				withCredentials: true
-			},
-			crossDomain: true,
+			},*/
 			complete: function( response ){
 				return_element = JSON.parse( response.responseText );
 				data_for_build = return_element[0];
@@ -6330,10 +6330,10 @@ var WEIGHTED_VOTINGS = {
 			$.ajax({
 				url: './weighted_vote_add.php?wv_id=' + object_id + '&vote=' + vote + '&open=' + open_name,
 				type: "GET",
+/*				crossDomain: true,
 				xhrFields: {
 					withCredentials: true
-				},
-				crossDomain: true,
+				},*/
 				complete: function( response ){
 						self.get_one_element(object_id);
 						//console.log('ok');
@@ -6345,10 +6345,10 @@ var WEIGHTED_VOTINGS = {
 		$.ajax({
 			url: './weighted_voting_rm.php?wv_id=' + voting_id,
 			type: "GET",
+/*			crossDomain: true,
 			xhrFields: {
 				withCredentials: true
-			},
-			crossDomain: true,
+			},*/
 			complete: function( response ){
 				 //console.log("Deleted id:" + voting_id);
 				 $.mobile.navigate(return_page);	
@@ -6365,10 +6365,10 @@ var WEIGHTED_VOTINGS = {
 		$.ajax({
 			url: './weighted_vote_open.php?id=' + vote_id + filter_id,
 			type: "GET",
+/*			crossDomain: true,
 			xhrFields: {
 			 withCredentials: true
-			},
-			crossDomain: true,
+			},*/
 			complete: function( response ){
 					//console.log(response);
 					self.voters_list = JSON.parse( response.responseText );
@@ -6521,10 +6521,10 @@ var TRUST_LIST = {
 		$.ajax({
 			url: url,
 			type: "GET",
+/*			crossDomain: true,
 			xhrFields: {
 				withCredentials: true
-			},
-			crossDomain: true,
+			},*/
 			complete: function( response ){
 				$.mobile.loading( "hide" );
 				//console.log(response);
@@ -6568,10 +6568,10 @@ var TRUST_LIST = {
 		$.ajax({
 			url: url,
 			type: "GET",
+/*			crossDomain: true,
 			xhrFields: {
 			 withCredentials: true
-			},
-			crossDomain: true,
+			},*/
 			complete: function( response ){
 				//console.log(response);
 				var query_array = JSON.parse( response.responseText );
@@ -6887,10 +6887,10 @@ var TRUST_LIST = {
 		$.ajax({
 			url: './trust_rm.php?tid=' + id_sphere_trust,
 			type: "GET",
-			xhrFields: {
+/*			xhrFields: {
 				withCredentials: true
 			},
-			crossDomain: true,
+			crossDomain: true,*/
 			complete: function( response ){
 				$.mobile.loading( "hide" );
 				if( response.responseText.indexOf('error') > -1 ){
@@ -6915,10 +6915,10 @@ var TRUST_LIST = {
 		$.ajax({
 			url: './trust_add.php?t=' + id_user + '&s=' + id_sphere,
 			type: "GET",
-			xhrFields: {
+/*			xhrFields: {
 			 withCredentials: true
 			},
-			crossDomain: true,
+			crossDomain: true,*/
 			complete: function( response ){
 				$.mobile.loading( "hide" );
 				if( response.responseText.indexOf('error') > -1 ){
@@ -7003,10 +7003,10 @@ var SPHERES = {
 			$.ajax({
 				url: './filter.php',
 				type: "GET",
-				xhrFields: {
+/*				xhrFields: {
 					withCredentials: true
 				},
-				crossDomain: true,
+				crossDomain: true,*/
 				complete: function( response ){
 						self.spheres_array = JSON.parse( response.responseText );	
 						self.normalize_array();
@@ -7163,10 +7163,10 @@ var SPHERES = {
 		$.ajax({
 			url: './filter_fav_add.php?id=' + id_sphere + '&rm=1',
 			type: "GET",
-			xhrFields: {
+/*			xhrFields: {
 				withCredentials: true
 			},
-			crossDomain: true,
+			crossDomain: true,*/
 			complete: function( response ){
 				$.mobile.loading( "hide" );
 			},
@@ -7177,10 +7177,10 @@ var SPHERES = {
 		$.ajax({
 			url: './filter_fav_add.php?id=' + id_sphere,
 			type: "GET",
-			xhrFields: {
+/*			xhrFields: {
 				withCredentials: true
 			},
-			crossDomain: true,
+			crossDomain: true,*/
 			complete: function( response ){
 					$.mobile.loading( "hide" );	
 			},
@@ -7344,10 +7344,10 @@ var NEWS = {
 		$.ajax({
 			url: './news.php',
 			type: "GET",
-			xhrFields: {
+/*			xhrFields: {
 				withCredentials: true
 			},
-			crossDomain: true,
+			crossDomain: true,*/
 			complete: function( response ){
 				//console.log(response);
 				self.news_list = JSON.parse( response.responseText );
@@ -7363,10 +7363,10 @@ var NEWS = {
 		$.ajax({
 			url: './news.php?ls=' + self.news_last_item,
 			type: "GET",
-			xhrFields: {
+/*			xhrFields: {
 				withCredentials: true
 			},
-			crossDomain: true,
+			crossDomain: true,*/
 			complete: function( response ){
 				//console.log(response);
 				var query_array = JSON.parse( response.responseText );
@@ -7455,10 +7455,10 @@ var TASKS = {
 		$.ajax({
 			url: './tasks.php',
 			type: "GET",
-			xhrFields: {
+/*			xhrFields: {
 				withCredentials: true
 			},
-			crossDomain: true,
+			crossDomain: true,*/
 			complete: function( response ){
 				//console.log(response);
 				var query_array = JSON.parse( response.responseText );
@@ -7479,10 +7479,10 @@ var TASKS = {
 		$.ajax({
 			url: './tasks.php?ls=' + self.tasks_last_item,
 			type: "GET",
-			xhrFields: {
+/*			xhrFields: {
 				withCredentials: true
 			},
-			crossDomain: true,
+			crossDomain: true,*/
 			complete: function( response ){
 				//console.log(response);
 				var query_array = JSON.parse( response.responseText );
@@ -7529,10 +7529,10 @@ var MAP = {
 		$.ajax({
 			url: './map_marks.php',
 			type: "GET",
-			xhrFields: {
+/*			xhrFields: {
 				withCredentials: true
 			},
-			crossDomain: true,
+			crossDomain: true,*/
 			complete: function( response ){
 				//console.log(response);
 				var query_array = JSON.parse( response.responseText );
@@ -7552,10 +7552,10 @@ var MAP = {
 		$.ajax({
 			url: './map_marks.php',
 			type: "GET",
-			xhrFields: {
+/*			xhrFields: {
 				withCredentials: true
 			},
-			crossDomain: true,
+			crossDomain: true,*/
 			complete: function( response ){
 				//console.log(response);
 				var query_array = JSON.parse( response.responseText );
@@ -7600,10 +7600,10 @@ var WALLET = {
 		$.ajax({
 			url: "./sn/auth_liqpay.php",
 			type: "value",
-			crossDomain: true,
+/*			crossDomain: true,
 			xhrFields: {
 				withCredentials: true
-			},
+			},*/
 			complete: function(response){
 				var data = response.responseText;
 				$('#auth_wallet').html(data);
@@ -7629,10 +7629,10 @@ var GROUPS = {
 		$.ajax({
 			url: './groups.php?ls=' + self.last_item,
 			type: "GET",
-			xhrFields: {
+/*			xhrFields: {
 				withCredentials: true
 			},
-			crossDomain: true,
+			crossDomain: true,*/
 			complete: function( response ){
 				//console.log(response);
 				self.items_list = JSON.parse(response.responseText);
@@ -7946,10 +7946,10 @@ var VOTINGS = {
 		$.ajax({
 			url: url,
 			type: "GET",
-			xhrFields: {
+/*			xhrFields: {
 				withCredentials: true
 			},
-			crossDomain: true,
+			crossDomain: true,*/
 			complete: function( response ){
 				//console.log(response);
 				self.votings_array = JSON.parse( response.responseText );	
@@ -8070,10 +8070,10 @@ var VOTINGS = {
 		$.ajax({
 			url: url,
 			type: "GET",
-			xhrFields: {
+/*			xhrFields: {
 				withCredentials: true
 			},
-			crossDomain: true,
+			crossDomain: true,*/
 			complete: function( response ){
 				//console.log(response);
 				self.votings_array = JSON.parse( response.responseText );	
@@ -8131,10 +8131,10 @@ var VOTINGS = {
 			$.ajax({
 				url: url,
 				type: "GET",
-				xhrFields: {
+/*				xhrFields: {
 					withCredentials: true
 				},
-				crossDomain: true,
+				crossDomain: true,*/
 				complete: function( response ){
 					//console.log('REinit:' + response);
 				
@@ -8155,10 +8155,10 @@ var VOTINGS = {
 		$.ajax({
 			url: './like_add.php?id=' + vote_id,
 			type: "GET",
-			xhrFields: {
+/*			xhrFields: {
 				withCredentials: true
 			},
-			crossDomain: true,
+			crossDomain: true,*/
 			complete: function( response ){
 				//console.log("all ok!");	 
 			},
@@ -8225,10 +8225,10 @@ var VOTINGS = {
 				$.ajax({
 					url: "./stars_add.php?id=" + vote_id + "&stars=0&obj=1",
 					type: "GET",
-					xhrFields: {
+/*					xhrFields: {
 						withCredentials: true
 					},
-					crossDomain: true,
+					crossDomain: true,*/
 					complete: function( response ){
 						
 					}
@@ -8239,10 +8239,10 @@ var VOTINGS = {
 			$.ajax({
 				url: "./stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=1",
 				type: "GET",
-				xhrFields: {
+/*				xhrFields: {
 					withCredentials: true
 				},
-				crossDomain: true,
+				crossDomain: true,*/
 				complete: function( response ){
 					
 				}
@@ -8884,10 +8884,10 @@ var VOTINGS = {
 		$.ajax({
 			url: './mc.php?id=' + vote_id,
 			type: "GET",
-			xhrFields: {
+/*			xhrFields: {
 				withCredentials: true
 			},
-			crossDomain: true,
+			crossDomain: true,*/
 			complete: function( response ){
 				var return_element = JSON.parse( response.responseText );
 				data_for_build = return_element[0];
@@ -8990,10 +8990,10 @@ var VOTINGS = {
 			$.ajax({
 				url: './vote_add.php?id=' + object_id + '&vote=' + vote + '&open=' + open_name,
 				type: "GET",
-				xhrFields: {
+/*				xhrFields: {
 					withCredentials: true
 				},
-				crossDomain: true,
+				crossDomain: true,*/
 				complete: function( response ){
 					function cb(){
 						return function(){
@@ -9029,10 +9029,10 @@ var VOTINGS = {
 		$.ajax({
 			url: './mc_rm.php?id=' + voting_id,
 			type: "GET",
-			xhrFields: {
+/*			xhrFields: {
 				withCredentials: true
 			},
-			crossDomain: true,
+			crossDomain: true,*/
 			complete: function( response ){
 				if(response && response.responseText.indexOf('error') == -1){
 					//console.log("Deleted id:" + voting_id);
@@ -9196,10 +9196,10 @@ var VOTINGS = {
 		$.ajax({
 			url: './vote_open.php?id=' + vote_id,
 			type: "GET",
-			xhrFields: {
+/*			xhrFields: {
 				withCredentials: true
 			},
-			crossDomain: true,
+			crossDomain: true,*/
 			complete: function( response ){
 					//console.log(response);
 					self.voters_list = JSON.parse( response.responseText );
@@ -9305,10 +9305,10 @@ var VOTINGS = {
 			$.ajax({
 				url: url,
 				type: "GET",
-				xhrFields: {
+/*				xhrFields: {
 					withCredentials: true
 				},
-				crossDomain: true,
+				crossDomain: true,*/
 				complete: function( response ){
 					 //console.log("Okay");
 					 $('#vote-page #create_project_button').attr('style', 'display: none');
@@ -9338,10 +9338,10 @@ var MY_VOTINGS = {
 		$.ajax({
 			url: './user_votes_list.php?sph=0',
 			type: "GET",
-			xhrFields: {
+/*			xhrFields: {
 				withCredentials: true
 			},
-			crossDomain: true,
+			crossDomain: true,*/
 			complete: function( response ){
 				//console.log(response);
 				self.votings_array = JSON.parse( response.responseText );	
@@ -9363,10 +9363,10 @@ var MY_VOTINGS = {
 			$.ajax({
 			url: './user_votes_list.php?sph=0&ls=' + self.voting_last_item,
 			type: "GET",
-			xhrFields: {
+/*			xhrFields: {
 				withCredentials: true
 			},
-			crossDomain: true,
+			crossDomain: true,*/
 			complete: function( response ){
 				//console.log(response);
 				var query_array =JSON.parse( response.responseText );	
@@ -9452,10 +9452,10 @@ var MY_VOTINGS = {
 		$.ajax({
 			url: url,
 			type: "GET",
-			xhrFields: {
+/*			xhrFields: {
 				withCredentials: true
 			},
-			crossDomain: true,
+			crossDomain: true,*/
 			complete: function( response ){
 				//console.log(response);
 				self.votings_array = JSON.parse( response.responseText );	
@@ -9509,10 +9509,10 @@ var MY_VOTINGS = {
 		$.ajax({
 			url: './like_add.php?id=' + vote_id,
 			type: "GET",
-			xhrFields: {
+/*			xhrFields: {
 				withCredentials: true
 			},
-			crossDomain: true,
+			crossDomain: true,*/
 			complete: function( response ){
 				//console.log("all ok!");	 
 				switch($('#my_support').data('my_supported')){
@@ -10143,10 +10143,10 @@ var MY_VOTINGS = {
 		$.ajax({
 			url: './mc.php?sph=0&id=' + vote_id,
 			type: "GET",
-			xhrFields: {
+/*			xhrFields: {
 				withCredentials: true
 			},
-			crossDomain: true,
+			crossDomain: true,*/
 			complete: function( response ){
 				return_element = JSON.parse( response.responseText );
 				data_for_build = return_element[0];
@@ -10241,10 +10241,10 @@ var MY_VOTINGS = {
 			$.ajax({
 				url: './vote_add.php?id=' + object_id + '&vote=' + vote + '&open=' + open_name,
 				type: "GET",
-				xhrFields: {
+/*				xhrFields: {
 					withCredentials: true
 				},
-				crossDomain: true,
+				crossDomain: true,*/
 				complete: function( response ){
 					function cb(){
 						return function(){
@@ -10414,10 +10414,10 @@ var MY_VOTINGS = {
 		$.ajax({
 			url: './vote_open.php?id=' + vote_id,
 			type: "GET",
-			xhrFields: {
+/*			xhrFields: {
 				withCredentials: true
 			},
-			crossDomain: true,
+			crossDomain: true,*/
 			complete: function( response ){
 				//console.log(response);
 				self.voters_list = JSON.parse( response.responseText );
@@ -10693,10 +10693,10 @@ var ADRESS = {
 			$.ajax({
 				url: m,
 				type: "GET",
-				xhrFields: {
+/*				xhrFields: {
 					withCredentials: true
 				},
-				crossDomain: true,
+				crossDomain: true,*/
 				dataType: 'jsonp',
 				complete: function(result){
 					//console.log(result);
@@ -10749,10 +10749,10 @@ var ADRESS = {
 														+ '&zip=' + $('#address-item-' + page + ' [name=index]').val()
 														+ '&reg_adr=' + reg_adr + '&lat=' + GoogleMapsAdress.lt_value + '&lng=' + GoogleMapsAdress.ln_value,
 			type: "GET",
-			xhrFields: {
+/*			xhrFields: {
 				withCredentials: true
 			},
-			crossDomain: true,
+			crossDomain: true,*/
 			complete: function(){
 				$.mobile.navigate("#edit-address");
 				$.mobile.loading( "hide" );
@@ -10782,10 +10782,10 @@ var ADRESS = {
 				$.ajax({
 					url: './user_address_rm.php?ida=' + ADRESS.address_arr[page-1]['ida'],
 					type: "GET",
-					xhrFields: {
+/*					xhrFields: {
 						withCredentials: true
 					},
-					crossDomain: true,
+					crossDomain: true,*/
 					complete: function(){
 						//alert('Deleting complete');	
 					
@@ -10921,11 +10921,11 @@ var ADRESS = {
 			$.ajax({
 				url: "./list_adr_country.php",
 				type:"GET",
+/*				crossDomain: true,
 				xhrFields: {
 					withCredentials: true
-				},
+				},*/
 				async: true,
-				crossDomain: true,
 				complete: function(response){
 					var data = response.responseText;
 					// //console.log(data);
@@ -10979,11 +10979,11 @@ var ADRESS = {
 			$.ajax({
 			url: "./list_adr_state.php?idc="+idc,
 			type:"GET",
+/*			crossDomain: true,
 			xhrFields: {
 				withCredentials: true
 			},
-			async: true,
-			crossDomain: true,
+*/			async: true,
 			complete: function(response){
 				var data = response.responseText;
 				self.state = jQuery.parseJSON(data);
@@ -11071,11 +11071,11 @@ var ADRESS = {
 			$.ajax({
 			url: "./list_adr_state.php?idc="+idc,
 			type:"GET",
+/*			crossDomain: true,
 			xhrFields: {
 				withCredentials: true
 			},
-			async: true,
-			crossDomain: true,
+*/			async: true,
 			complete: function(response){
 				var data = response.responseText;
 				self.state = jQuery.parseJSON(data);
@@ -11127,10 +11127,10 @@ var ADRESS = {
 		$.ajax({
 			url: "./list_adr_county.php?idc="+idc+"&ids="+ids,
 			type:"GET",
-			xhrFields: {
+/*			xhrFields: {
 				withCredentials: true
 			},
-			crossDomain: true,
+			crossDomain: true,*/
 			complete: function(response){
 				var data = response.responseText;
 			 // //console.log(data);
@@ -11182,10 +11182,10 @@ var ADRESS = {
 		$.ajax({
 			url: "./list_adr_city.php?idc="+idc+"&ids="+ids+"&idr="+idr,
 			type:"GET",
-			xhrFields: {
+/*			xhrFields: {
 				withCredentials: true
 			},
-			crossDomain: true,
+			crossDomain: true,*/
 			complete: function(response){
 				var data = response.responseText;
 				self.city = jQuery.parseJSON(data);
@@ -11236,10 +11236,10 @@ var ADRESS = {
 		$.ajax({
 			url: "./list_adr_zip.php?id="+idcity,
 			type:"GET",
-			xhrFields: {
+/*			xhrFields: {
 				withCredentials: true
 			},
-			crossDomain: true,
+			crossDomain: true,*/
 			complete: function(response){
 				var data = response.responseText;
 				//console.log(data);
@@ -11300,9 +11300,9 @@ var ADRESS = {
 				url: "./user_address.php",
 				type:"GET",
 				crossDomain: true,
-				xhrFields: {
+/*				xhrFields: {
 					withCredentials: true
-				},
+				},*/
 				complete: function(response){
 					var data = response.responseText;
 					var address_arr = jQuery.parseJSON(data);
@@ -11577,10 +11577,10 @@ function change_nan(number){
 			$.ajax({
 				url: './l/index.php?' + matches[0],
 				type: "GET",
-				xhrFields: {
+/*				xhrFields: {
 					withCredentials: true
 				},
-				crossDomain: true,
+				crossDomain: true,*/
 				complete: function( response ){
 					auth(true);
 					$.mobile.navigate("#news-page");
@@ -11634,10 +11634,10 @@ function change_nan(number){
 			$.ajax({
 				url: "./profile.php",
 				type:"GET",
-				crossDomain: true,
+/*				crossDomain: true,
 				xhrFields: {
 					withCredentials: true
-				},
+				},*/
 				complete: function(response){
 					var data = response.responseText;
 					PROFILE.profile_obj = jQuery.parseJSON(data)[0];
@@ -11909,10 +11909,10 @@ function change_nan(number){
 								$.ajax({
 									url: './sn/sn_rm.php?sn=' + $(this).data("index"),
 									type: "GET",
-									xhrFields: {
+/*									xhrFields: {
 										withCredentials: true
 									},
-									crossDomain: true,
+									crossDomain: true,*/
 									complete: function( response ){
 										//console.log('ok');
 									}
@@ -11983,10 +11983,10 @@ function change_nan(number){
 							 "ln": ln,
 							 "url": url,
 							 "av": av},
-						crossDomain: true,
+/*						crossDomain: true,
 						xhrFields: {
 							withCredentials: true
-						},
+						},*/
 						complete: function(data){
 							//console.log("saved ok");
 							PROFILE.gender = g;
@@ -12021,10 +12021,10 @@ function change_nan(number){
 								 "user_password_new": $('#profile-page [name=user_password_new]').val(),
 								 "user_password_repeat": $('#profile-page [name=user_password_repeat]').val(),
 								 "user_edit_submit_password": "Change password"},
-							crossDomain: true,
+/*							crossDomain: true,
 							xhrFields: {
 								withCredentials: true
-							},
+							},*/
 							complete: function(data){
 								if(data.responseText.indexOf("wrong") > -1){
 									alert(LOCALE_ARRAY_ADDITIONAL.old_password_is_wrong[CURRENT_LANG]);
@@ -12055,10 +12055,10 @@ function change_nan(number){
 				url: "./l/index.php?m=0",
 				type: "POST",
 				data: data,
-				crossDomain: true,
+/*				crossDomain: true,
 				xhrFields: {
 					withCredentials: true
-				},
+				},*/
 				complete: function(data){
 					if(data.responseText.indexOf("You are logged")!==-1){
 						$.mobile.navigate("#news-page");
@@ -12085,9 +12085,9 @@ function change_nan(number){
 				url: "./l/index.php?m=3",
 				type: "POST",
 				data: data,
-				xhrFields: {
+/*				xhrFields: {
 					withCredentials: true
-				},
+				},*/
 				complete: function(data){
 					var resp = data.responseText;
 					if(resp.indexOf("This user does not exist")!==-1){
@@ -12136,10 +12136,10 @@ function change_nan(number){
 				url: "./l/index.php?m=1",
 				type: "POST",
 				data: data,
-				xhrFields: {
+/*				xhrFields: {
 					withCredentials: true
 				},
-				crossDomain: true,
+				crossDomain: true,*/
 				complete: function(data){
 					var resp = data.responseText;
 					if(resp.indexOf("Captcha was wrong!")!==-1){
@@ -12220,10 +12220,10 @@ function change_nan(number){
 					$.ajax({
 						url: "./profile.php",
 						type:"GET",
-						crossDomain: true,
+/*						crossDomain: true,
 						xhrFields: {
 							withCredentials: true
-						},
+						},*/
 						complete: function(response){
 							var data = response.responseText;
 							that.profile_obj = jQuery.parseJSON(data)[0];
@@ -12275,10 +12275,10 @@ function change_nan(number){
 				$.ajax({
 					url: "./l/index.php?logout=1&logout=1",
 					type:"GET",
-					crossDomain: true,
+/*					crossDomain: true,
 					xhrFields: {
 						withCredentials: true
-					},
+					},*/
 					complete: function(response){
 						self.auth = false;
 						$("#login-form [name=login]").val("");
