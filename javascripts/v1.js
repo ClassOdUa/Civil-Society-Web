@@ -2083,7 +2083,7 @@ var PROJECTS = {
 /*				crossDomain: true,
 				xhrFields: {
 					withCredentials: true
-				}*/,
+				},*/
 				complete: function( response ){
 					////console.log(response);
 					
