@@ -1,9 +1,9 @@
-<?xml version="1" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
     <widget xmlns   = "http://www.w3.org/ns/widgets"
-     xmlns:gap   = "http://phonegap.com/ns/1.0"
-     id          = "mobi.gurtom"
-     versionCode = "2"
-     version     = "0.7.77" >
+    xmlns:gap   = "http://phonegap.com/ns/1.0"
+    id          = "mobi.gurtom"
+    versionCode = "2"
+    version     = "0.7.54" >
 
     <!-- versionCode is optional and Android only -->
 
@@ -14,9 +14,9 @@
     </description>
 
     <author href="https://gurtom.mobi" email="gurtom.mobi@gmail.com">
-      Hardeep Shoker
+      Andrii Pertsiukh
     </author>
 
-
+    <gap:plugin name="com.telerik.plugins.nativepagetransitions" version="0.2.2" />
 
 </widget>
