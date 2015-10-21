@@ -8,8 +8,7 @@ var g_lat = 0;
 var g_lng = 0;
 //var OLD_ID_COOKIE = -1;
 
-///////////////////////////////////////////////////////////////////Неоптимизированная карта для старницы Адресов
-
+///////////////////TODO: OPTIMIZE MAP!!
 
 var GoogleMapsAdress = {
 	geocoder: new google.maps.Geocoder(),
@@ -69,7 +68,7 @@ var GoogleMapsAdress = {
 					 var build = ADRESS.getGPSByType(address,"street_number");
 					 ADRESS.gpsSet(object_id, country,state,county,city,street,build, latLng.lat(), latLng.lng());
 				} else {
-					//console.log(LOCALE_ARRAY_ADDITIONAL.gps_not_activated[CURRENT_LANG]);
+					console.log(LOCALE_ARRAY_ADDITIONAL.gps_not_activated[CURRENT_LANG]);
 				}
 				});
 			}
@@ -135,8 +134,7 @@ var GoogleMapsAdress = {
 	}
 }
 
-
-///////////////////////////////////////////////////////////////////
+///////////////////////////////////////
 
 $.mobile.defaultPageTransition = 'none';
 function inner_back(link){
@@ -576,7 +574,7 @@ window.onload = function(){
 		$('#lang label').html($('#lang label').data(CURRENT_LANG));
 		$('#select-lang').selectmenu("refresh", true);
 	}catch(e){
-		//console.log('exception catched, all ok');
+		console.log('exception catched, all ok');
 	}
 };
 
@@ -831,7 +829,7 @@ window.onhashchange = function(){
 		$('#select-lang > option[value="' + new_lang + '"]').attr('selected', 'selected');
 		$('#select-lang').selectmenu("refresh", true);
 	}catch(e){
-		//console.log('exception catched, all ok');
+		console.log('exception catched, all ok');
 	}
 
 	if(UI_STATE_DIALOG == 1 && location.href.indexOf('ui-state=dialog') == -1){
@@ -8160,7 +8158,7 @@ var VOTINGS = {
 			},
 			crossDomain: true,*/
 			complete: function( response ){
-				//console.log("all ok!");	 
+				console.log("all ok!");	 
 			},
 		});
 		switch($('#support').data('supported')){
@@ -11568,7 +11566,7 @@ function change_nan(number){
 	return number;
 }
 
-//console.log(window.location.toString());
+console.log(window.location.toString());
 
 (function($){
 	$(function(){
@@ -11718,7 +11716,7 @@ function change_nan(number){
 						}
 						$(links_array[i]).off("click");						
 					}
-					//console.log('fuck');
+					//console.log('!!!');
 					break;
 			}
 		}
@@ -11755,9 +11753,8 @@ function change_nan(number){
 				 
 			 client.onreadycountychange = function() 
 			 {
-				if (client.readyState == 4 && client.status == 200) 
-				{
-					//console.log("send ok");
+				if (client.readyState == 4 && client.status == 200){
+					console.log("send ok");
 					 //alert(client.statusText);
 				}
 			 }
@@ -11798,7 +11795,7 @@ function change_nan(number){
 			 /* Check the response status */
 			 client.onreadystatechange = function(){
 				if (client.readyState == 4 && client.status == 200){
-					//console.log("send ok");
+					console.log("send ok");
 					//alert(client.statusText);
 				}
 			 }
@@ -11877,8 +11874,7 @@ function change_nan(number){
 							$button.addClass("active");
 							$button.html('<span>' + LOCALE_ARRAY_ADDITIONAL.activate[CURRENT_LANG] + '</span>');
 							//console.log('non active');
-							}
-						else{
+						}else{
 							//console.log('active');
 							$button.attr("href","");
 							$button.removeClass("active");
@@ -11914,7 +11910,7 @@ function change_nan(number){
 									},
 									crossDomain: true,*/
 									complete: function( response ){
-										//console.log('ok');
+										console.log('ok');
 									}
 								});
 								
