@@ -7345,7 +7345,10 @@ var NEWS = {
 /*			xhrFields: {
 				withCredentials: true
 			},
-			crossDomain: true,*/
+			crossDomain: true,
+			error:function(jqXHR,text_status,strError){
+				alert("Error: " + text_status + " :: " + strError);},
+			timeout:60000,
 			complete: function( response ){
 				//console.log(response);
 				self.news_list = JSON.parse( response.responseText );
