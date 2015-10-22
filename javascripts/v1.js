@@ -7340,15 +7340,12 @@ var NEWS = {
 		var self = this;
 		$.mobile.loading( "show", {theme: "z"});
 		$.ajax({
-			url: mainURL + '/news.php',
+			url: './news.php',
 			type: "GET",
-			xhrFields: {
+/*			xhrFields: {
 				withCredentials: true
 			},
-			crossDomain: true,
-			error:function(jqXHR,text_status,strError){
-				alert("Error: " + text_status + " :: " + strError);},
-			timeout:60000,
+			crossDomain: true,*/
 			complete: function( response ){
 				//console.log(response);
 				self.news_list = JSON.parse( response.responseText );
