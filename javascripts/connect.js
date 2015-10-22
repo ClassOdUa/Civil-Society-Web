@@ -2290,7 +2290,7 @@ var PROJECTS = {
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + ' fund-raising">\
 									<a onclick = "$.mobile.navigate(\'#project-page?' + page + one_voting.id + '\')" href="#">\
 										<div class="img">\
-											<img src=".' + one_voting.img + '" />\
+											<img src="' mainURL + one_voting.img + '" />\
 										</div>\
 										<div class="info">\
 											<div class="title">\
@@ -2326,7 +2326,7 @@ var PROJECTS = {
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + ' project-completed">\
 								<a onclick = "$.mobile.navigate(\'#project-page?project=' + one_voting.id + '\')" href="#">\
 									<div class="img">\
-										<img src=".' + one_voting.img + '" />\
+										<img src="' mainURL + one_voting.img + '" />\
 									</div>\
 									<div class="info">\
 										<div class="title">\
@@ -2362,7 +2362,7 @@ var PROJECTS = {
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + ' fund-raising">\
 									<a onclick = "$.mobile.navigate(\'#project-page?project=' + one_voting.id + '\')" href="#">\
 										<div class="img">\
-											<img src=".' + one_voting.img + '" />\
+											<img src="' mainURL + one_voting.img + '" />\
 										</div>\
 										<div class="info">\
 											<div class="title">\
@@ -3592,7 +3592,7 @@ var PROGRAMS = {
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + ' fund-raising">\
 									<a onclick = "$.mobile.navigate(\'#program-page?program=' + one_voting.id + '\')" href="#">\
 										<div class="img">\
-											<img src=".' + one_voting.img + '" />\
+											<img src="' mainURL + one_voting.img + '" />\
 										</div>\
 										<div class="info">\
 											<div class="title">\
@@ -3621,7 +3621,7 @@ var PROGRAMS = {
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + ' program-completed">\
 								<a onclick = "$.mobile.navigate(\'#program-page?program=' + one_voting.id + '\')" href="#">\
 									<div class="img">\
-										<img src=".' + one_voting.img + '" />\
+										<img src="' mainURL + one_voting.img + '" />\
 									</div>\
 									<div class="info">\
 										<div class="title">\
@@ -4428,7 +4428,7 @@ var REQUESTS = {
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + ' fund-raising">\
 									<a onclick = "$.mobile.navigate(\'#request-page?request=' + one_voting.id + '\')" href="#">\
 										<div class="img">\
-											<img src=".' + one_voting.img + '" />\
+											<img src="' mainURL + one_voting.img + '" />\
 										</div>\
 										<div class="info">\
 											<div class="title">\
@@ -4464,7 +4464,7 @@ var REQUESTS = {
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + ' request-completed">\
 								<a onclick = "$.mobile.navigate(\'#request-page?request=' + one_voting.id + '\')" href="#">\
 									<div class="img">\
-										<img src=".' + one_voting.img + '" />\
+										<img src="' mainURL + one_voting.img + '" />\
 									</div>\
 									<div class="info">\
 										<div class="title">\
@@ -4500,7 +4500,7 @@ var REQUESTS = {
 		}
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + ' voting-canceled" style = "cursor: pointer" onclick = "VOTINGS.switch_page_for_build(' + one_voting.id + ', 0)">\
 								<div class="img">\
-									<img src=".' + one_voting.img + '" />\
+									<img src="' mainURL + one_voting.img + '" />\
 								</div>\
 								<div class="info">\
 									<div class="title">\
@@ -5702,7 +5702,7 @@ var WEIGHTED_VOTINGS = {
 		}
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + ' voting-supporters" style = "cursor: pointer" onclick = "WEIGHTED_VOTINGS.switch_page_for_build(' + one_voting.id + ', 0)">\
 								<div class="img">\
-									<img src=".' + one_voting.img + '" />\
+									<img src="' mainURL + one_voting.img + '" />\
 								</div>\
 								<div class="info">\
 									 <div class="title">\
@@ -5725,7 +5725,7 @@ var WEIGHTED_VOTINGS = {
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + '" style = "cursor: pointer" onclick = "WEIGHTED_VOTINGS.switch_page_for_build(' + one_voting.id + ', 0)">\
 								<a href="#">\
 									<div class="img">\
-										<img src=".' + one_voting.img + '" />\
+										<img src="' mainURL + one_voting.img + '" />\
 									</div>\
 									<div class="info">\
 										<div class="title">\
@@ -5757,7 +5757,7 @@ var WEIGHTED_VOTINGS = {
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + ' voting-completed" style = "cursor: pointer" onclick = "WEIGHTED_VOTINGS.switch_page_for_build(' + one_voting.id + ', 0)">\
 								<a href="#">\
 									<div class="img">\
-										<img src=".' + one_voting.img + '" />\
+										<img src="' mainURL + one_voting.img + '" />\
 									</div>\
 									<div class="info">\
 										<div class="title">\
@@ -5788,7 +5788,7 @@ var WEIGHTED_VOTINGS = {
 		}
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + ' voting-canceled" style = "cursor: pointer" onclick = "WEIGHTED_VOTINGS.switch_page_for_build(' + one_voting.id + ', 0)">\
 								<div class="img">\
-									<img src=".' + one_voting.img + '" />\
+									<img src="' mainURL + one_voting.img + '" />\
 								</div>\
 								<div class="info">\
 									<div class="title">\
@@ -6434,7 +6434,7 @@ var WEIGHTED_VOTINGS = {
 		jQuery.each(self.voters_list, function(i, one_voter) {
 			var item = '<div class="item">\
 							<div class="avatar">\
-								<img src=".' + one_voter.avatar + '" />\
+								<img src="' mainURL + one_voter.avatar + '" />\
 							</div>\
 							<div class="id">\
 								ID:' + one_voter.user_id + '\
@@ -6614,7 +6614,7 @@ var TRUST_LIST = {
 			elements_string += '<div class="item ui-corner-all">\
 									<div class="ui-block-a">\
 										<div class="avatar">\
-											<img src=".' + one_trust.img + '" />\
+											<img src="' mainURL + one_trust.img + '" />\
 										</div>\
 									</div>\
 									<div class="ui-block-b">\
@@ -7428,7 +7428,7 @@ var NEWS = {
 									</div>';
 			}else{
 				var image_news = '<div class="img">\
-										<img src=".' + one_news.img + '" />\
+										<img src="' mainURL + one_news.img + '" />\
 									</div>';
 			}
 			elements_string += '<div ' + onclick_event + ' class="item ui-corner-all ' + icon_news + '">\
@@ -8274,7 +8274,7 @@ var VOTINGS = {
 		}
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + ' voting-supporters" style = "cursor: pointer" onclick = "VOTINGS.switch_page_for_build(' + one_voting.id + ', 0)">\
 								<div class="img">\
-									<img src=".' + one_voting.img + '" />\
+									<img src="' mainURL + one_voting.img + '" />\
 								</div>\
 								<div class="info">\
 									 <div class="title">\
@@ -8300,7 +8300,7 @@ var VOTINGS = {
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + '" style = "cursor: pointer" onclick = "VOTINGS.switch_page_for_build(' + one_voting.id + ', 0)">\
 								<a href="#">\
 									<div class="img">\
-										<img src=".' + one_voting.img + '" />\
+										<img src="' mainURL + one_voting.img + '" />\
 									</div>\
 									<div class="info">\
 										<div class="title">\
@@ -8333,7 +8333,7 @@ var VOTINGS = {
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + ' voting-completed" style = "cursor: pointer" onclick = "VOTINGS.switch_page_for_build(' + one_voting.id + ', 0)">\
 								<a href="#">\
 									<div class="img">\
-										<img src=".' + one_voting.img + '" />\
+										<img src="' mainURL + one_voting.img + '" />\
 									</div>\
 									<div class="info">\
 										<div class="title">\
@@ -8365,7 +8365,7 @@ var VOTINGS = {
 		}
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + ' voting-canceled" style = "cursor: pointer" onclick = "VOTINGS.switch_page_for_build(' + one_voting.id + ', 0)">\
 								<div class="img">\
-									<img src=".' + one_voting.img + '" />\
+									<img src="' mainURL + one_voting.img + '" />\
 								</div>\
 								<div class="info">\
 									<div class="title">\
@@ -9265,7 +9265,7 @@ var VOTINGS = {
 		jQuery.each(self.voters_list, function(i, one_voter) {
 			var item = '<div class="item">\
 							<div class="avatar">\
-								<img src=".' + one_voter.avatar + '" />\
+								<img src="' mainURL + one_voter.avatar + '" />\
 							</div>\
 							<div class="id">\
 								ID:' + one_voter.user_id + '\
@@ -9552,7 +9552,7 @@ var MY_VOTINGS = {
 		}
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + ' voting-supporters" style = "cursor: pointer" onclick = "MY_VOTINGS.switch_page_for_build(' + one_voting.id + ', 0)">\
 								<div class="img">\
-									<img src=".' + one_voting.img + '" />\
+									<img src="' mainURL + one_voting.img + '" />\
 								</div>\
 								<div class="info">\
 									 <div class="title">\
@@ -9578,7 +9578,7 @@ var MY_VOTINGS = {
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + '" style = "cursor: pointer" onclick = "MY_VOTINGS.switch_page_for_build(' + one_voting.id + ', 0)">\
 								<a href="#">\
 									<div class="img">\
-										<img src=".' + one_voting.img + '" />\
+										<img src="' mainURL + one_voting.img + '" />\
 									</div>\
 									<div class="info">\
 										<div class="title">\
@@ -9613,7 +9613,7 @@ var MY_VOTINGS = {
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + ' voting-completed" style = "cursor: pointer" onclick = "MY_VOTINGS.switch_page_for_build(' + one_voting.id + ', 0)">\
 								<a href="#">\
 									<div class="img">\
-										<img src=".' + one_voting.img + '" />\
+										<img src="' mainURL + one_voting.img + '" />\
 									</div>\
 									<div class="info">\
 										<div class="title">\
@@ -9647,7 +9647,7 @@ var MY_VOTINGS = {
 		}
 		var part_ui_string = '<div class="item ui-corner-all ' + star_class + ' voting-canceled" style = "cursor: pointer" onclick = "MY_VOTINGS.switch_page_for_build(' + one_voting.id + ', 0)">\
 								<div class="img">\
-									<img src=".' + one_voting.img + '" />\
+									<img src="' mainURL + one_voting.img + '" />\
 								</div>\
 								<div class="info">\
 									<div class="title">\
@@ -10483,7 +10483,7 @@ var MY_VOTINGS = {
 		jQuery.each(self.voters_list, function(i, one_voter) {
 			var item = '<div class="item">\
 							<div class="avatar">\
-								<img src=".' + one_voter.avatar + '" />\
+								<img src="' mainURL + one_voter.avatar + '" />\
 							</div>\
 							<div class="id">\
 								ID:' + one_voter.id + '\
