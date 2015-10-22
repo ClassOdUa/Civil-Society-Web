@@ -8,6 +8,14 @@ var g_lat = 0;
 var g_lng = 0;
 //var OLD_ID_COOKIE = -1;
 
+//phonegap special cross-domain configuration
+$( document ).bind( "mobileinit", function() {
+    // Make your jQuery Mobile framework configuration changes here!
+
+	$.support.cors = true;
+    $.mobile.allowCrossDomainPages = true;
+});
+
 ///////////////////////////////////////////////////////////////////Неоптимизированная карта для старницы Адресов
 
 
@@ -380,7 +388,7 @@ window.onload = function(){
 		}
 
 		if(location.href.indexOf('#registration') > -1){
-			$("#captcha").attr("src", "./l/tools/showCaptcha.php");
+			$("#captcha").attr("src", mainURL + "/l/tools/showCaptcha.php");
 			$('#registration [type=submit]').button('refresh');
 		}
 	}, 300);
@@ -388,7 +396,7 @@ window.onload = function(){
 	//PIF.get_pif_array();
 
 	$('#picture_form').ajaxForm({
-		url: './i/up.php', 
+		url: mainURL + '/i/up.php', 
 		type: 'post', 
 		success: function(response) {
 			if( response.indexOf('error') > -1 ){
@@ -406,7 +414,7 @@ window.onload = function(){
 				}
 			}
 			$.ajax({
-				url: "./profile.php",
+				url: mainURL + "/profile.php",
 				type:"GET",
 				crossDomain: true,
 				xhrFields: {
@@ -418,7 +426,7 @@ window.onload = function(){
 					var profile_obj = jQuery.parseJSON(response.responseText)[0];
 					$('#profile-page #avatar').attr('src', '.' + profile_obj.avatar);
 					$('#menu_avatar').html('<img id="avatar" src=".' + profile_obj.avatar + '">');
-					//console.log( './' + profile_obj.avatar);
+					//console.log( mainURL + '/' + profile_obj.avatar);
 				}else{
 					if( response.responseText.indexOf('error') > -1 ){
 						var error_arr = JSON.parse(response.responseText);
@@ -444,7 +452,7 @@ window.onload = function(){
 
 
 	$('#picture_form_create_vote').ajaxForm({
-		url: './i/up.php', 
+		url: mainURL + '/i/up.php', 
 		type: 'post', 
 		success: function(response) {
 			var error = 0;
@@ -499,7 +507,7 @@ window.onload = function(){
 	//функция create_object
 
 	$('#additional_photo_form').ajaxForm({
-		url: './i/up.php', 
+		url: mainURL + '/i/up.php', 
 		type: 'post', 
 		success: function(response) {
 			var error = 0;
@@ -743,7 +751,7 @@ window.onhashchange = function(){
 	}
 
 	if(location.href.indexOf('#registration') > -1){
-		$("#captcha").attr("src", "./l/tools/showCaptcha.php");
+		$("#captcha").attr("src", mainURL + "/l/tools/showCaptcha.php");
 		$('#registration [type=submit]').button('refresh');
 	}
 
@@ -953,7 +961,7 @@ function nko_create_page_data(){
 	var data_for_build;
 
 	$.ajax({
-		url: "./nco.php",
+		url: mainURL + "/nco.php",
 		type: "GET",
 		xhrFields: {
 	 		withCredentials: true
@@ -1101,7 +1109,7 @@ var COMMON_OBJECT = {
 		var the_verification_code = parts[0];
 
 		$.ajax({
-			url: "./l/index.php",
+			url: mainURL + "/l/index.php",
 			type: "POST",
 			data: {"m": the_m,
 				 "id": the_id,
@@ -1112,7 +1120,7 @@ var COMMON_OBJECT = {
 			},
 			complete: function(response){
 				if(response && response.responseText.indexOf('error') == -1){
-					window.location.replace("./index.html");
+					window.location.replace(mainURL + "/index.html");
 				}else{
 					if( response.responseText.indexOf('error') > -1 ){
 						var error_arr = JSON.parse(response.responseText);
@@ -1148,7 +1156,7 @@ var SUPER_PROFILE = {
 var NCO_OBJECT = {
 	offer_accept_nco: function(object_type, object_id, page){
 		$.ajax({
-			url: "./nco_bid.php",
+			url: mainURL + "/nco_bid.php",
 			type: "POST",
 			data: {"type": object_type,
 				 "id": object_id},
@@ -1298,7 +1306,7 @@ var CREATE_ITEM = {
 		var validation_error = self.validation( validation_row );
 		if( validation_error == 0 ){
 			$.ajax({
-				url: "./project_add.php",
+				url: mainURL + "/project_add.php",
 				type: "POST",
 				data: {"img": img,
 					 "descr": $("#create-item .jqte_editor").html(),
@@ -1349,7 +1357,7 @@ var CREATE_ITEM = {
 		var validation_error = self.validation( validation_row );
 		if( validation_error == 0 ){
 			$.ajax({
-				url: "./program_add.php",
+				url: mainURL + "/program_add.php",
 				type: "POST",
 				data: {"img": img,
 					 "descr": $("#create-item .jqte_editor").html(),
@@ -1403,7 +1411,7 @@ var CREATE_ITEM = {
 		var validation_error = self.validation( validation_row );
 		if( validation_error == 0 ){
 			$.ajax({
-				url: "./request_add.php",
+				url: mainURL + "/request_add.php",
 				type: "POST",
 				data: {"img": img,
 					 "descr": $('#create-item [name=descr]').val(),
@@ -1462,7 +1470,7 @@ var CREATE_ITEM = {
 		var validation_error = self.validation( validation_row );
 		if( validation_error == 0 ){
 			$.ajax({
-				url: "./weighted_voting_add.php",
+				url: mainURL + "/weighted_voting_add.php",
 				type: "POST",
 				data: {"img": img,
 					 "descr": $('#create-item [name=descr]').val(),
@@ -1518,7 +1526,7 @@ var CREATE_ITEM = {
 		var validation_error = self.validation( validation_row );
 		if( validation_error == 0 ){
 					$.ajax({
-						url: "./project_propositions_add.php",
+						url: mainURL + "/project_propositions_add.php",
 						type: "POST",
 						data: {"img": img,
 							 "descr": $("#create-item .jqte_editor").html(),
@@ -1591,7 +1599,7 @@ var HISTORY_PAGE = {
 		var self = this;
 		$.mobile.loading( "show", {theme: "z"});
 		$.ajax({
-			url: './fund_public_cf.php?type=4&id=' + object_id,
+			url: mainURL + '/fund_public_cf.php?type=4&id=' + object_id,
 			type: "GET",
 			xhrFields: {
 				withCredentials: true
@@ -1752,7 +1760,7 @@ var CREATE_VOTE = {
 			}
 
 			$.ajax({
-				url: "./mc_add.php",
+				url: mainURL + "/mc_add.php",
 				type: "POST",
 				data: {"img": img,
 					 "sph": $('#create-vote [name=sph]').val(),
@@ -1868,7 +1876,7 @@ var PIF = {
 			//console.log(funds.arr);
 			//console.log('pif here');
 			$.ajax({
-				url: "./fund_user.php",
+				url: mainURL + "/fund_user.php",
 				type: "GET",
 				xhrFields: {
 			 		withCredentials: true
@@ -1995,14 +2003,14 @@ var PROJECTS = {
 		if(location.href.indexOf('#projects-page?tags_filter=') > -1){
 			var tag_filter = location.href.match(/=([a-zA-Z0-9а-яА-Я]*)/i)[1];
 			
-			var url = './project.php?filter=' + encodeURIComponent(tag_filter);
+			var url = mainURL + '/project.php?filter=' + encodeURIComponent(tag_filter);
 			$('#projects-page #menu_link').attr('style', 'display:block');
 			$('#projects-page #my_activities_link').attr('style', 'display:none');
 			//console.log(tag_filter);
 		}else if(location.href.indexOf('#projects-page?program=') > -1){
 			var match_array = location.href.match(/#projects-page\?program=[0-9]*/i);
 			var object_id = match_array[0].match(/[0-9]+/i);
-			var url = './project_propositions.php?program_id=' + object_id;
+			var url = mainURL + '/project_propositions.php?program_id=' + object_id;
 			$('#projects-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.projects_propositions[CURRENT_LANG]);
 			var return_to = '#program-page?program=' + object_id;
 			$('#projects-page #menu_link').attr('style', 'display:block');
@@ -2014,20 +2022,20 @@ var PROJECTS = {
 			}
 			$('#projects-page #my_activities_link').attr('style', 'display:none');
 		}else if(location.href.indexOf('#projects-page?my_project=true') > -1){
-			var url = './project.php?my=1';
+			var url = mainURL + '/project.php?my=1';
 			$('#projects-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.my_projects[CURRENT_LANG]);
 			$('#projects-page #create_link').attr('style','display: block');
 			$('#projects-page #menu_link').attr('style', 'display:none');
 			$('#projects-page #my_activities_link').attr('style', 'display:block');
 			PIF.get_pif_array(true);
 		}else if(location.href.indexOf('#projects-page?my_project_propositions=true') > -1){
-			var url = './project_propositions.php?my=1';
+			var url = mainURL + '/project_propositions.php?my=1';
 			$('#projects-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.my_projects_propositions[CURRENT_LANG]);
 			$('#projects-page #menu_link').attr('style', 'display:none');
 			$('#projects-page #my_activities_link').attr('style', 'display:block');
 			PIF.get_pif_array(true);
 		}else{
-			var url = './project.php';
+			var url = mainURL + '/project.php';
 			$('#programs-page #menu_link').attr('style', 'display:block');
 			$('#programs-page #my_activities_link').attr('style', 'display:none');
 		}
@@ -2065,19 +2073,19 @@ var PROJECTS = {
 
 			if(location.href.indexOf('#projects-page?tags_filter=') > -1){
 				var tag_filter = location.href.match(/=([a-zA-Z0-9а-яА-Я]*)/i)[1];
-				var url = './project.php?filter=' + encodeURIComponent(tag_filter) + '&ls=' + self.data_last_item;
+				var url = mainURL + '/project.php?filter=' + encodeURIComponent(tag_filter) + '&ls=' + self.data_last_item;
 				//console.log(tag_filter);
 			}else if(location.href.indexOf('#projects-page?program=') > -1){
 				var match_array = location.href.match(/#projects-page\?program=[0-9]*/i);
 				var object_id = match_array[0].match(/[0-9]+/i);
-				var url = './project_propositions.php?program_id=' + object_id + '&ls=' + self.data_last_item;;
+				var url = mainURL + '/project_propositions.php?program_id=' + object_id + '&ls=' + self.data_last_item;;
 				var return_to = '#program-page?program=' + object_id + '&ls=' + self.data_last_item;;
 			}else if(location.href.indexOf('#projects-page?my_project=true') > -1){
-				var url = './project.php?my=1&ls=' + self.data_last_item;;
+				var url = mainURL + '/project.php?my=1&ls=' + self.data_last_item;;
 			}else if(location.href.indexOf('#projects-page?my_project_propositions=true') > -1){
-				var url = './project_propositions.php?my=1&ls=' + self.data_last_item;
+				var url = mainURL + '/project_propositions.php?my=1&ls=' + self.data_last_item;
 			}else{
-				var url = './project.php?ls=' + self.data_last_item;
+				var url = mainURL + '/project.php?ls=' + self.data_last_item;
 			}
 
 			$.ajax({
@@ -2109,7 +2117,7 @@ var PROJECTS = {
 
 		$.mobile.loading( "show", {theme: "z"});
 
-		var url = './project.php';
+		var url = mainURL + '/project.php';
 
 		switch($('#projects-page [name=sort]').val()){
 			case "Sort by id":
@@ -2236,7 +2244,7 @@ var PROJECTS = {
 				allStar.removeClass('active');
 				
 				$.ajax({
-					url: "./stars_add.php?id=" + vote_id + "&stars=0&obj=" + obj_type,
+					url: mainURL + "/stars_add.php?id=" + vote_id + "&stars=0&obj=" + obj_type,
 					type: "GET",
 					xhrFields: {
 						withCredentials: true
@@ -2250,7 +2258,7 @@ var PROJECTS = {
 			}
 
 			$.ajax({
-				url: "./stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=" + obj_type,
+				url: mainURL + "/stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=" + obj_type,
 				type: "GET",
 				xhrFields: {
 					withCredentials: true
@@ -3046,7 +3054,7 @@ var PROJECTS = {
 	},
 	set_nco: function(object_type, object_id, nco_id){
 		$.ajax({
-			url: "./nco_choice.php",
+			url: mainURL + "/nco_choice.php",
 			type: "POST",
 			data: {"type": object_type,
 				 "id": object_id,
@@ -3063,9 +3071,9 @@ var PROJECTS = {
 		});
 	},
 	get_one_element: function(data_id, type_trigger, project_proposition){
-		var url = './project.php?id=' + data_id;
+		var url = mainURL + '/project.php?id=' + data_id;
 		if(project_proposition){
-			url = './project_propositions.php?id=' + data_id;			
+			url = mainURL + '/project_propositions.php?id=' + data_id;			
 		}
 		var self = this;
 		var return_element;
@@ -3120,7 +3128,7 @@ var PROJECTS = {
 		}
 		
 		$.ajax({
-			url: "./fund_add_by_type.php",
+			url: mainURL + "/fund_add_by_type.php",
 			type: "POST",
 			data: {"fund_id": fund_id,
 				 "currency": currency,
@@ -3170,7 +3178,7 @@ var PROJECTS = {
 			var my_add = 0;
 			$.mobile.loading( "show", {theme: "z"});
 			$.ajax({
-			url: './fund_public_cf.php?type=' + type + '&id=' + object_id,
+			url: mainURL + '/fund_public_cf.php?type=' + type + '&id=' + object_id,
 			type: "GET",
 			xhrFields: {
 				withCredentials: true
@@ -3268,7 +3276,7 @@ var PROJECTS = {
 	}, 
 	return_donate: function(fund_id, currency, amount, type, type_id, return_page){
 		$.ajax({
-			url: "./fund_return_by_type.php",
+			url: mainURL + "/fund_return_by_type.php",
 			type: "POST",
 			data: {"fund_id": fund_id,
 				 "currency": currency,
@@ -3290,7 +3298,7 @@ var PROJECTS = {
 	},
 	/*delete_voting: function(voting_id, return_page){
 		$.ajax({
-			url: './mc_rm.php?id=' + voting_id,
+			url: mainURL + '/mc_rm.php?id=' + voting_id,
 			type: "GET",
 			xhrFields: {
 				withCredentials: true
@@ -3325,19 +3333,19 @@ var PROGRAMS = {
 		if(location.href.indexOf('#programs-page?tags_filter=') > -1){
 			var tag_filter = location.href.match(/=([a-zA-Z0-9а-яА-Я]*)/i)[1];
 			
-			var url = './program.php?filter=' + encodeURIComponent(tag_filter);
+			var url = mainURL + '/program.php?filter=' + encodeURIComponent(tag_filter);
 			//console.log(tag_filter);
 			$('#programs-page #menu_link').attr('style', 'display:block');
 			$('#programs-page #my_activities_link').attr('style', 'display:none');
 		}else if(location.href.indexOf('#programs-page?my_program=true') > -1){
-			var url = './program.php?my=1';
+			var url = mainURL + '/program.php?my=1';
 			$('#programs-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.my_programs[CURRENT_LANG]);
 			$('#programs-page #create_link').attr('style','display: block');
 			$('#programs-page #menu_link').attr('style', 'display:none');
 			$('#programs-page #my_activities_link').attr('style', 'display:block');
 			PIF.get_pif_array(true);
 		}else{
-			var url = './program.php';
+			var url = mainURL + '/program.php';
 			$('#programs-page #menu_link').attr('style', 'display:block');
 			$('#programs-page #my_activities_link').attr('style', 'display:none');
 		}
@@ -3378,12 +3386,12 @@ var PROGRAMS = {
 				var tag_filter = location.href.match(/=([a-zA-Z0-9а-яА-Я]*)/i)[1];
 				
 
-				var url = './program.php?filter=' + encodeURIComponent(tag_filter) + '&ls=' + self.data_last_item;
+				var url = mainURL + '/program.php?filter=' + encodeURIComponent(tag_filter) + '&ls=' + self.data_last_item;
 				//console.log(tag_filter);
 			}else if(location.href.indexOf('#programs-page?my_program=true') > -1){
-				var url = './program.php?my=1&ls=' + self.data_last_item;
+				var url = mainURL + '/program.php?my=1&ls=' + self.data_last_item;
 			}else{
-				var url = './program.php?ls=' + self.data_last_item;
+				var url = mainURL + '/program.php?ls=' + self.data_last_item;
 			}
 
 			$.mobile.loading( "show", {theme: "z"});
@@ -3426,7 +3434,7 @@ var PROGRAMS = {
 		}*/
 		$.mobile.loading( "show", {theme: "z"});
 
-		var url = './program.php';
+		var url = mainURL + '/program.php';
 
 		switch($('#programs-page [name=sort]').val()){
 			case "Sort by id":
@@ -3543,7 +3551,7 @@ var PROGRAMS = {
 			if (star.hasClass('active') && !star.next().hasClass('active')) {
 				allStar.removeClass('active');
 				$.ajax({
-					url: "./stars_add.php?id=" + vote_id + "&stars=0&obj=2",
+					url: mainURL + "/stars_add.php?id=" + vote_id + "&stars=0&obj=2",
 					type: "GET",
 					xhrFields: {
 						withCredentials: true
@@ -3557,7 +3565,7 @@ var PROGRAMS = {
 			}
 
 			$.ajax({
-				url: "./stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=2",
+				url: mainURL + "/stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=2",
 				type: "GET",
 				xhrFields: {
 					withCredentials: true
@@ -3896,7 +3904,7 @@ var PROGRAMS = {
 		var self = this;
 		var return_element;
 		$.ajax({
-			url: './program.php?id=' + data_id,
+			url: mainURL + '/program.php?id=' + data_id,
 			type: "GET",
 			xhrFields: {
 				withCredentials: true
@@ -3943,7 +3951,7 @@ var PROGRAMS = {
 		}
 		
 		$.ajax({
-			url: "./fund_add_by_type.php",
+			url: mainURL + "/fund_add_by_type.php",
 			type: "POST",
 			data: {"fund_id": fund_id,
 				 "currency": currency,
@@ -3982,7 +3990,7 @@ var PROGRAMS = {
 			var my_add = 0;
 			$.mobile.loading( "show", {theme: "z"});
 			$.ajax({
-				url: './fund_public_cf.php?type=2&id=' + object_id,
+				url: mainURL + '/fund_public_cf.php?type=2&id=' + object_id,
 				type: "GET",
 				xhrFields: {
 					withCredentials: true
@@ -4075,7 +4083,7 @@ var PROGRAMS = {
 	},
 	return_donate: function(fund_id, currency, amount, type, type_id, return_page){
 		$.ajax({
-			url: "./fund_return_by_type.php",
+			url: mainURL + "/fund_return_by_type.php",
 			type: "POST",
 			data: {"fund_id": fund_id,
 				 "currency": currency,
@@ -4098,7 +4106,7 @@ var PROGRAMS = {
 	}	
 	/*delete_voting: function(voting_id, return_page){
 		$.ajax({
-			url: './mc_rm.php?id=' + voting_id,
+			url: mainURL + '/mc_rm.php?id=' + voting_id,
 			type: "GET",
 			xhrFields: {
 				withCredentials: true
@@ -4135,17 +4143,17 @@ var REQUESTS = {
 		if(location.href.indexOf('#requests-page?tags_filter=') > -1){
 			var tag_filter = location.href.match(/=([a-zA-Z0-9а-яА-Я]*)/i)[1];
 			
-			var url = './request.php?filter=' + encodeURIComponent(tag_filter);
+			var url = mainURL + '/request.php?filter=' + encodeURIComponent(tag_filter);
 			//console.log(tag_filter);
 		}else if(location.href.indexOf('#requests-page?my_request=true') > -1){
-			var url = './request.php?my=1';
+			var url = mainURL + '/request.php?my=1';
 			$('#requests-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.my_requests[CURRENT_LANG]);
 			$('#requests-page #create_link').attr('style','display: block');
 			$('#requests-page #menu_link').attr('style', 'display:none');
 			$('#requests-page #my_activities_link').attr('style', 'display:block');
 			PIF.get_pif_array(true);
 		}else{
-			var url = './request.php';
+			var url = mainURL + '/request.php';
 		}
 
 		$.mobile.loading( "show", {theme: "z"});
@@ -4180,12 +4188,12 @@ var REQUESTS = {
 				var tag_filter = location.href.match(/=([a-zA-Z0-9а-яА-Я]*)/i)[1];
 				
 
-				var url = './request.php?filter=' + encodeURIComponent(tag_filter) + '&ls=' + self.data_last_item;
+				var url = mainURL + '/request.php?filter=' + encodeURIComponent(tag_filter) + '&ls=' + self.data_last_item;
 				//console.log(tag_filter);
 			}else if(location.href.indexOf('#requests-page?my_request=true') > -1){
-				var url = './request.php?my=1&ls=' + self.data_last_item;
+				var url = mainURL + '/request.php?my=1&ls=' + self.data_last_item;
 			}else{
-				var url = './request.php?ls=' + self.data_last_item;
+				var url = mainURL + '/request.php?ls=' + self.data_last_item;
 			}
 
 			$.mobile.loading( "show", {theme: "z"});
@@ -4228,7 +4236,7 @@ var REQUESTS = {
 		}*/
 		$.mobile.loading("show", {theme: "z"});
 
-		var url = './request.php';
+		var url = mainURL + '/request.php';
 
 		switch($('#requests-page [name=sort]').val()){
 			case "Sort by id":
@@ -4313,7 +4321,7 @@ var REQUESTS = {
 	},
 	/*support_voting: function(vote_id){
 		$.ajax({
-			url: './like_add.php?id=' + vote_id,
+			url: mainURL + '/like_add.php?id=' + vote_id,
 			type: "GET",
 			xhrFields: {
 				withCredentials: true
@@ -4379,7 +4387,7 @@ var REQUESTS = {
 			if (star.hasClass('active') && !star.next().hasClass('active')) {
 				allStar.removeClass('active');
 				$.ajax({
-					url: "./stars_add.php?id=" + vote_id + "&stars=0&obj=5",
+					url: mainURL + "/stars_add.php?id=" + vote_id + "&stars=0&obj=5",
 					type: "GET",
 					xhrFields: {
 						withCredentials: true
@@ -4393,7 +4401,7 @@ var REQUESTS = {
 			}
 
 			$.ajax({
-				url: "./stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=5",
+				url: mainURL + "/stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=5",
 				type: "GET",
 				xhrFields: {
 					withCredentials: true
@@ -4883,7 +4891,7 @@ var REQUESTS = {
 	},
 	set_nco: function(object_type, object_id, nco_id){
 		$.ajax({
-			url: "./nco_choice.php",
+			url: mainURL + "/nco_choice.php",
 			type: "POST",
 			data: {"type": object_type,
 				 "id": object_id,
@@ -4903,7 +4911,7 @@ var REQUESTS = {
 		var self = this;
 		var return_element;
 		$.ajax({
-			url: './request.php?id=' + data_id,
+			url: mainURL + '/request.php?id=' + data_id,
 			type: "GET",
 			xhrFields: {
 				withCredentials: true
@@ -4950,7 +4958,7 @@ var REQUESTS = {
 		}
 		
 		$.ajax({
-			url: "./fund_add_by_type.php",
+			url: mainURL + "/fund_add_by_type.php",
 			type: "POST",
 			data: {"fund_id": fund_id,
 				 "currency": currency,
@@ -4988,7 +4996,7 @@ var REQUESTS = {
 			var my_add = 0;
 			$.mobile.loading( "show", {theme: "z"});
 			$.ajax({
-				url: './fund_public_cf.php?type=5&id=' + object_id,
+				url: mainURL + '/fund_public_cf.php?type=5&id=' + object_id,
 				type: "GET",
 				xhrFields: {
 					withCredentials: true
@@ -5086,7 +5094,7 @@ var REQUESTS = {
 	},
 	return_donate: function(fund_id, currency, amount, type, type_id, return_page){
 		$.ajax({
-			url: "./fund_return_by_type.php",
+			url: mainURL + "/fund_return_by_type.php",
 			type: "POST",
 			data: {"fund_id": fund_id,
 				 "currency": currency,
@@ -5108,7 +5116,7 @@ var REQUESTS = {
 	}	
 	/*delete_voting: function(voting_id, return_page){
 		$.ajax({
-			url: './mc_rm.php?id=' + voting_id,
+			url: mainURL + '/mc_rm.php?id=' + voting_id,
 			type: "GET",
 			xhrFields: {
 				withCredentials: true
@@ -5132,7 +5140,7 @@ var funds = {
 	init : function(callback_function){
 		var self = this;
 		$.ajax({
-			url: "./fund_user.php",
+			url: mainURL + "/fund_user.php",
 			type: "GET",
 			crossDomain: true,
 			xhrFields: {
@@ -5181,7 +5189,7 @@ var funds = {
 	update_pay_button : function(id){
 		var self = this;
 		$.ajax({
-			url: "./sn/donation.php?fund_id="+id,
+			url: mainURL + "/sn/donation.php?fund_id="+id,
 			type: "GET",
 			crossDomain: true,
 			xhrFields: {
@@ -5207,7 +5215,7 @@ var funds = {
 		var self = this;
 		if(confirm(LOCALE_ARRAY_ADDITIONAL.create_fund_question[CURRENT_LANG])){
 			$.ajax({
-				url: "./fund_user_add.php?currency="+currency,
+				url: mainURL + "/fund_user_add.php?currency="+currency,
 				type: "GET",
 				crossDomain: true,
 				xhrFields: {
@@ -5267,7 +5275,7 @@ var funds = {
 		if(location.href.indexOf('#balances-pif-page?fund=') > -1){
 			var match_array = location.href.match(/=([a-zA-Z0-9а-яА-Я]*)/i)[1];
 			var fund_id = match_array.match(/[^=][0-9]*/i);
-			var url = './fund_user_cf.php?fund_id=' + fund_id;
+			var url = mainURL + '/fund_user_cf.php?fund_id=' + fund_id;
 
 			$.ajax({
 				url: url,
@@ -5357,7 +5365,7 @@ var funds = {
 			}else{
 				//console.log( parsed_int );
 				$.ajax({
-					url: './fund_return_by_type.php',
+					url: mainURL + '/fund_return_by_type.php',
 					type: "POST",
 					data: {	"fund_id": fund_id,
 				 			"currency": currency,
@@ -5392,7 +5400,7 @@ var funds = {
 	set_cash: function(){
 		if(confirm(LOCALE_ARRAY_ADDITIONAL.transaction_question[CURRENT_LANG])){
 			$.ajax({
-				url: "./fund_user_user.php",
+				url: mainURL + "/fund_user_user.php",
 				type: "POST",
 				data: {"fund_id": $('#transaction-page [name=fund_id]').val(),
 					 "currency": $('#transaction-page [name=fund_id] option[value=' + $('#transaction-page [name=fund_id]').val() + ']').data('currency'),
@@ -5439,7 +5447,7 @@ var WEIGHTED_VOTINGS = {
 			if(location.href.indexOf('#weighted-votings-page?program=') > -1){
 				var match_array = location.href.match(/#weighted-votings-page\?program=[0-9]*/i);
 				var object_id = match_array[0].match(/[0-9]+/i);
-				var url = './weighted_votings.php?program_id=' + object_id;
+				var url = mainURL + '/weighted_votings.php?program_id=' + object_id;
 				$('#weighted-votings-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.weighted_votings[CURRENT_LANG]);
 				$('#weighted-votings-page #create_voting_link').attr('style','display: block');
 				$('#weighted-votings-page #create_voting_link').attr('onclick', "$.mobile.navigate(\'#create-item?weighted_voting=true&item=" + object_id + "\')");
@@ -5447,17 +5455,17 @@ var WEIGHTED_VOTINGS = {
 				if(location.href.indexOf('#weighted-votings-page?my=1') > -1){
 					$('#weighted-votings-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.my_weighted_votings[CURRENT_LANG]);
 					$('#weighted-votings-page #create_voting_link').attr('style','display: none');
-					var url = './weighted_votings.php?my=1';
+					var url = mainURL + '/weighted_votings.php?my=1';
 				}else if(location.href.indexOf('#weighted-votings-page?my=2') > -1){
 					$('#weighted-votings-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.weighted_votings[CURRENT_LANG]);
 					$('#weighted-votings-page #create_voting_link').attr('style','display: block');
-					var url = './weighted_votings.php?my=2';
+					var url = mainURL + '/weighted_votings.php?my=2';
 				}
 			}
 			if(location.href.indexOf('#weighted-vote-page?vote=') > -1){
 				var match_array = location.href.match(/#weighted-vote-page\?vote=[0-9]*/i);
 				var object_id = match_array[0].match(/[0-9]+/i);
-				var url = './weighted_votings.php?id=' + object_id;
+				var url = mainURL + '/weighted_votings.php?id=' + object_id;
 			}
 
 			$.ajax({
@@ -5500,7 +5508,7 @@ var WEIGHTED_VOTINGS = {
 		}
 		$.mobile.loading( "show", {theme: "z"});
 
-		var url = './weighted_votings.php?';
+		var url = mainURL + '/weighted_votings.php?';
 
 		switch($('#weighted-votings-page [name=sort]').val()){
 			case "Sort by newest":
@@ -5577,14 +5585,14 @@ var WEIGHTED_VOTINGS = {
 			if(location.href.indexOf('#weighted-votings-page?program=') > -1){
 				var match_array = location.href.match(/#weighted-votings-page\?program=[0-9]*/i);
 				var object_id = match_array[0].match(/[0-9]+/i);
-				var url = './weighted_votings.php?program_id=' + object_id + '&ls=' + self.voting_last_item;
+				var url = mainURL + '/weighted_votings.php?program_id=' + object_id + '&ls=' + self.voting_last_item;
 				$('#weighted-votings-page #ui_title').html('Weighted votings');
 				$('#weighted-votings-page #create_link').attr('style','display: none');
 				var return_to = '#program-page?program=' + object_id;
 			}else{
 				$('#weighted-votings-page #ui_title').html('My weighted votings');
 				$('#weighted-votings-page #create_link').attr('style','display: block');
-				var url = './weighted_votings.php?my=1&ls=' + self.voting_last_item;
+				var url = mainURL + '/weighted_votings.php?my=1&ls=' + self.voting_last_item;
 			}
 
 			$.mobile.loading( "show", {theme: "z"});
@@ -5654,7 +5662,7 @@ var WEIGHTED_VOTINGS = {
 			if (star.hasClass('active') && !star.next().hasClass('active')) {
 				allStar.removeClass('active');
 				$.ajax({
-					url: "./stars_add.php?id=" + vote_id + "&stars=0&obj=6",
+					url: mainURL + "/stars_add.php?id=" + vote_id + "&stars=0&obj=6",
 					type: "GET",
 					xhrFields: {
 						withCredentials: true
@@ -5668,7 +5676,7 @@ var WEIGHTED_VOTINGS = {
 			}
 
 			$.ajax({
-				url: "./stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=6",
+				url: mainURL + "/stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=6",
 				type: "GET",
 				xhrFields: {
 					withCredentials: true
@@ -6238,7 +6246,7 @@ var WEIGHTED_VOTINGS = {
 		var self = this;
 		var return_element;
 		$.ajax({
-			url: './weighted_votings.php?id=' + vote_id,
+			url: mainURL + '/weighted_votings.php?id=' + vote_id,
 			type: "GET",
 			xhrFields: {
 				withCredentials: true
@@ -6331,7 +6339,7 @@ var WEIGHTED_VOTINGS = {
 			}
 			$('#weighted-vote-page .selected-text').html( status_current_voting );
 			$.ajax({
-				url: './weighted_vote_add.php?wv_id=' + object_id + '&vote=' + vote + '&open=' + open_name,
+				url: mainURL + '/weighted_vote_add.php?wv_id=' + object_id + '&vote=' + vote + '&open=' + open_name,
 				type: "GET",
 				xhrFields: {
 					withCredentials: true
@@ -6346,7 +6354,7 @@ var WEIGHTED_VOTINGS = {
 	},
 	delete_voting: function(voting_id, return_page){
 		$.ajax({
-			url: './weighted_voting_rm.php?wv_id=' + voting_id,
+			url: mainURL + '/weighted_voting_rm.php?wv_id=' + voting_id,
 			type: "GET",
 			xhrFields: {
 				withCredentials: true
@@ -6366,7 +6374,7 @@ var WEIGHTED_VOTINGS = {
 			filter_id = '&idu=' + $(idu_input).val();
 		}
 		$.ajax({
-			url: './weighted_vote_open.php?id=' + vote_id + filter_id,
+			url: mainURL + '/weighted_vote_open.php?id=' + vote_id + filter_id,
 			type: "GET",
 			xhrFields: {
 			 withCredentials: true
@@ -6476,29 +6484,29 @@ var TRUST_LIST = {
 		$.mobile.loading( "show", {theme: "z"});
 
 		if(parameter == 's'){
-				var url = './trust.php';					
+				var url = mainURL + '/trust.php';					
 		}else if(parameter == 'p_s'){
-				var url = './trust.php?p_s=1';
+				var url = mainURL + '/trust.php?p_s=1';
 		}
 
 		if(parameter){
 			if(parameter == 's'){
-				var url = './trust.php';					
+				var url = mainURL + '/trust.php';					
 			}else if(parameter == 'p_s'){
-				var url = './trust.php?p_s=1';
+				var url = mainURL + '/trust.php?p_s=1';
 			}
 		}else{
 			if(next_used){
 				if($('#trusted_checkbox').hasClass('ui-checkbox-off')){
-					var url = './trust.php';					
+					var url = mainURL + '/trust.php';					
 				}else{
-					var url = './trust.php?p_s=1';
+					var url = mainURL + '/trust.php?p_s=1';
 				}
 			}else{
 				if($('#trusted_checkbox').hasClass('ui-checkbox-on')){
-					var url = './trust.php';					
+					var url = mainURL + '/trust.php';					
 				}else{
-					var url = './trust.php?p_s=1';
+					var url = mainURL + '/trust.php?p_s=1';
 				}
 			}
 		}
@@ -6561,9 +6569,9 @@ var TRUST_LIST = {
 		var self = this;
 		$.mobile.loading( "show", {theme: "z"});
 		if($('#trusted_checkbox').hasClass('ui-checkbox-on')){
-			var url = './trust.php?p_s=1&ls=' + self.trust_last_item;			
+			var url = mainURL + '/trust.php?p_s=1&ls=' + self.trust_last_item;			
 		}else{
-			var url = './trust.php?ls=' + self.trust_last_item;
+			var url = mainURL + '/trust.php?ls=' + self.trust_last_item;
 		}
 		if($('#trust-list #searched_string').val() != ''){
 				url += "&s=" + $('#trust-list #searched_string').val();
@@ -6888,7 +6896,7 @@ var TRUST_LIST = {
 	delete_sphere: function(id_sphere_trust){
 		$.mobile.loading( "show", {theme: "z"});
 		$.ajax({
-			url: './trust_rm.php?tid=' + id_sphere_trust,
+			url: mainURL + '/trust_rm.php?tid=' + id_sphere_trust,
 			type: "GET",
 			xhrFields: {
 				withCredentials: true
@@ -6916,7 +6924,7 @@ var TRUST_LIST = {
 	save_sphere: function(id_user, id_sphere){
 		$.mobile.loading( "show", {theme: "z"});
 		$.ajax({
-			url: './trust_add.php?t=' + id_user + '&s=' + id_sphere,
+			url: mainURL + '/trust_add.php?t=' + id_user + '&s=' + id_sphere,
 			type: "GET",
 			xhrFields: {
 			 withCredentials: true
@@ -7004,7 +7012,7 @@ var SPHERES = {
 		self.set_locale_names();
 		if(SPHERES.spheres_array.length == 0 || forced_initial){
 			$.ajax({
-				url: './filter.php',
+				url: mainURL + '/filter.php',
 				type: "GET",
 				xhrFields: {
 					withCredentials: true
@@ -7164,7 +7172,7 @@ var SPHERES = {
 	delete_sphere: function(id_sphere){
 		$.mobile.loading( "show", {theme: "z"});
 		$.ajax({
-			url: './filter_fav_add.php?id=' + id_sphere + '&rm=1',
+			url: mainURL + '/filter_fav_add.php?id=' + id_sphere + '&rm=1',
 			type: "GET",
 			xhrFields: {
 				withCredentials: true
@@ -7178,7 +7186,7 @@ var SPHERES = {
 	save_sphere: function(id_sphere){
 		$.mobile.loading( "show", {theme: "z"});
 		$.ajax({
-			url: './filter_fav_add.php?id=' + id_sphere,
+			url: mainURL + '/filter_fav_add.php?id=' + id_sphere,
 			type: "GET",
 			xhrFields: {
 				withCredentials: true
@@ -7345,7 +7353,7 @@ var NEWS = {
 		var self = this;
 		$.mobile.loading( "show", {theme: "z"});
 		$.ajax({
-			url: './news.php',
+			url: mainURL + '/news.php',
 			type: "GET",
 			xhrFields: {
 				withCredentials: true
@@ -7364,7 +7372,7 @@ var NEWS = {
 		var self = this;
 		$.mobile.loading( "show", {theme: "z"});
 		$.ajax({
-			url: './news.php?ls=' + self.news_last_item,
+			url: mainURL + '/news.php?ls=' + self.news_last_item,
 			type: "GET",
 			xhrFields: {
 				withCredentials: true
@@ -7456,7 +7464,7 @@ var TASKS = {
 		var self = this;
 		$.mobile.loading( "show", {theme: "z"});
 		$.ajax({
-			url: './tasks.php',
+			url: mainURL + '/tasks.php',
 			type: "GET",
 			xhrFields: {
 				withCredentials: true
@@ -7480,7 +7488,7 @@ var TASKS = {
 		var self = this;
 		$.mobile.loading( "show", {theme: "z"});
 		$.ajax({
-			url: './tasks.php?ls=' + self.tasks_last_item,
+			url: mainURL + '/tasks.php?ls=' + self.tasks_last_item,
 			type: "GET",
 			xhrFields: {
 				withCredentials: true
@@ -7530,7 +7538,7 @@ var MAP = {
 		var self = this;
 		$.mobile.loading( "show", {theme: "z"});
 		$.ajax({
-			url: './map_marks.php',
+			url: mainURL + '/map_marks.php',
 			type: "GET",
 			xhrFields: {
 				withCredentials: true
@@ -7553,7 +7561,7 @@ var MAP = {
 		var self = this;
 		$.mobile.loading( "show", {theme: "z"});
 		$.ajax({
-			url: './map_marks.php',
+			url: mainURL + '/map_marks.php',
 			type: "GET",
 			xhrFields: {
 				withCredentials: true
@@ -7601,7 +7609,7 @@ var MAP = {
 var WALLET = {
 	init: function(){
 		$.ajax({
-			url: "./sn/auth_liqpay.php",
+			url: mainURL + "/sn/auth_liqpay.php",
 			type: "value",
 			crossDomain: true,
 			xhrFields: {
@@ -7630,7 +7638,7 @@ var GROUPS = {
 
 		$.mobile.loading( "show", {theme: "z"});
 		$.ajax({
-			url: './groups.php?ls=' + self.last_item,
+			url: mainURL + '/groups.php?ls=' + self.last_item,
 			type: "GET",
 			xhrFields: {
 				withCredentials: true
@@ -7670,7 +7678,7 @@ var LIST_OF_ITEM = {
 					l_onclick_event = 'onclick="$.mobile.navigate(\'#my-spheres-options?id=' + l_one_item.id + '\')" style="cursor:pointer"';
 					l_date = l_one_item.ts;
 					l_title = '<b>ID: ' + l_one_item.id + ' :: ' + l_one_item.org + '</b>';
-					l_image = './uploads/news.svg';
+					l_image = mainURL + '/uploads/news.svg';
 
 					switch( [CURRENT_LANG] ){
 						case "en":
@@ -7903,22 +7911,22 @@ var VOTINGS = {
 		if(location.href.indexOf('#votings-page?program=') > -1){
 			var match_array = location.href.match(/#votings-page\?program=[0-9]*/i);
 			var object_id = match_array[0].match(/[0-9]+/i);
-			var url = './weighted_votings.php?program_id=' + object_id;
+			var url = mainURL + '/weighted_votings.php?program_id=' + object_id;
 		}else{
 			if(location.href.indexOf('#votings-page?type=') > -1){
 				var match_array = location.href.match(/#votings-page\?type=[0-9]*/i);
 				var object_id = match_array[0].match(/[0-9]+/i);
-				var url = './mc.php?type=' + object_id;
+				var url = mainURL + '/mc.php?type=' + object_id;
 
 			}else if(location.href.indexOf('#votings-page?filter=') > -1){
 				self.activated_easy_filter = 1;
 				var match_array = location.href.match(/filter=[%a-zA-Z0-9]*/i);
 				var object_search = match_array[0].match(/filter=[%a-zA-Z0-9]*/i);
 
-				var url = './mc.php?' + object_search + '&ls=' + self.voting_last_item;
+				var url = mainURL + '/mc.php?' + object_search + '&ls=' + self.voting_last_item;
 
 			}else{
-				var url = './mc.php?';
+				var url = mainURL + '/mc.php?';
 			}
 
 			if(location.href.indexOf('&sph=') > -1){
@@ -7988,7 +7996,7 @@ var VOTINGS = {
 			$('#filter-page #choose_spheres').html(LOCALE_ARRAY_ADDITIONAL.choose_sphere[CURRENT_LANG] + ': ' + type_sphere);
 		}
 
-		var url = './mc.php?';
+		var url = mainURL + '/mc.php?';
 
 		if($('#votings-page #searched_string').val() != ""){
 			url += '&filter=' + $('#votings-page #searched_string').val();
@@ -8107,16 +8115,16 @@ var VOTINGS = {
 			if(location.href.indexOf('#votings-page?type=') > -1){
 				var match_array = location.href.match(/#votings-page\?type=[0-9]*/i);
 				var object_id = match_array[0].match(/[0-9]+/i);
-				var url = './mc.php?type=' + object_id + '&ls=' + self.voting_last_item;
+				var url = mainURL + '/mc.php?type=' + object_id + '&ls=' + self.voting_last_item;
 
 			}else if(location.href.indexOf('#votings-page?filter=') > -1){
 				var match_array = location.href.match(/#votings-page\?filter=[%a-zA-Z0-9]*/i);
 				var object_search = match_array[0].match(/filter=[%a-zA-Z0-9]*/i);
 				
-				var url = './mc.php?' + object_search + '&ls=' + self.voting_last_item;
+				var url = mainURL + '/mc.php?' + object_search + '&ls=' + self.voting_last_item;
 
 			}else{
-				var url = './mc.php?ls=' + self.voting_last_item;
+				var url = mainURL + '/mc.php?ls=' + self.voting_last_item;
 			}
 
 			if(location.href.indexOf('&sph=') > -1){
@@ -8156,7 +8164,7 @@ var VOTINGS = {
 	},
 	support_voting: function(vote_id, page){
 		$.ajax({
-			url: './like_add.php?id=' + vote_id,
+			url: mainURL + '/like_add.php?id=' + vote_id,
 			type: "GET",
 			xhrFields: {
 				withCredentials: true
@@ -8226,7 +8234,7 @@ var VOTINGS = {
 			if (star.hasClass('active') && !star.next().hasClass('active')) {
 				allStar.removeClass('active');
 				$.ajax({
-					url: "./stars_add.php?id=" + vote_id + "&stars=0&obj=1",
+					url: mainURL + "/stars_add.php?id=" + vote_id + "&stars=0&obj=1",
 					type: "GET",
 					xhrFields: {
 						withCredentials: true
@@ -8240,7 +8248,7 @@ var VOTINGS = {
 			}
 
 			$.ajax({
-				url: "./stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=1",
+				url: mainURL + "/stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=1",
 				type: "GET",
 				xhrFields: {
 					withCredentials: true
@@ -8885,7 +8893,7 @@ var VOTINGS = {
 		var return_element;
 		console.log('sw');
 		$.ajax({
-			url: './mc.php?id=' + vote_id,
+			url: mainURL + '/mc.php?id=' + vote_id,
 			type: "GET",
 			xhrFields: {
 				withCredentials: true
@@ -8991,7 +8999,7 @@ var VOTINGS = {
 			}
 			$('#vote-page .selected-text').html( status_current_voting );
 			$.ajax({
-				url: './vote_add.php?id=' + object_id + '&vote=' + vote + '&open=' + open_name,
+				url: mainURL + '/vote_add.php?id=' + object_id + '&vote=' + vote + '&open=' + open_name,
 				type: "GET",
 				xhrFields: {
 					withCredentials: true
@@ -9030,7 +9038,7 @@ var VOTINGS = {
 	},
 	delete_voting: function(voting_id, return_page){
 		$.ajax({
-			url: './mc_rm.php?id=' + voting_id,
+			url: mainURL + '/mc_rm.php?id=' + voting_id,
 			type: "GET",
 			xhrFields: {
 				withCredentials: true
@@ -9197,7 +9205,7 @@ var VOTINGS = {
 		var self = this;
 		$.mobile.loading( "show", {theme: "z"});
 		$.ajax({
-			url: './vote_open.php?id=' + vote_id,
+			url: mainURL + '/vote_open.php?id=' + vote_id,
 			type: "GET",
 			xhrFields: {
 				withCredentials: true
@@ -9296,11 +9304,11 @@ var VOTINGS = {
 	create_project_request: function(vote_id, type){
 		switch(type){
 			case 'project':
-				var url = './vote_add_project.php?id=' + vote_id;
+				var url = mainURL + '/vote_add_project.php?id=' + vote_id;
 				var answer = confirm(LOCALE_ARRAY_ADDITIONAL.do_you_want_to_create_project[CURRENT_LANG]);
 				break;
 			case 'request':
-				var url = './vote_add_request.php?id=' + vote_id;
+				var url = mainURL + '/vote_add_request.php?id=' + vote_id;
 				var answer = confirm(LOCALE_ARRAY_ADDITIONAL.do_you_want_to_create_request[CURRENT_LANG]);
 				break;
 		}
@@ -9339,7 +9347,7 @@ var MY_VOTINGS = {
 
 		$.mobile.loading( "show", {theme: "z"});
 		$.ajax({
-			url: './user_votes_list.php?sph=0',
+			url: mainURL + '/user_votes_list.php?sph=0',
 			type: "GET",
 			xhrFields: {
 				withCredentials: true
@@ -9364,7 +9372,7 @@ var MY_VOTINGS = {
 		var self = this;
 			$.mobile.loading( "show", {theme: "z"});
 			$.ajax({
-			url: './user_votes_list.php?sph=0&ls=' + self.voting_last_item,
+			url: mainURL + '/user_votes_list.php?sph=0&ls=' + self.voting_last_item,
 			type: "GET",
 			xhrFields: {
 				withCredentials: true
@@ -9402,7 +9410,7 @@ var MY_VOTINGS = {
 		}
 		$.mobile.loading( "show", {theme: "z"});
 
-		var url = './user_votes_list.php?sph=0';
+		var url = mainURL + '/user_votes_list.php?sph=0';
 
 		if($('#my-votings-page #searched_string').val() != ""){
 			url += '&filter=' + $('#my-votings-page #searched_string').val();
@@ -9510,7 +9518,7 @@ var MY_VOTINGS = {
 	},
 	support_voting: function(vote_id){
 		$.ajax({
-			url: './like_add.php?id=' + vote_id,
+			url: mainURL + '/like_add.php?id=' + vote_id,
 			type: "GET",
 			xhrFields: {
 				withCredentials: true
@@ -10144,7 +10152,7 @@ var MY_VOTINGS = {
 		var self = this;
 		var return_element;
 		$.ajax({
-			url: './mc.php?sph=0&id=' + vote_id,
+			url: mainURL + '/mc.php?sph=0&id=' + vote_id,
 			type: "GET",
 			xhrFields: {
 				withCredentials: true
@@ -10242,7 +10250,7 @@ var MY_VOTINGS = {
 			}
 			$('#my-vote-page .selected-text').html( status_current_voting );
 			$.ajax({
-				url: './vote_add.php?id=' + object_id + '&vote=' + vote + '&open=' + open_name,
+				url: mainURL + '/vote_add.php?id=' + object_id + '&vote=' + vote + '&open=' + open_name,
 				type: "GET",
 				xhrFields: {
 					withCredentials: true
@@ -10415,7 +10423,7 @@ var MY_VOTINGS = {
 		var self = this;
 		$.mobile.loading( "show", {theme: "z"});
 		$.ajax({
-			url: './vote_open.php?id=' + vote_id,
+			url: mainURL + '/vote_open.php?id=' + vote_id,
 			type: "GET",
 			xhrFields: {
 				withCredentials: true
@@ -10744,7 +10752,7 @@ var ADRESS = {
 		}
 
 		$.ajax({
-			url: './user_address_add.php?ida=' + ida
+			url: mainURL + '/user_address_add.php?ida=' + ida
 														+ ('&c=' + $('#address-item-' + page + ' [name=city]').val()).replace("'", "`")
 														+ ('&str=' + $('#address-item-' + page + ' [name=street]').val()).replace("'", "`")
 														+ '&bld=' + $('#address-item-' + page + ' [name=house]').val()
@@ -10783,7 +10791,7 @@ var ADRESS = {
 		if(ADRESS.address_arr[page-1]){
 			if(ADRESS.address_arr[page-1]['ida']){
 				$.ajax({
-					url: './user_address_rm.php?ida=' + ADRESS.address_arr[page-1]['ida'],
+					url: mainURL + '/user_address_rm.php?ida=' + ADRESS.address_arr[page-1]['ida'],
 					type: "GET",
 					xhrFields: {
 						withCredentials: true
@@ -10922,7 +10930,7 @@ var ADRESS = {
 				}
 		} else {
 			$.ajax({
-				url: "./list_adr_country.php",
+				url: mainURL + "/list_adr_country.php",
 				type:"GET",
 				xhrFields: {
 					withCredentials: true
@@ -10980,7 +10988,7 @@ var ADRESS = {
 		var self = this;
 		if(self.state){
 			$.ajax({
-			url: "./list_adr_state.php?idc="+idc,
+			url: mainURL + "/list_adr_state.php?idc="+idc,
 			type:"GET",
 			xhrFields: {
 				withCredentials: true
@@ -11072,7 +11080,7 @@ var ADRESS = {
 				}*/
 		} else {
 			$.ajax({
-			url: "./list_adr_state.php?idc="+idc,
+			url: mainURL + "/list_adr_state.php?idc="+idc,
 			type:"GET",
 			xhrFields: {
 				withCredentials: true
@@ -11128,7 +11136,7 @@ var ADRESS = {
 	getCounty:function(page, idc,ids,cb){
 		var self = this;
 		$.ajax({
-			url: "./list_adr_county.php?idc="+idc+"&ids="+ids,
+			url: mainURL + "/list_adr_county.php?idc="+idc+"&ids="+ids,
 			type:"GET",
 			xhrFields: {
 				withCredentials: true
@@ -11183,7 +11191,7 @@ var ADRESS = {
 	getCity:function(page, idc,ids,idr,cb){
 		var self = this;
 		$.ajax({
-			url: "./list_adr_city.php?idc="+idc+"&ids="+ids+"&idr="+idr,
+			url: mainURL + "/list_adr_city.php?idc="+idc+"&ids="+ids+"&idr="+idr,
 			type:"GET",
 			xhrFields: {
 				withCredentials: true
@@ -11237,7 +11245,7 @@ var ADRESS = {
 	getIndex:function(page, idcity,cb){
 		var self = this;
 		$.ajax({
-			url: "./list_adr_zip.php?id="+idcity,
+			url: mainURL + "/list_adr_zip.php?id="+idcity,
 			type:"GET",
 			xhrFields: {
 				withCredentials: true
@@ -11300,7 +11308,7 @@ var ADRESS = {
 			}
 		} else {
 			$.ajax({
-				url: "./user_address.php",
+				url: mainURL + "/user_address.php",
 				type:"GET",
 				crossDomain: true,
 				xhrFields: {
@@ -11578,7 +11586,7 @@ function change_nan(number){
 		if(location.href.search(/m=[\w&id=]+/i) > -1){
 			var matches = location.href.match(/m=[\w&id=]+/i);
 			$.ajax({
-				url: './l/index.php?' + matches[0],
+				url: mainURL + '/l/index.php?' + matches[0],
 				type: "GET",
 				xhrFields: {
 					withCredentials: true
@@ -11635,7 +11643,7 @@ function change_nan(number){
 
 			//lang_activate_el("body");
 			$.ajax({
-				url: "./profile.php",
+				url: mainURL + "/profile.php",
 				type:"GET",
 				crossDomain: true,
 				xhrFields: {
@@ -11661,7 +11669,7 @@ function change_nan(number){
 				}
 			});
 			/*$.ajax({
-					url: "./list_adr_country.php",
+					url: mainURL + "/list_adr_country.php",
 					type:"GET",
 					xhrFields: {
 						withCredentials: true
@@ -11750,7 +11758,7 @@ function change_nan(number){
 				 
 				var formData = new FormData();
 				formData.append("av", FILE);
-				client.open("post", "./i/up.php", true);
+				client.open("post", mainURL + "/i/up.php", true);
 				client.setRequestHeader('Accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8');
 				client.setRequestHeader("Content-Type", "multipart/form-data");
 				client.send(formData);/* Send to server */ 
@@ -11793,7 +11801,7 @@ function change_nan(number){
 				/* Add the file */ 
 				formData.append("av", FILE);
 
-				client.open("post", "./l/index.php?m=2", true);
+				client.open("post", mainURL + "/l/index.php?m=2", true);
 				client.setRequestHeader("Content-Type", "multipart/form-data");
 				client.send(formData);/* Send to server */ 
 			 }
@@ -11813,54 +11821,54 @@ function change_nan(number){
 		var SOCIAL = {
 			vk:{
 				auth: false,
-				activate: "./sn/vk.php",
-				deactivate: "./sn/sn_rm.php?sn=5",
-				sn: "./sn/vk_sn.php",
+				activate: mainURL + "/sn/vk.php",
+				deactivate: mainURL + "/sn/sn_rm.php?sn=5",
+				sn: mainURL + "/sn/vk_sn.php",
 				element: "a.vk",
 				ind: "5",
 				prefix_elem: "vk"
 			},
 			fb:{
 				auth: false,
-				activate: "./sn/fb.php",
-				deactivate: "./sn/sn_rm.php?sn=1",
-				sn: "./sn/fb_sn.php",
+				activate: mainURL + "/sn/fb.php",
+				deactivate: mainURL + "/sn/sn_rm.php?sn=1",
+				sn: mainURL + "/sn/fb_sn.php",
 				element: "a.fb",
 				ind: "1",
 				prefix_elem: "fb"
 			},
 			tw:{
 				auth: false,
-				activate: "./sn/tw.php",
-				deactivate: "./sn/sn_rm.php?sn=3",
-				sn: "./sn/tw_sn.php",
+				activate: mainURL + "/sn/tw.php",
+				deactivate: mainURL + "/sn/sn_rm.php?sn=3",
+				sn: mainURL + "/sn/tw_sn.php",
 				element: "a.tw",
 				ind: "3",
 				prefix_elem: "tw"
 			},
 			gp:{
 				auth: true,
-				activate: "./sn/gp.php",
-				deactivate: "./sn/sn_rm.php?sn=2",
-				sn: "./sn/gp_sn.php",
+				activate: mainURL + "/sn/gp.php",
+				deactivate: mainURL + "/sn/sn_rm.php?sn=2",
+				sn: mainURL + "/sn/gp_sn.php",
 				element: "a.gp",
 				ind: "2",
 				prefix_elem: "gp"
 			},
 			in:{
 				auth: false,
-				activate: "./sn/in.php",
-				deactivate: "./sn/sn_rm.php?sn=4",
-				sn: "./sn/in_sn.php",
+				activate: mainURL + "/sn/in.php",
+				deactivate: mainURL + "/sn/sn_rm.php?sn=4",
+				sn: mainURL + "/sn/in_sn.php",
 				element: "a.in",
 				ind: "4",
 				prefix_elem: "in"
 			},
 			ok:{
 				auth: false,
-				activate: "./sn/ok.php",
-				deactivate: "./sn/sn_rm.php?sn=6",
-				sn: "./sn/ok_sn.php",
+				activate: mainURL + "/sn/ok.php",
+				deactivate: mainURL + "/sn/sn_rm.php?sn=6",
+				sn: mainURL + "/sn/ok_sn.php",
 				element: "a.ok",
 				ind: "6",
 				prefix_elem: "ok"
@@ -11910,7 +11918,7 @@ function change_nan(number){
 								}									
 								
 								$.ajax({
-									url: './sn/sn_rm.php?sn=' + $(this).data("index"),
+									url: mainURL + '/sn/sn_rm.php?sn=' + $(this).data("index"),
 									type: "GET",
 									xhrFields: {
 										withCredentials: true
@@ -11978,7 +11986,7 @@ function change_nan(number){
 					var url = $('#profile-page [name=url]').val();
 					
 					$.ajax({
-						url: "./l/index.php?m=2",
+						url: mainURL + "/l/index.php?m=2",
 						type: "POST",
 						data: {"db": db,
 							 "g": g,
@@ -12018,7 +12026,7 @@ function change_nan(number){
 					}
 					if(wrong_enter == 0){
 						$.ajax({
-							url: "./l/index.php?m=2",
+							url: mainURL + "/l/index.php?m=2",
 							type: "POST",
 							data: {"user_password_old": $('#profile-page [name=user_password_old]').val(),
 								 "user_password_new": $('#profile-page [name=user_password_new]').val(),
@@ -12055,7 +12063,7 @@ function change_nan(number){
 				user_rememberme:remember
 			};
 			$.ajax({
-				url: "./l/index.php?m=0",
+				url: mainURL + "/l/index.php?m=0",
 				type: "POST",
 				data: data,
 				crossDomain: true,
@@ -12085,7 +12093,7 @@ function change_nan(number){
 				request_password_reset: "Reset my password"
 			}
 			$.ajax({
-				url: "./l/index.php?m=3",
+				url: mainURL + "/l/index.php?m=3",
 				type: "POST",
 				data: data,
 				xhrFields: {
@@ -12136,7 +12144,7 @@ function change_nan(number){
 				}
 
 			$.ajax({
-				url: "./l/index.php?m=1",
+				url: mainURL + "/l/index.php?m=1",
 				type: "POST",
 				data: data,
 				xhrFields: {
@@ -12147,7 +12155,7 @@ function change_nan(number){
 					var resp = data.responseText;
 					if(resp.indexOf("Captcha was wrong!")!==-1){
 						alert(LOCALE_ARRAY_ADDITIONAL.wrong_captcha[CURRENT_LANG]);
-						update_img("#register-form .captcha img", "./l/tools/showCaptcha.php");
+						update_img("#register-form .captcha img", mainURL + "/l/tools/showCaptcha.php");
 					}
 					if(resp.indexOf("This email address is already registered") !==-1){
 						alert(LOCALE_ARRAY_ADDITIONAL.email_already_registered[CURRENT_LANG]);
@@ -12221,7 +12229,7 @@ function change_nan(number){
 					SOCIAL.init();
 				}else{
 					$.ajax({
-						url: "./profile.php",
+						url: mainURL + "/profile.php",
 						type:"GET",
 						crossDomain: true,
 						xhrFields: {
@@ -12276,7 +12284,7 @@ function change_nan(number){
 				var self = this;
 				auth(false);
 				$.ajax({
-					url: "./l/index.php?logout=1&logout=1",
+					url: mainURL + "/l/index.php?logout=1&logout=1",
 					type:"GET",
 					crossDomain: true,
 					xhrFields: {
