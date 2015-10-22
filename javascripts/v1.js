@@ -7340,9 +7340,9 @@ var NEWS = {
 		var self = this;
 		$.mobile.loading( "show", {theme: "z"});
 		$.ajax({
-			url: './news.php',
+			url: mainURL + '/news.php',
 			type: "GET",
-/*			xhrFields: {
+			xhrFields: {
 				withCredentials: true
 			},
 			crossDomain: true,

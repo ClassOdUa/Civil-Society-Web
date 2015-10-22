@@ -10,6 +10,7 @@ var g_lng = 0;
 
 //phonegap special cross-domain configuration
 $( document ).bind( "mobileinit", function() {
+<<<<<<< HEAD
     // Make your jQuery Mobile framework configuration changes here!
 
 	$.support.cors = true;
@@ -17,6 +18,12 @@ $( document ).bind( "mobileinit", function() {
 });
 
 ///////////////////////////////////////////////////////////////////Неоптимизированная карта для старницы Адресов
+=======
+	// Make your jQuery Mobile framework configuration changes here!
+	$.support.cors = true;
+	$.mobile.allowCrossDomainPages = true;
+});
+>>>>>>> 7c81b42580058ecaf533919eaa7e2ed9d960ee4f
 
 
 var GoogleMapsAdress = {
