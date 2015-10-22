@@ -425,7 +425,7 @@ window.onload = function(){
 				if(response.responseText.indexOf('error') == -1 && !jQuery.parseJSON(response.responseText)[0].error){
 					var profile_obj = jQuery.parseJSON(response.responseText)[0];
 					$('#profile-page #avatar').attr('src', '.' + profile_obj.avatar);
-					$('#menu_avatar').html('<img id="avatar" src=".' + profile_obj.avatar + '">');
+					$('#menu_avatar').html('<img id="avatar" src="' +  mainURL + profile_obj.avatar + '">');
 					//console.log( mainURL + '/' + profile_obj.avatar);
 				}else{
 					if( response.responseText.indexOf('error') > -1 ){
@@ -2626,7 +2626,7 @@ var PROJECTS = {
 				<div role="main" class="ui-content">\
 					<div id = "project-item" class="project-item">\
 					<div class="img">\
-						<img width="100%" src=".' + data_for_build.img + '" />\
+						<img width="100%" src="' +  mainURL + data_for_build.img + '" />\
 					</div>\
 					<div class="project-item-inner">\
 						<div class="stars-wrap">\
@@ -2898,7 +2898,7 @@ var PROJECTS = {
 				<div role="main" class="ui-content">\
 					<div id = "project-item" class="project-item">\
 					<div class="img">\
-						<img width="100%" src=".' + data_for_build.img + '" />\
+						<img width="100%" src="' +  mainURL + data_for_build.img + '" />\
 					</div>\
 					<div class="project-item-inner">\
 						<div class="stars-wrap">\
@@ -3814,7 +3814,7 @@ var PROGRAMS = {
 				<div role="main" class="ui-content">\
 					<div id = "program-item" class="program-item">\
 					<div class="img">\
-						<img width="100%" src=".' + data_for_build.img + '" />\
+						<img width="100%" src="' +  mainURL + data_for_build.img + '" />\
 					</div>\
 					<div class="program-item-inner">\
 						<div class="stars-wrap">\
@@ -4739,7 +4739,7 @@ var REQUESTS = {
 				<div role="main" class="ui-content">\
 					<div id = "request-item" class="request-item">\
 					<div class="img">\
-						<img width="100%" src=".' + data_for_build.img + '" />\
+						<img width="100%" src="' +  mainURL + data_for_build.img + '" />\
 					</div>\
 					<div class="request-item-inner">\
 						<div class="stars-wrap">\
@@ -5876,7 +5876,7 @@ var WEIGHTED_VOTINGS = {
 								<div role="main" class="ui-content">\
 									<div class="vote-item">\
 										<div class="img">\
-											<img width="100%" src=".' + data_for_build.img + '" />\
+											<img width="100%" src="' +  mainURL + data_for_build.img + '" />\
 										</div>\
 										<div class="vote-item-inner">\
 											<div class="stars-wrap">' + stars_ui + 
@@ -6074,7 +6074,7 @@ var WEIGHTED_VOTINGS = {
 							<div role="main" class="ui-content">\
 								<div class="vote-item">\
 									<div class="img">\
-										<img width="100%" src=".' + data_for_build.img + '" />\
+										<img width="100%" src="' +  mainURL + data_for_build.img + '" />\
 									</div>\
 									<div class="vote-item-inner">\
 										<div class="stars-wrap">' + stars_ui +											
@@ -7424,7 +7424,7 @@ var NEWS = {
 			}
 			if(one_news.img.indexOf('svg') > -1){
 				var image_news = '<div class="img">\
-										<object type="image/svg+xml" data=".' + one_news.img + '">Your browser does not support SVG</object>\
+										<object type="image/svg+xml" data="' +  mainURL + one_news.img + '">Your browser does not support SVG</object>\
 									</div>';
 			}else{
 				var image_news = '<div class="img">\
@@ -8471,7 +8471,7 @@ var VOTINGS = {
 								<div class="left_col">\
 									<div class="vote-item">\
 										<div class="img">\
-											<img width="100%" src=".' + data_for_build.img + '" />\
+											<img width="100%" src="' +  mainURL + data_for_build.img + '" />\
 										</div>\
 										<div class="vote-item-inner">\
 											<div class="stars-wrap">' + stars_ui + 
@@ -8706,7 +8706,7 @@ var VOTINGS = {
 						<div class="left_col">\
 							<div class="vote-item">\
 								<div class="img">\
-									<img width="100%" src=".' + data_for_build.img + '" />\
+									<img width="100%" src="' +  mainURL + data_for_build.img + '" />\
 								</div>\
 								<div class="vote-item-inner">\
 									<div class="stars-wrap">' + stars_ui +											
@@ -9751,7 +9751,7 @@ var MY_VOTINGS = {
 								<div role="main" class="ui-content">\
 									<div class="vote-item">\
 										<div class="img">\
-											<img width="100%" src=".' + data_for_build.img + '" />\
+											<img width="100%" src="' +  mainURL + data_for_build.img + '" />\
 										</div>\
 										<div class="vote-item-inner">\
 											<div class="stars-wrap">' + stars_ui + 
@@ -9975,7 +9975,7 @@ var MY_VOTINGS = {
 							<div role="main" class="ui-content">\
 								<div class="vote-item">\
 									<div class="img">\
-										<img width="100%" src=".' + data_for_build.img + '" />\
+										<img width="100%" src="' +  mainURL + data_for_build.img + '" />\
 									</div>\
 									<div class="vote-item-inner">\
 										<div class="stars-wrap">' + stars_ui + 
@@ -12310,7 +12310,7 @@ function change_nan(number){
 						$('#profile-page [name=ln]').val(this.last_name);
 						$('#profile-page .login > span:eq(1)').html(this.login);
 						$('#profile-page #avatar').attr('src', '.' + this.avatar);
-						$('#menu_avatar').html('<img id="avatar" src=".' + this.avatar + '">');
+						$('#menu_avatar').html('<img id="avatar" src="' +  mainURL + this.avatar + '">');
 						switch(this.gender){
 							case "0":
 								$('#profile-page #male').attr('class', 'ui-btn ui-btn-inherit ui-first-child ui-btn-active ui-radio-on');
