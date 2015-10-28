@@ -2,8 +2,8 @@
     <widget xmlns   = "http://www.w3.org/ns/widgets"
     xmlns:gap   = "http://phonegap.com/ns/1.0"
     id          = "mobi.gurtom"
-    versionCode = "4"
-    version     = "0.7.78" >
+    versionCode = "5"
+    version     = "0.7.79" >
 
     <!-- versionCode is optional and Android only -->
 
@@ -20,4 +20,9 @@
     <gap:plugin name="cordova-plugin-whitelist" source="npm" version="1.0.0" />
         <access origin="https://gurtom.mobi"/>
         <access origin="*" />
+
+    <gap:plugin name="nl.x-services.plugins.socialsharing" />
+
+
+
 </widget>

@@ -34,8 +34,7 @@
 		<script src="./javascripts/jquery.form.min.js?t=1"></script>
 		<script src="./javascripts/purl.js?t=1"></script>
 		<script src="./leaflet/leaflet.js"></script>
-		<script src="./javascripts/connect.js?t=1"></script>
-		<link href="https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic" rel="stylesheet" type="text/css">
+		<script src="./javascripts/v3.js?t=1"></script>
 
 
 	</head>
@@ -59,14 +58,14 @@
 		<h1>Log in</h1>
 		<a class="ui-btn ui-btn-left ui-icon-bars ui-btn-icon-notext" href="#left-panel">Menu</a>
 		<div id="lang">
-			<label data-en="Language" data-ru="Язык" data-ua="Мова">Language</label><select id="select-lang">
+			<label data-en="Language" data-ru="Язык" data-uk="Мова">Language</label><select id="select-lang">
 				<option value="en">
 					English
 				</option>
 				<option value="ru">
 					Русский
 				</option>
-				<option value="ua">
+				<option value="uk">
 					Українська
 				</option>
 			</select>
@@ -375,7 +374,18 @@
 <div id="profile-page" data-role="page">
 	<div data-role="header" data-position="fixed" data-tap-toggle="false">
 		<h1>Edit Profile</h1>
-		<a class="ui-btn ui-btn-left ui-icon-bars ui-btn-corner-all ui-btn-icon-notext" href="#left-panel">Menu</a><a class="ui-btn ui-btn-right ui-icon-check ui-btn-icon-right" href="#">Save</a>
+		<a class="ui-btn ui-btn-left ui-icon-bars ui-btn-corner-all ui-btn-icon-notext" href="#left-panel">Menu</a>
+		<a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#profile-vote-help">Ask</a>
+		<div id="profile-vote-help" class="help-popup" data-role="popup" data-history="false">
+			<div class="title">
+				Description
+			</div>
+			<div class="text">
+				help text
+			</div>
+		</div>
+
+		<!-- <a class="ui-btn ui-btn-right ui-icon-check ui-btn-icon-right" href="#">Save</a> -->
 	</div>
 	<div role="main" class="ui-content">
 		<div class="left_col">
@@ -398,7 +408,7 @@
 					<option value="en">Choose language</option>
 					<option value="en">English</option>
 					<option value="ru">Русский</option>
-					<option value="ua">Українська</option>
+					<option value="uk">Українська</option>
 				</select>
 			</div>
 			<div class="add-address">
@@ -479,7 +489,7 @@
 					</div>
 				</div>
 
-				<fieldset class="radio-wrap gender" data-role="controlgroup" data-type="horizontal">
+				<fieldset class="radio-wrap gender" id="gender" data-role="controlgroup" data-type="horizontal">
 					<legend>Gender</legend>
 					<div class="ui-radio">
 						<label id = 'male' class="ui-btn ui-btn-inherit ui-radio-off">Male</label><input type="radio" name="gender" value = "0" data-enhanced="true">
@@ -489,7 +499,7 @@
 					</div>
 				</fieldset> 
 
-				<fieldset class="date-group" data-role="controlgroup" data-type="horizontal">
+				<fieldset id="date_of_birth" class="date-group" data-role="controlgroup" data-type="horizontal">
 					<legend>Enter your date of birth</legend>
 					<select name="date">
 						<option value="01">1</option>
@@ -617,18 +627,6 @@
 						<option value="2005">2005</option>
 					</select>
 				</fieldset>
-				<!--
-				<div class="text-field">
-					<label>Add url of your avatar</label>
-					<div class="ui-input-text">
-						<input type="text" name="url" placeholder="Url" data-enhanced="true" />
-					</div>
-				</div>
-				
-				<div class="btn-next-page">
-					<a class="ui-btn ui-btn-icon-right menu-icon-options" data-link = "#options-page" href="#options-page">Options</a>
-				</div>
-				-->
 			</form>
 		</div>
 		<div class="right_col"></div>
@@ -1024,8 +1022,8 @@
 	<div data-role="header" data-position="fixed" data-tap-toggle="false">
 		<h1 id = "ui_title">Projects</h1>
 		<a id = "menu_link" class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back('#social-entrepreneurship')" href="#">Back</a>
-		<a id = "my_activities_link" style = "display:none" class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back('#my-activities-page')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#programs-help">Ask</a>
-		<div id="programs-help" class="help-popup" data-role="popup" data-history="false">
+		<a id = "my_activities_link" style = "display:none" class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back('#my-activities-page')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#projects-help">Ask</a>
+		<div id="projects-help" class="help-popup" data-role="popup" data-history="false">
 			<div class="title">
 				Description
 			</div>
@@ -1141,8 +1139,8 @@
 	<div data-role="header" data-position="fixed" data-tap-toggle="false">
 		<h1 id = "ui_title">Requests</h1>
 		<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back('#social-entrepreneurship')" href="#">Back</a>
-		<a id = "my_activities_link" style = "display:none" class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back('#my-activities-page')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#programs-help">Ask</a>
-		<div id="programs-help" class="help-popup" data-role="popup" data-history="false">
+		<a id = "my_activities_link" style = "display:none" class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back('#my-activities-page')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#requests-help">Ask</a>
+		<div id="requests-help" class="help-popup" data-role="popup" data-history="false">
 			<div class="title">
 				Description
 			</div>
@@ -1258,8 +1256,8 @@
 	<div data-role="header" data-position="fixed" data-tap-toggle="false">
 		<h1 id = "ui_title">Weighted Votings</h1>
 		<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a>
-		<a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#voting-help">Ask</a>
-		<div id="voting-help" class="help-popup" data-role="popup" data-history="false">
+		<a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#weighted-votings-help">Ask</a>
+		<div id="weighted-votings-help" class="help-popup" data-role="popup" data-history="false">
 			<div class="title">
 				Description
 			</div>

@@ -192,7 +192,7 @@ function lang_activate_el(element){
 			CURRENT_LANG = DEFAULT_LANG;
 		}
 	}
-	if(element == "ua" || element == "ru" || element == "en"){
+	if(element == "uk" || element == "ru" || element == "en"){
 		CURRENT_LANG = element;
 	}
 
@@ -216,7 +216,7 @@ window.onload = function(){
 		if(lang_id == 1) {
 			lang_activate_el('en');
 		} else if(lang_id == 2) {
-			lang_activate_el('ua');
+			lang_activate_el('uk');
 		} else if(lang_id == 3) {
 			lang_activate_el('ru');
 		}
@@ -417,7 +417,7 @@ window.onload = function(){
 					case 'ru':
 						alert(error_arr[0].error_ru);
 						break;
-					case 'ua':
+					case 'uk':
 						alert(error_arr[0].error_uk);
 						break;
 				}
@@ -446,7 +446,7 @@ window.onload = function(){
 							case 'ru':
 								alert(error_arr[0].error_ru);
 								break;
-							case 'ua':
+							case 'uk':
 								alert(error_arr[0].error_uk);
 								break;
 							}
@@ -478,7 +478,7 @@ window.onload = function(){
 							case 'ru':
 								alert(error_arr[0].error_ru);
 								break;
-							case 'ua':
+							case 'uk':
 								alert(error_arr[0].error_uk);
 								break;
 						}
@@ -534,7 +534,7 @@ window.onload = function(){
 							case 'ru':
 								alert(error_arr[0].error_ru);
 								break;
-							case 'ua':
+							case 'uk':
 								alert(error_arr[0].error_uk);
 								break;
 						}
@@ -596,7 +596,6 @@ window.onload = function(){
 		console.log('exception catched, all ok');
 	}
 };
-
 
 $(document).on("pagecontainershow", function () {
 	$.mobile.loading( "show", {theme: "z"});
@@ -1326,7 +1325,7 @@ var COMMON_OBJECT = {
 							case 'ru':
 								alert(error_arr[0].error_ru);
 								break;
-							case 'ua':
+							case 'uk':
 								alert(error_arr[0].error_uk);
 								break;
 						}
@@ -1342,6 +1341,7 @@ var SUPER_PROFILE = {
 	gender: 0,
 	id: 0,
 	checkUser: function(){
+		console.log('SUPER_PROFILE.checkUser - EMPTY MODULE ACTIVATED!');
 		/*if(readCookie('id_cookie') != OLD_ID_COOKIE){
 			location.reload(true);
 		}*/
@@ -1531,7 +1531,7 @@ var CREATE_ITEM = {
 								case 'ru':
 									alert(error_arr[0].error_ru);
 									break;
-								case 'ua':
+								case 'uk':
 									alert(error_arr[0].error_uk);
 									break;
 							}
@@ -1579,7 +1579,7 @@ var CREATE_ITEM = {
 								case 'ru':
 									alert(error_arr[0].error_ru);
 									break;
-								case 'ua':
+								case 'uk':
 									alert(error_arr[0].error_uk);
 									break;
 							}
@@ -1637,7 +1637,7 @@ var CREATE_ITEM = {
 								case 'ru':
 									alert(error_arr[0].error_ru);
 									break;
-								case 'ua':
+								case 'uk':
 									alert(error_arr[0].error_uk);
 									break;
 							}
@@ -1694,7 +1694,7 @@ var CREATE_ITEM = {
 								case 'ru':
 									alert(error_arr[0].error_ru);
 									break;
-								case 'ua':
+								case 'uk':
 									alert(error_arr[0].error_uk);
 									break;
 							}
@@ -1752,7 +1752,7 @@ var CREATE_ITEM = {
 								case 'ru':
 									alert(error_arr[0].error_ru);
 									break;
-								case 'ua':
+								case 'uk':
 									alert(error_arr[0].error_uk);
 									break;
 							}
@@ -1992,7 +1992,7 @@ var CREATE_VOTE = {
 								case 'ru':
 									alert(error_arr[0].error_ru);
 									break;
-								case 'ua':
+								case 'uk':
 									alert(error_arr[0].error_uk);
 									break;
 							}
@@ -6751,7 +6751,7 @@ var TRUST_LIST = {
 							case 'ru':
 								alert(error_arr[0].error_ru);
 								break;
-							case 'ua':
+							case 'uk':
 								alert(error_arr[0].error_uk);
 								break;
 						}
@@ -7108,7 +7108,7 @@ var TRUST_LIST = {
 						case 'ru':
 							alert(error_arr[0].error_ru);
 							break;
-						case 'ua':
+						case 'uk':
 							alert(error_arr[0].error_uk);
 							break;
 					}
@@ -7136,7 +7136,7 @@ var TRUST_LIST = {
 						case 'ru':
 							alert(error_arr[0].error_ru);
 							break;
-						case 'ua':
+						case 'uk':
 							alert(error_arr[0].error_uk);
 							break;
 					}
@@ -7714,8 +7714,8 @@ var TASKS = {
 
 		jQuery.each(build_array, function(i, one_tasks) {
 			var l_task = '';
-			if(CURRENT_LANG == 'ua') {
-				l_task = one_tasks.ua;
+			if(CURRENT_LANG == 'uk') {
+				l_task = one_tasks.uk;
 			}else if (CURRENT_LANG == 'ru') {
 				l_task = one_tasks.ru;
 			}else{
@@ -7880,7 +7880,7 @@ var LIST_OF_ITEM = {
 						case "en":
 							l_city = l_one_item.city_en;
 				 		break;
-						case "ua":
+						case "uk":
 							l_city = l_one_item.city_uk;
 				 		break;
 				 		case "ru":
@@ -8489,7 +8489,7 @@ var VOTINGS = {
 								case 'ru':
 									alert(error_arr[2].error_ru);
 									break;
-								case 'ua':
+								case 'uk':
 									alert(error_arr[1].error_uk);
 									break;
 							}
@@ -8756,7 +8756,7 @@ var VOTINGS = {
 												ID: <strong>' + data_for_build.id + ' : ' + data_for_build.name + '</strong>\
 											</div>\
 											<div class="username">\
-												 ' + LOCALE_ARRAY_ADDITIONAL.by[CURRENT_LANG] + ' @<strong>' + data_for_build.author + '</strong>\
+												 ' + LOCALE_ARRAY_ADDITIONAL.by[CURRENT_LANG] + '::<b>' + data_for_build.author_id + ' @' + data_for_build.author + '</b>\
 											</div>\
 											<div class="address">\
 												' + LOCALE_ARRAY_ADDITIONAL.share[CURRENT_LANG] + ' - ' + type_sphere + ' - ' + organization + data_for_build.sphere + '\
@@ -8823,9 +8823,23 @@ var VOTINGS = {
 		}
 		var organization = '';
 		if(data_for_build.org){
-			var organization = data_for_build.org + " - ";
+			organization = data_for_build.org + " - ";
 		}
 
+		var l_city = '';
+		switch(CURRENT_LANG){
+			case "en":
+				l_city = data_for_build.city_en;
+			break;
+			case "ru":
+				l_city = data_for_build.city_ru;
+			break;
+			case "uk":
+				l_city = data_for_build.city_uk;
+			break;
+		}
+
+		organization += l_city + " - ";
 
 		var selected_class_yes = '';
 		var selected_class_abstain = '';
@@ -8988,10 +9002,10 @@ var VOTINGS = {
 									<div class="stars-wrap">' + stars_ui +											
 									'</div>\
 									 <div class="id">\
-										ID: <strong>' + data_for_build.id + ' : ' + data_for_build.name + '</strong>\
+										ID: <b>' + data_for_build.id + ' : ' + data_for_build.name + '</b>\
 									</div>\
 									<div class="username">\
-										' + LOCALE_ARRAY_ADDITIONAL.by[CURRENT_LANG] + ' @<strong>' + data_for_build.author + '</strong>\
+										' + LOCALE_ARRAY_ADDITIONAL.by[CURRENT_LANG] + '::<b>' + data_for_build.author_id + ' @' + data_for_build.author + '</b>\
 									</div>\
 									<div class="address">\
 										' + LOCALE_ARRAY_ADDITIONAL.sphere[CURRENT_LANG] + ' - ' + type_sphere + ' - ' + organization + data_for_build.sphere + '\
@@ -9301,7 +9315,7 @@ var VOTINGS = {
 								case 'ru':
 									alert(error_arr[2].error_ru);
 									break;
-								case 'ua':
+								case 'uk':
 									alert(error_arr[1].error_uk);
 									break;
 							}
@@ -9392,7 +9406,7 @@ var VOTINGS = {
 							case 'ru':
 								alert(error_arr[0].error_ru);
 								break;
-							case 'ua':
+							case 'uk':
 								alert(error_arr[0].error_uk);
 								break;
 						}
@@ -10609,7 +10623,7 @@ var MY_VOTINGS = {
 								case 'ru':
 									alert(error_arr[0].error_ru);
 									break;
-								case 'ua':
+								case 'uk':
 									alert(error_arr[0].error_uk);
 									break;
 							}
@@ -11232,7 +11246,7 @@ var ADRESS = {
 					$(option).val(c.id);
 					if(CURRENT_LANG){
 						switch(CURRENT_LANG){
-							case 'ua':
+							case 'uk':
 								$(option).html(c.name_uk);
 								break;
 							case 'en':
@@ -11244,7 +11258,7 @@ var ADRESS = {
 						}
 					}else{
 						switch(DEFAULT_LANG){
-							case 'ua':
+							case 'uk':
 								$(option).html(c.name_uk);
 								break;
 							case 'en':
@@ -11284,7 +11298,7 @@ var ADRESS = {
 						$(option).val(c.id);
 						if(CURRENT_LANG){
 							switch(CURRENT_LANG){
-								case 'ua':
+								case 'uk':
 									$(option).html(c.name_uk);
 									break;
 								case 'en':
@@ -11296,7 +11310,7 @@ var ADRESS = {
 							}
 						}else{
 							switch(DEFAULT_LANG){
-								case 'ua':
+								case 'uk':
 									$(option).html(c.name_uk);
 									break;
 								case 'en':
@@ -11340,7 +11354,7 @@ var ADRESS = {
 					$(option).val(c.id);
 					if(CURRENT_LANG){
 						switch(CURRENT_LANG){
-							case 'ua':
+							case 'uk':
 								$(option).html(c.name_uk);
 								break;
 							case 'en':
@@ -11352,7 +11366,7 @@ var ADRESS = {
 						}
 					}else{
 						switch(DEFAULT_LANG){
-							case 'ua':
+							case 'uk':
 								$(option).html(c.name_uk);
 								break;
 							case 'en':
@@ -11382,7 +11396,7 @@ var ADRESS = {
 					$(option).val(c.id);
 					if(CURRENT_LANG){
 						switch(CURRENT_LANG){
-							case 'ua':
+							case 'uk':
 								$(option).html(c.name_uk);
 								break;
 							case 'en':
@@ -11394,7 +11408,7 @@ var ADRESS = {
 						}
 					} else {
 						switch(DEFAULT_LANG){
-							case 'ua':
+							case 'uk':
 								$(option).html(c.name_uk);
 								break;
 							case 'en':
@@ -11432,7 +11446,7 @@ var ADRESS = {
 					$(option).val(c.id);
 					if(CURRENT_LANG){
 						switch(CURRENT_LANG){
-							case 'ua':
+							case 'uk':
 								$(option).html(c.name_uk);
 								break;
 							case 'en':
@@ -11444,7 +11458,7 @@ var ADRESS = {
 						}
 					}else{
 						switch(DEFAULT_LANG){
-							case 'ua':
+							case 'uk':
 								$(option).html(c.name_uk);
 								break;
 							case 'en':
@@ -11488,7 +11502,7 @@ var ADRESS = {
 					$(option).val(c.id);
 					if(CURRENT_LANG){
 						switch(CURRENT_LANG){
-							case 'ua':
+							case 'uk':
 								$(option).html(c.name_uk);
 								break;
 							case 'en':
@@ -11500,7 +11514,7 @@ var ADRESS = {
 						}
 					}else{
 						switch(DEFAULT_LANG){
-							case 'ua':
+							case 'uk':
 								$(option).html(c.name_uk);
 								break;
 							case 'en':
@@ -11542,7 +11556,7 @@ var ADRESS = {
 					$(option).val(c.id);
 					if(CURRENT_LANG){
 						switch(CURRENT_LANG){
-							case 'ua':
+							case 'uk':
 								$(option).html(c.name_uk);
 								break;
 							case 'en':
@@ -11554,7 +11568,7 @@ var ADRESS = {
 						}
 					} else {
 						switch(DEFAULT_LANG){
-							case 'ua':
+							case 'uk':
 								$(option).html(c.name_uk);
 								break;
 							case 'en':
@@ -11614,8 +11628,6 @@ var ADRESS = {
 	getCurrent:function(not_refresh, callback_redirect, page){
 		var self = this;
 		var lang_address = CURRENT_LANG;
-		if(CURRENT_LANG == 'ua')
-			lang_address = 'uk';
 		if(self.address_arr.length > 0 && location.href.indexOf('#address-item') > -1){
 			if(page && self.address_arr[page-1]){
 				self.set_one_address(page, not_refresh, callback_redirect);						
@@ -11655,23 +11667,20 @@ var ADRESS = {
 						var address = address_arr[i];
 						var en = address.str+" "+address.bld+", "+address.city_en;
 						var ru = address.str+" "+address.bld+", "+address.city_ru;
-						var ua = address.str+" "+address.bld+", "+address.city_ua;
+						var uk = address.str+" "+address.bld+", "+address.city_uk;
 						$(".address-item a.js-address:eq("+i+")")
 							.data("en",en)
 							.data("ru",ru)
-							.data("ua",ua);
+							.data("uk",uk);
 
 						$(".address-item a.js-sphere:eq("+i+")")
 							.data("en","Choose sphere for "+en)
 							.data("ru","Выберите сферы для "+ru)
-							.data("ua","Виберіть галузі для "+ua);
+							.data("uk","Виберіть галузі для "+uk);
 					}
 
 					self.address_arr = address_arr;
 					var lang_address = CURRENT_LANG;
-					if(CURRENT_LANG == 'ua')
-						lang_address = 'uk';
-					
 					if(page && self.address_arr[page-1]){
 						self.set_one_address(page, not_refresh, callback_redirect);						
 					} else {
@@ -11774,11 +11783,11 @@ var ADRESS = {
 			$(".address-item a.js-address:eq("+ (i-1) +")")
 						.data("en","Address "+i)
 						.data("ru","Адресс "+i)
-						.data("ua","Адрес "+i);
+						.data("uk","Адрес "+i);
 			 $(".address-item a.js-sphere:eq("+ (i-1) +")")
 						.data("en","Choose sphere")
 						.data("ru","Выберите сферы")
-						.data("ua","Виберіть галузі");
+						.data("uk","Виберіть галузі");
 		}
 		//lang_activate_el($("#edit-address"));
 	},
@@ -11917,6 +11926,21 @@ function change_nan(number){
 
 (function($){
 	$(function(){
+
+		function ajax_post(p_url, p_json){
+			$.ajax({
+				url: p_url,
+				type: "POST",
+				data: p_json,
+				crossDomain: true,
+				xhrFields: {
+					withCredentials: true
+				},
+				complete: function(p_result){
+					console.log(p_result);
+				}
+			});
+		}
 
 		if(location.href.search(/m=[\w&id=]+/i) > -1){
 			var matches = location.href.match(/m=[\w&id=]+/i);
@@ -12293,51 +12317,45 @@ function change_nan(number){
 					//$.mobile.navigate('#spheres-address');
 					//$.mobile.navigate('#profile-page');
 				});
-				$('#profile-page .ui-btn-right.ui-btn.ui-icon-check.ui-btn-icon-right').off();
-				$('#profile-page .ui-btn-right.ui-btn.ui-icon-check.ui-btn-icon-right').click(function(){
-					if($('#profile-page #male').hasClass('ui-radio-on')){
-						var g = 0;
-					}else{
-						if($('#profile-page #female').hasClass('ui-radio-on')){
-							var g = 1;
-						}else{
-							var g = 2;
-						}
-						
-					}
-					if(FILE){
-						var av = FILE;
-					}else{
-						var av = '';
-					}
-					var db = $('#profile-page [name=year]').val() + '-' + $('#profile-page [name=month]').val() + '-' + $('#profile-page [name=date]').val();
-					var fn = $('#profile-page [name=fn]').val();
-					var ln = $('#profile-page [name=ln]').val();
-					var url = $('#profile-page [name=url]').val();
-					
-					$.ajax({
-						url: mainURL + "/l/index.php?m=2",
-						type: "POST",
-						data: {"db": db,
-							 "g": g,
-							 "fn": fn,
-							 "ln": ln,
-							 "url": url,
-							 "av": av},
-						crossDomain: true,
-						xhrFields: {
-							withCredentials: true
-						},
-						complete: function(data){
-							//console.log("saved ok");
-							PROFILE.gender = g;
-							SUPER_PROFILE.gender = g;
-							$('#profile-page .name').html(fn + ' ' + ln);
-							alert(LOCALE_ARRAY_ADDITIONAL.saved_successfull[CURRENT_LANG]);
-							//alert('okay');
-						}
-					});
 
+				// $('#profile-page .ui-btn-right.ui-btn.ui-icon-check.ui-btn-icon-right').off();
+
+				//TODO: All events for profile must be in PRIFILE.events!!!
+
+				$('#profile-page [name=fn]').on('change', function(){
+					var l_fn = $('#profile-page [name=fn]').val();
+					var l_url = mainURL + "/l/index.php?m=2";
+					var l_data = $.parseJSON('{"fn":"'+ l_fn + '"}');
+					ajax_post(l_url, l_data);
+					//TODO: split last name and first name to separate placeholders!!
+					var l_ln = $('#profile-page [name=ln]').val();
+					$('#profile-page .name').html(l_fn + ' ' + l_ln);
+				});
+
+				$('#profile-page [name=ln]').on('change', function(){
+					var l_ln = $('#profile-page [name=ln]').val();
+					var l_url = mainURL + "/l/index.php?m=2";
+					var l_data = $.parseJSON('{"ln":"'+ l_ln + '"}');
+					ajax_post(l_url, l_data);
+					//TODO: split last name and first name to separate placeholders!!
+					var l_fn = $('#profile-page [name=fn]').val();
+					$('#profile-page .name').html(l_fn + ' ' + l_ln);
+				});
+
+				$('#gender').on('change', function(){
+					var l_g = $('#gender :radio:checked').val();
+					var l_url = mainURL + "/l/index.php?m=2";
+					var l_data = $.parseJSON('{"g":"'+ l_g + '"}');
+					ajax_post(l_url, l_data);
+					PROFILE.gender = l_g;
+					SUPER_PROFILE.gender = l_g;
+				});
+
+				$('#date_of_birth').on('change', function(){
+					var l_db = $('#profile-page [name=year]').val() + '-' + $('#profile-page [name=month]').val() + '-' + $('#profile-page [name=date]').val();
+					var l_url = mainURL + "/l/index.php?m=2";
+					var l_data = $.parseJSON('{"db":"'+ l_db + '"}');
+					ajax_post(l_url, l_data);
 				});
 
 				$('#profile-page #change_pass_button').click(function(){
@@ -12377,8 +12395,8 @@ function change_nan(number){
 							}
 						});
 					}
-
 				});
+
 			},
 		};
 		$("#login-form").submit(function(){
@@ -12545,11 +12563,11 @@ function change_nan(number){
 						var soc = SOCIAL[i];
 						for(var b in that.profile_obj){
 							if(b != i) continue;								
-							if(that.profile_obj[b] != 0){
-								soc.auth = true;
-							}else{
-								soc.auth = false;
-							}	
+								if(that.profile_obj[b] != 0){
+									soc.auth = true;
+								}else{
+									soc.auth = false;
+								}	
 							//soc.auth = that.profile_obj[b]?true:false;
 
 							}
@@ -12634,83 +12652,74 @@ function change_nan(number){
 				//OLD_ID_COOKIE = -1;
 			},
 			updateMenu:function(){
-					if(this.auth){
-						$(".user-info .username").html(this.login);
-						$('#profile-page [name=fn]').val(this.first_name);
-						$('#profile-page [name=ln]').val(this.last_name);
-						$('#profile-page .login > span:eq(1)').html(this.login);
-						$('#profile-page #avatar').attr('src', '.' + this.avatar);
-						$('#menu_avatar').html('<img id="avatar" src="' +  mainURL + this.avatar + '">');
-						switch(this.gender){
-							case "0":
-								$('#profile-page #male').attr('class', 'ui-btn ui-btn-inherit ui-first-child ui-btn-active ui-radio-on');
-								break;
-							case "1":
-								$('#profile-page #female').attr('class', 'ui-btn ui-btn-inherit ui-first-child ui-btn-active ui-radio-on');
-								break;
-							case "2":
-								$('#profile-page #other_sex').attr('class', 'ui-btn ui-btn-inherit ui-first-child ui-btn-active ui-radio-on');
-								break;
-						}
-						var match_array = this.birth.match(/[0-9]+/ig);
-						var year_val = match_array[0];
-						$('#profile-page [name=year] option[value=' + year_val + ']').prop('selected', true);
-						var month_val = match_array[1];
-						$('#profile-page [name=month] option[value=' + month_val + ']').prop('selected', true);
-						var date_val = match_array[2];
-						$('#profile-page [name=date] option[value=' + date_val + ']').prop('selected', true);
-						$('#profile-page select').selectmenu().selectmenu("refresh", true);
-						$(".user-info .email").html(this.email);
-						//$(".user-info .avatar").css("background-image","url('"+this.avatar+"')");
-						$(".user-info .id").html("ID: "+this.ID);
-						$(".user-info .name").html(this.first_name + " " + this.last_name);
-						var ribbons = '<img style = "margin: 3px;" class="ui-corner-all" src="images/trust-icon-email.png">';
-						if(this.go != "0"){
-							ribbons += '<img style = "margin: 3px;" class="ui-corner-all" src="images/trust-icon-community.png">';
-						} else {
-							ribbons += '<a href="#community"><img style = "margin: 3px; filter: alpha(Opacity=30); opacity: 0.3;" src="images/trust-icon-community.png"></a>';
-						}
-						if(this.osmd != "0"){
-							ribbons += '<img style = "margin: 3px;" class="ui-corner-all" src="images/trust-icon-house.png">';
-						} else {
-							ribbons += '<a href="#house"><img style = "margin: 3px; filter: alpha(Opacity=30); opacity: 0.3;" class="ui-corner-all" src="images/trust-icon-house.png"></a>';
-						}
-						if(this.payment != "0"){
-							ribbons += '<img style = "margin: 3px;" class="ui-corner-all" src="images/trust-icon-wallet.png">';
-						} else {
-							ribbons += '<a href="#wallet"><img style = "margin: 3px; filter: alpha(Opacity=30); opacity: 0.3;" class="ui-corner-all" src="images/trust-icon-wallet.png"></a>';
-						}
-						if(this.bankid != "0"){
-							ribbons += '<img style = "margin: 3px;" class="ui-corner-all" src="images/trust-icon-password.png">';
-						} else {
-							ribbons += '<a href="#bankid"><img style = "margin: 3px; filter: alpha(Opacity=30); opacity: 0.3;" class="ui-corner-all" src="images/trust-icon-password.png"></a>';
-						}
-
-/*						if(this.fb != "0"){
-							ribbons += '<img class="ui-corner-all ribbon" src="images/icon-fb.png">';
-						} else {
-							ribbons += '<a href="sn/fb.php"><img style = "filter: alpha(Opacity=30);" class="ui-corner-all ribbon" src="images/icon-fb.png"></a>';
-						}
-
-						if(this.gp != "0"){
-							ribbons += '<img class="ui-corner-all ribbon" src="images/icon-gp.png">';
-						} else {
-							ribbons += '<a href="sn/fb.php"><img style = "filter: alpha(Opacity=30);" class="ui-corner-all ribbon" src="images/icon-gp.png"></a>';
-						}*/
-
-
-						$('#profile-page #ribbons').html( ribbons );
-						$("#left-panel").addClass("auth-panel");
+				if(this.auth){
+					$(".user-info .username").html(this.login);
+					$('#profile-page [name=fn]').val(this.first_name);
+					$('#profile-page [name=ln]').val(this.last_name);
+					$('#profile-page .login > span:eq(1)').html(this.login);
+					$('#profile-page #avatar').attr('src', '.' + this.avatar);
+					$('#menu_avatar').html('<img id="avatar" src="' +  mainURL + this.avatar + '">');
+					console.log(this.gender);
+					$('input:radio[name=gender]').filter('[value="'+ this.gender + '"]').attr('checked', true);
+					var match_array = this.birth.match(/[0-9]+/ig);
+					var year_val = match_array[0];
+					$('#profile-page [name=year] option[value=' + year_val + ']').prop('selected', true);
+					var month_val = match_array[1];
+					$('#profile-page [name=month] option[value=' + month_val + ']').prop('selected', true);
+					var date_val = match_array[2];
+					$('#profile-page [name=date] option[value=' + date_val + ']').prop('selected', true);
+					$('#profile-page select').selectmenu().selectmenu("refresh", true);
+					$(".user-info .email").html(this.email);
+					//$(".user-info .avatar").css("background-image","url('"+this.avatar+"')");
+					$(".user-info .id").html("ID: "+this.ID);
+					$(".user-info .name").html(this.first_name + " " + this.last_name);
+					var ribbons = '<img style = "margin: 3px;" class="ui-corner-all" src="images/trust-icon-email.png">';
+					if(this.go != "0"){
+						ribbons += '<img style = "margin: 3px;" class="ui-corner-all" src="images/trust-icon-community.png">';
 					} else {
-						$("#left-panel").removeClass("auth-panel");
-						$(".user-info .username").html("Guest");
-						$(".user-info .email").html("");
-
-						$(".user-info .avatar").css("background-image","");
-						$(".user-info .id").html("");
-						$(".user-info .name").html("");
+						ribbons += '<a href="#community"><img style = "margin: 3px; filter: alpha(Opacity=30); opacity: 0.3;" src="images/trust-icon-community.png"></a>';
 					}
+					if(this.osmd != "0"){
+						ribbons += '<img style = "margin: 3px;" class="ui-corner-all" src="images/trust-icon-house.png">';
+					} else {
+						ribbons += '<a href="#house"><img style = "margin: 3px; filter: alpha(Opacity=30); opacity: 0.3;" class="ui-corner-all" src="images/trust-icon-house.png"></a>';
+					}
+					if(this.payment != "0"){
+						ribbons += '<img style = "margin: 3px;" class="ui-corner-all" src="images/trust-icon-wallet.png">';
+					} else {
+						ribbons += '<a href="#wallet"><img style = "margin: 3px; filter: alpha(Opacity=30); opacity: 0.3;" class="ui-corner-all" src="images/trust-icon-wallet.png"></a>';
+					}
+					if(this.bankid != "0"){
+						ribbons += '<img style = "margin: 3px;" class="ui-corner-all" src="images/trust-icon-password.png">';
+					} else {
+						ribbons += '<a href="#bankid"><img style = "margin: 3px; filter: alpha(Opacity=30); opacity: 0.3;" class="ui-corner-all" src="images/trust-icon-password.png"></a>';
+					}
+
+					// if(this.fb != "0"){
+					// 	ribbons += '<img class="ui-corner-all ribbon" src="images/icon-fb.png">';
+					// } else {
+					// 	ribbons += '<a href="sn/fb.php"><img style = "filter: alpha(Opacity=30);" class="ui-corner-all ribbon" src="images/icon-fb.png"></a>';
+					// }
+
+					// if(this.gp != "0"){
+					// 	ribbons += '<img class="ui-corner-all ribbon" src="images/icon-gp.png">';
+					// } else {
+					// 	ribbons += '<a href="sn/fb.php"><img style = "filter: alpha(Opacity=30);" class="ui-corner-all ribbon" src="images/icon-gp.png"></a>';
+					// }
+
+
+					$('#profile-page #ribbons').html( ribbons );
+					$("#left-panel").addClass("auth-panel");
+				} else {
+					$("#left-panel").removeClass("auth-panel");
+					$(".user-info .username").html("Guest");
+					$(".user-info .email").html("");
+
+					$(".user-info .avatar").css("background-image","");
+					$(".user-info .id").html("");
+					$(".user-info .name").html("");
 				}
+			}
 		};
 
 	})
