@@ -24,6 +24,7 @@ var g_ar_w_votings = [];
 var g_ar_projects = [];
 var g_ar_requests = [];
 var g_ar_nav_seeds = [];
+var g_current_page = '';
 
 //phonegap special cross-domain configuration
 $( document ).bind( "mobileinit", function() {
@@ -41,7 +42,6 @@ function checkUpdateByID(p_json_list, p_id) {
   );
 }
 ////
-
 
 //////////////////////////////////////////////////////////////////
 var GoogleMapsAdress = {
@@ -298,13 +298,6 @@ window.onload = function(){
 		if(location.href.indexOf('#weighted-votings-page') > -1 || location.href.indexOf('#weighted-vote-page?vote=') > -1){
 			WEIGHTED_VOTINGS.init();
 			$('#weighted-votings-page select').selectmenu().selectmenu("refresh", true);
-		}
-
-
-
-
-		if(location.href.indexOf('#my-groups') > -1){
-			GROUPS.init();
 		}
 
 		if(location.href.indexOf('#wallet') > -1){
@@ -601,8 +594,8 @@ $(document).on("pagecontainershow", function () {
 	$.mobile.loading( "show", {theme: "z"});
 	lang_activate_el();
 	var activePage = $.mobile.pageContainer.pagecontainer("getActivePage");
-	var activePageId = activePage[0].id;
-	switch (activePageId) {
+	g_current_page = activePage[0].id;
+	switch (g_current_page) {
 		case 'main-page':
 			console.log('main-page');
 			break;
@@ -710,12 +703,15 @@ $(document).on("pagecontainershow", function () {
 			break;
 		case 'my-groups':
 			console.log('my-groups');
+			GROUPS.init();
 			break;
 		case 'my-spheres-options':
 			console.log('my-spheres-options');
+			GROUPS.groups_spheres(GROUPS.group_id);
 			break;
 		case 'membership-manage':
 			console.log('membership-manage');
+
 			break;
 		case 'my-tasks-page':
 			console.log('my-tasks-page');
@@ -858,10 +854,6 @@ window.onhashchange = function(){
 
 	if(location.href.indexOf('#wallet') > -1){
 		WALLET.init();
-	}
-
-	if(location.href.indexOf('#my-groups') > -1){
-		GROUPS.init();
 	}
 
 	if(location.href.indexOf('#programs-page') > -1
@@ -1219,45 +1211,36 @@ function nco_show_selected( id, nco_name, nco_phone, doc_type, doc_series, doc_n
 
 var COMMON_OBJECT = {
 	custom_listeners: function(){
-		if(location.href.indexOf('#votings-page') > -1){
-			
-			if( $(window).scrollTop() == $(document).height() - $(window).height()){
-				VOTINGS.reinit();
-			}
-			
-		}else if(location.href.indexOf('#news-page') > -1){
-			if( $(window).scrollTop() == $(document).height() - $(window).height()){
-				NEWS.reinit();
-			}
 
-		}else if(location.href.indexOf('#trust-list') > -1){
-			if( $(window).scrollTop() == $(document).height() - $(window).height()){
+		if( $(window).scrollTop() > ($(document).height() - $(window).height() - 1)){
+			if(location.href.indexOf('#votings-page') > -1){
+				VOTINGS.reinit();
+			}else if(location.href.indexOf('#news-page') > -1){
+				NEWS.reinit();
+			}else if(location.href.indexOf('#trust-list') > -1){
 				TRUST_LIST.reinit();
-			}
-		}else if(location.href.indexOf('#my-votings-page') > -1){
-			if( $(window).scrollTop() == $(document).height() - $(window).height()){
+			}else if(location.href.indexOf('#my-votings-page') > -1){
 				MY_VOTINGS.reinit();
-			}
-		}else if(location.href.indexOf('#programs-page') > -1){
-			if( $(window).scrollTop() == $(document).height() - $(window).height()){
+			}else if(location.href.indexOf('#programs-page') > -1){
 				PROGRAMS.reinit();
-			}
-		}else if(location.href.indexOf('#projects-page') > -1){
-			if( $(window).scrollTop() == $(document).height() - $(window).height()){
+			}else if(location.href.indexOf('#projects-page') > -1){
 				PROJECTS.reinit();
-			}
-		}else if(location.href.indexOf('#requests-page') > -1){
-			if( $(window).scrollTop() == $(document).height() - $(window).height()){
+			}else if(location.href.indexOf('#requests-page') > -1){
 				REQUESTS.reinit();
-			}
-		}else if(location.href.indexOf('#weighted-votings-page') > -1){
-			if( $(window).scrollTop() == $(document).height() - $(window).height()){
+			}else if(location.href.indexOf('#weighted-votings-page') > -1){
 				WEIGHTED_VOTINGS.reinit();
 			}
 		}
+
 	},
 	init_common_listeners: function(){
-			window.addEventListener("scroll", COMMON_OBJECT.custom_listeners );	
+		window.addEventListener("scroll", COMMON_OBJECT.custom_listeners );	
+
+		$('body').on('click', '.group-item', function(){
+			GROUPS.group_id = $(this).attr('org_id');
+			$.mobile.navigate('#my-spheres-options?id=' + GROUPS.group_id );
+		});
+
 	},
 	custom_swipe: function(object){
 		//console.log($(object).data('show'));
@@ -7822,10 +7805,11 @@ var WALLET = {
 var GROUPS = {
 	items_list: [],
 	last_item: 0,
+	group_id: 0,
 	init: function(){
 		var self = this;
 
-		console.log(SUPER_PROFILE.payment);
+		//console.log(SUPER_PROFILE.payment);
 		if(SUPER_PROFILE.payment){
 			$('#btn_group_create').show();
 		} else {
@@ -7846,13 +7830,40 @@ var GROUPS = {
 				if(self.items_list.length > 0){
 					//self.items_list = self.items_list.concat(query_array);
 					LIST_OF_ITEM.build_items_list(0, '#org_list', self.items_list);
-					self.items_list += 10;
+					self.last_item += 10;
 				}
 				$.mobile.loading( "hide" );	
 			},
 		});
 	},
+	groups_spheres: function(p_group_id){
+		var self = this;
+		if(p_group_id > 0){
+			$.mobile.loading( "show", {theme: "z"});
+			$.ajax({
+				url: mainURL + '/groups_spheres.php?org_id=' + p_group_id,
+				type: "GET",
+				xhrFields: {
+					withCredentials: true
+				},
+				crossDomain: true,
+				complete: function( response ){
+					//console.log(response);
+					self.items_list = JSON.parse(response.responseText);
+					if(self.items_list.length > 0){
 
+						//TODO: exqlude doubles!!!
+						//TODO: check init or reinit status!
+
+						//self.items_list = self.items_list.concat(query_array);
+
+						LIST_OF_ITEM.build_items_list(0, '#group_spheres_list', self.items_list);
+					}
+					$.mobile.loading( "hide" );	
+				},
+			});
+		}
+	},
 }
 
 var LIST_OF_ITEM = {
@@ -7868,10 +7879,10 @@ var LIST_OF_ITEM = {
 			var l_img = '';
 			var l_author = '';
 			var l_city = '';
-			var l_icon_right = '';
+			var l_style = '';
 			switch( parseInt(l_one_item.type_id) ){
 				case 4:
-					l_onclick_event = 'onclick="$.mobile.navigate(\'#my-spheres-options?id=' + l_one_item.id + '\')" style="cursor:pointer"';
+					l_onclick_event = ' org_id="' + l_one_item.id + '" style="cursor:pointer"';
 					l_date = l_one_item.ts;
 					l_title = '<b>ID: ' + l_one_item.id + ' :: ' + l_one_item.org + '</b>';
 					l_image = mainURL + '/uploads/news.svg';
@@ -7889,10 +7900,17 @@ var LIST_OF_ITEM = {
 				 	}
 
 					l_author = '<b>' + l_city + '</b>';
-					l_icon_right = 'news-icon news-icon-num-4';
+					l_style = ' group-item news-icon news-icon-num-4';
+					break;
+				case 10:
+					l_onclick_event = 'id="' + l_one_item.id + '" style="cursor:pointer" ';
+					l_date = '';
+					l_title = '<b>' + l_one_item.name_uk + '</b>';
+					l_image = mainURL + '/uploads/news.svg';
+					l_author = '<b>' + l_one_item.idc + '</b>';
+					l_style = 'sphere-item news-icon checkbox-on';
 					break;
 			}
-
 
 			if(l_image.indexOf('svg') > -1){
 				var l_img = '<object type="image/svg+xml" data="' + l_image + '">Your browser does not support SVG</object>';
@@ -7900,7 +7918,7 @@ var LIST_OF_ITEM = {
 				var l_img = '<img src="' + l_image + '" />';
 			}
 
-			l_elements_string += '<div ' + l_onclick_event + ' class="item ui-corner-all ' + l_icon_right + '">\
+			l_elements_string += '<div ' + l_onclick_event + ' class="item ui-corner-all ' + l_style + '">\
 									<div class="img">' + l_img + '</div>\
 									<div class="info">\
 										<div class="date">' + l_date + '</div>\
@@ -7917,6 +7935,7 @@ var LIST_OF_ITEM = {
 		}else{
 			$(p_selector_list).html(l_elements_string);
 		}
+
 	},
 	build_item: function(p_reinit, p_back_to, p_item){
 		var self = this;
@@ -8168,7 +8187,7 @@ var VOTINGS = {
 				$('#votings-page #solo_filter').css('display', 'block');	 
 				if(call_back){
 					call_back();
-				} 
+				}
 			},
 		});
 
@@ -8676,6 +8695,22 @@ var VOTINGS = {
 		if(data_for_build.org){
 			var organization = data_for_build.org + " - ";
 		}
+
+		var l_city = '';
+		switch(CURRENT_LANG){
+			case "en":
+				l_city = data_for_build.city_en;
+			break;
+			case "ru":
+				l_city = data_for_build.city_ru;
+			break;
+			case "uk":
+				l_city = data_for_build.city_uk;
+			break;
+		}
+
+		organization += l_city + " - ";
+
 		var support_button = '';
 		var status_vote = '';
 		if(canceled == 0 && SUPER_PROFILE.auth == true){
@@ -9266,9 +9301,7 @@ var VOTINGS = {
 		}
 
 		return l_data_array;
-
 	},
-
 	f_add_vote:function(p_offer_id, p_vote){
 		$.mobile.loading( "show", {theme: "z"});
 		var self = this;
@@ -9382,7 +9415,6 @@ var VOTINGS = {
 			});
 		//}, 100);
 		$.mobile.loading( "hide" );
-
 	},
 	delete_voting: function(voting_id, return_page){
 		$.ajax({
@@ -9739,7 +9771,6 @@ var MY_VOTINGS = {
 				$.mobile.loading( "hide" );	 
 			},
 		});
-
 	},
 	filter_data: function(sphere_id, reinit, name_sphere){
 		var self = this;
@@ -10017,11 +10048,26 @@ var MY_VOTINGS = {
 				break;
 			}
 		}
-
 		var organization = '';
 		if(data_for_build.org){
 			var organization = data_for_build.org + " - ";
 		}
+
+		var l_city = '';
+		switch(CURRENT_LANG){
+			case "en":
+				l_city = data_for_build.city_en;
+			break;
+			case "ru":
+				l_city = data_for_build.city_ru;
+			break;
+			case "uk":
+				l_city = data_for_build.city_uk;
+			break;
+		}
+
+		organization += l_city + " - ";
+
 		var support_button = '';
 		var status_vote = '';
 
@@ -10177,6 +10223,20 @@ var MY_VOTINGS = {
 			var organization = data_for_build.org + " - ";
 		}
 
+		var l_city = '';
+		switch(CURRENT_LANG){
+			case "en":
+				l_city = data_for_build.city_en;
+			break;
+			case "ru":
+				l_city = data_for_build.city_ru;
+			break;
+			case "uk":
+				l_city = data_for_build.city_uk;
+			break;
+		}
+
+		organization += l_city + " - ";
 
 		var selected_class_yes = '';
 		var selected_class_abstain = '';

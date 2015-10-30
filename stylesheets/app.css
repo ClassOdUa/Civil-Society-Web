@@ -117,6 +117,15 @@ label.ui-btn {
   border: 2px solid #4d4d4d;
   margin: -11px 2px 0 2px; }
 
+.checkbox-on {
+  border-color: #4caf50;
+  background: #4caf50 url(../images/svg/checkbox.svg) no-repeat 50% 50%;
+  -moz-background-size: 14px 12px;
+  -o-background-size: 14px 12px;
+  -webkit-background-size: 14px 12px;
+  background-size: 14px 12px; }
+
+
 .ui-btn.ui-checkbox-on:after {
   border-color: #4caf50;
   background: #4caf50 url(../images/svg/checkbox.svg) no-repeat 50% 50%;
@@ -553,8 +562,8 @@ label.ui-btn {
     right: 0;
     bottom: 0;
     padding: 0;
-    overflow: auto;
-    -webkit-overflow-scrolling: touch; }
+ }
+
   #left-panel .panel-head {
     overflow: hidden;
     height: 11em;
@@ -2643,3 +2652,38 @@ label.ui-btn {
   padding-top: 56px !important; }
  .jqte_editor{min-height: 1.3em;}
 
+/* FIX FOR CHAPPY SCROLLING IN ANDROID (JUST REMOVING THE SHADOWS) Get rid of shadows for performance */
+
+.ui-bar-a 
+.ui-shadow,
+.ui-btn-up-a,
+.ui-btn-hover-a,
+.ui-btn-down-a,
+.ui-body-b,
+.ui-btn-up-b,
+.ui-btn-hover-b,
+.ui-btn-down-b,
+.ui-bar-c,
+.ui-body-c,
+.ui-btn-up-c,
+.ui-btn-hover-c,
+.ui-btn-down-c,
+.ui-bar-c,
+.ui-body-d,
+.ui-btn-up-d,
+.ui-btn-hover-d,
+.ui-btn-down-d,
+.ui-bar-d,
+.ui-body-e,
+.ui-btn-up-e,
+.ui-btn-hover-e,
+.ui-btn-down-e,
+.ui-bar-e,
+.ui-overlay-shadow,
+.ui-shadow,
+.ui-btn-active,
+.ui-body-a {
+    text-shadow: none;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}

@@ -1874,7 +1874,7 @@
 <div id="my-spheres-options" data-role="page">
 	<div data-role="header" data-position="fixed" data-tap-toggle="false">
 		<h1>My spheres options</h1>
-		<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#my-spheres')" href="#my-spheres">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#my-spheres-options-help">Ask</a>
+		<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#my-groups')" href="#my-groups">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#my-spheres-options-help">Ask</a>
 		<div id="my-spheres-options-help" class="help-popup" data-role="popup" data-history="false">
 			<div class="title">
 				Description
@@ -1895,41 +1895,7 @@
 
 			<a class="ui-btn ui-corner-all ui-shadow" href="#membership-stop">Stop membership</a>
 
-			<div class="vote-list news-list" id = 'spheres_list'>
-				
-				<div class="item ui-corner-all news-icon news-icon-num-4" onclick="$.mobile.navigate('#my-sphere-options&id=1')" style="cursor:pointer">
-					<div class="img"><object type="image/svg+xml" data="https://gurtom.mobi/uploads/news.svg">Your browser does not support SVG</object>
-					</div>
-					<div class="info">
-						<div class="date">
-							2015-06-08 01:20:47
-						</div>
-						<div class="title">
-							Загальне
-						</div>
-						<div class="author">
-							<span>Опубліковано</span> <strong></strong>
-						</div>
-					</div>
-				</div>
-
-				<div class="item ui-corner-all news-icon news-icon-num-4" onclick="$.mobile.navigate('#')" style="cursor:pointer">
-					<div class="img"><object type="image/svg+xml" data="https://gurtom.mobi/uploads/news.svg">Your browser does not support SVG</object>
-					</div>
-					<div class="info">
-						<div class="date">
-							2015-06-08 01:20:47
-						</div>
-						<div class="title">
-							Предмети
-						</div>
-						<div class="author">
-							<span>Опубліковано</span> <strong></strong>
-						</div>
-					</div>
-				</div>
-
-			</div>
+			<div class="vote-list news-list" id = 'group_spheres_list'></div>
 		</div>
 		<div class="right_col"></div>
 	</div>
@@ -2865,7 +2831,7 @@
 					<option value="en">Choose language</option>
 					<option value="en">English</option>
 					<option value="ru">Русский</option>
-					<option value="ua">Українська</option>
+					<option value="uk">Українська</option>
 				</select>
 			</div>
 			<fieldset data-role="controlgroup" data-iconpos="right">
