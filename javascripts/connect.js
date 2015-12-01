@@ -1267,8 +1267,8 @@ var COMMON_OBJECT = {
 			//console.log(2);
 				$.mobile.activePage.find('.filters-panel').find('.filters-panel-inner').attr('style', 'display: none');
 				$('.filter_slider_btn').show();
-/*				$(object).html('Filter');
-				$(object).data('show', 1);*/
+				// $(object).html('Filter');
+				// $(object).data('show', 1);
 				break;
 			case 1:
 			//console.log(3);
@@ -7824,6 +7824,7 @@ var GROUPS = {
 	last_item: 0,
 	init: function(){
 		var self = this;
+		$.mobile.loading( "show", {theme: "z"});
 
 		console.log(SUPER_PROFILE.payment);
 		if(SUPER_PROFILE.payment){
@@ -7832,7 +7833,6 @@ var GROUPS = {
 			$('#btn_group_create').hide();
 		}
 
-		$.mobile.loading( "show", {theme: "z"});
 		$.ajax({
 			url: mainURL + '/groups.php?ls=' + self.last_item,
 			type: "GET",
@@ -7848,9 +7848,40 @@ var GROUPS = {
 					LIST_OF_ITEM.build_items_list(0, '#org_list', self.items_list);
 					self.items_list += 10;
 				}
-				$.mobile.loading( "hide" );	
 			},
 		});
+		$.mobile.loading( "hide" );	
+	},
+	add_group: function(){
+		var self = this;
+		$.mobile.loading( "show", {theme: "z"});
+
+		var p_name_en = $('#add-item [name=name_en]').val();
+		var p_name_uk = $('#add-item [name=name_uk]').val();
+		var p_name_ru = $('#add-item [name=name_ru]').val();
+
+		$.ajax({
+			url: mainURL + '/groups_add.php',
+			type: "POST",
+			data: {"name_en": p_name_en,
+				 "name_uk": p_name_uk,
+				 "name_ru": p_name_ru },
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				//console.log(response);
+				self.items_list = JSON.parse(response.responseText);
+				if(self.items_list.length > 0){
+					//self.items_list = self.items_list.concat(query_array);
+					LIST_OF_ITEM.build_items_list(0, '#org_list', self.items_list);
+
+				}
+			},
+		});
+
+		$.mobile.loading( "hide" );	
 	},
 
 }

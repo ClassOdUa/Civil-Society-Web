@@ -12,7 +12,6 @@ var g_id = 0;
 var g_city = [0, 0, 0];
 var g_ar_funds = [];
 var g_ar_array_tasks = [];
-var g_ar_ngo = [];
 var g_ar_trust = [];
 var g_ar_groups = [];
 var g_ar_news = [];
@@ -25,6 +24,7 @@ var g_ar_projects = [];
 var g_ar_requests = [];
 var g_ar_nav_seeds = [];
 var g_current_page = '';
+var g_group_creator_id = 0; 
 
 //phonegap special cross-domain configuration
 $( document ).bind( "mobileinit", function() {
@@ -33,6 +33,38 @@ $( document ).bind( "mobileinit", function() {
 	$.support.cors = true;
     $.mobile.allowCrossDomainPages = true;
 });
+
+function message_result(p_result){
+	//Multilingual alert. TODO: change 'error' on 'msg' in all outputs
+	if(p_result.indexOf('error') > -1){
+		var l_error_arr = $.parseJSON(p_result);
+		switch(CURRENT_LANG){
+			case 'en':
+				alert(l_error_arr[0].error);
+			break;
+			case 'uk':
+				alert(l_error_arr[0].error_uk);
+			break;
+			case 'ru':
+				alert(l_error_arr[0].error_ru);
+			break;
+		}
+		var l_r = l_error_arr;
+		if(l_r[0].msg==1){
+			switch(CURRENT_LANG){
+				case 'en':
+					alert(l_r[0].msg_en);
+				break;
+				case 'uk':
+					alert(l_r[0].msg_uk);
+				break;
+				case 'ru':
+					alert(l_r[0].msg_ru);
+				break;
+			}
+		}
+	}
+}
 
 ////
 function checkUpdateByID(p_json_list, p_id) {
@@ -170,6 +202,7 @@ var GoogleMapsAdress = {
 //////////////////////////////////////////////////////////////////
 
 $.mobile.defaultPageTransition = 'none';
+
 function inner_back(link){
 	if(link){
 		$.mobile.navigate(link);
@@ -230,8 +263,13 @@ window.onload = function(){
 		//console.log('interval');
 		SUPER_PROFILE.checkUser();
 	}, 5000);*/
+
+	NCO.init();
+
 	setTimeout(function(){
+
 		COMMON_OBJECT.init_common_listeners();
+
 		
 		MAP.init();
 		
@@ -402,7 +440,7 @@ window.onload = function(){
 		type: 'post', 
 		success: function(response) {
 			if( response.indexOf('error') > -1 ){
-				var error_arr = JSON.parse(response);
+				var error_arr = $.parseJSON(response);
 				switch(CURRENT_LANG){
 					case 'en':
 						alert(error_arr[0].error);
@@ -431,7 +469,7 @@ window.onload = function(){
 					//console.log( mainURL + '/' + profile_obj.avatar);
 				}else{
 					if( response.responseText.indexOf('error') > -1 ){
-						var error_arr = JSON.parse(response.responseText);
+						var error_arr = $.parseJSON(response.responseText);
 						switch(CURRENT_LANG){
 							case 'en':
 								alert(error_arr[0].error);
@@ -463,7 +501,7 @@ window.onload = function(){
 					var img = response;
 				}else{
 					if( response.indexOf('error') > -1 ){
-						var error_arr = JSON.parse(response);
+						var error_arr = $.parseJSON(response);
 						switch(CURRENT_LANG){
 							case 'en':
 								alert(error_arr[0].error);
@@ -519,7 +557,7 @@ window.onload = function(){
 					//console.log(img);
 				}else{
 					if( response.indexOf('error') > -1 ){
-						var error_arr = JSON.parse(response);
+						var error_arr = $.parseJSON(response);
 						switch(CURRENT_LANG){
 							case 'en':
 								alert(error_arr[0].error);
@@ -580,6 +618,7 @@ window.onload = function(){
 	PROJECTS.build_history_page();
 	REQUESTS.build_history_page();
 	CREATE_ITEM.check_item();
+	//GROUPS.init_sphere();
 
 	try{
 		$('#lang label').attr('lang', CURRENT_LANG);
@@ -595,9 +634,16 @@ $(document).on("pagecontainershow", function () {
 	lang_activate_el();
 	var activePage = $.mobile.pageContainer.pagecontainer("getActivePage");
 	g_current_page = activePage[0].id;
+
 	switch (g_current_page) {
+		case 'test':
+			console.log('test');
+			SPHERES.init();
+			SPHERES.events();
+			break;
 		case 'main-page':
 			console.log('main-page');
+
 			break;
 		case 'registration':
 			console.log('registration');
@@ -631,6 +677,7 @@ $(document).on("pagecontainershow", function () {
 			break;
 		case 'programs-page':
 			console.log('programs-page');
+			$('.right_col').html('<a href="https://www.facebook.com/citizens.empowering/videos/vb.740675639284899/1044527985566328/?type=2&theater" target="_blank">Инструкция по основным механизмам Гражданского Общества</a>');
 			break;
 		case 'program-page':
 			console.log('program-page');
@@ -695,9 +742,6 @@ $(document).on("pagecontainershow", function () {
 		case 'help':
 			console.log('help');
 			break;
-		case 'test':
-			console.log('test');
-			break;
 		case 'my-activities-page':
 			console.log('my-activities-page');
 			break;
@@ -709,9 +753,14 @@ $(document).on("pagecontainershow", function () {
 			console.log('my-spheres-options');
 			GROUPS.groups_spheres(GROUPS.group_id);
 			break;
+		case 'add-group':
+			console.log('add-group');
+			break;
+		case 'add-group-sphere':
+			console.log('add-group-sphere');
+			break;
 		case 'membership-manage':
 			console.log('membership-manage');
-
 			break;
 		case 'my-tasks-page':
 			console.log('my-tasks-page');
@@ -731,6 +780,9 @@ $(document).on("pagecontainershow", function () {
 			break;
 		case 'votings-page':
 			console.log('votings-page');
+			SPHERES.initial();
+			SPHERES.init();
+			SPHERES.events();
 			VOTINGS.init();
 			break;
 		case 'my-votings-page':
@@ -1036,12 +1088,6 @@ window.onhashchange = function(){
 	}
 };
 
-/*function lang_activate(lang){
-	CURRENT_LANG = lang;
- 	createCookie("lang",lang);
- 	lang_activate_el("body");
-	}*/
-
 function createCookie(name, value, days) {
 		var expires = '';
 
@@ -1154,16 +1200,16 @@ function nko_create_page_data(){
 		},
 	 	crossDomain: true,
 		complete: function( response ){
-			data_for_build = JSON.parse( response.responseText );
+			data_for_build = $.parseJSON( response.responseText );
 
 			var nko_parts = '';
 			jQuery.each(data_for_build, function(i, one_nko) {
 				nko_parts += '<li>\
 								<div onclick = "nco_show_selected( ' + one_nko.id + ', \'' + one_nko.nco_name + '\', \'' + one_nko.nco_phone + '\', \'' + one_nko.doc_type + '\', \'' + one_nko.doc_series + '\', \'' + one_nko.doc_number + '\', \'' + one_nko.doc_date + '\', \'' +  one_nko.address_type + '\', \'' + one_nko.street + '\', \'' + one_nko.city + '\', \'' + one_nko.county + '\', \'' + one_nko.build + '\', \'' + one_nko.ap + '\'  )" class="ui-checkbox">\
-									<label class="ui-btn ui-btn-icon-left ui-checkbox-off"></label><input type="checkbox" name="" value="1" data-enhanced="true" />\
+									<label class="ui-btn ui-btn-icon-left ui-checkbox-off"></label><input type="checkbox" name="nco_chk" n_id="' + one_nko.id + '" value="1" data-enhanced="true" />\
 								</div>\
 								<div>\
-									<strong>' + one_nko.nco_name + '</strong> (<strong>ID</strong>:<span>' + one_nko.user_id + '</span>)<span class="phone">' + one_nko.nco_phone + '</span><span class="doc">' + one_nko.doc_type + ' ' + one_nko.doc_series + ' ' + one_nko.doc_number + ' ' + one_nko.doc_date + '</span><span class="addr">' + one_nko.address_type + ' ' + one_nko.street + ',' + one_nko.city + ',' + one_nko.county + ', дом ' + one_nko.build + ', каб. ' + one_nko.ap + '</span>\
+									<strong>' + one_nko.nco_name + '</strong> (<strong>ID</strong>:<span >' + one_nko.id + '</span>)<span class="phone">' + one_nko.nco_phone + '</span><span class="doc">' + one_nko.doc_type + ' ' + one_nko.doc_series + ' ' + one_nko.doc_number + ' ' + one_nko.doc_date + '</span><span class="addr">' + one_nko.address_type + ' ' + one_nko.street + ',' + one_nko.city + ',' + one_nko.county + ', дом ' + one_nko.build + ', каб. ' + one_nko.ap + '</span>\
 								</div>\
 							</li>\ '; 
 			});
@@ -1212,35 +1258,54 @@ function nco_show_selected( id, nco_name, nco_phone, doc_type, doc_series, doc_n
 var COMMON_OBJECT = {
 	custom_listeners: function(){
 
-		if( $(window).scrollTop() > ($(document).height() - $(window).height() - 1)){
-			if(location.href.indexOf('#votings-page') > -1){
-				VOTINGS.reinit();
-			}else if(location.href.indexOf('#news-page') > -1){
-				NEWS.reinit();
-			}else if(location.href.indexOf('#trust-list') > -1){
-				TRUST_LIST.reinit();
-			}else if(location.href.indexOf('#my-votings-page') > -1){
-				MY_VOTINGS.reinit();
-			}else if(location.href.indexOf('#programs-page') > -1){
-				PROGRAMS.reinit();
-			}else if(location.href.indexOf('#projects-page') > -1){
-				PROJECTS.reinit();
-			}else if(location.href.indexOf('#requests-page') > -1){
-				REQUESTS.reinit();
-			}else if(location.href.indexOf('#weighted-votings-page') > -1){
-				WEIGHTED_VOTINGS.reinit();
+		//Scrolling list update
+		//console.log($(window).scrollTop());
+		//console.log($(document).height()- $(window).height() - 1);
+		if( $(window).scrollTop() > ($(document).height() - $(window).height() - 2)){
+			switch (g_current_page) {
+				case 'votings-page':
+					VOTINGS.reinit();
+					break;
+				case 'news-page':
+				 	NEWS.reinit();
+				 	break;
+				case 'trust-list':
+					TRUST_LIST.reinit();
+					break;
+				case 'my-votings-page':
+					MY_VOTINGS.reinit();
+					break;
+				case 'programs-page':
+					PROGRAMS.reinit();
+					break;
+				case 'projects-page':
+					PROJECTS.reinit();
+					break;
+				case 'requests-page':
+					REQUESTS.reinit();
+					break;
+				case 'weighted-votings-page':
+					WEIGHTED_VOTINGS.reinit();
+					break;
+				case 'members':
+					MEMBERS.scrolled_down = 1;
+					MEMBERS.init();
+					break;
+				case 'my-groups':
+					GROUPS.scrolled_down = 1;
+					GROUPS.init();
+					break;
 			}
 		}
-
 	},
 	init_common_listeners: function(){
 		window.addEventListener("scroll", COMMON_OBJECT.custom_listeners );	
 
-		$('body').on('click', '.group-item', function(){
-			GROUPS.group_id = $(this).attr('org_id');
-			$.mobile.navigate('#my-spheres-options?id=' + GROUPS.group_id );
-		});
+		MEMBERS.events();
 
+		GROUPS.events();
+
+		CREATE_ITEM.events();
 	},
 	custom_swipe: function(object){
 		//console.log($(object).data('show'));
@@ -1249,8 +1314,8 @@ var COMMON_OBJECT = {
 			//console.log(2);
 				$.mobile.activePage.find('.filters-panel').find('.filters-panel-inner').attr('style', 'display: none');
 				$('.filter_slider_btn').show();
-/*				$(object).html('Filter');
-				$(object).data('show', 1);*/
+				// $(object).html('Filter');
+				// $(object).data('show', 1);
 				break;
 			case 1:
 			//console.log(3);
@@ -1299,20 +1364,7 @@ var COMMON_OBJECT = {
 				if(response && response.responseText.indexOf('error') == -1){
 					window.location.replace(mainURL + "/index.html");
 				}else{
-					if( response.responseText.indexOf('error') > -1 ){
-						var error_arr = JSON.parse(response.responseText);
-						switch(CURRENT_LANG){
-							case 'en':
-								alert(error_arr[0].error);
-								break;
-							case 'ru':
-								alert(error_arr[0].error_ru);
-								break;
-							case 'uk':
-								alert(error_arr[0].error_uk);
-								break;
-						}
-					}
+					message_result(response.responseText);
 				}				
 			}
 		});
@@ -1323,6 +1375,7 @@ var SUPER_PROFILE = {
 	auth: false,
 	gender: 0,
 	id: 0,
+	nco: 0,
 	checkUser: function(){
 		console.log('SUPER_PROFILE.checkUser - EMPTY MODULE ACTIVATED!');
 		/*if(readCookie('id_cookie') != OLD_ID_COOKIE){
@@ -1331,21 +1384,182 @@ var SUPER_PROFILE = {
 	}
 };
 
-var NCO_OBJECT = {
+var NCO = {
+	list: {},
+	init: function(){
+		var self = this;
+		$.post(mainURL + '/nco.php', function(p_result){
+			self.list = $.parseJSON(p_result);
+			$('#nco_full_list').html(LIST_OF_ITEM.build_items_list(self.list));
+		});
+	},
 	offer_accept_nco: function(object_type, object_id, page){
-		$.ajax({
-			url: mainURL + "/nco_bid.php",
-			type: "POST",
-			data: {"type": object_type,
-				 "id": object_id},
-			crossDomain: true,
-			xhrFields: {
-				withCredentials: true
-			},
-			complete: function(data){
-				$(page + ' #create_nco_button').css('display', 'none');
+		var l_json = $.parseJSON('{"type":' + object_type + ', "id":' + object_id + '}');
+		$.post(mainURL + '/nco_bid.php', l_json, function(p_result){
+
+			if(p_result.indexOf('error') > -1 ){
+				message_result(p_result);
+			}else{
+				if(p_result > 1){
+					$('#nco_bid_btn').hide();
+					var l_add_list = '';
+					$.each(NCO.list, function(i, l_nco) {
+						if(SUPER_PROFILE.id == l_nco.id){
+							l_add_list = '<li class="nco_part ui-corner-all"><strong>' + l_nco.nco_name + '</strong> (<strong>ID</strong>:<span>' + l_nco.id + '</span>)<span class="phone">' + l_nco.nco_phone + '</span><span class="doc">' + l_nco.doc_type + ' ' + l_nco.doc_series + ' ' + l_nco.doc_number + ' ' + l_nco.doc_issue + ' ' + l_nco.doc_date + '</span><span class="addr">' + l_nco.country + ' ' + l_nco.state + ' ' + l_nco.county + ' ' + l_nco.city + ' ' + l_nco.street + ' ' + l_nco.build + ' ' + l_nco.ap + '</span></li>';
+						}
+					});
+
+					switch(p_result){
+						case '1':
+							$('.nko-list ol').append(l_add_list);
+						break;
+						case '2':
+							$('.nco_part').hide();
+							$('#nco_btn').hide();
+							$('.nko-list .title').html(LOCALE_ARRAY_ADDITIONAL.nco_accepted[CURRENT_LANG]);
+							$('.nko-list ol').html(l_add_list);
+						break;
+					}
+				}
+			}
+
+			
+
+		});
+	},
+	selected_by_author: function(p_choosen_nco_id){
+		//build NCO selected by Author
+		var l_return = '';
+		$.each(self.list, function(i, l_nco) {
+			if(p_choosen_nco_id == l_nco.id){
+				l_return = '</span><div class="nco_choosen_name ui-corner-all"><strong>ID: ' 
+							+ l_nco.id + ' :: ' 
+							+ l_nco.nco_name + '</strong><br /><span class="phone">'
+							+ l_nco.nco_phone + '</span><br /><span class="doc">'
+							+ l_nco.doc_type + ' ' + l_nco.doc_number + ' '
+							+ l_nco.doc_issue + ' ' 
+							+ l_nco.doc_date + '</span><br /><span class="addr">' 
+							+ l_nco.country + ' ' + l_nco.state + ' ' + l_nco.city + ' ' 
+							+ l_nco.street + ' ' + l_nco.build + '</span>';
 			}
 		});
+		return l_return;
+	},
+	nco_build: function(p_type, p_id, p_author_id, p_choosen_nco_id, p_nco_bids_list, p_nco_acceptance){
+		var self = this;
+
+		// if($.isEmptyObject(self.list)){
+		// 	self.init();
+		// }
+
+		var l_nco_part = '';
+		var l_nco_selected = '';
+		var l_nco_bids_list = '';
+		var l_nco_bid_btn = '';
+		var l_nco_choice_btn = '';
+		var l_nco_in_list = 0;
+
+		//build NCO selected by Author
+		if(p_choosen_nco_id > 0){
+			// l_nco_selected = self.selected_by_author(p_choosen_nco_id);
+			$.each(self.list, function(i, l_nco) {
+				if(p_choosen_nco_id == l_nco.id){
+					l_nco_selected = '<span class="nco_choosen"></span><div class="nco_choosen_name ui-corner-all"><strong>ID: ' 
+								+ l_nco.id + ' :: ' 
+								+ l_nco.nco_name + '</strong><br /><span class="phone">'
+								+ l_nco.nco_phone + '</span><br /><span class="doc">'
+								+ l_nco.doc_type + ' ' + l_nco.doc_number + ' '
+								+ l_nco.doc_issue + ' ' 
+								+ l_nco.doc_date + '</span><br /><span class="addr">' 
+								+ l_nco.country + ' ' + l_nco.state + ' ' + l_nco.city + ' ' 
+								+ l_nco.street + ' ' + l_nco.build + '</span></div>';
+				}
+			});
+		}
+
+		//build list of NCO bids
+		if(p_nco_bids_list.length > 0 && p_nco_acceptance == '0'){
+			jQuery.each(p_nco_bids_list, function(i, l_nco) {
+				l_nco_bids_list += '<li class="nco_part ui-corner-all"><strong>' 
+								+ l_nco.reg_name + '</strong> (<strong>ID</strong>:<span>' 
+								+ l_nco.user_id + '</span>)<span class="phone">' 
+								+ l_nco.reg_phone + '</span><span class="doc">' 
+								+ l_nco.reg_doc + '</span><span class="addr">'
+								+ l_nco.reg_address + '</span></li>';
+				if(SUPER_PROFILE.id == l_nco.user_id){
+					l_nco_in_list = 1;
+				}
+			});
+			l_nco_bids_list = '<ul>' + l_nco_bids_list + '</ul>';
+		}
+
+		//Build NCO choice btn
+		if(SUPER_PROFILE.id == p_author_id && p_nco_acceptance == '0' ){
+			l_nco_choice_btn = '<a class="list-nco-btn nco-btn ui-btn ui-corner-all ui-shadow" p_type="' + p_type + '" p_id="' 
+								+ p_id + '" href="#">' 
+								+ LOCALE_ARRAY_ADDITIONAL.choose_nco[CURRENT_LANG] 
+								+ '</a>'
+		}
+
+		//Build NCO bid btn
+		if(SUPER_PROFILE.nco == 1 && p_nco_acceptance == '0'  &&  l_nco_in_list == 0 ){
+			l_nco_bid_btn = '<a class="nco_bid_btn nco-btn ui-btn ui-corner-all ui-shadow" p_type="' + p_type + '" p_id="' 
+								+ p_id + '" href="#">' 
+								+ LOCALE_ARRAY_ADDITIONAL.create_nco[CURRENT_LANG]
+								+ '</a>';
+		}
+
+		$('.nco_status').html(l_nco_selected + l_nco_bid_btn + l_nco_choice_btn + l_nco_bids_list);
+		console.log(l_nco_selected);
+
+	},
+	events: function(){
+
+		$('body').on('click', '.list-nco-btn', function(){
+			var l_type = $(this).attr('p_type');
+			var l_id = $(this).attr('p_id');
+			var l_page = '';
+			switch(l_type){
+				case '3':
+					l_page = '#project-page?project_proposition=' + l_id;
+					break;
+				case '4':
+					l_page = '#project-page?project=' + l_id;
+					break;
+				case '5':
+					l_page = '#request-page?request=' + l_id;
+					break;
+			}
+			$('#nco-page .ui-icon-back').attr('p_type', l_type).attr('p_id', l_id).attr('href', l_page);
+
+			$.mobile.navigate('#nco-page?p_type=' + l_type + '&id=' + l_id);
+		});
+
+		$('body').on('click', '.nco', function(){
+			var n_id = $(this).attr('n_id');
+			var l_page = '';
+			switch(l_type){
+				case '3':
+					l_page = '#project-page?project_proposition=' + l_id;
+					break;
+				case '4':
+					l_page = '#project-page?project=' + l_id;
+					break;
+				case '5':
+					l_page = '#request-page?request=' + l_id;
+					break;
+			}
+			$('#nco-page .ui-icon-back').attr('p_type', l_type).attr('p_id', l_id).attr('href', l_page);
+
+			$.mobile.navigate('#nco-page?p_type=' + l_type + '&id=' + l_id);
+		});
+
+		$('body').on('click', '.nco_bid_btn', function(){
+			l_type = $(this).attr('p_type');
+			l_id = $(this).attr('p_id');
+			NCO.offer_accept_nco(l_type, l_id, '');
+		});
+
 	}
 }
 
@@ -1501,12 +1715,12 @@ var CREATE_ITEM = {
 				complete: function(response){
 					if(response && response.responseText.indexOf('error') == -1){
 						alert(LOCALE_ARRAY_ADDITIONAL.saved_successfull[CURRENT_LANG]);
-						var id = JSON.parse(response.responseText);
+						var id = $.parseJSON(response.responseText);
 						id = id[0].id;
 						$.mobile.navigate("#project-page?project=" + id);
 					}else{
 						if( response.responseText.indexOf('error') > -1 ){
-							var error_arr = JSON.parse(response.responseText);
+							var error_arr = $.parseJSON(response.responseText);
 							switch(CURRENT_LANG){
 								case 'en':
 									alert(error_arr[0].error);
@@ -1549,12 +1763,12 @@ var CREATE_ITEM = {
 				complete: function(response){
 					if(response && response.responseText.indexOf('error') == -1){
 						alert(LOCALE_ARRAY_ADDITIONAL.saved_successfull[CURRENT_LANG]);
-						var id = JSON.parse(response.responseText);
+						var id = $.parseJSON(response.responseText);
 						id = id[0].id;
 						$.mobile.navigate("#program-page?program=" + id);
 					}else{
 						if( response.responseText.indexOf('error') > -1 ){
-							var error_arr = JSON.parse(response.responseText);
+							var error_arr = $.parseJSON(response.responseText);
 							switch(CURRENT_LANG){
 								case 'en':
 									alert(error_arr[0].error);
@@ -1607,12 +1821,12 @@ var CREATE_ITEM = {
 				complete: function(response){
 					if(response && response.responseText.indexOf('error') == -1){
 						alert(LOCALE_ARRAY_ADDITIONAL.saved_successfull[CURRENT_LANG]);
-						var id = JSON.parse(response.responseText);
+						var id = $.parseJSON(response.responseText);
 						id = id[0].id;
 						$.mobile.navigate("#request-page?request=" + id);
 					}else{
 						if( response.responseText.indexOf('error') > -1 ){
-							var error_arr = JSON.parse(response.responseText);
+							var error_arr = $.parseJSON(response.responseText);
 							switch(CURRENT_LANG){
 								case 'en':
 									alert(error_arr[0].error);
@@ -1664,12 +1878,12 @@ var CREATE_ITEM = {
 				complete: function(response){
 					if(response && response.responseText.indexOf('error') == -1){
 						alert(LOCALE_ARRAY_ADDITIONAL.saved_successfull[CURRENT_LANG]);
-						var id = JSON.parse(response.responseText);
+						var id = $.parseJSON(response.responseText);
 						id = id[0].id;
 						$.mobile.navigate("#weighted-vote-page?vote=" + id);
 					}else{
 						if( response.responseText.indexOf('error') > -1 ){
-							var error_arr = JSON.parse(response.responseText);
+							var error_arr = $.parseJSON(response.responseText);
 							switch(CURRENT_LANG){
 								case 'en':
 									alert(error_arr[0].error);
@@ -1703,31 +1917,31 @@ var CREATE_ITEM = {
 
 		var validation_error = self.validation( validation_row );
 		if( validation_error == 0 ){
-					$.ajax({
-						url: mainURL + "/project_propositions_add.php",
-						type: "POST",
-						data: {"img": img,
-							 "descr": $("#create-item .jqte_editor").html(),
-							 "title": $('#create-item [name=title ]').val(),
-							 "dtex": dtex,
-							 "program_id": $('#create-item [name=program_id]').val(), 
-							 "tags": $('#create-item [name=tags]').val(),
-							 "nco": $('#create-item [name=nco]').val(),
-							 "curr": $('#create-item [name=curr]').val(),
-							 "amount": $('#create-item [name=amount]').val()},
-						crossDomain: true,
-						xhrFields: {
-							withCredentials: true
-						},
-						complete: function(response){
-							if(response && response.responseText.indexOf('error') == -1){
-								alert(LOCALE_ARRAY_ADDITIONAL.saved_successfull[CURRENT_LANG]);
-								var id = JSON.parse(response.responseText);
-								id = id[0].id;
-								$.mobile.navigate("#project-page?project_proposition=" + id);
-							}else{
+			$.ajax({
+				url: mainURL + "/project_propositions_add.php",
+				type: "POST",
+				data: {"img": img,
+					 "descr": $("#create-item .jqte_editor").html(),
+					 "title": $('#create-item [name=title ]').val(),
+					 "dtex": dtex,
+					 "program_id": $('#create-item [name=program_id]').val(), 
+					 "tags": $('#create-item [name=tags]').val(),
+					 "nco": $('#create-item [name=nco]').val(),
+					 "curr": $('#create-item [name=curr]').val(),
+					 "amount": $('#create-item [name=amount]').val()},
+				crossDomain: true,
+				xhrFields: {
+					withCredentials: true
+				},
+				complete: function(response){
+					if(response && response.responseText.indexOf('error') == -1){
+						alert(LOCALE_ARRAY_ADDITIONAL.saved_successfull[CURRENT_LANG]);
+						var id = $.parseJSON(response.responseText);
+						id = id[0].id;
+						$.mobile.navigate("#project-page?project_proposition=" + id);
+					}else{
 						if( response.responseText.indexOf('error') > -1 ){
-							var error_arr = JSON.parse(response.responseText);
+							var error_arr = $.parseJSON(response.responseText);
 							switch(CURRENT_LANG){
 								case 'en':
 									alert(error_arr[0].error);
@@ -1741,9 +1955,9 @@ var CREATE_ITEM = {
 							}
 						}
 					}
-							//$.mobile.navigate("#vote-page?vote=" + id);
-						}
-					});
+					//$.mobile.navigate("#vote-page?vote=" + id);
+				}
+			});
 		}
 	},
 	validation: function( rows_array ){
@@ -1769,6 +1983,11 @@ var CREATE_ITEM = {
 			alert( error_description );
 
 		return error;
+	},
+	events: function(){
+		$('#add-item-back').click(function(){
+			$.mobile.navigate('#' + $('#add-item-back').attr('back'));
+		});
 	}
 }
 
@@ -1784,7 +2003,7 @@ var HISTORY_PAGE = {
 			},
 			crossDomain: true,
 			complete: function( response ){
-				var funds_list = JSON.parse( response.responseText );
+				var funds_list = $.parseJSON( response.responseText );
 				//console.log('history');	
 				$.mobile.loading( "hide" );
 
@@ -1895,7 +2114,7 @@ var CREATE_VOTE = {
 			alert(LOCALE_ARRAY_ADDITIONAL.please_enter_description_voting[CURRENT_LANG]);
 			error = 1;
 		}
-		if($('#create-vote [name=sph]').val() == "" && error != 1){
+		if(($('#create-vote [name=sph]').val() == "" && $('#create_vote_global_sphere').is(':checked') != true) && error != 1){
 			alert(LOCALE_ARRAY_ADDITIONAL.please_enter_sphere_voting[CURRENT_LANG]);
 			error = 1;
 		}
@@ -1937,11 +2156,19 @@ var CREATE_VOTE = {
 				var v5 = 0;
 			}
 
+			var l_shp = 0;
+
+			if($('#create_vote_global_sphere').is(':checked')){
+				l_shp = 1;
+			}else{
+				l_shp = $('#create-vote [name=sph]').val();
+			}
+
 			$.ajax({
 				url: mainURL + "/mc_add.php",
 				type: "POST",
 				data: {"img": img,
-					 "sph": $('#create-vote [name=sph]').val(),
+					 "sph": l_shp,
 					 "name": $('#create-vote [name=name]').val(),
 					 "s_time": start_date,
 					 "f_time": end_date, 
@@ -1961,13 +2188,13 @@ var CREATE_VOTE = {
 				},
 				complete: function(response){
 					if(response && response.responseText.indexOf('error') == -1){
-						var id = JSON.parse(response.responseText);
+						var id = $.parseJSON(response.responseText);
 						id = id[0].id;
 						alert(LOCALE_ARRAY_ADDITIONAL.voting_created[CURRENT_LANG]);
 						$.mobile.navigate("#vote-page?vote=" + id);
 					}else{
 						if( response.responseText.indexOf('error') > -1 ){
-							var error_arr = JSON.parse(response.responseText);
+							var error_arr = $.parseJSON(response.responseText);
 							switch(CURRENT_LANG){
 								case 'en':
 									alert(error_arr[0].error);
@@ -1982,7 +2209,7 @@ var CREATE_VOTE = {
 						}
 					}
 					/*if(response){
-						var id = JSON.parse(response.responseText);
+						var id = $.parseJSON(response.responseText);
 						id = id[0].id;
 						alert(LOCALE_ARRAY_ADDITIONAL.voting_created[CURRENT_LANG]);
 						$.mobile.navigate("#vote-page?vote=" + id);
@@ -2061,7 +2288,7 @@ var PIF = {
 				},
 			 	crossDomain: true,
 				complete: function( response ){
-					self.pif_array = JSON.parse( response.responseText );	
+					self.pif_array = $.parseJSON( response.responseText );	
 					COMMON_OBJECT.free_callbacker( temp_callback() );
 					if( callback_function ){
 						callback_function();
@@ -2156,7 +2383,7 @@ var PIF = {
 		self.get_pif_array( true, temp_callback( selector_container, object_name, special_type, id_object, code_type_object, currency_asking ) );
 	}
 }
-///////////////////////////////////////////////Projects 
+//////////////////////////////////////////Projects 
 
 var PROJECTS = {
 	data_array: [],
@@ -2172,9 +2399,8 @@ var PROJECTS = {
 		self.sphere_filter = 0;
 		self.data_last_item = 10;
 		$('#projects-page #searched_string').val('');
-		
 		$('#projects-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.projects[CURRENT_LANG]);
-		$('#projects-page #create_link').attr('style','display: none');
+		$('#projects-page #create_link').attr('style','display: block');
 		$('#projects-page #create_propositions_link').attr('style','display: none');
 		$('#projects-page #create_proposition_link').attr('style', 'display: none');
 
@@ -2192,6 +2418,7 @@ var PROJECTS = {
 			$('#projects-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.projects_propositions[CURRENT_LANG]);
 			var return_to = '#program-page?program=' + object_id;
 			$('#projects-page #menu_link').attr('style', 'display:block');
+			$('#projects-page #create_link').attr('style', 'display:none');
 			$('#projects-page #create_proposition_link').attr('style', 'display:block');
 			if(object_id == 0){
 				$('#projects-page #create_proposition_link').attr('onclick', 'alert(\'' + LOCALE_ARRAY_ADDITIONAL.projects_proposition_only_from_program[CURRENT_LANG] + '\');');
@@ -2211,6 +2438,7 @@ var PROJECTS = {
 			$('#projects-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.my_projects_propositions[CURRENT_LANG]);
 			$('#projects-page #menu_link').attr('style', 'display:none');
 			$('#projects-page #my_activities_link').attr('style', 'display:block');
+			$('#projects-page #create_link').attr('style', 'display:none');
 			PIF.get_pif_array(true);
 		}else{
 			var url = mainURL + '/project.php';
@@ -2228,7 +2456,7 @@ var PROJECTS = {
 			crossDomain: true,
 			complete: function( response ){
 				////console.log(response);
-				self.data_array = JSON.parse( response.responseText );
+				self.data_array = $.parseJSON( response.responseText );
 				if(self.data_array.length == 0){
 					//alert(LOCALE_ARRAY_ADDITIONAL.no_data[CURRENT_LANG] && self.activated_hard_filter == 1);
 					$('#projects-page #projects-list').html('<center>Empty</center>');
@@ -2258,6 +2486,12 @@ var PROJECTS = {
 				var object_id = match_array[0].match(/[0-9]+/i);
 				var url = mainURL + '/project_propositions.php?program_id=' + object_id + '&ls=' + self.data_last_item;;
 				var return_to = '#program-page?program=' + object_id + '&ls=' + self.data_last_item;;
+				$('#projects-page #create_link').attr('style', 'display:none');
+				$('#projects-page #create_proposition_link').attr('style', 'display:block');
+
+				$('#projects-page #menu_link').attr('onclick', '$.mobile.navigate("' + return_to + '")');
+				$('#projects-page #menu_link').attr('href', return_to);
+
 			}else if(location.href.indexOf('#projects-page?my_project=true') > -1){
 				var url = mainURL + '/project.php?my=1&ls=' + self.data_last_item;;
 			}else if(location.href.indexOf('#projects-page?my_project_propositions=true') > -1){
@@ -2276,7 +2510,7 @@ var PROJECTS = {
 				complete: function( response ){
 					////console.log(response);
 					
-					var query_array = JSON.parse( response.responseText );	
+					var query_array = $.parseJSON( response.responseText );	
 					//console.log( self.data_array );
 					if(query_array.length > 0){
 						self.data_array = self.data_array.concat(query_array);
@@ -2359,7 +2593,7 @@ var PROJECTS = {
 			crossDomain: true,
 			complete: function( response ){
 				//console.log(url);
-				self.data_array = JSON.parse( response.responseText );	
+				self.data_array = $.parseJSON( response.responseText );	
 				$.mobile.loading( "hide" );
 				//self.check_current_url( 1 );
 				if(reinit){
@@ -2684,7 +2918,7 @@ var PROJECTS = {
 			}
 		});
 
-		if(SUPER_PROFILE.id == data_for_build.creator_id && data_for_build.nco_acceptance == '0' ){
+		if(SUPER_PROFILE.id == data_for_build.author_id && data_for_build.nco_acceptance == '0' ){
 			var nco_button = '<div class="nko-btn">\
 								<a class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate(\'#nko-page?project=' + data_for_build.id + '\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.choose_nco[CURRENT_LANG] + '</a>\
 							</div>\
@@ -2699,7 +2933,7 @@ var PROJECTS = {
 		if(SUPER_PROFILE.nco == '1' && data_for_build.nco_acceptance == '0' && data_for_build.nco_id == '0' ){
 			if( data_for_build.nco_list.length == 0 ){
 				nco_create_button = '<div class="nko-btn">\
-								<a class="ui-btn ui-corner-all ui-shadow" onclick = "NCO_OBJECT.offer_accept_nco(4,' + data_for_build.id + ',\'#project-page\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.create_nco[CURRENT_LANG] + '</a>\
+								<a class="ui-btn ui-corner-all ui-shadow" onclick = "NCO.offer_accept_nco(4,' + data_for_build.id + ',\'#project-page\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.create_nco[CURRENT_LANG] + '</a>\
 							</div>';
 			}else{
 				jQuery.each(data_for_build.nco_list, function(i, one_nko) {
@@ -2709,7 +2943,7 @@ var PROJECTS = {
 				});
 				if(creator_check == 0){
 					nco_create_button = '<div class="nko-btn">\
-								<a class="ui-btn ui-corner-all ui-shadow" onclick = "NCO_OBJECT.offer_accept_nco(4,' + data_for_build.id + '\'#project-page\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.create_nco[CURRENT_LANG] + '</a>\
+								<a class="ui-btn ui-corner-all ui-shadow" onclick = "NCO.offer_accept_nco(4,' + data_for_build.id + '\'#project-page\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.create_nco[CURRENT_LANG] + '</a>\
 							</div>';
 				}
 			}
@@ -2726,7 +2960,7 @@ var PROJECTS = {
 				jQuery.each(data_for_build.nco_list, function(i, one_nko) {
 					if( data_for_build.nco_id == user_id){
 						nco_accept_button = '<div class="nko-btn">\
-							<a class="ui-btn ui-corner-all ui-shadow" onclick = "NCO_OBJECT.offer_accept_nco(4,' + data_for_build.id + '\'#project-page\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.accept_nco[CURRENT_LANG] + '</a>\
+							<a class="ui-btn ui-corner-all ui-shadow" onclick = "NCO.offer_accept_nco(4,' + data_for_build.id + '\'#project-page\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.accept_nco[CURRENT_LANG] + '</a>\
 						</div>';
 					} 
 				});
@@ -2802,6 +3036,7 @@ var PROJECTS = {
 					</div>\
 				</div>\
 				<div role="main" class="ui-content">\
+				<div class="left_col">\
 					<div id = "project-item" class="project-item">\
 					<div class="img">\
 						<img width="100%" src="' +  mainURL + data_for_build.img + '" />\
@@ -2833,11 +3068,9 @@ var PROJECTS = {
 							<ol>\
 								' + nko_parts + '\
 							</ol>\
-						</div>\
-						' + (data_for_build.nco_acceptance == '0' ? LOCALE_ARRAY_ADDITIONAL.nco_accept_no[CURRENT_LANG] : LOCALE_ARRAY_ADDITIONAL.nco_accept_yes[CURRENT_LANG] ) + '\
-						' + nco_button + '\
-						' + nco_create_button + '\
-						' + nco_accept_button + '\
+						' + (data_for_build.nco_acceptance == '0' ? LOCALE_ARRAY_ADDITIONAL.nco_accept_no[CURRENT_LANG] : LOCALE_ARRAY_ADDITIONAL.nco_accept_yes[CURRENT_LANG]) 
+						+ nco_button + nco_create_button + nco_accept_button 
+						+ '</div>\
 						<div class="desc">\
 							<div class="text">\
 								' + data_for_build.description + '\
@@ -2885,6 +3118,7 @@ var PROJECTS = {
 							<a class="ui-btn ui-btn-icon-right" href="#" onclick = "$.mobile.navigate(\'#history-page?item=project&id=' + data_for_build.id + '\');">' + LOCALE_ARRAY_ADDITIONAL.history_donation[CURRENT_LANG] + '</a>\
 						</div>\
 					</div>\
+					</div><div class="right_col"></div>\
 				</div>\
 			</div>';
 		
@@ -2934,75 +3168,6 @@ var PROJECTS = {
 			}
 		});
 
-		var nco_create_flag = 0;
-		var nko_parts = '';
-		jQuery.each(data_for_build.nco_list, function(i, one_nko) {
-			if( data_for_build.nco_id == '0' ){
-					nko_parts += '<li>\
-									<div>\
-										<strong>' + one_nko.reg_name + '</strong> (<strong>ID</strong>:<span>' + one_nko.user_id + '</span>)<span class="phone">' + one_nko.reg_phone + '</span><span class="doc">' + one_nko.reg_doc + '</span><span class="addr">' + one_nko.reg_address + '</span>\
-									</div>\
-								</li>\ ';
-			}else{
-				if( data_for_build.nco_id == one_nko.user_id){
-					nko_parts += '<li>\
-									<div>\
-										<strong>' + one_nko.reg_name + '</strong> (<strong>ID</strong>:<span>' + one_nko.user_id + '</span>)<span class="phone">' + one_nko.reg_phone + '</span><span class="doc">' + one_nko.reg_doc + '</span><span class="addr">' + one_nko.reg_address + '</span>\
-									</div>\
-								</li>\ ';
-					nco_create_flag = 1;
-				}
-			} 
-		});
-
-		if(SUPER_PROFILE.id == data_for_build.creator_id && data_for_build.nco_acceptance == '0' ){
-			var nco_button = '<div class="nko-btn">\
-								<a class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate(\'#nko-page?project_proposition=' + data_for_build.id + '\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.choose_nco[CURRENT_LANG] + '</a>\
-							</div>\
-							<div class="nko-status red">\
-								' + (data_for_build.nco_list.length > 0 ? "" : LOCALE_ARRAY_ADDITIONAL.nco_not_selected[CURRENT_LANG]) + '\
-							</div>';
-		}else{
-			var nco_button = '';
-		}
-		var nco_create_button = '';
-		var creator_check = 0;
-		if(SUPER_PROFILE.nco == '1' && data_for_build.nco_acceptance == '0' && data_for_build.nco_id == '0' ){
-			if( data_for_build.nco_list.length == 0 ){
-				nco_create_button = '<div class="nko-btn">\
-								<a class="ui-btn ui-corner-all ui-shadow" onclick = "NCO_OBJECT.offer_accept_nco(3,' + data_for_build.id + ',\'#project-page\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.create_nco[CURRENT_LANG] + '</a>\
-							</div>';
-			}else{
-				jQuery.each(data_for_build.nco_list, function(i, one_nko) {
-					if( SUPER_PROFILE.id == one_nko.user_id ){
-						creator_check = 1;
-					} 
-				});
-				if(creator_check == 0){
-					nco_create_button = '<div class="nko-btn">\
-								<a class="ui-btn ui-corner-all ui-shadow" onclick = "NCO_OBJECT.offer_accept_nco(3,' + data_for_build.id + '\'#project-page\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.create_nco[CURRENT_LANG] + '</a>\
-							</div>';
-				}
-			}
-		}
-		var nco_accept_button = '';
-		var creator_check_accept = 0;
-		if(SUPER_PROFILE.nco == '1' && data_for_build.nco_acceptance == '0' && data_for_build.nco_id == '0' ){
-			jQuery.each(data_for_build.nco_list, function(i, one_nko) {
-				if( SUPER_PROFILE.id == one_nko.user_id ){
-					creator_check_accept = 1;
-				} 
-			});
-			if(creator_check_accept == 0){
-				jQuery.each(data_for_build.nco_list, function(i, one_nko) {
-					if( data_for_build.nco_id == one_nko.user_id){
-						nco_accept_button = '<div class="nko-btn">\
-							<a class="ui-btn ui-corner-all ui-shadow" onclick = "NCO_OBJECT.offer_accept_nco(3,' + data_for_build.id + '\'#project-page\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.accept_nco[CURRENT_LANG] + '</a>\
-						</div>';
-					} 
-				});
-			}
-		}
 		var ui_donate_panel = '';
 		if(data_for_build.status == 0){
 			if(flag_selected == 1){
@@ -3033,7 +3198,7 @@ var PROJECTS = {
 											</div>\
 										</div>\
 									</div>\
-								</div>\ ';
+								</div>';
 			}else{
 				ui_donate_panel = '';
 				if(PIF.pif_array.length == 0){
@@ -3063,7 +3228,7 @@ var PROJECTS = {
 					<h1>\
 						' + LOCALE_ARRAY_ADDITIONAL.project_proposition[CURRENT_LANG] + '\
 					</h1>\
-					<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#project-help">Ask</a>\
+					<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate(\'#projects-page?program=' + data_for_build.program_id + '\');" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#project-help">Ask</a>\
 					<div id="project-help" class="help-popup" data-role="popup" data-history="false">\
 						<div class="title">\
 							' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
@@ -3074,6 +3239,7 @@ var PROJECTS = {
 					</div>\
 				</div>\
 				<div role="main" class="ui-content">\
+				<div class="left_col">\
 					<div id = "project-item" class="project-item">\
 					<div class="img">\
 						<img width="100%" src="' +  mainURL + data_for_build.img + '" />\
@@ -3098,18 +3264,7 @@ var PROJECTS = {
 						<div class="my-amount">\
 							<span>' + LOCALE_ARRAY_ADDITIONAL.my_cash[CURRENT_LANG] + '</span> - <strong><test id = "my_amount_current">' + data_for_build.my_add + '</test> ' + PIF.get_currency_name_by_id( data_for_build.currency_asking ) + '</strong>\
 						</div>\
-						<div class="nko-list">\
-							<div class="title">\
-								' + LOCALE_ARRAY_ADDITIONAL.nco_list_locale[CURRENT_LANG] + ':\
-							</div>\
-							<ol>\
-								' + nko_parts + '\
-							</ol>\
-						</div>\
-						' + (data_for_build.nco_acceptance == '0' ? LOCALE_ARRAY_ADDITIONAL.nco_accept_no[CURRENT_LANG] : LOCALE_ARRAY_ADDITIONAL.nco_accept_yes[CURRENT_LANG] ) + '\
-						' + nco_button + '\
-						' + nco_create_button + '\
-						' + nco_accept_button + '\
+						<div class="nco_status ui-corner-all"></div>\
 						<div class="desc">\
 							<div class="text">\
 								' + data_for_build.description + '\
@@ -3157,6 +3312,7 @@ var PROJECTS = {
 							<a class="ui-btn ui-btn-icon-right" href="#" onclick = "$.mobile.navigate(\'#history-page?item=project_proposition&id=' + data_for_build.id + '\');">' + LOCALE_ARRAY_ADDITIONAL.history_donation[CURRENT_LANG] + '</a>\
 						</div>\
 					</div>\
+					</div><div class="right_col"></div>\
 				</div>\
 			</div>';
 		
@@ -3167,6 +3323,10 @@ var PROJECTS = {
 		$( ui_string ).appendTo( '#project-page' );
 		$('#project-page').enhanceWithin();
 		$('#project-page select').selectmenu().selectmenu("refresh", true);	
+
+		NCO.nco_build(3, data_for_build.id, data_for_build.author_id, data_for_build.nco_id, data_for_build.nco_list, data_for_build.nco_acceptance);
+		NCO.events();
+
 		$.mobile.loading( "hide" );
 	},
 	check_nko_page: function(){
@@ -3187,7 +3347,6 @@ var PROJECTS = {
 			jQuery.each(self.data_array, function(i, one_data) {
 				if(parseInt(one_data.id) == parseInt(object_id)){
 					data_for_build = one_data;
-					
 				}
 			});
 			var nko_parts = '';
@@ -3263,7 +3422,7 @@ var PROJECTS = {
 			},
 			crossDomain: true,
 			complete: function( response ){
-				return_element = JSON.parse( response.responseText );
+				return_element = $.parseJSON( response.responseText );
 				data_for_build = return_element[0];
 				self.data_array = data_for_build;
 				//console.log(self.data_array);
@@ -3320,7 +3479,7 @@ var PROJECTS = {
 			},
 			complete: function(data){
 				if(data){
-					var response_data = JSON.parse(data.responseText);
+					var response_data = $.parseJSON(data.responseText);
 					if(data.responseText.indexOf('error') == -1){
 						alert(LOCALE_ARRAY_ADDITIONAL.donate_successfull[CURRENT_LANG]);
 						$('#' + selector + '-page [name=pif] option[value=' + $('#' + selector + '-page [name=pif]').val() + ']').html($('#' + selector + '-page [name=pif]').val() + ' - ' + response_data[0].saldo);
@@ -3363,7 +3522,7 @@ var PROJECTS = {
 			},
 			crossDomain: true,
 			complete: function( response ){
-					var funds_list = JSON.parse( response.responseText );
+					var funds_list = $.parseJSON( response.responseText );
 					//console.log('project_proposition or project');	
 					$.mobile.loading( "hide" );
 
@@ -3402,6 +3561,7 @@ var PROJECTS = {
 										</div>\
 									</div>\
 									<div role="main" class="ui-content">\
+									<div class="left_col">\
 										<div class="program-history-wrap">\
 											<div class="ui-grid-b">\
 												<div class="ui-block-a">\
@@ -3445,6 +3605,7 @@ var PROJECTS = {
 												</tbody>\
 											</table>\
 										</div>\
+										</div><div class="right_col"></div>\
 									</div>';
 				$('#history-page').html( ui_funds ).enhanceWithin();
 							
@@ -3474,20 +3635,6 @@ var PROJECTS = {
 			}
 		});
 	},
-	/*delete_voting: function(voting_id, return_page){
-		$.ajax({
-			url: mainURL + '/mc_rm.php?id=' + voting_id,
-			type: "GET",
-			xhrFields: {
-				withCredentials: true
-			},
-			crossDomain: true,
-			complete: function( response ){
-				 //console.log("Deleted id:" + voting_id);
-				 $.mobile.navigate(return_page);
-			},
-		});
-	},*/
 };
 
 var PROGRAMS = {
@@ -3506,7 +3653,7 @@ var PROGRAMS = {
 		$('#programs-page #searched_string').val('');
 
 		$('#programs-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.programs[CURRENT_LANG]);
-		$('#programs-page #create_link').attr('style','display: none');
+		//$('#programs-page #create_link').attr('style','display: none');
 
 		if(location.href.indexOf('#programs-page?tags_filter=') > -1){
 			var tag_filter = location.href.match(/=([a-zA-Z0-9а-яА-Я]*)/i)[1];
@@ -3538,7 +3685,7 @@ var PROGRAMS = {
 			crossDomain: true,
 			complete: function( response ){
 					//console.log(response);
-					self.data_array = JSON.parse( response.responseText );
+					self.data_array = $.parseJSON( response.responseText );
 					if(self.data_array.length == 0 && self.activated_hard_filter == 1){
 						alert(LOCALE_ARRAY_ADDITIONAL.no_data[CURRENT_LANG]);
 					}	
@@ -3583,7 +3730,7 @@ var PROGRAMS = {
 				complete: function( response ){
 						////console.log(response);
 					
-						var query_array =JSON.parse( response.responseText );
+						var query_array =$.parseJSON( response.responseText );
 						//console.log( self.data_array );
 						if(query_array.length > 0){
 							self.data_array = self.data_array.concat(query_array);
@@ -3599,17 +3746,6 @@ var PROGRAMS = {
 	filter_data: function(sphere_id, reinit, name_sphere){
 		var self = this;
 		self.activated_easy_filter = 1;
-		/*if(sphere_id >= 0){
-			self.sphere_filter = sphere_id;
-			//console.log(sphere_id);
-			for (var i = 0; i < SPHERES.spheres.length; i++) {
-				if(SPHERES.spheres[i].selector_name == name_sphere){
-					var type_sphere = SPHERES.spheres[i].name;
-					break;
-				}
-			}
-			$('#filter-page #choose_spheres').html(LOCALE_ARRAY_ADDITIONAL.choose_sphere[CURRENT_LANG] + ': ' + type_sphere);
-		}*/
 		$.mobile.loading( "show", {theme: "z"});
 
 		var url = mainURL + '/program.php';
@@ -3636,8 +3772,6 @@ var PROGRAMS = {
 				url += '&direct=1';
 				break;	
 		}
-
-		
 
 		if($('#programs-page #searched_string').val() != ""){
 			url += '&filter=' + $('#programs-page #searched_string').val();
@@ -3672,7 +3806,7 @@ var PROGRAMS = {
 			crossDomain: true,
 			complete: function( response ){
 					//console.log(url);
-					self.data_array = JSON.parse( response.responseText );	
+					self.data_array = $.parseJSON( response.responseText );	
 					$.mobile.loading( "hide" );
 					//self.check_current_url( 1 );
 					if(reinit){
@@ -3690,7 +3824,7 @@ var PROGRAMS = {
 		var self = this;
 		var elements_string = '';
 		if(ready_array){
-			//var build_array = FILTERS.filtered_array;
+			var build_array = FILTERS.filtered_array;
 		}else{
 			var build_array = self.data_array;
 		}
@@ -3705,12 +3839,12 @@ var PROGRAMS = {
 				case '1':
 					elements_string += self.finished_collecting_build(one_voting);
 					break;
-				case '2':
+				// case '2':
 					//elements_string += self.finished_voting_build(one_voting);
-					break;
-				case '3':
+					// break;
+				// case '3':
 					//elements_string += self.not_supported_build(one_voting);
-					break;
+					// break;
 			}
 		});
 		if(reinit){
@@ -3826,7 +3960,6 @@ var PROGRAMS = {
 							</div>';
 		return part_ui_string;
 	},
-
 	check_current_url:function(type_trigger){
 		var self = this;
 		if(location.href.indexOf('#program-page?program=') > -1){
@@ -3906,12 +4039,14 @@ var PROGRAMS = {
 		var flag_selected = 0;
 		jQuery.each(PIF.pif_array, function(i, one_pif) {
 			if(one_pif.currency == data_for_build.currency_asking){
-				ui_pif_option += '<option data-currency = "' + one_pif.currency + '" value="' + one_pif.id + '">' + one_pif.id + ' - ' + one_pif.saldo + '</option>';
+				ui_pif_option += '<option data-currency = "' 
+								+ one_pif.currency + '" value="' 
+								+ one_pif.id + '">' 
+								+ one_pif.id + ' - ' 
+								+ one_pif.saldo + '</option>';
 				flag_selected = 1;
 			}
 		});
-
-
 
 		if(data_for_build.status == 0){
 			var status_item = '<div class="status yellow">\
@@ -3923,16 +4058,15 @@ var PROGRAMS = {
 								</div>';	
 		}
 
-
 		var ui_donate_panel = '';
 		if(data_for_build.status == 0){
 			if(flag_selected == 1){
 				ui_donate_panel = '<div class="ui-grid-a">\
 										<div class="ui-block-a">\
 											<div>\
-												<label>' + LOCALE_ARRAY_ADDITIONAL.choose_personal_fund[CURRENT_LANG] + '</label><select name="pif">\
-												' + ui_pif_option + '\
-												</select>\
+												<label>' 
+			+ LOCALE_ARRAY_ADDITIONAL.choose_personal_fund[CURRENT_LANG]
+			+ '</label><select name="pif">' + ui_pif_option + '</select>\
 											</div>\
 										</div>\
 										<div class="ui-block-b">\
@@ -3990,6 +4124,7 @@ var PROGRAMS = {
 					</div>\
 				</div>\
 				<div role="main" class="ui-content">\
+					<div class="left_col">\
 					<div id = "program-item" class="program-item">\
 					<div class="img">\
 						<img width="100%" src="' +  mainURL + data_for_build.img + '" />\
@@ -4066,6 +4201,7 @@ var PROGRAMS = {
 						</div>\
 					</div>\
 				</div>\
+				</div><div class="right_col"></div>\
 			</div>';
 		
 		//$('#vote-page').html(ui_string);
@@ -4077,7 +4213,6 @@ var PROGRAMS = {
 		$('#program-page select').selectmenu().selectmenu("refresh", true);
 		$.mobile.loading( "hide" );
 	},
-
 	get_one_element: function(data_id, type_trigger){
 		var self = this;
 		var return_element;
@@ -4089,7 +4224,7 @@ var PROGRAMS = {
 			},
 			crossDomain: true,
 			complete: function( response ){
-				return_element = JSON.parse( response.responseText );
+				return_element = $.parseJSON( response.responseText );
 				data_for_build = return_element[0];
 				self.data_array = data_for_build;
 				//console.log(self.data_array);
@@ -4143,7 +4278,7 @@ var PROGRAMS = {
 			},
 			complete: function(data){
 				if(data){
-					var response_data = JSON.parse(data.responseText);
+					var response_data = $.parseJSON(data.responseText);
 					if(data.responseText.indexOf('error') == -1){
 						alert(LOCALE_ARRAY_ADDITIONAL.donate_successfull[CURRENT_LANG]);
 						$('#' + selector + '-page [name=pif] option[value=' + $('#' + selector + '-page [name=pif]').val() + ']').html($('#' + selector + '-page [name=pif]').val() + ' - ' + response_data[0].saldo);
@@ -4175,7 +4310,7 @@ var PROGRAMS = {
 				},
 				crossDomain: true,
 				complete: function( response ){
-					var funds_list = JSON.parse( response.responseText );
+					var funds_list = $.parseJSON( response.responseText );
 					//console.log('program');
 					//console.log('funds_list');
 					//console.log(funds_list);	
@@ -4216,6 +4351,7 @@ var PROGRAMS = {
 										</div>\
 									</div>\
 									<div role="main" class="ui-content">\
+									<div class="left_col">\
 										<div class="program-history-wrap">\
 											<div class="ui-grid-b">\
 												<div class="ui-block-a">\
@@ -4252,7 +4388,8 @@ var PROGRAMS = {
 												</tbody>\
 											</table>\
 										</div>\
-									</div>';
+									</div>\
+									</div><div class="right_col"></div>';
 				$('#history-page').html( ui_funds ).enhanceWithin();
 							
 			},
@@ -4282,20 +4419,6 @@ var PROGRAMS = {
 			}
 		});
 	}	
-	/*delete_voting: function(voting_id, return_page){
-		$.ajax({
-			url: mainURL + '/mc_rm.php?id=' + voting_id,
-			type: "GET",
-			xhrFields: {
-				withCredentials: true
-			},
-			crossDomain: true,
-			complete: function( response ){
-				 //console.log("Deleted id:" + voting_id);
-				 $.mobile.navigate(return_page);	
-			},
-		});
-	},*/
 };
 
 var REQUESTS = {
@@ -4314,7 +4437,7 @@ var REQUESTS = {
 		$('#requests-page #searched_string').val('');
 
 		$('#requests-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.requests[CURRENT_LANG]);
-		$('#requests-page #create_link').attr('style','display: none');
+		//$('#requests-page #create_link').attr('style','display: none');
 		$('#requests-page #menu_link').attr('style', 'display:block');
 		$('#requests-page #my_activities_link').attr('style', 'display:none');
 
@@ -4344,7 +4467,7 @@ var REQUESTS = {
 			crossDomain: true,
 			complete: function( response ){
 				////console.log(response);
-				self.data_array = JSON.parse( response.responseText );
+				self.data_array = $.parseJSON( response.responseText );
 				if(self.data_array.length == 0 && self.activated_hard_filter == 1){
 					alert(LOCALE_ARRAY_ADDITIONAL.no_data[CURRENT_LANG]);
 				}	
@@ -4385,7 +4508,7 @@ var REQUESTS = {
 				complete: function( response ){
 					////console.log(response);
 				
-					var query_array = JSON.parse( response.responseText );	
+					var query_array = $.parseJSON( response.responseText );	
 					//console.log( self.data_array );
 					if(query_array.length > 0){
 						self.data_array = self.data_array.concat(query_array);
@@ -4483,7 +4606,7 @@ var REQUESTS = {
 			crossDomain: true,
 			complete: function( response ){
 				//console.log(url);
-				self.data_array = JSON.parse( response.responseText );	
+				self.data_array = $.parseJSON( response.responseText );	
 				$.mobile.loading( "hide" );
 				//self.check_current_url( 1 );
 				if(reinit){
@@ -4796,7 +4919,7 @@ var REQUESTS = {
 			} 
 		});
 
-		if(SUPER_PROFILE.id == data_for_build.creator_id && data_for_build.nco_acceptance == '0' ){
+		if(SUPER_PROFILE.id == data_for_build.author_id && data_for_build.nco_acceptance == '0' ){
 			var nco_button = '<div class="nko-btn">\
 								<a class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate(\'#nko-page?request=' + data_for_build.id + '\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.choose_nco[CURRENT_LANG] + '</a>\
 							</div>\
@@ -4811,7 +4934,7 @@ var REQUESTS = {
 		if(SUPER_PROFILE.nco == '1' && data_for_build.nco_acceptance == '0' && data_for_build.nco_id == '0' ){
 			if( data_for_build.nco_list.length == 0 ){
 				nco_create_button = '<div class="nko-btn">\
-								<a class="ui-btn ui-corner-all ui-shadow" onclick = "NCO_OBJECT.offer_accept_nco(5,' + data_for_build.id + ',\'#request-page\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.create_nco[CURRENT_LANG] + '</a>\
+								<a class="ui-btn ui-corner-all ui-shadow" onclick = "NCO.offer_accept_nco(5,' + data_for_build.id + ',\'#request-page\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.create_nco[CURRENT_LANG] + '</a>\
 							</div>';
 			}else{
 				jQuery.each(data_for_build.nco_list, function(i, one_nko) {
@@ -4821,7 +4944,7 @@ var REQUESTS = {
 				});
 				if(creator_check == 0){
 					nco_create_button = '<div class="nko-btn">\
-								<a class="ui-btn ui-corner-all ui-shadow" onclick = "NCO_OBJECT.offer_accept_nco(5,' + data_for_build.id + '\'#request-page\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.create_nco[CURRENT_LANG] + '</a>\
+								<a class="ui-btn ui-corner-all ui-shadow" onclick = "NCO.offer_accept_nco(5,' + data_for_build.id + '\'#request-page\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.create_nco[CURRENT_LANG] + '</a>\
 							</div>';
 				}
 			}
@@ -4838,7 +4961,7 @@ var REQUESTS = {
 				jQuery.each(data_for_build.nco_list, function(i, one_nko) {
 					if( data_for_build.nco_id == one_nko.user_id){
 						nco_accept_button = '<div class="nko-btn">\
-							<a class="ui-btn ui-corner-all ui-shadow" onclick = "NCO_OBJECT.offer_accept_nco(5,' + data_for_build.id + '\'#request-page\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.accept_nco[CURRENT_LANG] + '</a>\
+							<a class="ui-btn ui-corner-all ui-shadow" onclick = "NCO.offer_accept_nco(5,' + data_for_build.id + '\'#request-page\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.accept_nco[CURRENT_LANG] + '</a>\
 						</div>';
 					} 
 				});
@@ -4915,6 +5038,7 @@ var REQUESTS = {
 					</div>\
 				</div>\
 				<div role="main" class="ui-content">\
+				<div class="left_col">\
 					<div id = "request-item" class="request-item">\
 					<div class="img">\
 						<img width="100%" src="' +  mainURL + data_for_build.img + '" />\
@@ -4930,7 +5054,7 @@ var REQUESTS = {
 							<span class="bg">' + LOCALE_ARRAY_ADDITIONAL.beneficiary[CURRENT_LANG] + ' @<strong>' + data_for_build.beneficiary + '</strong></span>\
 						</div>\
 						<div class="username">\
-							' + LOCALE_ARRAY_ADDITIONAL.by[CURRENT_LANG] + ' @<strong>' + data_for_build.creator_id + ' ' + data_for_build.author + '</strong>\
+							' + LOCALE_ARRAY_ADDITIONAL.by[CURRENT_LANG] + ' @<strong>' + data_for_build.author_id + ' ' + data_for_build.author + '</strong>\
 						</div>\
 						' + status_item + '\
 						<div class="total-amount">\
@@ -5001,6 +5125,7 @@ var REQUESTS = {
 							<a class="ui-btn ui-btn-icon-right" href="#" onclick = "$.mobile.navigate(\'#history-page?item=request&id=' + data_for_build.id + '\'); ">' + LOCALE_ARRAY_ADDITIONAL.history_donation[CURRENT_LANG] + '</a>\
 						</div>\
 					</div>\
+					</div><div class="right_col"></div>\
 				</div>\
 			</div>';
 		
@@ -5096,7 +5221,7 @@ var REQUESTS = {
 			},
 			crossDomain: true,
 			complete: function( response ){
-				return_element = JSON.parse( response.responseText );
+				return_element = $.parseJSON( response.responseText );
 				data_for_build = return_element[0];
 				self.data_array = data_for_build;
 				//console.log(self.data_array);
@@ -5150,7 +5275,7 @@ var REQUESTS = {
 			},
 			complete: function(data){
 				if(data){
-					var response_data = JSON.parse(data.responseText);
+					var response_data = $.parseJSON(data.responseText);
 					if(data.responseText.indexOf('error') == -1){
 						alert(LOCALE_ARRAY_ADDITIONAL.donate_successfull[CURRENT_LANG]);
 						$('#' + selector + '-page [name=pif] option[value=' + $('#' + selector + '-page [name=pif]').val() + ']').html($('#' + selector + '-page [name=pif]').val() + ' - ' + response_data[0].saldo);
@@ -5181,7 +5306,7 @@ var REQUESTS = {
 				},
 				crossDomain: true,
 				complete: function( response ){
-					var funds_list = JSON.parse( response.responseText );
+					var funds_list = $.parseJSON( response.responseText );
 					//console.log('request');	
 					$.mobile.loading( "hide" );
 
@@ -5325,7 +5450,7 @@ var funds = {
 				withCredentials: true
 			},
 			complete: function(data){
-				self.arr = JSON.parse(data.responseText);
+				self.arr = $.parseJSON(data.responseText);
 				self.build_page(self.arr);
 				if(callback_function){
 					//console.log('callback');
@@ -5401,7 +5526,7 @@ var funds = {
 				},
 				complete: function(data){
 					try{
-						var funds = JSON.parse(data.responseText);
+						var funds = $.parseJSON(data.responseText);
 						var fund = self.build_fund(funds[0]);
 						$('#my-fund-page .fund-list').append(fund);
 						$('#my-fund-page #select_pif').append('<option data-currency = "' + funds[0].currency + '" value = ' + funds[0].fund_id + '>#' + funds[0].fund_id + ' 0 ' + PIF.get_currency_name_by_id(funds[0].currency) + '</option>');
@@ -5464,7 +5589,7 @@ var funds = {
 				crossDomain: true,
 				complete: function( response ){
 					////console.log(response);
-					var fund_array = JSON.parse( response.responseText );
+					var fund_array = $.parseJSON( response.responseText );
 					if(fund_array.length == 0){
 						$('#balances-pif-page #content_table').html( '<center><h2>' + LOCALE_ARRAY_ADDITIONAL.no_pif_history[CURRENT_LANG] + '</h1></center>' ).enhanceWithin();
 					}else{
@@ -5590,7 +5715,7 @@ var funds = {
 				},
 				complete: function(data){
 					if(data){
-						var response_data = JSON.parse(data.responseText);
+						var response_data = $.parseJSON(data.responseText);
 						alert(LOCALE_ARRAY_ADDITIONAL.transaction_okay[CURRENT_LANG]);
 						$('#transaction-page [name=fund_id] option[value=' + $('#transaction-page [name=fund_id]').val() + ']').html('#' + $('#transaction-page [name=fund_id]').val() + ' >> ' + response_data[0].saldo + ' ' + PIF.get_currency_name_by_id( $('#transaction-page [name=fund_id] option[value=' + $('#transaction-page [name=fund_id]').val() + ']').data('currency') ) );
 						$('#my-fund-page #select_pif option[value=' + $('#transaction-page [name=fund_id]').val() + ']').html('#' + $('#transaction-page [name=fund_id]').val() + ' >> ' + response_data[0].saldo + ' ' + PIF.get_currency_name_by_id( $('#transaction-page [name=fund_id] option[value=' + $('#transaction-page [name=fund_id]').val() + ']').data('currency') ) );
@@ -5655,7 +5780,7 @@ var WEIGHTED_VOTINGS = {
 				crossDomain: true,
 				complete: function( response ){
 					////console.log(response);
-					self.votings_array = JSON.parse( response.responseText );
+					self.votings_array = $.parseJSON( response.responseText );
 					if(self.votings_array.length == 0 && self.activated_hard_filter == 1){
 						alert(LOCALE_ARRAY_ADDITIONAL.no_data[CURRENT_LANG]);
 					}	
@@ -5741,7 +5866,7 @@ var WEIGHTED_VOTINGS = {
 			crossDomain: true,
 			complete: function( response ){
 				////console.log(response);
-				self.votings_array = JSON.parse( response.responseText );	
+				self.votings_array = $.parseJSON( response.responseText );	
 				$.mobile.loading( "hide" );
 				self.check_current_url( 1 );
 				if(reinit){
@@ -5784,7 +5909,7 @@ var WEIGHTED_VOTINGS = {
 				complete: function( response ){
 						////console.log(response);
 					
-						var query_array = JSON.parse( response.responseText );	
+						var query_array = $.parseJSON( response.responseText );	
 						//console.log( self.votings_array );
 						if(query_array.length > 0){
 							self.votings_array = self.votings_array.concat(query_array);
@@ -6052,6 +6177,7 @@ var WEIGHTED_VOTINGS = {
 									</div>\
 								</div>\
 								<div role="main" class="ui-content">\
+								<div class="left_col">\
 									<div class="vote-item">\
 										<div class="img">\
 											<img width="100%" src="' +  mainURL + data_for_build.img + '" />\
@@ -6107,6 +6233,7 @@ var WEIGHTED_VOTINGS = {
 											</div>' + delete_button + '\
 										</div>\
 									</div>\
+									</div><div class="right_col"></div>\
 								</div>';
 		
 		//$('#vote-page').html(ui_string);
@@ -6250,6 +6377,7 @@ var WEIGHTED_VOTINGS = {
 								</div>\
 							</div>\
 							<div role="main" class="ui-content">\
+							<div class="left_col">\
 								<div class="vote-item">\
 									<div class="img">\
 										<img width="100%" src="' +  mainURL + data_for_build.img + '" />\
@@ -6319,6 +6447,7 @@ var WEIGHTED_VOTINGS = {
 										</div>' + delete_button + '\
 									</div>\
 								</div>\
+							</div><div class="right_col"></div>\
 							</div></div>';
 
 		//self.build_circle_chart();
@@ -6431,7 +6560,7 @@ var WEIGHTED_VOTINGS = {
 			},
 			crossDomain: true,
 			complete: function( response ){
-				return_element = JSON.parse( response.responseText );
+				return_element = $.parseJSON( response.responseText );
 				data_for_build = return_element[0];
 				//console.log('data_for_build');
 				//console.log(data_for_build);
@@ -6560,7 +6689,7 @@ var WEIGHTED_VOTINGS = {
 			crossDomain: true,
 			complete: function( response ){
 					//console.log(response);
-					self.voters_list = JSON.parse( response.responseText );
+					self.voters_list = $.parseJSON( response.responseText );
 					$.mobile.loading( "hide" );
 					self.set_voters_list(vote_id);
 			},
@@ -6584,6 +6713,7 @@ var WEIGHTED_VOTINGS = {
 							</div>\
 						</div>\
 						<div role="main" class="ui-content">\
+						<div class="left_col">\
 							<form action="" accept-charset="UTF-8" method="post">\
 									<div class="ui-input-search ui-input-has-clear">\
 										<input id = "filter_input" onkeyup="WEIGHTED_VOTINGS.get_open_voters_list(\'' + vote_id + '\', this)" type="search" name="" placeholder="' + LOCALE_ARRAY_ADDITIONAL.search_voters[CURRENT_LANG] + '" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">' + LOCALE_ARRAY_ADDITIONAL.clear_text[CURRENT_LANG] + '</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />\
@@ -6643,6 +6773,7 @@ var WEIGHTED_VOTINGS = {
 		ui_string += minus_vote_string;
 		
 		ui_string += '</div>\
+					</div><div class="right_col"></div>\
 					</div>';
 		
 
@@ -6652,7 +6783,7 @@ var WEIGHTED_VOTINGS = {
 		$('#voters-page').enhanceWithin();
 	}
 };
-//////////////////////////////////////////////////			
+/////////////////////////////////////////////////			
 
 var TRUST_LIST = {
 	trust_array: [],
@@ -6718,7 +6849,7 @@ var TRUST_LIST = {
 				$.mobile.loading( "hide" );
 				//console.log(response);
 				if(response && response.responseText.indexOf('error') == -1){
-					self.trust_array = JSON.parse( response.responseText );
+					self.trust_array = $.parseJSON( response.responseText );
 					//console.log('trust');	
 					//console.log(self.trust_array);
 					self.build_elements();
@@ -6726,18 +6857,7 @@ var TRUST_LIST = {
 					SPHERES.initial();
 				}else{
 					if( response.responseText.indexOf('error') > -1 ){
-						var error_arr = JSON.parse(response.responseText);
-						switch(CURRENT_LANG){
-							case 'en':
-								alert(error_arr[0].error);
-								break;
-							case 'ru':
-								alert(error_arr[0].error_ru);
-								break;
-							case 'uk':
-								alert(error_arr[0].error_uk);
-								break;
-						}
+						message_result(response.responseText);
 					}
 				}	
 			},
@@ -6763,7 +6883,7 @@ var TRUST_LIST = {
 			crossDomain: true,
 			complete: function( response ){
 				//console.log(response);
-				var query_array = JSON.parse( response.responseText );
+				var query_array = $.parseJSON( response.responseText );
 				if(query_array.length > 0){
 					self.trust_array = self.trust_array.concat(query_array);
 					self.build_elements(true, query_array);
@@ -7044,8 +7164,8 @@ var TRUST_LIST = {
 		});*/
 	},
 	show_mini_spheres: function (selector_content){
-	if($(selector_content).attr('style') == 'display:none;'){
-		$(selector_content).attr('style', '');
+		if($(selector_content).attr('style') == 'display:none;'){
+			$(selector_content).attr('style', '');
 		}else{
 			$(selector_content).attr('style', 'display:none;');
 		}
@@ -7083,18 +7203,7 @@ var TRUST_LIST = {
 			complete: function( response ){
 				$.mobile.loading( "hide" );
 				if( response.responseText.indexOf('error') > -1 ){
-					var error_arr = JSON.parse(response.responseText);
-					switch(CURRENT_LANG){
-						case 'en':
-							alert(error_arr[0].error);
-							break;
-						case 'ru':
-							alert(error_arr[0].error_ru);
-							break;
-						case 'uk':
-							alert(error_arr[0].error_uk);
-							break;
-					}
+					message_result(response.responseText);
 				}
 			},
 		});
@@ -7111,18 +7220,7 @@ var TRUST_LIST = {
 			complete: function( response ){
 				$.mobile.loading( "hide" );
 				if( response.responseText.indexOf('error') > -1 ){
-					var error_arr = JSON.parse(response.responseText);
-					switch(CURRENT_LANG){
-						case 'en':
-							alert(error_arr[0].error);
-							break;
-						case 'ru':
-							alert(error_arr[0].error_ru);
-							break;
-						case 'uk':
-							alert(error_arr[0].error_uk);
-							break;
-					}
+					message_result(response.responseText);
 				}
 			},
 		});
@@ -7130,6 +7228,7 @@ var TRUST_LIST = {
 };
 
 var SPHERES = {
+	list: {},
 	spheres_array: [],
 	spheres: [{name: "Votings by spheres",
 			selector_name: "votings_by_sphere",
@@ -7143,11 +7242,11 @@ var SPHERES = {
 			selector_name: "co_owners",
 			type: 3,
 			objects: []},
-			{name: "Political Parties, Public organizations",
-			selector_name: "public_organization",
+			{name: "Votings in groups",
+			selector_name: "groups_votings",
 			type: 4,
-			objects: []},
-			/*{name: "Public primaries",
+			objects: []}/*,
+			{name: "Public primaries",
 			selector_name: "primaries",
 			type: 5,
 			objects: []},
@@ -7176,13 +7275,13 @@ var SPHERES = {
 		self.spheres[0].name = LOCALE_ARRAY_ADDITIONAL.votings_by_sphere[CURRENT_LANG];
 		self.spheres[1].name = LOCALE_ARRAY_ADDITIONAL.local_self_goverments_indicative[CURRENT_LANG];
 		self.spheres[2].name = LOCALE_ARRAY_ADDITIONAL.co_owners[CURRENT_LANG];
-		self.spheres[3].name = LOCALE_ARRAY_ADDITIONAL.type_public_orrganization[CURRENT_LANG];
-		/*self.spheres[4].name = LOCALE_ARRAY_ADDITIONAL.type_primaries[CURRENT_LANG];
-		self.spheres[5].name = LOCALE_ARRAY_ADDITIONAL.elections[CURRENT_LANG];
-		self.spheres[6].name = LOCALE_ARRAY_ADDITIONAL.type_maidan[CURRENT_LANG];
-		self.spheres[7].name = LOCALE_ARRAY_ADDITIONAL.candidates_proposal[CURRENT_LANG];
-		self.spheres[8].name = LOCALE_ARRAY_ADDITIONAL.candidates_parties[CURRENT_LANG];
-		self.spheres[9].name = LOCALE_ARRAY_ADDITIONAL.local_self_goverments[CURRENT_LANG];*/
+		self.spheres[3].name = LOCALE_ARRAY_ADDITIONAL.groups_votings[CURRENT_LANG];
+		// self.spheres[4].name = LOCALE_ARRAY_ADDITIONAL.type_primaries[CURRENT_LANG];
+		// self.spheres[5].name = LOCALE_ARRAY_ADDITIONAL.elections[CURRENT_LANG];
+		// self.spheres[6].name = LOCALE_ARRAY_ADDITIONAL.type_maidan[CURRENT_LANG];
+		// self.spheres[7].name = LOCALE_ARRAY_ADDITIONAL.candidates_proposal[CURRENT_LANG];
+		// self.spheres[8].name = LOCALE_ARRAY_ADDITIONAL.candidates_parties[CURRENT_LANG];
+		// self.spheres[9].name = LOCALE_ARRAY_ADDITIONAL.local_self_goverments[CURRENT_LANG];
 	},
 	initial: function(callback_function, forced_initial){
 		var self = this;
@@ -7197,7 +7296,7 @@ var SPHERES = {
 				},
 				crossDomain: true,
 				complete: function( response ){
-						self.spheres_array = JSON.parse( response.responseText );	
+						self.spheres_array = $.parseJSON( response.responseText );	
 						self.normalize_array();
 						if(location.href.indexOf('#votings-page') > -1){
 							self.set_spheres_filters();
@@ -7521,8 +7620,137 @@ var SPHERES = {
 		}else{
 			COMMON_OBJECT.free_callbacker( temp_callback() );			
 		}		
-	},	
+	},
+	f_sph: function(p_org, p_sph){
+		var l_return = '<div class="sph_selector_org" data-role="collapsible" ><h3>'
+							+ p_org
+							+ '</h3><ul class="sph_listview" data-role="listview">';
+
+		$.each(p_sph, function(i, l_one_sph){
+			l_return += '<li><a href="#" class="sph_idc" p_idc="' + l_one_sph.idc + '">' + l_one_sph.sphere + '</a></li>';
+		});
+
+		l_return += '</ul></div>';
+
+		return l_return;
+	},
+	init: function(){
+		var self = this;
+		//$.mobile.loading( "show", {theme: "z"});
+
+		$.post(mainURL + '/filter.php', function(l_result){
+			self.list = $.parseJSON(l_result);
+
+			$('.sph_selector').html('');
+			var l_sph_tree = [];
+
+			$.each(self.list, function(i, l_one_item){
+				console.log(l_one_item);
+
+				if(l_sph_tree[l_one_item.type] === undefined){ 
+					l_sph_tree[l_one_item.type] = ''; 
+				}
+
+				l_sph_tree[l_one_item.type] += self.f_sph(l_one_item.org, l_one_item.sph);
+
+			});
+
+			$.each(l_sph_tree, function(i, l_sph_item){
+				if(l_sph_item === undefined){
+					console.log(i);
+				}else{
+					$('.sph_selector').append('<div class="sph_selector_type" data-role="collapsible"><h3>' + LOCALE_ARRAY_ADDITIONAL.sphs[i][CURRENT_LANG] + '</h3>' + l_sph_item + '</div>');
+				}
+			});
+
+			$('.sph_selector_type').collapsible();
+			$('.sph_selector_org').collapsible();
+			$('.sph_listview').listview();
+
+		});
+	},
+	events: function(){
+		$(document).on('click', '.sph_idc', function(e){
+			var l_idc = $(this).attr('p_idc');
+			alert(l_idc);
+
+		});
+	},
 };
+
+var TASKS = {
+	tasks_list: [],
+	tasks_last_item: 10,
+	init: function(){
+		var self = this;
+		$.mobile.loading( "show", {theme: "z"});
+		$.ajax({
+			url: mainURL + '/tasks.php',
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				//console.log(response);
+				var query_array = $.parseJSON( response.responseText );
+				if(query_array.length > 0){
+					self.tasks_list = self.tasks_list.concat(query_array);
+					self.build_elements(true, query_array);
+					self.tasks_last_item += query_array.length;
+				}
+				//console.log(self.tasks_list);
+			},
+		});
+ 		$.mobile.loading( "hide" );	
+	},
+	reinit: function(){
+		var self = this;
+		$.mobile.loading( "show", {theme: "z"});
+		$.ajax({
+			url: mainURL + '/tasks.php?ls=' + self.tasks_last_item,
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				//console.log(response);
+				var query_array = $.parseJSON( response.responseText );
+				if(query_array.length > 0){
+					self.tasks_list = self.tasks_list.concat(query_array);
+					self.build_elements(true, query_array);
+					self.tasks_last_item += query_array.length;
+				}			
+				$.mobile.loading( "hide" );	
+			},
+		});
+	},
+	build_elements: function(reinit, reinit_array){
+		var self = this;
+		var elements_string = '';
+		if(reinit){
+			var build_array = reinit_array;
+		}else{
+			var build_array = self.tasks_list;
+		}
+
+
+		jQuery.each(build_array, function(i, one_tasks) {
+			var l_task = '';
+			if(CURRENT_LANG == 'uk') {
+				l_task = one_tasks.uk;
+			}else if (CURRENT_LANG == 'ru') {
+				l_task = one_tasks.ru;
+			}else{
+				l_task = one_tasks.en;
+			}
+
+			elements_string += '<div class="item ui-corner-all task-icon">' + l_task + '<div class="check-' + one_tasks.chk + '"></div></div>';
+		});
+ 		$('#my-tasks-page #tasklist').html(elements_string);
+	},
+}; 
 
 var NEWS = {
 	news_list: [],
@@ -7540,7 +7768,7 @@ var NEWS = {
 			crossDomain: true,
 			complete: function( response ){
 				//console.log(response);
-				self.news_list = JSON.parse( response.responseText );
+				self.news_list = $.parseJSON( response.responseText );
 				self.build_elements();
 				console.log(checkUpdateByID(self.news_list, 1));
 				$.mobile.loading( "hide" );	
@@ -7559,7 +7787,7 @@ var NEWS = {
 			crossDomain: true,
 			complete: function( response ){
 				//console.log(response);
-				var query_array = JSON.parse( response.responseText );
+				var query_array = $.parseJSON( response.responseText );
 				if(query_array.length > 0){
 					self.news_list = self.news_list.concat(query_array);
 					self.build_elements(true, query_array);
@@ -7636,81 +7864,6 @@ var NEWS = {
 	},
 }; 
 
-var TASKS = {
-	tasks_list: [],
-	tasks_last_item: 10,
-	init: function(){
-		var self = this;
-		$.mobile.loading( "show", {theme: "z"});
-		$.ajax({
-			url: mainURL + '/tasks.php',
-			type: "GET",
-			xhrFields: {
-				withCredentials: true
-			},
-			crossDomain: true,
-			complete: function( response ){
-				//console.log(response);
-				var query_array = JSON.parse( response.responseText );
-				if(query_array.length > 0){
-					self.tasks_list = self.tasks_list.concat(query_array);
-					self.build_elements(true, query_array);
-					self.tasks_last_item += query_array.length;
-				}
-				//console.log(self.tasks_list);
-			},
-		});
- 		$.mobile.loading( "hide" );	
-
-	},
-	reinit: function(){
-		var self = this;
-		$.mobile.loading( "show", {theme: "z"});
-		$.ajax({
-			url: mainURL + '/tasks.php?ls=' + self.tasks_last_item,
-			type: "GET",
-			xhrFields: {
-				withCredentials: true
-			},
-			crossDomain: true,
-			complete: function( response ){
-				//console.log(response);
-				var query_array = JSON.parse( response.responseText );
-				if(query_array.length > 0){
-					self.tasks_list = self.tasks_list.concat(query_array);
-					self.build_elements(true, query_array);
-					self.tasks_last_item += query_array.length;
-				}			
-				$.mobile.loading( "hide" );	
-			},
-		});
-	},
-	build_elements: function(reinit, reinit_array){
-		var self = this;
-		var elements_string = '';
-		if(reinit){
-			var build_array = reinit_array;
-		}else{
-			var build_array = self.tasks_list;
-		}
-
-
-		jQuery.each(build_array, function(i, one_tasks) {
-			var l_task = '';
-			if(CURRENT_LANG == 'uk') {
-				l_task = one_tasks.uk;
-			}else if (CURRENT_LANG == 'ru') {
-				l_task = one_tasks.ru;
-			}else{
-				l_task = one_tasks.en;
-			}
-
-			elements_string += '<div class="item ui-corner-all task-icon">' + l_task + '<div class="check-' + one_tasks.chk + '"></div></div>';
-		});
- 		$('#my-tasks-page #tasklist').html(elements_string);
-	},
-}; 
-
 var MAP = {
 	marks_list: [],
 	init: function(){
@@ -7725,7 +7878,7 @@ var MAP = {
 			crossDomain: true,
 			complete: function( response ){
 				//console.log(response);
-				var query_array = JSON.parse( response.responseText );
+				var query_array = $.parseJSON( response.responseText );
 				if(query_array.length > 0){
 					self.markss_list = self.marks_list.concat(query_array);
 					self.build_elements(true, query_array);
@@ -7748,7 +7901,7 @@ var MAP = {
 			crossDomain: true,
 			complete: function( response ){
 				//console.log(response);
-				var query_array = JSON.parse( response.responseText );
+				var query_array = $.parseJSON( response.responseText );
 				if(query_array.length > 0){
 					self.markss_list = self.marks_list.concat(query_array);
 					self.build_elements(true, query_array);
@@ -7803,22 +7956,59 @@ var WALLET = {
 };
 
 var GROUPS = {
-	items_list: [],
-	last_item: 0,
+	items_list_groups: [],
+	items_list_spheres: [],
+	last_item_groups: 0,
+	last_item_spheres: 0,
+	full_sph_list_load: 0,
+	sph_full_list: [],
 	group_id: 0,
+	group_owner_id: 0,
+	filter: '',
+	reinit: 0,
+	rebuild: 0,
+	scrolled_down: 0,
 	init: function(){
 		var self = this;
 
-		//console.log(SUPER_PROFILE.payment);
-		if(SUPER_PROFILE.payment){
-			$('#btn_group_create').show();
-		} else {
-			$('#btn_group_create').hide();
+		$.mobile.loading( "show", {theme: "z"});
+
+		if(GROUPS.scrolled_down){
+			GROUPS.rebuild = 0;
+			GROUPS.scrolled_down = 0;
 		}
 
-		$.mobile.loading( "show", {theme: "z"});
+		// console.log(SUPER_PROFILE.payment);
+		// if(SUPER_PROFILE.payment){
+		// 	$('#btn_group_create').show();
+		// } else {
+		// 	$('#btn_group_create').hide();
+		// }
+
+		var l_filter = '';
+
+		if($('#search_group').val() != ''){
+			if(isNaN($('#search_group').val())) {
+				l_filter = '&filter=' + encodeURIComponent($('#search_group').val());
+			}else{
+				l_filter = '&id=' + $('#search_group').val();
+			}
+		}
+
+		if(self.filter != $('#search_group').val()) {
+			self.last_item_groups = 0;
+			self.filter = $('#search_group').val();
+			GROUPS.rebuild = 1;
+		}
+
+		if(GROUPS.rebuild){
+			$('#org_list').html('');
+			self.last_item_members = 0;
+			MEMBERS.rebuild = 0;
+		}
+
 		$.ajax({
-			url: mainURL + '/groups.php?ls=' + self.last_item,
+			url: mainURL + '/groups.php?ls=' + self.last_item_groups + l_filter,
 			type: "GET",
 			xhrFields: {
 				withCredentials: true
@@ -7826,19 +8016,41 @@ var GROUPS = {
 			crossDomain: true,
 			complete: function( response ){
 				//console.log(response);
-				self.items_list = JSON.parse(response.responseText);
-				if(self.items_list.length > 0){
-					//self.items_list = self.items_list.concat(query_array);
-					LIST_OF_ITEM.build_items_list(0, '#org_list', self.items_list);
-					self.last_item += 10;
+				self.items_list_groups = $.parseJSON(response.responseText);
+				if(self.items_list_groups.length > 0){
+					$('#org_list').append(LIST_OF_ITEM.build_items_list(self.items_list_groups));
+					self.last_item_groups += 10;
 				}
-				$.mobile.loading( "hide" );	
 			},
 		});
+
+		$.mobile.loading( "hide" );	
 	},
 	groups_spheres: function(p_group_id){
 		var self = this;
+
 		if(p_group_id > 0){
+
+			console.log(GROUPS.group_owner_id);
+			console.log(SUPER_PROFILE.id);
+
+			if(GROUPS.group_owner_id == SUPER_PROFILE.id 
+				&& SUPER_PROFILE.id > 0 && GROUPS.group_owner_id > 0){
+
+				$('#create_sphere').show();
+				$('#members-btn').show();
+				$('#membership_ask').hide();
+				$('#membership_stop').hide();
+
+			}else{
+
+				$('#create_sphere').hide();
+				$('#members-btn').hide();
+				$('#membership_ask').show();
+				$('#membership_stop').show();
+				
+			}
+
 			$.mobile.loading( "show", {theme: "z"});
 			$.ajax({
 				url: mainURL + '/groups_spheres.php?org_id=' + p_group_id,
@@ -7849,97 +8061,451 @@ var GROUPS = {
 				crossDomain: true,
 				complete: function( response ){
 					//console.log(response);
-					self.items_list = JSON.parse(response.responseText);
-					if(self.items_list.length > 0){
+
+					self.items_list_spheres = $.parseJSON(response.responseText);
+					if(self.items_list_spheres.length > 0){
 
 						//TODO: exqlude doubles!!!
-						//TODO: check init or reinit status!
+						$('#group_spheres_list').html(LIST_OF_ITEM.build_items_list(self.items_list_spheres));
 
-						//self.items_list = self.items_list.concat(query_array);
-
-						LIST_OF_ITEM.build_items_list(0, '#group_spheres_list', self.items_list);
+					}else{
+						$('#group_spheres_list').html('');
 					}
 					$.mobile.loading( "hide" );	
 				},
 			});
+		} else {
+			$('#create_sphere').hide();
+			$('#members-btn').hide();
+			$('#membership_ask').hide();
+			$('#membership_stop').hide();
 		}
+	},
+	spheres_add: function(){
+		var full_list_spheres = [
+			"ActionScript",
+			"AppleScript",
+			"Asp"
+		    ];
+	    $('#sph_name').autocomplete({
+	    	source: full_list_spheres
+	    });
+	},
+	get_full_sph_list: function(){
+		var self = this;
+
+		$.mobile.loading( "show", {theme: "z"});
+
+		$.post(mainURL + '/groups_spheres_full.php', function(l_result){
+
+			self.sph_full_list = $.parseJSON(l_result);
+
+			if(self.sph_full_list.length > 0){
+				var l_name = '';
+
+				// Removes all options for the select box
+				$('#full_spheres_list option').remove();
+ 				
+				// .each loops through the array
+				$.each(self.sph_full_list, function(i, l_one_item){
+					switch(CURRENT_LANG){
+						case 'en':
+							l_name = (l_one_item.name_en);
+							break;
+						case 'uk':
+							l_name = (l_one_item.name_uk);
+							break;
+						case 'ru':
+							l_name = (l_one_item.name_ru);
+							break;
+					}
+					$('#full_spheres_list').append('<option value="' + l_one_item.id + '">' + l_name + '</option>');
+
+				});
+
+				GROUPS.full_sph_list_load = 1;
+
+			}else{
+				$('#full_spheres_list option').remove();
+			}
+		});
+		$.mobile.loading( "hide" );	
+	},	
+	events: function(){
+
+		$('body').on('click', '.group-item', function(){
+			GROUPS.group_id = $(this).attr('org_id');
+			GROUPS.group_owner_id = $(this).attr('user_id');
+			$.mobile.navigate('#my-spheres-options?id=' + GROUPS.group_id );
+		});
+
+		$('#btn_group_create').click(function(){
+			$('#add-group #add_btn').attr('value', LOCALE_ARRAY_ADDITIONAL.group_add_btn[CURRENT_LANG])
+			$('#add-group #add-group-back').attr('back', 'my-groups');
+
+			$.mobile.navigate('#add-group');
+		});
+
+		$('body').on('keyup', '#search_group', function(){
+			GROUPS.init();
+		})
+
+		$('body').on('click', '#add_btn', function(){
+			var p_result = '';
+			var group_add_ask = confirm(LOCALE_ARRAY_ADDITIONAL.group_add_question[CURRENT_LANG]);
+			if(group_add_ask){
+				$.post(mainURL + '/groups_add.php', $.parseJSON('{"name_en":"' + $('input[name=name_en]').val()
+					+ '", "name_uk":"' + $('input[name=name_uk]').val() 
+					+ '", "name_ru":"' + $('input[name=name_ru]').val() 
+					+ '"}'), function(p_result){
+
+					if(p_result.indexOf('error') > -1 ){
+							message_result(p_result);
+					}else{
+						var l_result = $.parseJSON(p_result);
+						GROUPS.group_id = l_result.id;
+						GROUPS.group_owner_id = l_result.user_id;
+						$.mobile.navigate('#my-spheres-options?id=' + GROUPS.group_id );
+					}
+				});
+				
+			}
+
+			console.log('item_add');
+		});
+
+		$('#membership_ask').click(function(){
+			var membership_ask = confirm(LOCALE_ARRAY_ADDITIONAL.membership_ask[CURRENT_LANG]);
+			if(membership_ask){
+				$.post(mainURL + '/groups_membership_request.php', $.parseJSON('{"request":1, "id":' + GROUPS.group_id + '}'), function(l_result){
+					message_result(l_result);
+				});				
+			}
+		});
+		
+		$('#membership_stop').click(function(){
+			var membership_ask = confirm(LOCALE_ARRAY_ADDITIONAL.membership_stop[CURRENT_LANG]);
+			if(membership_stop){
+				$.post(mainURL + '/groups_membership_request.php', $.parseJSON('{"request":2, "id":' + GROUPS.group_id + '}'), function(l_result){
+					message_result(l_result);
+				});
+			}
+		});
+
+		$('#create_sphere').click(function(){
+			var self = this;
+			if(GROUPS.full_sph_list_load == 0){
+				GROUPS.get_full_sph_list();
+			}
+			$('#add-group-shpere #add_sph').attr('value', LOCALE_ARRAY_ADDITIONAL.sph_add_btn[CURRENT_LANG]);
+
+
+			$.mobile.navigate('#add-group-shpere');
+		});
+		
+		$('#members-btn').click(function(){
+			MEMBERS.init();
+		});
+
+		$('#add-group-sphere-back').click(function(){
+			$.mobile.navigate('#my-spheres-options?id=' + GROUPS.group_id );
+		});
+
+		$('#add_sph').click(function(){
+			var l_text = $('#sph_name').val();
+			var l_select = $('#full_spheres_list').val();
+
+			$.post(mainURL + '/groups_sphere_add.php', $.parseJSON('{"t":"' + l_text
+					+ '", "s":"' + l_select 
+					+ '", "g":"' + GROUPS.group_id 
+					+ '"}'), function(l_result){
+				message_result(l_result);
+			});
+		});
+
 	},
 }
 
+var MEMBERS = {
+	items_list_members: [],
+	last_item_members: 0,
+	filter: '',
+	rebuild: 0,
+	new_only: 1,
+	scrolled_down: 0,
+	init: function(){
+		$.mobile.loading( "show", {theme: "z"});
+		var self = this;
+		var l_filter = $('#filter_members').val();
+		var l_new_only = 0;
+
+		if($('#members_checkbox').is(':checked')){
+			l_new_only = 1;
+		}
+
+
+		if(MEMBERS.scrolled_down){
+			MEMBERS.rebuild = 0;
+			MEMBERS.scrolled_down = 0;
+		}
+
+		if(MEMBERS.filter != l_filter){
+			MEMBERS.rebuild = 1;
+			MEMBERS.filter = l_filter;
+		}
+
+		if(MEMBERS.new_only != l_new_only){
+			MEMBERS.rebuild = 1;
+			MEMBERS.new_only = l_new_only
+		}
+
+		if(MEMBERS.rebuild){
+			$('#members_list').html('');
+			self.last_item_members = 0;
+			MEMBERS.rebuild = 0;
+		}
+
+		$.ajax({
+			url: mainURL + '/members.php',
+			type: "GET",
+			data: {"ls": self.last_item_members, "org_id": GROUPS.group_id, "filter": l_filter, "new_only": l_new_only},
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				//console.log(response);
+				self.items_list_members = $.parseJSON(response.responseText);
+				if(self.items_list_members.length > 0){
+					$('#members_list').append(LIST_OF_ITEM.build_items_list(self.items_list_members));
+					self.last_item_members += 10;
+				}
+			},
+		});
+		$.mobile.loading( "hide" );	
+	},
+	events: function(){
+
+		$(document).on('keyup', '#filter_members', function(e){
+			MEMBERS.rebuild = 1;
+			MEMBERS.init();
+		});
+
+		$(document).on('click', '.ui-btn', function(e){
+			var l_do = 0;
+			if($(this).hasClass('btn_approve')){
+				l_do = 1;
+			}else if($(this).hasClass('btn_decline')){
+				l_do = 2;
+			}
+			if(l_do > 0){
+				var l_json = $.parseJSON('{"request":' + l_do + ', "access_id":'+ $(this).closest('.item').attr('access_id') + ', "user_id":' + $(this).closest('.item').attr('user_id') + ', "group_id":' + GROUPS.group_id + '}');
+
+				$.post(mainURL + '/groups_membership_moderate.php', l_json);
+
+				if(l_do == 1){
+					$(this).closest('.item .str-d').html('');
+
+				}else if(l_do == 2){
+					$(this).closest('.item').remove();
+				}
+			}
+		});
+
+		$('#filter_clear').click(function(){
+			$('#filter_members').val('');
+			MEMBERS.rebuild = 1;
+			MEMBERS.init();
+		});
+
+		$('#members_checkbox').click(function(){
+			
+			MEMBERS.init();
+		});
+	},
+};
+
 var LIST_OF_ITEM = {
-	build_items_list: function(p_reinit, p_selector_list, p_items_list){
+	build_items_list: function(p_items_list){
 		var self = this;
 		var l_elements_string = '';
 
 		jQuery.each(p_items_list, function(i, l_one_item) {
-			var l_onclick_event = '';
-			var l_date = '';
-			var l_title = '';
+			var l_item_properties = '';
+			var l_str_a = '';
+			var l_str_b = '';
+			var l_str_c = '';
+			var l_str_d = '';
+
 			var l_image = '';
 			var l_img = '';
-			var l_author = '';
 			var l_city = '';
-			var l_style = '';
+			var l_classes = '';
+			var l_label = '';
+			var l_extra = '';
+			var l_org = '';
+
 			switch( parseInt(l_one_item.type_id) ){
 				case 4:
-					l_onclick_event = ' org_id="' + l_one_item.id + '" style="cursor:pointer"';
-					l_date = l_one_item.ts;
-					l_title = '<b>ID: ' + l_one_item.id + ' :: ' + l_one_item.org + '</b>';
+					l_item_properties = ' user_id="' + l_one_item.user_id + '" org_id="' + l_one_item.id + '" style="cursor:pointer" ';
+					l_classes = ' group-item ';
 					l_image = mainURL + '/uploads/news.svg';
 
-					switch( [CURRENT_LANG] ){
-						case "en":
+					switch(CURRENT_LANG){
+						case 'en':
 							l_city = l_one_item.city_en;
+							l_org = l_one_item.org_en;
 				 		break;
-						case "uk":
+						case 'uk':
 							l_city = l_one_item.city_uk;
+							l_org = l_one_item.org_uk;
 				 		break;
-				 		case "ru":
+				 		case 'ru':
 							l_city = l_one_item.city_ru;
+							l_org = l_one_item.org_ru;
 				 		break;
 				 	}
 
-					l_author = '<b>' + l_city + '</b>';
-					l_style = ' group-item news-icon news-icon-num-4';
+
+					l_str_a = '<b>ID: ' + l_one_item.id + ' :: ' + l_org + '</b>';
+					l_str_b = '<b>' + l_one_item.user_id + ' @ ' + l_one_item.user_name + '</b>';
+					l_str_c = '<b>' + l_city + '</b>';
+					l_str_d = '<img src="/images/icon-contractors.png" /> <b>' + l_one_item.users + '</b>';
+					l_label = '4';
+
 					break;
 				case 10:
-					l_onclick_event = 'id="' + l_one_item.id + '" style="cursor:pointer" ';
-					l_date = '';
-					l_title = '<b>' + l_one_item.name_uk + '</b>';
+					l_item_properties = ' id="' + l_one_item.id + '" ';
 					l_image = mainURL + '/uploads/news.svg';
-					l_author = '<b>' + l_one_item.idc + '</b>';
-					l_style = 'sphere-item news-icon checkbox-on';
+					l_str_a = '<b>' + l_one_item.name_uk + '</b>';
+					break;
+				case 11:
+					l_item_properties = '  access_id="' + l_one_item.id + '" user_id="' + l_one_item.user_id + '" ';
+					if(l_one_item.avatar == '') {
+						l_image = mainURL + '/images/svg/avatar-bg.svg';
+					} else {
+						l_image = mainURL + '/uploads/' + l_one_item.user_id + '/0/' + l_one_item.avatar;
+					}
+					l_str_a = '<b>ID: ' + l_one_item.user_id + ' :: ' + l_one_item.user_name + '<br />';
+					l_name = l_one_item.fname + ' ' + l_one_item.lname + '</b>';
+					if(Number(l_one_item.right) == 0){
+						l_str_d = '<a class="btn_approve ui-btn btn-save ui-corner-all" href="#">' + LOCALE_ARRAY_ADDITIONAL.btn_approve[CURRENT_LANG] + '</a><a class="btn_decline btn-delete ui-btn ui-corner-all" href="#">' + LOCALE_ARRAY_ADDITIONAL.btn_decline[CURRENT_LANG] + '</a>';
+					}
+
+					for (var i = 0; i < l_one_item.t_s.length; i++) {
+						switch(l_one_item.t_s[i].s){
+							case "1":
+								l_str_b += '<img class="ribbon ui-corner-all" src="images/trust-icon-fb.png" />';
+								break;
+							case "2":
+								l_str_b += '<img class="ribbon ui-corner-all" src="images/trust-icon-gp.png" />';
+								break;
+							case "3":
+								l_str_b += '<img class="ribbon ui-corner-all" src="images/trust-icon-tw.png" />';
+								break;
+							case "4":
+								l_str_b += '<img class="ribbon ui-corner-all" src="images/trust-icon-in.png" />';
+								break;
+							case "5":
+								l_str_b += '<img class="ribbon ribon ui-corner-all" src="images/trust-icon-vk.png" />';
+								break;
+							case "6":
+								l_str_b += '<img class="ribbon ui-corner-all" src="images/trust-icon-ok.png" />';
+								break;
+							case "7":
+								l_str_c += '<img class="ribbon ui-corner-all" src="images/trust-icon-wallet.png" />';
+								break;
+							case "8":
+								l_str_c += '<img class="ribbon ui-corner-all" src="images/trust-icon-house.png" />';
+								break;
+							case "9":
+								l_str_c += '<img class="ribbon ui-corner-all" src="images/trust-icon-community.png" />';
+								break;
+							case "10":
+								l_str_c += '<img class="ribbon ui-corner-all" src="images/trust-icon-password.png" />';
+								break;
+						}
+					}
+					break;
+				case 12:
+					l_classes = 'nco_to_set';
+					l_image = mainURL + '/images/svg/avatar-bg.svg';
+					l_item_properties = ' n_id="' + l_one_item.id + '" style="cursor:pointer" ';
+					l_str_a = '<b>ID: ' + l_one_item.id + ' :: ' + l_one_item.nco_name + '</b>';
+					l_str_b = '<span class="phone">' + l_one_item.nco_phone + '</span>';
+					l_str_c = '<span class="doc">' + l_one_item.doc_type + ' ' + l_one_item.doc_number + ' ' + l_one_item.doc_issue + ' ' + l_one_item.doc_date + '</span>';
+					l_str_d = '<span class="addr">' + l_one_item.country + ' ' + l_one_item.state + ' ' + l_one_item.city + ' ' + l_one_item.street + ' ' + l_one_item.build + '</span>'
 					break;
 			}
 
 			if(l_image.indexOf('svg') > -1){
-				var l_img = '<object type="image/svg+xml" data="' + l_image + '">Your browser does not support SVG</object>';
+				var l_img = '<object type="image/svg+xml" data="' 
+							+ l_image + '">Your browser does not support SVG</object>';
 			}else{
-				var l_img = '<img src="' + l_image + '" />';
+				var l_img = '<img src="' 
+							+ l_image + '" />';
 			}
 
-			l_elements_string += '<div ' + l_onclick_event + ' class="item ui-corner-all ' + l_style + '">\
-									<div class="img">' + l_img + '</div>\
-									<div class="info">\
-										<div class="date">' + l_date + '</div>\
-										<div class="title">' + l_title + '</div>\
-										<div class="author">' + l_author + '</div>\
-									</div>\
-								</div>';
+			l_elements_string += '<div ' + l_item_properties + ' class="item ' + l_classes + '" >\
+				<div class="grid-a">\
+					<div class="grid-a-left">\
+						<div class="avatar">' + l_img + '</div>\
+					</div>\
+					<div class="grid-a-right">\
+						<div class="str-a">' + l_str_a + '</div>\
+						<div class="str-b">' + l_str_b + '</div>\
+						<div class="str-c">' + l_str_c + '</div>\
+						<div class="str-d">' + l_str_d + '</div>\
+					</div>\
+					<div class="grid-b">\
+						<div class="extra">' + l_extra + '</div>\
+					</div>\
+					<div class="grid-c">\
+						<div class="right-block">' + l_label + '</div>\
+					</div>\
+				</div>\
+			</div>';
 		});
 
-		//console.log(l_elements_string);
+		self.events();
 
-		if(p_reinit){
-			$(p_selector_list).append(l_elements_string);
-		}else{
-			$(p_selector_list).html(l_elements_string);
-		}
+		return l_elements_string;
+
+		// if(p_reinit){
+		// 	$(p_selector_list).append(l_elements_string);
+		// }else{
+		// 	$(p_selector_list).html(l_elements_string);
+		// }
 
 	},
 	build_item: function(p_reinit, p_back_to, p_item){
 		var self = this;
 		var l_elements_string = '';
+	},
+	events: function(){
+
+		$('body').on('click', '.nco_to_set', function(){
+			var l_type = $('#nco-page .ui-icon-back').attr('p_type');
+			var l_id = $('#nco-page .ui-icon-back').attr('p_id');
+			var l_nco = $(this).attr('n_id');
+			$.get(mainURL + '/nco_choice.php', { type: l_type, id: l_id, nco: l_nco }, function(p_result){
+				if( p_result.indexOf('error') > -1 ){
+					var l_msg = $.parseJSON(p_result);
+					switch(CURRENT_LANG){
+						case 'en':
+							alert(l_msg[0].error);
+							break;
+						case 'uk':
+							alert(l_msg[0].error_uk);
+							break;
+						case 'ru':
+							alert(l_msg[0].error_ru);
+							break;
+					}
+				}
+
+			});
+		});
 
 	},
 }
@@ -8122,7 +8688,7 @@ var VOTINGS = {
 		$('#votings-page #searched_string').val('');
 
 		$.mobile.loading( "show", {theme: "z"});
-		SPHERES.initial()
+		//SPHERES.initial();
 		if(location.href.indexOf('#votings-page?program=') > -1){
 			var match_array = location.href.match(/#votings-page\?program=[0-9]*/i);
 			var object_id = match_array[0].match(/[0-9]+/i);
@@ -8178,7 +8744,7 @@ var VOTINGS = {
 			crossDomain: true,
 			complete: function( response ){
 				//console.log(response);
-				self.votings_array = JSON.parse( response.responseText );	
+				self.votings_array = $.parseJSON( response.responseText );	
 				//console.log( self.votings_array );
 				$.mobile.loading( "hide" );
 				self.check_current_url( 1 );
@@ -8302,7 +8868,7 @@ var VOTINGS = {
 			crossDomain: true,
 			complete: function( response ){
 				//console.log(response);
-				self.votings_array = JSON.parse( response.responseText );	
+				self.votings_array = $.parseJSON( response.responseText );	
 				if(self.votings_array.length > 0){
 					self.check_current_url( 1 );
 					if(reinit){
@@ -8364,7 +8930,7 @@ var VOTINGS = {
 				complete: function( response ){
 					//console.log('REinit:' + response);
 				
-					var query_array =JSON.parse( response.responseText );	
+					var query_array =$.parseJSON( response.responseText );	
 					//console.log( self.votings_array );					
 					if(query_array.length > 0){
 						self.votings_array = self.votings_array.concat(query_array);
@@ -8500,7 +9066,7 @@ var VOTINGS = {
 						console.log('response error');
 					}else{
 						if( response.responseText.indexOf('error') > -1 ){
-							var error_arr = JSON.parse(response.responseText);
+							var error_arr = $.parseJSON(response.responseText);
 							switch(CURRENT_LANG){
 								case 'en':
 									alert(error_arr[0].error);
@@ -9230,7 +9796,7 @@ var VOTINGS = {
 			},
 			crossDomain: true,
 			complete: function( response ){
-				var return_element = JSON.parse( response.responseText );
+				var return_element = $.parseJSON( response.responseText );
 				data_for_build = return_element[0];
 				if(data_for_build){
 					//console.log(data_for_build);
@@ -9340,7 +9906,7 @@ var VOTINGS = {
 					// 	console.log(response.responseText);
 					// }else{
 						if( response.responseText.indexOf('error') > -1 ){
-							var error_arr = JSON.parse(response.responseText);
+							var error_arr = $.parseJSON(response.responseText);
 							switch(CURRENT_LANG){
 								case 'en':
 									alert(error_arr[0].error);
@@ -9353,7 +9919,7 @@ var VOTINGS = {
 									break;
 							}
 						}else{
-							var l_data_for_build = JSON.parse(response.responseText);
+							var l_data_for_build = $.parseJSON(response.responseText);
 
 							var l_data_array = self.f_array_for_chart(l_data_for_build);
 
@@ -9430,7 +9996,7 @@ var VOTINGS = {
 			 		$.mobile.navigate(return_page);
 				}else{
 					if( response.responseText.indexOf('error') > -1 ){
-						var error_arr = JSON.parse(response.responseText);
+						var error_arr = $.parseJSON(response.responseText);
 						switch(CURRENT_LANG){
 							case 'en':
 								alert(error_arr[0].error);
@@ -9593,7 +10159,7 @@ var VOTINGS = {
 			crossDomain: true,
 			complete: function( response ){
 					//console.log(response);
-					self.voters_list = JSON.parse( response.responseText );
+					self.voters_list = $.parseJSON( response.responseText );
 					$.mobile.loading( "hide" );
 					self.set_voters_list(vote_id);	
 			},
@@ -9735,7 +10301,7 @@ var MY_VOTINGS = {
 			crossDomain: true,
 			complete: function( response ){
 				//console.log(response);
-				self.votings_array = JSON.parse( response.responseText );	
+				self.votings_array = $.parseJSON( response.responseText );	
 				//console.log( self.votings_array );
 				$.mobile.loading( "hide" );
 				$('#my-votings-page #activated_filter').css('display', 'none'); 
@@ -9760,7 +10326,7 @@ var MY_VOTINGS = {
 			crossDomain: true,
 			complete: function( response ){
 				//console.log(response);
-				var query_array =JSON.parse( response.responseText );	
+				var query_array =$.parseJSON( response.responseText );	
 				//console.log( query_array );					
 				if(query_array.length > 0){
 					self.votings_array = self.votings_array.concat(query_array);
@@ -9848,7 +10414,7 @@ var MY_VOTINGS = {
 			crossDomain: true,
 			complete: function( response ){
 				//console.log(response);
-				self.votings_array = JSON.parse( response.responseText );	
+				self.votings_array = $.parseJSON( response.responseText );	
 				$.mobile.loading( "hide" );
 				self.check_current_url( 1 );
 				if(reinit){
@@ -10567,7 +11133,7 @@ var MY_VOTINGS = {
 			},
 			crossDomain: true,
 			complete: function( response ){
-				return_element = JSON.parse( response.responseText );
+				return_element = $.parseJSON( response.responseText );
 				data_for_build = return_element[0];
 				switch(data_for_build.status){
 					case '0':
@@ -10675,7 +11241,7 @@ var MY_VOTINGS = {
 						//console.log('ok');
 					}else{
 						if( response.responseText.indexOf('error') > -1 ){
-							var error_arr = JSON.parse(response.responseText);
+							var error_arr = $.parseJSON(response.responseText);
 							switch(CURRENT_LANG){
 								case 'en':
 									alert(error_arr[0].error);
@@ -10839,7 +11405,7 @@ var MY_VOTINGS = {
 			crossDomain: true,
 			complete: function( response ){
 				//console.log(response);
-				self.voters_list = JSON.parse( response.responseText );
+				self.voters_list = $.parseJSON( response.responseText );
 				$.mobile.loading( "hide" );
 				self.set_voters_list(vote_id);	
 			},
@@ -11987,21 +12553,6 @@ function change_nan(number){
 (function($){
 	$(function(){
 
-		function ajax_post(p_url, p_json){
-			$.ajax({
-				url: p_url,
-				type: "POST",
-				data: p_json,
-				crossDomain: true,
-				xhrFields: {
-					withCredentials: true
-				},
-				complete: function(p_result){
-					console.log(p_result);
-				}
-			});
-		}
-
 		if(location.href.search(/m=[\w&id=]+/i) > -1){
 			var matches = location.href.match(/m=[\w&id=]+/i);
 			$.ajax({
@@ -12383,20 +12934,20 @@ function change_nan(number){
 				//TODO: All events for profile must be in PRIFILE.events!!!
 
 				$('#profile-page [name=fn]').on('change', function(){
-					var l_fn = $('#profile-page [name=fn]').val();
-					var l_url = mainURL + "/l/index.php?m=2";
+					var l_fn = $('#profile-page [name=fn]').val().replace('"', "'");
+					var l_url = mainURL + "/profile_edit.php";
 					var l_data = $.parseJSON('{"fn":"'+ l_fn + '"}');
-					ajax_post(l_url, l_data);
+					$.post(l_url, l_data);
 					//TODO: split last name and first name to separate placeholders!!
 					var l_ln = $('#profile-page [name=ln]').val();
 					$('#profile-page .name').html(l_fn + ' ' + l_ln);
 				});
 
 				$('#profile-page [name=ln]').on('change', function(){
-					var l_ln = $('#profile-page [name=ln]').val();
-					var l_url = mainURL + "/l/index.php?m=2";
+					var l_ln = $('#profile-page [name=ln]').val().replace('"', "'");
+					var l_url = mainURL + "/profile_edit.php";
 					var l_data = $.parseJSON('{"ln":"'+ l_ln + '"}');
-					ajax_post(l_url, l_data);
+					$.post(l_url, l_data);
 					//TODO: split last name and first name to separate placeholders!!
 					var l_fn = $('#profile-page [name=fn]').val();
 					$('#profile-page .name').html(l_fn + ' ' + l_ln);
@@ -12404,18 +12955,20 @@ function change_nan(number){
 
 				$('#gender').on('change', function(){
 					var l_g = $('#gender :radio:checked').val();
-					var l_url = mainURL + "/l/index.php?m=2";
+					var l_url = mainURL + "/profile_edit.php";
 					var l_data = $.parseJSON('{"g":"'+ l_g + '"}');
-					ajax_post(l_url, l_data);
+					$.post(l_url, l_data);
 					PROFILE.gender = l_g;
 					SUPER_PROFILE.gender = l_g;
 				});
 
 				$('#date_of_birth').on('change', function(){
-					var l_db = $('#profile-page [name=year]').val() + '-' + $('#profile-page [name=month]').val() + '-' + $('#profile-page [name=date]').val();
-					var l_url = mainURL + "/l/index.php?m=2";
+					var l_db = $('#profile-page [name=year]').val() 
+					+ '-' + $('#profile-page [name=month]').val() 
+					+ '-' + $('#profile-page [name=date]').val();
+					var l_url = mainURL + "/profile_edit.php";
 					var l_data = $.parseJSON('{"db":"'+ l_db + '"}');
-					ajax_post(l_url, l_data);
+					$.post(l_url, l_data);
 				});
 
 				$('#profile-page #change_pass_button').click(function(){
@@ -12646,6 +13199,7 @@ function change_nan(number){
 						complete: function(response){
 							var data = response.responseText;
 							that.profile_obj = jQuery.parseJSON(data)[0];
+
 							that.email = that.profile_obj.email;
 							that.login = that.profile_obj.login;
 							that.avatar = that.profile_obj.avatar;
@@ -12665,6 +13219,7 @@ function change_nan(number){
 
 							SUPER_PROFILE.gender = that.gender;
 							SUPER_PROFILE.id = that.profile_obj.id;
+							SUPER_PROFILE.nco = that.profile_obj.nco;
 							SUPER_PROFILE.payment = that.profile_obj.payment;
 							for (var i in SOCIAL){
 								if(typeof SOCIAL[i] != "object") continue;
@@ -12788,6 +13343,7 @@ function change_nan(number){
 (function(){
 
 	var matcher = /\s*(?:((?:(?:\\\.|[^.,])+\.?)+)\s*([!~><=]=|[><])\s*("|')?((?:\\\3|.)*?)\3|(.+?))\s*(?:,|$)/g;
+
 
 	function resolve(element, data) {
 

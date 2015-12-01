@@ -34,11 +34,10 @@
 		<script src="./javascripts/jquery.form.min.js?t=1"></script>
 		<script src="./javascripts/purl.js?t=1"></script>
 		<script src="./leaflet/leaflet.js"></script>
+
 		<script src="./javascripts/v3.js?t=1"></script>
-
-
 	</head>
-	<body>
+<body>
 
 <style>
   .mapCanvas {
@@ -674,34 +673,34 @@
 			<a id = "findgps-1" class="ui-btn ui-corner-all ui-shadow" href="#">Find an address using GPS</a>
 			<form accept-charset="UTF-8" onsubmit = 'ADRESS.save_address(1); return false;'>
 				<div>
-					<label>Country</label><select required name="country"></select>
+					<label class="country">Country</label><select required name="country"></select>
 				</div>
 				<div>
-					<label>State</label><select required name="state"></select>
+					<label class="state">State</label><select required name="state"></select>
 				</div>
 				<div>
-					<label>County</label><select required name="county"></select>
+					<label class="county">County</label><select required name="county"></select>
 				</div>
 				<div>
-					<label>City</label><select required name="city"></select>
+					<label class="city">City</label><select required name="city"></select>
 				</div>
 				<div>
-					<label>Index</label><select required name="index"></select>
+					<label class="post_index">Index</label><select required name="index"></select>
 				</div>
 				<div class="text-field">
-					<label>Street</label>
+					<label class="street">Street</label>
 					<div class="ui-input-text">
 						<input required type="text" name="street" data-enhanced="true" />
 					</div>
 				</div>
 				<div class="text-field">
-					<label>Number of House</label>
+					<label class="building">Number of House</label>
 					<div class="ui-input-text">
 						<input required type="text" name="house" data-enhanced="true" />
 					</div>
 				</div>
 				<div class="text-field">
-					<label>Add some comments</label>
+					<label class="address_comments">Add some comments</label>
 					<div class="ui-input-text">
 						<textarea name="comment" rows="" cols="" class="ui-input-text" data-enhanced="true"></textarea>
 					</div>
@@ -732,34 +731,34 @@
 			<a id = "findgps-2" class="ui-btn ui-corner-all ui-shadow" href="#">Find an address using GPS</a>
 			<form accept-charset="UTF-8" onsubmit = 'ADRESS.save_address(2); return false;'>
 				<div>
-					<label>Country</label><select required name="country"></select>
+					<label class="country">Country</label><select required name="country"></select>
 				</div>
 				<div>
-					<label>State</label><select required name="state"></select>
+					<label class="state">State</label><select required name="state"></select>
 				</div>
 				<div>
-					<label>County</label><select required name="county"></select>
+					<label class="county">County</label><select required name="county"></select>
 				</div>
 				<div>
-					<label>City</label><select required name="city"></select>
+					<label class="city">City</label><select required name="city"></select>
 				</div>
 				<div>
-					<label>Index</label><select required name="index"></select>
+					<label class="post_index">Index</label><select required name="index"></select>
 				</div>
 				<div class="text-field">
-					<label>Street</label>
+					<label class="street">Street</label>
 					<div class="ui-input-text">
 						<input required type="text" name="street" data-enhanced="true" />
 					</div>
 				</div>
 				<div class="text-field">
-					<label>Number of House</label>
+					<label class="building">Number of House</label>
 					<div class="ui-input-text">
 						<input required type="text" name="house" data-enhanced="true" />
 					</div>
 				</div>
 				<div class="text-field">
-					<label>Add some comments</label>
+					<label class="address_comments">Add some comments</label>
 					<div class="ui-input-text"><textarea name="comment" rows="" cols="" class="ui-input-text" data-enhanced="true"></textarea>
 					</div>
 				</div>
@@ -787,34 +786,32 @@
 				<a id = "findgps-3" class="ui-btn ui-corner-all ui-shadow" href="#">Find an address using GPS</a>
 			<form accept-charset="UTF-8" onsubmit = 'ADRESS.save_address(3); return false;'>
 				<div>
-					<label>Country</label><select required name="country"></select>
+					<label class="country">Country</label><select required name="country"></select>
 				</div>
 				<div>
-					<label>State</label><select required name="state"></select>
+					<label class="state">State</label><select required name="state"></select>
 				</div>
 				<div>
-					<label>County</label><select required name="county"></select>
+					<label class="county">County</label><select required name="county"></select>
 				</div>
+					<label class="city">City</label><select required name="city"></select>
 				<div>
-					<label>City</label><select required name="city"></select>
-				</div>
-				<div>
-					<label>Index</label><select required name="index"></select>
+					<label class="post_index">Index</label><select required name="index"></select>
 				</div>
 				<div class="text-field">
-					<label>Street</label>
+					<label class="street">Street</label>
 					<div class="ui-input-text">
 						<input required type="text" name="street" data-enhanced="true" />
 					</div>
 				</div>
 				<div class="text-field">
-					<label>Number of House</label>
+					<label class="building">Number of House</label>
 					<div class="ui-input-text">
 						<input required type="text" name="house" data-enhanced="true" />
 					</div>
 				</div>
 				<div class="text-field">
-					<label>Add some comments</label>
+					<label class="address_comments">Add some comments</label>
 					<div class="ui-input-text"><textarea name="comment" rows="" cols="" class="ui-input-text" data-enhanced="true"></textarea>
 					</div>
 				</div>
@@ -906,7 +903,7 @@
 <div id="programs-page" data-role="page">
 	<div data-role="header" data-position="fixed" data-tap-toggle="false">
 		<h1 id = "ui_title">Programs</h1>
-		<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back('#social-investment')" href="#">Back</a>
+		<a id="menu_link" class="ui-btn ui-btn-left ui-icon-bars ui-btn-corner-all ui-btn-icon-notext" href="#left-panel">Menu</a>
 		<a id = "my_activities_link" style = "display:none" class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back('#my-activities-page')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#programs-help">Ask</a>
 		<div id="programs-help" class="help-popup" data-role="popup" data-history="false">
 			<div class="title">
@@ -960,10 +957,12 @@
 		</div>
 	</div>
 	<div role="main" class="ui-content">
-		<a  id = "filter_slider"  class="ui-btn ui-corner-all ui-shadow" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>
-		<a style = "display:none" id = "create_link" class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate('#create-item?program=true')" href="#">Create program</a>
-		<div id = "programs-list" class="programs-list">
+		<div class="left_col">
+			<a id = "filter_slider"  class="ui-btn ui-corner-all ui-shadow" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>
+			<a id = "create_link" class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate('#create-item?program=true')" href="#">Create program</a>
+			<div id = "programs-list" class="programs-list"></div>
 		</div>
+		<div class="right_col"></div>
 	</div>
 </div>
 
@@ -1076,17 +1075,42 @@
 		</div>
 	</div>
 	<div role="main" class="ui-content">
-		<a  id = "filter_slider"  class="ui-btn ui-corner-all ui-shadow" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>
-		<a style = "display:none" id = "create_link" class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate('#create-item?project=true')" href="#">
-		 Create project</a>
-		<a style = "display:none" id = "create_proposition_link" class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate('#')" href="#">
-		Create project proposion</a>
-		<div id = "projects-list" class="projects-list">
+		<div class="left_col">
+			<a id = "filter_slider" class="ui-btn ui-corner-all ui-shadow" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>
+			<a id = "create_link" class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate('#create-item?project=true')" href="#">Create project</a>
+			<a style = "display:none" id = "create_proposition_link" class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate('#')" href="#">
+        Create project proposion</a>
+			<div id = "projects-list" class="projects-list"></div>
 		</div>
+		<div class="right_col"></div>
 	</div>
 </div>
 
 <div id="project-page" data-role="page">
+</div>
+
+<div id="one_item" data-role="page">
+	<div data-role="header" data-position="fixed" data-tap-toggle="false">
+		<h1 id="ui_title">one item title</h1>
+		<a id="one_item_back" class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back('#')" href="#">Back</a>
+		<a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#one_item-help">Ask</a>
+		<div id="one_item-help" class="help-popup" data-role="popup" data-history="false">
+			<div class="title">Description</div>
+			<div class="text">help text</div>
+		</div>
+	</div>
+	<div role="main" class="ui-content">
+		<div class="left_col">
+			<div id="one_item_content">
+				<div class="img"><img src="https://gurtom.mobi/uploads/project_propositions.svg" width="100%"></div>
+				<div class="stars-wrap">
+					<span data-vote_id="7"></span>
+				</div>
+
+			</div>
+		</div>
+		<div class="right_col"></div>
+	</div>
 </div>
 
 <div id="filter-page-projects" data-role="page">
@@ -1194,10 +1218,13 @@
 		</div>
 	</div>
 	<div role="main" class="ui-content">
-		<a  id = "filter_slider"  class="ui-btn ui-corner-all ui-shadow" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>
-		<a style = "display:none" id = "create_link" class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate('#create-item?request=true')" href="#">Create request</a>
-		<div id = "requests-list" class="requests-list">
+		<div class="left_col">
+			<a  id = "filter_slider"  class="ui-btn ui-corner-all ui-shadow" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>
+			<a style = "display:none" id = "create_link" class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate('#create-item?request=true')" href="#">Create request</a>
+			<div id = "requests-list" class="requests-list">
+			</div>
 		</div>
+		<div class="right_col"></div>
 	</div>
 </div>
 
@@ -1306,11 +1333,13 @@
 		</div>
 	</div>
 	<div role="main" class="ui-content">
-		<a  id = "filter_slider" class="ui-btn ui-corner-all ui-shadow" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>
-		<a style = "display:none" id = "create_voting_link" class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate('#')" href="#">
-		Create weighted voting</a>
-		<div class="votings-list" id = 'votings_list'>
+		<div class="left_col">
+			<a  id = "filter_slider" class="ui-btn ui-corner-all ui-shadow" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>
+			<a style = "display:none" id = "create_voting_link" class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate('#')" href="#">
+			Create weighted voting</a>
+			<div class="votings-list" id = 'votings_list'></div>
 		</div>
+		<div class="right_col"></div>
 	</div>
 </div>
 
@@ -1320,7 +1349,7 @@
 <div id="my-fund-page" data-role="page">
 	<div data-role="header" data-position="fixed" data-tap-toggle="false">
 		<h1 class="long-title">Personal Funds</h1>
-		<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#social-investments')" href="#social-investment">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#my-fund-help">Ask</a>
+		<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#my-activities-page')" href="#my-activities-page">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#my-fund-help">Ask</a>
 		<div id="my-fund-help" class="help-popup" data-role="popup" data-history="false">
 			<div class="title">
 				Description
@@ -1331,71 +1360,40 @@
 		</div>
 	</div>
 	<div role="main" class="ui-content">
-		<div class="fund-list">
-<!--			 <div class="item ui-corner-all">
-				<div>
-					<strong>PIF</strong> <span>2245678</span>
-				</div>
-				<div>
-					<strong>Тип валюты:</strong> <span>UAH (украинская гривна)</span>
-				</div>
-				<div>
-					<strong>Остаток на счету:</strong> <span>2 346 UAH</span>
-				</div>
-			</div>
-			<div class="item ui-corner-all">
-				<div>
-					<strong>PIF</strong> <span>2245678</span>
-				</div>
-				<div>
-					<strong>Тип валюты:</strong> <span>UAH (украинская гривна)</span>
-				</div>
-				<div>
-					<strong>Остаток на счету:</strong> <span>2 346 UAH</span>
-				</div>
-			</div>
-			<div class="item ui-corner-all">
-				<div>
-					<strong>PIF</strong> <span>2245678</span>
-				</div>
-				<div>
-					<strong>Тип валюты:</strong> <span>UAH (украинская гривна)</span>
-				</div>
-				<div>
-					<strong>Остаток на счету:</strong> <span>2 346 UAH</span>
-				</div>
-			</div> -->
-		</div>
+	<div class="left_col">
+		<div class="fund-list"></div>
 		<div class="section-wrap">
-			<div class="section-title">
-				Пополнить PIF
+			<div class="section-title">Пополнить PIF</div>
+				<div class="select-field">
+					<label>Выбрать PIF</label>
+					<select id = "select_pif" onchange = "funds.update_pay_button($(this).val())" name="">
+						<option value="PIF ID232 Остаток 0">PIF ID232 Остаток 0</option>
+					</select>
+				</div>
+				<div class="center">
+					<img src="" />
+				</div>
 			</div>
-						<div class="select-field">
-							<label>Выбрать PIF</label><select id = "select_pif" onchange = "funds.update_pay_button($(this).val())" name=""><option value="PIF ID232 Остаток 0">PIF ID232 Остаток 0</option>
-							</select>
-						</div>
-						<div class="center">
-							<img src="" />
-						</div>
-		</div>
-		<div class="section-wrap">
-			<div class="section-title">
-				Создание PIF
+			<div class="section-wrap">
+				<div class="section-title">Создание PIF</div>
+				<form onsubmit = "return false;" action="" accept-charset="UTF-8" method="post">
+					<div class="select-field" id="choose_currency_div">
+						<label>Выберите тип валюты</label>
+						<select name="">
+							<option value="UAH (украинская гривня)">UAH (украинская гривня)</option>
+						</select>
+					</div>
+					<div class="btn-create">
+						<input type="submit" onclick = "funds.create_fund($('#choose_currency_div select').val());" value="Создать" class="ui-btn ui-btn-corner-all ui-shadow" />
+					</div>
+				</form>
 			</div>
-			<form onsubmit = "return false;" action="" accept-charset="UTF-8" method="post">
-						<div class="select-field" id="choose_currency_div">
-							<label>Выберите тип валюты</label><select name=""><option value="UAH (украинская гривня)">UAH (украинская гривня)</option>
-							</select>
-						</div>
-						<div class="btn-create">
-							<input type="submit" onclick = "funds.create_fund($('#choose_currency_div select').val());" value="Создать" class="ui-btn ui-btn-corner-all ui-shadow" />
-						</div></form>
-		</div>
-		<hr>
-		<div class="btn-trans">
-			<button onclick = "$.mobile.navigate('#transaction-page')" class="ui-btn ui-corner-all ui-shadow btn-save">Перевод средств</button>
+			<div class="btn-trans">
+				<button onclick = "$.mobile.navigate('#transaction-page')" class="ui-btn ui-corner-all ui-shadow btn-save">Перевод средств</button>
+			</div>
 		</div>
 	</div>
+	<div="right_col"></div>
 </div>
 
 <div id="transaction-page" data-role="page">
@@ -1412,7 +1410,8 @@
 		</div>
 	</div>
 	<div role="main" class="ui-content">
-		<form action="" accept-charset="UTF-8" onsubmit = "return false;" method="post">
+		<div class="left_col">
+			<form action="" accept-charset="UTF-8" onsubmit = "return false;" method="post">
 				<div class="select-field">
 					<label id = "choose-fund-label">Выбрать PIF</label><select id = "select_pif" name="fund_id"><option value="PIF ID232 Остаток 0">PIF ID232 Остаток 0</option>
 					</select>
@@ -1431,15 +1430,18 @@
 				</div>
 				<div class="btn-create">
 					<input id = "transaction-label" onclick = "funds.set_cash()" type="submit" value="Перевести" class="ui-btn ui-btn-corner-all ui-shadow" />
-				</div></form>
+				</div>
+			</form>
+		</div>
+		<div class="right_col"></div>
 	</div>
 </div>
 
-<div id="nko-page" data-role="page">
+<div id="nco-page" data-role="page">
 	<div data-role="header" data-position="fixed" data-tap-toggle="false">
 		<h1>NCO List</h1>
-		<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#program-nko-help">Ask</a>
-		<div id="program-nko-help" class="help-popup" data-role="popup" data-history="false">
+		<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#nco-help">Ask</a>
+		<div id="nco-help" class="help-popup" data-role="popup" data-history="false">
 			<div class="title">
 				Description
 			</div>
@@ -1449,16 +1451,13 @@
 		</div>
 	</div>
 	<div role="main" class="ui-content">
-		<div class="select-nko-wrap">
-			<div class="title">
-				Выберете <strong>НКО</strong> из текущих предложений:
-			</div>
-			<ol>
-			</ol>
-			<div class="btn-save">
-				<input type="submit" value="Сохранить" />
+		<div class="left_col">
+			<div class="select-nko-wrap">
+				<div class="nco_page_select_title"></div>
+				<div id="nco_full_list"></div>
 			</div>
 		</div>
+		<div class="right_col"></div>
 	</div>
 </div>
 
@@ -1476,47 +1475,50 @@
 		</div>
 	</div>
 	<div role="main" class="ui-content">
-		<div class="program-history-wrap">
-			<div class="ui-grid-b">
-				<div class="ui-block-a">
-					<div class="my-amount">
-						<strong></strong><span>Мой вклад</span>
+		<div class="left_col">
+			<div class="program-history-wrap">
+				<div class="ui-grid-b">
+					<div class="ui-block-a">
+						<div class="my-amount">
+							<strong></strong><span>Мой вклад</span>
+						</div>
 					</div>
-				</div>
-				<div class="ui-block-b">
-					<div class="amount up">
-						<strong></strong><span>Собранно на данный момент</span>
+					<div class="ui-block-b">
+						<div class="amount up">
+							<strong></strong><span>Собранно на данный момент</span>
+						</div>
 					</div>
-				</div>
-				<div class="ui-block-c">
-					<div class="total-amount">
+					<div class="ui-block-c">
+						<div class="total-amount">
 
-						<strong></strong><span>Нужное количество</span>
+							<strong></strong><span>Нужное количество</span>
+						</div>
 					</div>
 				</div>
+				<table>
+					<thead>
+						<tr>
+							<td>
+								Дата и время
+							</td>
+							<td>
+								ФИО
+							</td>
+							<td>
+								Сумма
+							</td>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
 			</div>
-			<table>
-				<thead>
-					<tr>
-						<td>
-							Дата и время
-						</td>
-						<td>
-							ФИО
-						</td>
-						<td>
-							Сумма
-						</td>
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-			</table>
 		</div>
+		<div class="right_col"></div>
 	</div>
 </div>
 
-<div id="public-proposals" data-role="page">
+<div id="public-proposals" data-role="page"> <!-- DELETE -->
 	<div data-role="header" data-position="fixed" data-tap-toggle="false">
 		<h1>Public proposals</h1>
 		<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#decision-making')" href="#decision-making">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#public-proposals-help">Ask</a>
@@ -1547,7 +1549,7 @@
 	</div>
 </div>
 
-<div id="local-self-governments" data-role="page">
+<div id="local-self-governments" data-role="page"> <!-- DELETE -->
 	<div data-role="header" data-position="fixed" data-tap-toggle="false">
 		<h1>Local self-governments</h1>
 		<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#decision-making')" href="#decision-making">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#local-self-governments-help">Ask</a>
@@ -1572,7 +1574,7 @@
 	</div>
 </div>
 
-<div id="co-owners" data-role="page">
+<div id="co-owners" data-role="page"> <!-- DELETE -->
 	<div data-role="header" data-position="fixed" data-tap-toggle="false">
 		<h1>Co-owners and co-investors</h1>
 		<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#decision-making')" href="#decision-making">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#co-owners-help">Ask</a>
@@ -1586,19 +1588,21 @@
 		</div>
 	</div>
 	<div role="main" class="ui-content">
-			 
-		<div class="btn-next-page">
-			<a class="ui-btn ui-btn-icon-right icon-votings" data-link = "#votings-page?type=3" href="#votings-page?type=3">Co-owners of real estate</a>
+		<div class="left_col">
+
+			<div class="btn-next-page">
+				<a class="ui-btn ui-btn-icon-right icon-votings" data-link = "#votings-page?type=3" href="#votings-page?type=3">Co-owners of real estate</a>
+			</div>
+			
+			<div class="btn-next-page">
+				<a class="ui-btn ui-btn-icon-right icon-votings" onclick = "$.mobile.navigate('#weighted-votings-page?my=2')" href="#">Co-investors of programs</a>
+			</div>
 		</div>
-		
-		<div class="btn-next-page">
-			<a class="ui-btn ui-btn-icon-right icon-votings" onclick = "$.mobile.navigate('#weighted-votings-page?my=2')" href="#">Co-investors of programs</a>
-		</div>
-		
+		<div class="right_col"></div>		
 	</div>
 </div>
 
-<div id="parties" data-role="page">
+<div id="parties" data-role="page"> <!-- DELETE  -->
 	<div data-role="header" data-position="fixed" data-tap-toggle="false">
 		<h1>Political parties, NGOs volunteering groups</h1>
 		<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#decision-making')" href="#decision-making">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#parties-help">Ask</a>
@@ -1612,20 +1616,21 @@
 		</div>
 	</div>
 	<div role="main" class="ui-content">
-		
-		<div class="btn-next-page">
-			<a class="ui-btn ui-btn-icon-right icon-votings" data-link = "#votings-page?type=4" href="#votings-page?type=1">Votings by spheres</a>
-		</div>
-		
-		<div class="btn-next-page">
-			<a class="ui-btn ui-btn-icon-right icon-votings" data-link = "#future" href="#future">Candidates` rating</a>
-		</div>
+		<div class="left_col">
 
-
+			<div class="btn-next-page">
+				<a class="ui-btn ui-btn-icon-right icon-votings" data-link = "#votings-page?type=4" href="#votings-page?type=1">Votings by spheres</a>
+			</div>
+			
+			<div class="btn-next-page">
+				<a class="ui-btn ui-btn-icon-right icon-votings" data-link = "#future" href="#future">Candidates` rating</a>
+			</div>
+		</div>
+		<div class="right_col"></div>
 	</div>
 </div>
 
-<div id="primaries" data-role="page">
+<div id="primaries" data-role="page"> <!-- DELETE -->
 	<div data-role="header" data-position="fixed" data-tap-toggle="false">
 		<h1>Primaries, elections, exit-polls</h1>
 		<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#decision-making')" href="#decision-making">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#primaries-help">Ask</a>
@@ -1639,15 +1644,16 @@
 		</div>
 	</div>
 	<div role="main" class="ui-content">
-		
-		<div class="btn-next-page">
-			<a class="ui-btn ui-btn-icon-right icon-votings" data-link = "#future" href="#future">Public primaries (Schulze method)</a>
-		</div>
+		<div class="left_col">
+			<div class="btn-next-page">
+				<a class="ui-btn ui-btn-icon-right icon-votings" data-link = "#future" href="#future">Public primaries (Schulze method)</a>
+			</div>
 
-		 <div class="btn-next-page">
-			<a class="ui-btn ui-btn-icon-right icon-votings" data-link = "#future" href="#future">Elections (exit-polls)</a>
+			 <div class="btn-next-page">
+				<a class="ui-btn ui-btn-icon-right icon-votings" data-link = "#future" href="#future">Elections (exit-polls)</a>
+			</div>
 		</div>
- 
+		<div class="right_col"></div>
 	</div>
 </div>
 
@@ -1665,9 +1671,10 @@
 		</div>
 	</div>
 	<div role="main" class="ui-content">
-		
-		<p>This option will be activated in future releases</p>
-		
+		<div class="left_col">
+			<p>This option will be activated in future releases</p>
+		</div>
+		<div class="right_col"></div>
 	</div>
 </div>
 
@@ -1685,9 +1692,8 @@
 		</div>
 	</div>
 	<div role="main" class="ui-content">
-		
-		<p>This option will be activated in future releases</p>
-	
+		<div class="left_col"></div>
+		<div class="right_col"></div>
 	</div>
 </div>
 
@@ -1705,96 +1711,57 @@
 		</div>
 	</div>
 	<div role="main" class="ui-content">
-		
-		<div data-role="collapsibleset">
-			<div data-role="collapsible">
-				<h3>Level 1 Record 1</h3>
-				<div data-role="collapsible">
-					<h3>Level 2 Record 1</h3>
-					<div data-role="collapsible">
-						<h3>Level 3 Record 1</h3>
-						<ul data-role="listview">
-							<li><a href="#">Last level list item 1</a></li>
-							<li><a href="#">Last level list item 2</a></li>
-							<li><a href="#">Last level list item 3</a></li>
-							<li><a href="#">Last level list item 4</a></li>
-							<li><a href="#">Last level list item 5</a></li>
-						</ul>
-					</div>
-					<div data-role="collapsible">
-						<h3>Level 3 Record 2</h3>
-						<ul data-role="listview">
-							<li><a href="#">Last level list item 1</a></li>
-							<li><a href="#">Last level list item 2</a></li>
-							<li><a href="#">Last level list item 3</a></li>
-							<li><a href="#">Last level list item 4</a></li>
-							<li><a href="#">Last level list item 5</a></li>
-						</ul>
-					</div>
+	
+		<div class="sph_selector">
+			<div class="sph_selector_type" data-role="collapsible">
+				<h3>TYPE 1</h3>
+				<div class="sph_selector_org" data-role="collapsible">
+					<h3>ORG 1</h3>
+					<ul data-role="listview">
+						<li><a href="#">Last level list item 1</a></li>
+						<li><a href="#">Last level list item 2</a></li>
+						<li><a href="#">Last level list item 3</a></li>
+						<li><a href="#">Last level list item 4</a></li>
+						<li><a href="#">Last level list item 5</a></li>
+					</ul>
 				</div>
-				<div data-role="collapsible">
-					<h3>Level 2 Record 2</h3>
-					<div data-role="collapsible">
-						<h3>Level 3 Record 1</h3>
-						<ul data-role="listview">
-							<li><a href="#">Last level list item 1</a></li>
-							<li><a href="#">Last level list item 2</a></li>
-							<li><a href="#">Last level list item 3</a></li>
-							<li><a href="#">Last level list item 4</a></li>
-							<li><a href="#">Last level list item 5</a></li>
-						</ul>
-					</div>
-					<div data-role="collapsible">
-						<h3>Level 3 Record 2</h3>
-						<div data-role="collapsible">
-							<h3>Level 4 Record 1</h3>
-							<div data-role="collapsible">
-								<h3>Level 5 Record 1</h3>
-								<ul data-role="listview">
-									<li><a href="#">Last level list item 1</a></li>
-									<li><a href="#">Last level list item 2</a></li>
-									<li><a href="#">Last level list item 3</a></li>
-									<li><a href="#">Last level list item 4</a></li>
-									<li><a href="#">Last level list item 5</a></li>
-								</ul>
-							</div>
-							<div data-role="collapsible">
-								<h3>Level 5 Record 2</h3>
-								<ul data-role="listview">
-									<li><a href="#">Last level list item 1</a></li>
-									<li><a href="#">Last level list item 2</a></li>
-									<li><a href="#">Last level list item 3</a></li>
-									<li><a href="#">Last level list item 4</a></li>
-									<li><a href="#">Last level list item 5</a></li>
-								</ul>
-							</div>
-						</div>
-						<div data-role="collapsible">
-							<h3>Level 4 Record 2</h3>
-							<ul data-role="listview">
-								<li><a href="#">Last level list item 1</a></li>
-								<li><a href="#">Last level list item 2</a></li>
-								<li><a href="#">Last level list item 3</a></li>
-								<li><a href="#">Last level list item 4</a></li>
-								<li><a href="#">Last level list item 5</a></li>
-							</ul>
-						</div>
-					</div>
-					<div data-role="collapsible">
-						<h3>Level 3 Record 3</h3>
-						<ul data-role="listview">
-							<li><a href="#">Last level list item 1</a></li>
-							<li><a href="#">Last level list item 2</a></li>
-							<li><a href="#">Last level list item 3</a></li>
-							<li><a href="#">Last level list item 4</a></li>
-							<li><a href="#">Last level list item 5</a></li>
-						</ul>
-					</div>
+				<div class="sph_selector_org" data-role="collapsible">
+					<h3>ORG 2</h3>
+					<ul data-role="listview">
+						<li><a href="#">Last level list item 1</a></li>
+						<li><a href="#">Last level list item 2</a></li>
+						<li><a href="#">Last level list item 3</a></li>
+						<li><a href="#">Last level list item 4</a></li>
+						<li><a href="#">Last level list item 5</a></li>
+					</ul>
 				</div>
 			</div>
 
-
+			<div class="sph_selector_type" data-role="collapsible">
+				<h3>TYPE 2</h3>
+				<div class="sph_selector_org" data-role="collapsible">
+					<h3>ORG 3</h3>
+					<ul data-role="listview">
+						<li><a href="#">Last level list item 1</a></li>
+						<li><a href="#">Last level list item 2</a></li>
+						<li><a href="#">Last level list item 3</a></li>
+						<li><a href="#">Last level list item 4</a></li>
+						<li><a href="#">Last level list item 5</a></li>
+					</ul>
+				</div>
+				<div class="sph_selector_org" data-role="collapsible">
+					<h3>ORG 4</h3>
+					<ul data-role="listview">
+						<li><a href="#">Last level list item 1</a></li>
+						<li><a href="#">Last level list item 2</a></li>
+						<li><a href="#">Last level list item 3</a></li>
+						<li><a href="#">Last level list item 4</a></li>
+						<li><a href="#">Last level list item 5</a></li>
+					</ul>
+				</div>
+			</div>
 		</div>
+
 	</div>
 </div>
 
@@ -1814,7 +1781,13 @@
 	<div role="main" class="ui-content">
 		<div class="left_col">
 			<div class="btn-next-page">
+				<a class="ui-btn ui-btn-icon-right icon-funds" data-link = "#my-fund-page" onclick="$.mobile.navigate('#my-fund-page')" href="#my-fund-page">Personal Funds</a>
+			</div>
+			<div class="btn-next-page">
 				<a class="ui-btn ui-btn-icon-right menu-icon-trust" data-link = "#trust-list" onclick="$.mobile.navigate('#trust-list')" href="#trust-list">Trust List</a>
+			</div>
+			<div class="btn-next-page">
+				<a class="ui-btn ui-btn-icon-right icon-votings" data-link = "#my-groups" onclick = "$.mobile.navigate('#my-groups')" href="#">My groups</a>
 			</div>
 			<div class="btn-next-page">
 				<a class="ui-btn ui-btn-icon-right icon-votings" data-link = "#my-votings-page" onclick = "$.mobile.navigate('#my-votings-page')" href="#">My votings</a>
@@ -1833,9 +1806,6 @@
 			</div>
 			<div class="btn-next-page">
 				<a class="ui-btn ui-btn-icon-right icon-requests" data-link = "#my_request-page" onclick = "$.mobile.navigate('#requests-page?my_request=true')" href="#">My requests</a>
-			</div>
-			<div class="btn-next-page">
-				<a class="ui-btn ui-btn-icon-right icon-votings" data-link = "#my-groups" onclick = "$.mobile.navigate('#my-groups')" href="#">My groups</a>
 			</div>
 		</div>
 		<div class="right_col"></div>
@@ -1857,15 +1827,13 @@
 	</div>
 	<div role="main" class="ui-content">
 		<div class="left_col">
-
 			<div class="ui-input-search ui-input-has-clear">
-				<input onkeyup="ORG_LIST.init(true)" id = "searched_string_org" class = "search_string" type="search" name="" placeholder="Search.." data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" onclick = "$('#my-spheres .search_string').val(''); $('#my-spheres .search_string').keyup();" href="">Clear text</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />
+				<input id = "search_group" class = "search_string" type="search" name="" placeholder="Search.." data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">Clear text</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />
 			</div>
 
 			<a id="btn_group_create" class="ui-btn ui-corner-all ui-shadow" href="#create-org">Create group/org</a>
 
-			<div class="vote-list news-list" id = 'org_list'>
-			</div>
+			<div class="news-list" id = 'org_list'></div>
 		</div>
 		<div class="right_col"></div>
 	</div>
@@ -1887,13 +1855,13 @@
 	<div role="main" class="ui-content">
 		<div class="left_col">
 
-			<a class="ui-btn ui-corner-all ui-shadow" href="#create-sphere">Create sphere</a>
+			<a id="create_sphere" class="ui-btn ui-corner-all ui-shadow" href="">Create sphere</a>
 
-			<a class="ui-btn ui-corner-all ui-shadow" href="#membership-manage">Manage user list</a>
+			<a id="members-btn" class="ui-btn ui-corner-all ui-shadow" href="#members">Manage user list</a>
 
-			<a class="ui-btn ui-corner-all ui-shadow" href="#membership-ask">Ask for membership</a>
+			<a id="membership_ask" class="ui-btn ui-corner-all ui-shadow" href="#membership-ask">Ask for membership</a>
 
-			<a class="ui-btn ui-corner-all ui-shadow" href="#membership-stop">Stop membership</a>
+			<a id="membership_stop" class="ui-btn ui-corner-all ui-shadow" href="#membership-stop">Stop membership</a>
 
 			<div class="vote-list news-list" id = 'group_spheres_list'></div>
 		</div>
@@ -1901,9 +1869,9 @@
 	</div>
 </div>
 
-<div id="membership-manage" data-role="page">
+<div id="members" data-role="page">
 	<div data-role="header" data-position="fixed" data-tap-toggle="false">
-		<h1>Manege users</h1>
+		<h1>Manage users</h1>
 		<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#my-spheres-options')" href="#my-spheres-options">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#my-votings-help">Ask</a>
 		<div id="my-votings-help" class="help-popup" data-role="popup" data-history="false">
 			<div class="title">
@@ -1917,71 +1885,15 @@
 	<div role="main" class="ui-content">
 		<div class="left_col">
 
-			<div class="ui-checkbox">
-				<label id = "members_checkbox" data-checked = "false" onclick = "MEMBERS_LIST.filter_by_id(false)" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">New calls only</label><input type="checkbox" name="members_checkbox" value="0" data-enhanced="true" />
-			</div>
-
 			<div class="ui-input-search ui-input-has-clear">
-				<input onkeyup="MEMBERS_LIST.init(true)" id = "searched_string_members" id = "search_string" type="search" name="" placeholder="Search.." data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" onclick = "$('#my-spheres-options .search_string').val(''); $('#my-spheres-options .search_string').keyup();" href="">Clear text</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />
+				<input id="filter_members" type="search" name="filter_members" placeholder="Search.." data-enhanced="true" /><a id="filter_clear" class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">Clear text</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />
 			</div>
 
-			<div class="items-list" id = 'members_list'>
-				
-				<div class="item ui-corner-all">
-					<div class="ui-block-a">
-						<div class="avatar">
-							<img src="https://gurtom.mobi/uploads/avatar.svg" />
-						</div>
-					</div>
-					<div class="ui-block-b">
-						<div class="id">ID: 307 a-xomenko</div>
-						<div class="name">Oleksandr Khomenko</div>
-					</div>
-					<div class="ui-grid-a">
-						<div class="ui-block-b">
-							<div></div>
-							<div><img class="ui-corner-all" src="images/trust-icon-email.png" /></div>
-						</div>
-						<div class="osmd-list">
-							<div></div>
-						</div>
-					</div>
-				</div>
-
-				<div class="item ui-corner-all">
-					<div class="ui-block-a">
-						<div class="avatar">
-							<img src="https://gurtom.mobi/images/logo.png" />
-						</div>
-					</div>
-					<div class="ui-block-b">
-						<div class="id">ID: 1 admin</div>
-						<div class="name">Andre`s Morrison</div>
-						<a class="ui-btn ui-shadow ui-corner-all" href="#" onclick="MEMEBERS_LIST.approve(1);">Approve</a>
-						<a class="ui-btn ui-shadow ui-corner-all btn-delete" href="#" onclick="MEMEBERS_LIST.decline('1');">Decline</a>
-					</div>
-					<div class="ui-grid-a">
-						<div class="ui-block-b">
-							<div>
-								<img class="ui-corner-all" src="images/trust-icon-gp.png" />
-							</div>
-							<div>
-								<img class="ui-corner-all" src="images/trust-icon-email.png" />
-								<img class="ui-corner-all" src="images/trust-icon-community.png" />
-								<img class="ui-corner-all" src="images/trust-icon-house.png" />
-								<img class="ui-corner-all" src="images/trust-icon-wallet.png" />
-							</div>
-						</div>
-						<div class="osmd-list">
-							<div></div>
-						</div>
-					</div>
-				</div>
-
-
-
-
+			<div class="ui-checkbox">
+				<input type="checkbox" checked="checked" name="members_checkbox" id="members_checkbox" class="custom"/><label id="members_checkbox_label" for="members_checkbox">New calls only</label>
 			</div>
+
+			<div class="items_list" id ='members_list'></div>
 		</div>
 		<div class="right_col"></div>
 	</div>
@@ -2004,32 +1916,6 @@
 	</div>
 </div>
 
-<div id="social-investment" data-role="page">
-	<div data-role="header" data-position="fixed" data-tap-toggle="false">
-		<h1>Social Investment</h1>
-		<a class="ui-btn ui-btn-left ui-icon-bars ui-btn-corner-all ui-btn-icon-notext" href="#left-panel">Menu</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#social-investment-help">Ask</a>
-		<div id="social-investment-help" class="help-popup" data-role="popup" data-history="false">
-			<div class="title">
-				Description
-			</div>
-			<div class="text">
-				help text
-			</div>
-		</div>
-	</div>
-	<div role="main" class="ui-content">
-
-		<div class="btn-next-page">
-			<a class="ui-btn ui-btn-icon-right icon-funds" data-link = "#my-fund-page" onclick = "$.mobile.navigate('#my-fund-page')" href="#">My Personal Funds</a>
-		</div>
-
-		<div class="btn-next-page">
-			<a class="ui-btn ui-btn-icon-right menu-icon-programs" onclick = "$.mobile.navigate('#programs-page')" data-link = "#programs-page" href="#programs-page">Program of social co-investment</a>
-		</div>
-		
-	</div>
-</div>
-
 <div id="social-entrepreneurship" data-role="page">
 	<div data-role="header" data-position="fixed" data-tap-toggle="false">
 		<h1>Social Entrepreneurship</h1>
@@ -2044,21 +1930,110 @@
 		</div>
 	</div>
 	<div role="main" class="ui-content">
-		
-		<div class="btn-next-page">
-			<a class="ui-btn ui-btn-icon-right menu-icon-projects" onclick = "$.mobile.navigate('#projects-page')" data-link = "#projects-page" href="#">Projects</a>
+		<div class="left_col">
+			<div class="btn-next-page">
+				<a class="ui-btn ui-btn-icon-right menu-icon-projects" onclick = "$.mobile.navigate('#projects-page')" data-link = "#projects-page" href="#">Projects</a>
+			</div>
+			
+			<div class="btn-next-page">
+				<a class="ui-btn ui-btn-icon-right icon-projects projects_on_call" onclick = "$.mobile.navigate('#projects-page?program=0')" data-link = "#projects-page?program=0" href="#">Projects on Call</a>
+			</div>
+			
+			<div class="btn-next-page">
+				<a class="ui-btn ui-btn-icon-right menu-icon-requests" onclick = "$.mobile.navigate('#requests-page')" data-link = "#requests-page" href="#">Requests for help</a>
+			</div>
 		</div>
-		
-		<div class="btn-next-page">
-			<a class="ui-btn ui-btn-icon-right icon-projects projects_on_call" onclick = "$.mobile.navigate('#projects-page?program=0')" data-link = "#projects-page?program=0" href="#">Projects on Call</a>
-		</div>
-		
-		<div class="btn-next-page">
-			<a class="ui-btn ui-btn-icon-right menu-icon-requests" onclick = "$.mobile.navigate('#requests-page')" data-link = "#requests-page" href="#">Requests for help</a>
-		</div>
-		
+		<div class="right_col"></div>		
 	</div>
 </div>
+
+<div id="add-group" data-role="page">
+	<div data-role="header" data-position="fixed" data-tap-toggle="false">
+		<h1 id = "title_item">Add item</h1>
+		<a id="add-group-back" class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" href="#my-groups">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#create-item-help">Ask</a>
+		<div id="create-item-help" class="help-popup" data-role="popup" data-history="false">
+			<div class="title">
+				Description
+			</div>
+			<div class="text">
+				help text
+			</div>
+		</div>
+	</div>
+	<div role="main" class="ui-content">
+		<div class="left_col">
+			<form onsubmit = "return false;" action="" accept-charset="UTF-8" method="post">
+				<div class="text-field">
+					<label class = "name_en">name_en</label>
+					<div class="ui-input-text">
+						<input type="text" required name="name_en" placeholder="Name in english" data-enhanced="true" />
+					</div>
+				</div>
+				<div class="text-field">
+					<label class = "name_uk">name_uk</label>
+					<div class="ui-input-text">
+						<input type="text" required name="name_uk" placeholder="Назва українською" data-enhanced="true" />
+					</div>
+				</div>
+				<div class="text-field">
+					<label class = "name_ru">name_ru</label>
+					<div class="ui-input-text">
+						<input type="text" required name="name_ru" placeholder="Название на русском" data-enhanced="true" />
+					</div>
+				</div>
+<!--
+ 				<div class="text-field">
+					<label class="country">Country</label><select name="country"></select>
+				</div>
+				<div class="text-field">
+					<label class="state">State</label><select name="state"></select>
+				</div>
+				<div class="text-field">
+					<label class="county">County</label><select name="county"></select>
+				</div>
+				<div class="text-field">
+					<label class="city">City</label><select name="city"></select>
+				</div> -->
+				<input id="add_btn" type="submit" value="Add group" class="ui-btn ui-input-btn ui-corner-all ui-shadow" />
+			</form>
+		</div>
+		<div class="right_col"></div>
+	</div>
+</div>
+
+<div id="add-group-shpere" data-role="page">
+	<div data-role="header" data-position="fixed" data-tap-toggle="false">
+		<h1 id = "title_item">Add item</h1>
+		<a id="add-group-sphere-back" class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" back="" href="">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#create-item-help">Ask</a>
+		<div id="create-item-help" class="help-popup" data-role="popup" data-history="false">
+			<div class="title">
+				Description
+			</div>
+			<div class="text">
+				help text
+			</div>
+		</div>
+	</div>
+	<div role="main" class="ui-content">
+		<div class="left_col">
+			<form onsubmit = "return false;" action="" accept-charset="UTF-8" method="post">
+				<div class="text-field">
+					<div class="ui-widget">
+				 		<select id="full_spheres_list">
+							<option value="" class="select_one">Select one...</option>
+						</select>
+						<div class="ui-widget">
+							<label for="sph_name" class="or_label">or</label></label><input id="sph_name" placeholder="enter name of sphere.." />
+						</div>
+					</div>
+				</div>
+				<input id="add_sph" type="submit" value="submit" name="submit" />
+			</form>
+		</div>
+		<div class="right_col"></div>
+	</div>
+</div>
+
 
 <div id="create-item" data-role="page">
 	<div data-role="header" data-position="fixed" data-tap-toggle="false">
@@ -2073,192 +2048,196 @@
 			</div>
 		</div>
 	</div>
-	<div role="main" class="ui-content"><form onsubmit = "return false;" action="" accept-charset="UTF-8" method="post">
-		<div style = "display:none;" class="select-field">
-			<select onchange = "CREATE_ITEM.switch_item()" name="type_item">
-				<option value="2">Program</option>
-				<option value="3">Project proposition</option>
-				<option value="4">Project</option>
-				<option value="5">Request</option>
-				<option value="6">Weighted votings</option>
-			</select>
-		</div>
-		<div class="text-field">
-			<label id = "name_item">Title</label>
-			<div class="ui-input-text">
-				<input type="text" name="title" placeholder="Name" data-enhanced="true" />
-			</div>
-		</div>
-		<div class="text-field">
-			<label id = "description-label">Description*</label><textarea name="descr" rows="" cols="" class="" data-role="none"></textarea>
-		</div>
-		<div class="text-field">
-			<label id = "tags-label">Separate hashtags with commas</label>
-			<div class="ui-input-text">
-				<input type="text" name="tags" placeholder="politic, human, sport, world" data-enhanced="true" />
-			</div>
-		</div>
-		<div id = "curr" class="select-field">
-			<label id = "curr-label">Choose currency</label><select name="curr"></select>
-		</div>
-		<div id = "amount" class="text-field">
-			<label id = "amount-label">The required amount of funds</label>
-			<div class="ui-input-text">
-				<input type="text" name="amount" placeholder="10000" data-enhanced="true" />
-			</div>
-		</div>
-		<div class="ui-input-file">
-			<input style = "cursor:pointer" onclick = "$('#create-item [name=picture]').click()" name="" data-enhanced="true" /><span id = "photo-label">Upload avatar of this item*</span>
-		</div>
-		<div id = "image_div" style = "display:none">
-			<center><img height = "100px" src = ""></center>
-		</div>
-		<fieldset id = "start" class="date-group" data-role="controlgroup" data-type="horizontal">
-			<legend id = "first-date-label">Enter first date</legend><select name="start_date"><option value="1">1</option>
-			<option value="2">2</option>
-			<option value="3">3</option>
-			<option value="4">4</option>
-			<option value="5">5</option>
-			<option value="6">6</option>
-			<option value="7">7</option>
-			<option value="8">8</option>
-			<option value="9">9</option>
-			<option value="10">10</option>
-			<option value="11">11</option>
-			<option value="12">12</option>
-			<option value="13">13</option>
-			<option value="14">14</option>
-			<option value="15">15</option>
-			<option value="16">16</option>
-			<option value="17">17</option>
-			<option value="18">18</option>
-			<option value="19">19</option>
-			<option value="20">20</option>
-			<option value="21">21</option>
-			<option value="22">22</option>
-			<option value="23">23</option>
-			<option value="24">24</option>
-			<option value="25">25</option>
-			<option value="26">26</option>
-			<option value="27">27</option>
-			<option value="28">28</option>
-			<option value="29">29</option>
-			<option value="30">30</option>
-			<option value="31">31</option>
-			</select><select name="start_month"><option value="January">January</option>
-			<option value="February">February</option>
-			<option value="March">March</option>
-			<option value="April">April</option>
-			<option value="May">May</option>
-			<option value="June">June</option>
-			<option value="July">July</option>
-			<option value="August">August</option>
-			<option value="September">September</option>
-			<option value="October">October</option>
-			<option value="November">November</option>
-			<option value="December">December</option>
-			</select><select name="start_year"><option value="1990">1990</option>
-			<option value="1991">1991</option>
-			<option value="1992">1992</option>
-			<option value="1993">1993</option>
-			<option value="1994">1994</option>
-			<option value="1995">1995</option>
-			<option value="1996">1996</option>
-			<option value="1997">1997</option>
-			<option value="1997">1997</option>
-			<option value="1999">1999</option>
-			<option value="2000">2000</option>
-			</select>
-		</fieldset>
-		<fieldset id = "dtex" class="date-group" data-role="controlgroup" data-type="horizontal">
-			<legend id = "last-date-label">Enter last date</legend><select name="dtex_date"><option value="1">1</option>
-			<option value="2">2</option>
-			<option value="3">3</option>
-			<option value="4">4</option>
-			<option value="5">5</option>
-			<option value="6">6</option>
-			<option value="7">7</option>
-			<option value="8">8</option>
-			<option value="9">9</option>
-			<option value="10">10</option>
-			<option value="11">11</option>
-			<option value="12">12</option>
-			<option value="13">13</option>
-			<option value="14">14</option>
-			<option value="15">15</option>
-			<option value="16">16</option>
-			<option value="17">17</option>
-			<option value="18">18</option>
-			<option value="19">19</option>
-			<option value="20">20</option>
-			<option value="21">21</option>
-			<option value="22">22</option>
-			<option value="23">23</option>
-			<option value="24">24</option>
-			<option value="25">25</option>
-			<option value="26">26</option>
-			<option value="27">27</option>
-			<option value="28">28</option>
-			<option value="29">29</option>
-			<option value="30">30</option>
-			<option value="31">31</option>
-			</select><select name="dtex_month"><option value="January">January</option>
-			<option value="February">February</option>
-			<option value="March">March</option>
-			<option value="April">April</option>
-			<option value="May">May</option>
-			<option value="June">June</option>
-			<option value="July">July</option>
-			<option value="August">August</option>
-			<option value="September">September</option>
-			<option value="October">October</option>
-			<option value="November">November</option>
-			<option value="December">December</option>
-			</select><select name="dtex_year"><option value="1990">1990</option>
-			<option value="1991">1991</option>
-			<option value="1992">1992</option>
-			<option value="1993">1993</option>
-			<option value="1994">1994</option>
-			<option value="1995">1995</option>
-			<option value="1996">1996</option>
-			<option value="1997">1997</option>
-			<option value="1997">1997</option>
-			<option value="1999">1999</option>
-			<option value="2000">2000</option>
-			</select>
-		</fieldset>
-		<div id = "program_id" class="text-field">
-			<label id = "id-program-label">Type ID of program</label>
-			<div class="ui-input-text">
-				<input type="text" name="program_id" placeholder="10000" data-enhanced="true" />
-			</div>
-		</div>
-		<div id = "ben" class="text-field">
-			<label id = "beneficiar-label">Type name of beneficiar</label>
-			<div class="ui-input-text">
-				<input type="text" name="ben" placeholder="Beneficiar" data-enhanced="true" />
-			</div>
-		</div>
-		<div id = "nco_content">
-		</div>
-		<div class="btn-nko">
-			<input id = "choose-nco-label" type="submit" onclick = "$.mobile.navigate('#create-item-nko-page')" value="Выбрать НКО" class="ui-btn ui-btn-corner-all ui-shadow" />
-			<input type = "hidden" name = "nco" value = "">
-		</div>
-		<div class="btn-create">
-			<input id = "create-label" id = "submit" onclick = "CREATE_ITEM.create_object()" type="submit" value="Create" class="ui-btn ui-btn-corner-all ui-shadow" />
-		</div></form>
-
-		<div style = "display:none">
-			<form id = "additional_photo_form" action = "https://gurtom.mobi/i/up.php" method="post" enctype="multipart/form-data">
-				Select image to upload:
-				<input type="hidden" name="MAX_FILE_SIZE" value="3000000">
-				<input type="file" name="picture" onchange="$('#additional_photo_form').submit()">
-				<input type="text" name="type" value="0">
-				<input type="submit" value="upload" name="submit">
+	<div role="main" class="ui-content">
+		<div class="left_col">
+			<form onsubmit = "return false;" action="" accept-charset="UTF-8" method="post">
+				<div style = "display:none;" class="select-field">
+					<select onchange = "CREATE_ITEM.switch_item()" name="type_item">
+						<option value="2">Program</option>
+						<option value="3">Project proposition</option>
+						<option value="4">Project</option>
+						<option value="5">Request</option>
+						<option value="6">Weighted votings</option>
+					</select>
+				</div>
+				<div class="text-field">
+					<label id = "name_item">Title</label>
+					<div class="ui-input-text">
+						<input type="text" name="title" placeholder="Name" data-enhanced="true" />
+					</div>
+				</div>
+				<div class="text-field">
+					<label id = "description-label">Description*</label><textarea name="descr" rows="" cols="" class="" data-role="none"></textarea>
+				</div>
+				<div class="text-field">
+					<label id = "tags-label">Separate hashtags with commas</label>
+					<div class="ui-input-text">
+						<input type="text" name="tags" placeholder="politic, human, sport, world" data-enhanced="true" />
+					</div>
+				</div>
+				<div id = "curr" class="select-field">
+					<label id = "curr-label">Choose currency</label><select name="curr"></select>
+				</div>
+				<div id = "amount" class="text-field">
+					<label id = "amount-label">The required amount of funds</label>
+					<div class="ui-input-text">
+						<input type="text" name="amount" placeholder="10000" data-enhanced="true" />
+					</div>
+				</div>
+				<div class="ui-input-file">
+					<input style = "cursor:pointer" onclick = "$('#create-item [name=picture]').click()" name="" data-enhanced="true" /><span id = "photo-label">Upload avatar of this item*</span>
+				</div>
+				<div id = "image_div" style = "display:none">
+					<center><img height = "100px" src = ""></center>
+				</div>
+				<fieldset id = "start" class="date-group" data-role="controlgroup" data-type="horizontal">
+					<legend id = "first-date-label">Enter first date</legend><select name="start_date"><option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+					<option value="8">8</option>
+					<option value="9">9</option>
+					<option value="10">10</option>
+					<option value="11">11</option>
+					<option value="12">12</option>
+					<option value="13">13</option>
+					<option value="14">14</option>
+					<option value="15">15</option>
+					<option value="16">16</option>
+					<option value="17">17</option>
+					<option value="18">18</option>
+					<option value="19">19</option>
+					<option value="20">20</option>
+					<option value="21">21</option>
+					<option value="22">22</option>
+					<option value="23">23</option>
+					<option value="24">24</option>
+					<option value="25">25</option>
+					<option value="26">26</option>
+					<option value="27">27</option>
+					<option value="28">28</option>
+					<option value="29">29</option>
+					<option value="30">30</option>
+					<option value="31">31</option>
+					</select><select name="start_month"><option value="January">January</option>
+					<option value="February">February</option>
+					<option value="March">March</option>
+					<option value="April">April</option>
+					<option value="May">May</option>
+					<option value="June">June</option>
+					<option value="July">July</option>
+					<option value="August">August</option>
+					<option value="September">September</option>
+					<option value="October">October</option>
+					<option value="November">November</option>
+					<option value="December">December</option>
+					</select><select name="start_year"><option value="1990">1990</option>
+					<option value="1991">1991</option>
+					<option value="1992">1992</option>
+					<option value="1993">1993</option>
+					<option value="1994">1994</option>
+					<option value="1995">1995</option>
+					<option value="1996">1996</option>
+					<option value="1997">1997</option>
+					<option value="1997">1997</option>
+					<option value="1999">1999</option>
+					<option value="2000">2000</option>
+					</select>
+				</fieldset>
+				<fieldset id = "dtex" class="date-group" data-role="controlgroup" data-type="horizontal">
+					<legend id = "last-date-label">Enter last date</legend><select name="dtex_date"><option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+					<option value="8">8</option>
+					<option value="9">9</option>
+					<option value="10">10</option>
+					<option value="11">11</option>
+					<option value="12">12</option>
+					<option value="13">13</option>
+					<option value="14">14</option>
+					<option value="15">15</option>
+					<option value="16">16</option>
+					<option value="17">17</option>
+					<option value="18">18</option>
+					<option value="19">19</option>
+					<option value="20">20</option>
+					<option value="21">21</option>
+					<option value="22">22</option>
+					<option value="23">23</option>
+					<option value="24">24</option>
+					<option value="25">25</option>
+					<option value="26">26</option>
+					<option value="27">27</option>
+					<option value="28">28</option>
+					<option value="29">29</option>
+					<option value="30">30</option>
+					<option value="31">31</option>
+					</select><select name="dtex_month"><option value="January">January</option>
+					<option value="February">February</option>
+					<option value="March">March</option>
+					<option value="April">April</option>
+					<option value="May">May</option>
+					<option value="June">June</option>
+					<option value="July">July</option>
+					<option value="August">August</option>
+					<option value="September">September</option>
+					<option value="October">October</option>
+					<option value="November">November</option>
+					<option value="December">December</option>
+					</select><select name="dtex_year"><option value="1990">1990</option>
+					<option value="1991">1991</option>
+					<option value="1992">1992</option>
+					<option value="1993">1993</option>
+					<option value="1994">1994</option>
+					<option value="1995">1995</option>
+					<option value="1996">1996</option>
+					<option value="1997">1997</option>
+					<option value="1997">1997</option>
+					<option value="1999">1999</option>
+					<option value="2000">2000</option>
+					</select>
+				</fieldset>
+				<div id = "program_id" class="text-field">
+					<label id = "id-program-label">Type ID of program</label>
+					<div class="ui-input-text">
+						<input type="text" name="program_id" placeholder="10000" data-enhanced="true" />
+					</div>
+				</div>
+				<div id = "ben" class="text-field">
+					<label id = "beneficiar-label">Type name of beneficiar</label>
+					<div class="ui-input-text">
+						<input type="text" name="ben" placeholder="Beneficiar" data-enhanced="true" />
+					</div>
+				</div>
+				<div id = "nco_content">
+				</div>
+				<div class="btn-nko">
+					<input id = "choose-nco-label" type="submit" onclick = "$.mobile.navigate('#create-item-nko-page')" value="Выбрать НКО" class="ui-btn ui-btn-corner-all ui-shadow" />
+					<input type = "hidden" name = "nco" value = "">
+				</div>
+				<div class="btn-create">
+					<input id = "create-label" id = "submit" onclick = "CREATE_ITEM.create_object()" type="submit" value="Create" class="ui-btn ui-btn-corner-all ui-shadow" />
+				</div>
 			</form>
-			<input type="hidden" name="response_img" id = "response_img" value="">
+			<div style = "display:none">
+				<form id = "additional_photo_form" action = "https://gurtom.mobi/i/up.php" method="post" enctype="multipart/form-data">
+					Select image to upload:
+					<input type="hidden" name="MAX_FILE_SIZE" value="3000000">
+					<input type="file" name="picture" onchange="$('#additional_photo_form').submit()">
+					<input type="text" name="type" value="0">
+					<input type="submit" value="upload" name="submit">
+				</form>
+				<input type="hidden" name="response_img" id = "response_img" value="">
+			</div>
 		</div>
+		<div class="right_col"></div>
 	</div>
 </div>
 
@@ -2276,11 +2255,14 @@
 		</div>
 	</div>
 	<div role="main" class="ui-content">
-		<div class="select-nko-wrap">
-			<div class="title">
-				Choose <strong>NCO</strong> from list below:
+		<div class="left_col">
+			<div class="select-nko-wrap">
+				<div class="title">
+					Choose <strong>NCO</strong> from list below:
+				</div>
 			</div>
 		</div>
+		<div class="right_col"></div>
 	</div>
 </div>
 
@@ -2425,9 +2407,12 @@
 		</div>
 	</div>
 	<div role="main" class="ui-content">
-	<a  id = "filter_slider"  class="ui-btn ui-corner-all ui-shadow" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>		
-		<a class="ui-btn ui-corner-all ui-shadow create-vote" href="#create-vote">Создать голосование</a>
-		<div class="votings-list" id = 'votings_list'></div>
+		<div class="left_col">
+			<a  id = "filter_slider"  class="ui-btn ui-corner-all ui-shadow" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>		
+			<a class="ui-btn ui-corner-all ui-shadow create-vote" href="#create-vote">Создать голосование</a>
+			<div class="votings-list" id = 'votings_list'></div>
+		</div>
+		<div class="right_col"></div>
 	</div>
 </div>
 
@@ -2479,38 +2464,41 @@
 		</div>
 	</div>
 	<div role="main" class="ui-content">
-		<form action="" accept-charset="UTF-8" method="post">
-			<fieldset class="date-group" data-role="controlgroup" data-type="horizontal">
-				<legend>Enter first date for sort</legend><select name="start_date">
-				</select><select name="start_month" >
-				</select><select name="start_year" >
-				</select>
-			</fieldset>
-			<fieldset class="date-group" data-role="controlgroup" data-type="horizontal">
-				<legend>Enter last date for sort</legend>
-				<select name="end_date"></select>
-				<select name="end_month" ><option value="01"></option></select>
-				<select name="end_year"></select>
-			</fieldset>
-			<div class="btn-next-page">
-				<a class="ui-btn ui-btn-icon-right" id = "choose_spheres" href="#spheres-filters">Choose spheres</a>
-			</div>
-			<div style = "display: none" class="btn-next-page">
-				<a class="ui-btn ui-btn-icon-right" href="#">Choose priority</a>
-			</div>
-			<div class="ui-grid-a">
-				<div  onclick = "VOTINGS.filter_data(); $.mobile.navigate('#votings-page')" class="ui-block-a">
-					<div  class="ui-input-btn ui-btn ui-btn-icon-right filter-save">
-						<span>Save filter</span><input type="button" value="" data-enhanced="true" />
+		<div class="left_col">
+			<form action="" accept-charset="UTF-8" method="post">
+				<fieldset class="date-group" data-role="controlgroup" data-type="horizontal">
+					<legend>Enter first date for sort</legend><select name="start_date">
+					</select><select name="start_month" >
+					</select><select name="start_year" >
+					</select>
+				</fieldset>
+				<fieldset class="date-group" data-role="controlgroup" data-type="horizontal">
+					<legend>Enter last date for sort</legend>
+					<select name="end_date"></select>
+					<select name="end_month" ><option value="01"></option></select>
+					<select name="end_year"></select>
+				</fieldset>
+				<div class="btn-next-page">
+					<a class="ui-btn ui-btn-icon-right" id = "choose_spheres" href="#spheres-filters">Choose spheres</a>
+				</div>
+				<div style = "display: none" class="btn-next-page">
+					<a class="ui-btn ui-btn-icon-right" href="#">Choose priority</a>
+				</div>
+				<div class="ui-grid-a">
+					<div  onclick = "VOTINGS.filter_data(); $.mobile.navigate('#votings-page')" class="ui-block-a">
+						<div  class="ui-input-btn ui-btn ui-btn-icon-right filter-save">
+							<span>Save filter</span><input type="button" value="" data-enhanced="true" />
+						</div>
+					</div>
+					<div onclick = "VOTINGS.init(); $.mobile.navigate('#votings-page')" class="ui-block-b">
+						<div  class="ui-input-btn ui-btn ui-btn-icon-right filter-clear">
+							<span>Clear filter</span><input type="button" value="" data-enhanced="true" />
+						</div>
 					</div>
 				</div>
-				<div onclick = "VOTINGS.init(); $.mobile.navigate('#votings-page')" class="ui-block-b">
-					<div  class="ui-input-btn ui-btn ui-btn-icon-right filter-clear">
-						<span>Clear filter</span><input type="button" value="" data-enhanced="true" />
-					</div>
-				</div>
-			</div>
-		</form>
+			</form>
+		</div>
+		<div class="right_col"></div>			
 	</div>
 </div>
 
@@ -2528,259 +2516,262 @@
 		</div>
 	</div>
 	<div role="main" class="ui-content">
-		<form action="" accept-charset="UTF-8" method="post" onsubmit = "CREATE_VOTE.sendFormData(); return false;">
-			<div class="text-field">
-				<label>Name your voting*</label>
-				<div class="ui-input-text">
-					<input type="text" name="name" placeholder="Name" data-enhanced="true" />
+		<div class="left_col">
+			<form action="" accept-charset="UTF-8" method="post" onsubmit = "CREATE_VOTE.sendFormData(); return false;">
+				<div class="text-field">
+					<label>Name your voting*</label>
+					<div class="ui-input-text">
+						<input type="text" name="name" placeholder="Name" data-enhanced="true" />
+					</div>
 				</div>
-			</div>
-			<div class="text-field">
-				<label>Description*</label>
-				<textarea name="descr" rows="" cols="" class="" data-role="none"></textarea>
-			</div>
-
-
-			
-			<div class="btn-next-page">
-				<a id = "create_vote_sphere" class="ui-btn ui-btn-icon-right" href="#spheres-create-vote">Choose spheres*</a>
-				<input  type = "hidden" name = "sph" value = "">
-			</div>
-			<div style ="display:none" class="btn-next-page">
-				<a class="ui-btn ui-btn-icon-right" href="#geo-page">Choose your geo-position of voting*</a>
-			</div>
-			<div class="ui-input-file">
-				<input style = "cursor:pointer" id = "img" name="" data-enhanced="true" /><span>Upload avatar of yor vote*</span>
-			</div>
-			<div id = "image_div_create_vote" style = "display:none">
-				<center><img height = "100px" src = ""></center>
-			</div>
-			<div class="text-field">
-				<label>Minimum support amount</label>
-				<div class="ui-input-text">
-					<input  type="text" name="sprt" placeholder="123" value="30" data-enhanced="true" />
+				<div class="text-field">
+					<label>Description*</label>
+					<textarea name="descr" rows="" cols="" class="" data-role="none"></textarea>
 				</div>
-			</div>
-			<fieldset class="date-group" data-role="controlgroup" data-type="horizontal">
-				<legend>Enter first date of vote</legend>
-				<select name="s_time_date"></select>
-				<select name="s_time_month"></select>
-				<select name="s_time_year"></select>
-			</fieldset>
-			<fieldset class="date-group" data-role="controlgroup" data-type="horizontal">
-				<legend>Enter last date of vote</legend>
-				<select name="f_time_date"></select>
-				<select name="f_time_month"></select>
-				<select name="f_time_year"></select>
-			</fieldset>
-			<fieldset class="checkbox-group" data-role="controlgroup">
-				<legend>Choose status of authorisation</legend>
-				<div class="ui-checkbox">
-					<label id = "v0" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-on">Email</label><input type="checkbox" name="" value="1" data-enhanced="true" data-cacheval="false" />
+				<label>
+        			<input id="create_vote_global_sphere" name="glob_shp" type="checkbox" />Global vote
+    			</label>
+				<div class="btn-next-page">
+					<a id = "create_vote_sphere" class="ui-btn ui-btn-icon-right" href="#spheres-create-vote">Choose spheres*</a>
+					<input  type = "hidden" name = "sph" value = "">
 				</div>
-				<div class="ui-checkbox">
-					<label id = "v1" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-on">Social Network</label><input type="checkbox" name="" value="1" data-enhanced="true" />
+				<div style ="display:none" class="btn-next-page">
+					<a class="ui-btn ui-btn-icon-right" href="#geo-page">Choose your geo-position of voting*</a>
 				</div>
-				<div class="ui-checkbox">
-					<label id = "v2" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-on">By payment</label><input type="checkbox" name="" value="1" data-enhanced="true" />
+				<div class="ui-input-file">
+					<input style = "cursor:pointer" id = "img" name="" data-enhanced="true" /><span>Upload avatar of yor vote*</span>
 				</div>
-				<div class="ui-checkbox">
-					<label id = "v3" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-on">By passport</label><input type="checkbox" name="" value="1" data-enhanced="true" />
+				<div id = "image_div_create_vote" style = "display:none">
+					<center><img height = "100px" src = ""></center>
 				</div>
-				<div class="ui-checkbox">
-					<label id = "v4" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-on">Community</label><input type="checkbox" name="" value="1" data-enhanced="true" />
+				<div class="text-field">
+					<label>Minimum support amount</label>
+					<div class="ui-input-text">
+						<input  type="text" name="sprt" placeholder="123" value="30" data-enhanced="true" />
+					</div>
 				</div>
-				<div class="ui-checkbox">
-					<label id = "v5" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-on">Сo-owners</label><input type="checkbox" name="" value="1" data-enhanced="true" />
+				<fieldset class="date-group" data-role="controlgroup" data-type="horizontal">
+					<legend>Enter first date of vote</legend>
+					<select name="s_time_date"></select>
+					<select name="s_time_month"></select>
+					<select name="s_time_year"></select>
+				</fieldset>
+				<fieldset class="date-group" data-role="controlgroup" data-type="horizontal">
+					<legend>Enter last date of vote</legend>
+					<select name="f_time_date"></select>
+					<select name="f_time_month"></select>
+					<select name="f_time_year"></select>
+				</fieldset>
+				<fieldset class="checkbox-group" data-role="controlgroup">
+					<legend>Choose status of authorisation</legend>
+					<div class="ui-checkbox">
+						<label id = "v0" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-on">Email</label><input type="checkbox" name="" value="1" data-enhanced="true" data-cacheval="false" />
+					</div>
+					<div class="ui-checkbox">
+						<label id = "v1" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-on">Social Network</label><input type="checkbox" name="" value="1" data-enhanced="true" />
+					</div>
+					<div class="ui-checkbox">
+						<label id = "v2" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-on">By payment</label><input type="checkbox" name="" value="1" data-enhanced="true" />
+					</div>
+					<div class="ui-checkbox">
+						<label id = "v3" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-on">By passport</label><input type="checkbox" name="" value="1" data-enhanced="true" />
+					</div>
+					<div class="ui-checkbox">
+						<label id = "v4" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-on">Community</label><input type="checkbox" name="" value="1" data-enhanced="true" />
+					</div>
+					<div class="ui-checkbox">
+						<label id = "v5" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-on">Сo-owners</label><input type="checkbox" name="" value="1" data-enhanced="true" />
+					</div>
+				</fieldset>
+				<fieldset class="select-group" data-role="controlgroup" data-type="horizontal">
+					<legend>Enter age members who can vote</legend><span class="label">From</span>
+					<select name="age_from">
+						<option selected value="16">16</option>
+						<option value="17">17</option>
+						<option value="18">18</option>
+						<option value="19">19</option>
+						<option value="20">20</option>
+						<option value="21">21</option>
+						<option value="22">22</option>
+						<option value="23">23</option>
+						<option value="24">24</option>
+						<option value="25">25</option>
+						<option value="26">26</option>
+						<option value="27">27</option>
+						<option value="28">28</option>
+						<option value="29">29</option>
+						<option value="30">30</option>
+						<option value="31">31</option>
+						<option value="32">32</option>
+						<option value="33">33</option>
+						<option value="34">34</option>
+						<option value="35">35</option>
+						<option value="36">36</option>
+						<option value="37">37</option>
+						<option value="38">38</option>
+						<option value="39">39</option>
+						<option value="40">40</option>
+						<option value="41">41</option>
+						<option value="42">42</option>
+						<option value="43">43</option>
+						<option value="44">44</option>
+						<option value="45">45</option>
+						<option value="46">46</option>
+						<option value="47">47</option>
+						<option value="48">48</option>
+						<option value="49">49</option>
+						<option value="50">50</option>
+						<option value="51">51</option>
+						<option value="52">52</option>
+						<option value="53">53</option>
+						<option value="54">54</option>
+						<option value="55">55</option>
+						<option value="56">56</option>
+						<option value="57">57</option>
+						<option value="58">58</option>
+						<option value="59">59</option>
+						<option value="60">60</option>
+						<option value="61">61</option>
+						<option value="62">62</option>
+						<option value="63">63</option>
+						<option value="64">64</option>
+						<option value="65">65</option>
+						<option value="66">66</option>
+						<option value="67">67</option>
+						<option value="68">68</option>
+						<option value="69">69</option>
+						<option value="70">70</option>
+						<option value="71">71</option>
+						<option value="72">72</option>
+						<option value="73">73</option>
+						<option value="74">74</option>
+						<option value="75">75</option>
+						<option value="76">76</option>
+						<option value="77">77</option>
+						<option value="78">78</option>
+						<option value="79">79</option>
+						<option value="80">80</option>
+						<option value="81">81</option>
+						<option value="82">82</option>
+						<option value="83">83</option>
+						<option value="84">84</option>
+						<option value="85">85</option>
+						<option value="86">86</option>
+						<option value="87">87</option>
+						<option value="88">88</option>
+						<option value="89">89</option>
+						<option value="90">90</option>
+						<option value="91">91</option>
+						<option value="92">92</option>
+						<option value="93">93</option>
+						<option value="94">94</option>
+						<option value="95">95</option>
+						<option value="96">96</option>
+						<option value="97">97</option>
+						<option value="98">98</option>
+						<option value="99">99</option>
+					</select>
+					<span class="label">To</span><select name="age_to">
+						<option selected value="16">16</option>
+						<option value="17">17</option>
+						<option value="18">18</option>
+						<option value="19">19</option>
+						<option value="20">20</option>
+						<option value="21">21</option>
+						<option value="22">22</option>
+						<option value="23">23</option>
+						<option value="24">24</option>
+						<option value="25">25</option>
+						<option value="26">26</option>
+						<option value="27">27</option>
+						<option value="28">28</option>
+						<option value="29">29</option>
+						<option value="30">30</option>
+						<option value="31">31</option>
+						<option value="32">32</option>
+						<option value="33">33</option>
+						<option value="34">34</option>
+						<option value="35">35</option>
+						<option value="36">36</option>
+						<option value="37">37</option>
+						<option value="38">38</option>
+						<option value="39">39</option>
+						<option value="40">40</option>
+						<option value="41">41</option>
+						<option value="42">42</option>
+						<option value="43">43</option>
+						<option value="44">44</option>
+						<option value="45">45</option>
+						<option value="46">46</option>
+						<option value="47">47</option>
+						<option value="48">48</option>
+						<option value="49">49</option>
+						<option value="50">50</option>
+						<option value="51">51</option>
+						<option value="52">52</option>
+						<option value="53">53</option>
+						<option value="54">54</option>
+						<option value="55">55</option>
+						<option value="56">56</option>
+						<option value="57">57</option>
+						<option value="58">58</option>
+						<option value="59">59</option>
+						<option value="60">60</option>
+						<option value="61">61</option>
+						<option value="62">62</option>
+						<option value="63">63</option>
+						<option value="64">64</option>
+						<option value="65">65</option>
+						<option value="66">66</option>
+						<option value="67">67</option>
+						<option value="68">68</option>
+						<option value="69">69</option>
+						<option value="70">70</option>
+						<option value="71">71</option>
+						<option value="72">72</option>
+						<option value="73">73</option>
+						<option value="74">74</option>
+						<option value="75">75</option>
+						<option value="76">76</option>
+						<option value="77">77</option>
+						<option value="78">78</option>
+						<option value="79">79</option>
+						<option value="80">80</option>
+						<option value="81">81</option>
+						<option value="82">82</option>
+						<option value="83">83</option>
+						<option value="84">84</option>
+						<option value="85">85</option>
+						<option value="86">86</option>
+						<option value="87">87</option>
+						<option value="88">88</option>
+						<option value="89">89</option>
+						<option value="90">90</option>
+						<option value="91">91</option>
+						<option value="92">92</option>
+						<option value="93">93</option>
+						<option value="94">94</option>
+						<option value="95">95</option>
+						<option value="96">96</option>
+						<option value="97">97</option>
+						<option value="98">98</option>
+						<option value="99">99</option>
+					</select>
+				</fieldset>
+				<div class="btn-create">
+					<input type="submit" value="Create vote" class="ui-btn ui-btn-corner-all ui-shadow" />
 				</div>
-			</fieldset>
-			<fieldset class="select-group" data-role="controlgroup" data-type="horizontal">
-				<legend>Enter age members who can vote</legend><span class="label">From</span>
-				<select name="age_from">
-					<option selected value="16">16</option>
-					<option value="17">17</option>
-					<option value="18">18</option>
-					<option value="19">19</option>
-					<option value="20">20</option>
-					<option value="21">21</option>
-					<option value="22">22</option>
-					<option value="23">23</option>
-					<option value="24">24</option>
-					<option value="25">25</option>
-					<option value="26">26</option>
-					<option value="27">27</option>
-					<option value="28">28</option>
-					<option value="29">29</option>
-					<option value="30">30</option>
-					<option value="31">31</option>
-					<option value="32">32</option>
-					<option value="33">33</option>
-					<option value="34">34</option>
-					<option value="35">35</option>
-					<option value="36">36</option>
-					<option value="37">37</option>
-					<option value="38">38</option>
-					<option value="39">39</option>
-					<option value="40">40</option>
-					<option value="41">41</option>
-					<option value="42">42</option>
-					<option value="43">43</option>
-					<option value="44">44</option>
-					<option value="45">45</option>
-					<option value="46">46</option>
-					<option value="47">47</option>
-					<option value="48">48</option>
-					<option value="49">49</option>
-					<option value="50">50</option>
-					<option value="51">51</option>
-					<option value="52">52</option>
-					<option value="53">53</option>
-					<option value="54">54</option>
-					<option value="55">55</option>
-					<option value="56">56</option>
-					<option value="57">57</option>
-					<option value="58">58</option>
-					<option value="59">59</option>
-					<option value="60">60</option>
-					<option value="61">61</option>
-					<option value="62">62</option>
-					<option value="63">63</option>
-					<option value="64">64</option>
-					<option value="65">65</option>
-					<option value="66">66</option>
-					<option value="67">67</option>
-					<option value="68">68</option>
-					<option value="69">69</option>
-					<option value="70">70</option>
-					<option value="71">71</option>
-					<option value="72">72</option>
-					<option value="73">73</option>
-					<option value="74">74</option>
-					<option value="75">75</option>
-					<option value="76">76</option>
-					<option value="77">77</option>
-					<option value="78">78</option>
-					<option value="79">79</option>
-					<option value="80">80</option>
-					<option value="81">81</option>
-					<option value="82">82</option>
-					<option value="83">83</option>
-					<option value="84">84</option>
-					<option value="85">85</option>
-					<option value="86">86</option>
-					<option value="87">87</option>
-					<option value="88">88</option>
-					<option value="89">89</option>
-					<option value="90">90</option>
-					<option value="91">91</option>
-					<option value="92">92</option>
-					<option value="93">93</option>
-					<option value="94">94</option>
-					<option value="95">95</option>
-					<option value="96">96</option>
-					<option value="97">97</option>
-					<option value="98">98</option>
-					<option value="99">99</option>
-				</select>
-				<span class="label">To</span><select name="age_to">
-					<option selected value="16">16</option>
-					<option value="17">17</option>
-					<option value="18">18</option>
-					<option value="19">19</option>
-					<option value="20">20</option>
-					<option value="21">21</option>
-					<option value="22">22</option>
-					<option value="23">23</option>
-					<option value="24">24</option>
-					<option value="25">25</option>
-					<option value="26">26</option>
-					<option value="27">27</option>
-					<option value="28">28</option>
-					<option value="29">29</option>
-					<option value="30">30</option>
-					<option value="31">31</option>
-					<option value="32">32</option>
-					<option value="33">33</option>
-					<option value="34">34</option>
-					<option value="35">35</option>
-					<option value="36">36</option>
-					<option value="37">37</option>
-					<option value="38">38</option>
-					<option value="39">39</option>
-					<option value="40">40</option>
-					<option value="41">41</option>
-					<option value="42">42</option>
-					<option value="43">43</option>
-					<option value="44">44</option>
-					<option value="45">45</option>
-					<option value="46">46</option>
-					<option value="47">47</option>
-					<option value="48">48</option>
-					<option value="49">49</option>
-					<option value="50">50</option>
-					<option value="51">51</option>
-					<option value="52">52</option>
-					<option value="53">53</option>
-					<option value="54">54</option>
-					<option value="55">55</option>
-					<option value="56">56</option>
-					<option value="57">57</option>
-					<option value="58">58</option>
-					<option value="59">59</option>
-					<option value="60">60</option>
-					<option value="61">61</option>
-					<option value="62">62</option>
-					<option value="63">63</option>
-					<option value="64">64</option>
-					<option value="65">65</option>
-					<option value="66">66</option>
-					<option value="67">67</option>
-					<option value="68">68</option>
-					<option value="69">69</option>
-					<option value="70">70</option>
-					<option value="71">71</option>
-					<option value="72">72</option>
-					<option value="73">73</option>
-					<option value="74">74</option>
-					<option value="75">75</option>
-					<option value="76">76</option>
-					<option value="77">77</option>
-					<option value="78">78</option>
-					<option value="79">79</option>
-					<option value="80">80</option>
-					<option value="81">81</option>
-					<option value="82">82</option>
-					<option value="83">83</option>
-					<option value="84">84</option>
-					<option value="85">85</option>
-					<option value="86">86</option>
-					<option value="87">87</option>
-					<option value="88">88</option>
-					<option value="89">89</option>
-					<option value="90">90</option>
-					<option value="91">91</option>
-					<option value="92">92</option>
-					<option value="93">93</option>
-					<option value="94">94</option>
-					<option value="95">95</option>
-					<option value="96">96</option>
-					<option value="97">97</option>
-					<option value="98">98</option>
-					<option value="99">99</option>
-				</select>
-			</fieldset>
-			<div class="btn-create">
-				<input type="submit" value="Create vote" class="ui-btn ui-btn-corner-all ui-shadow" />
-			</div>
-		</form>
-		<form style = "display:none" id = "picture_form_create_vote" action = "https://gurtom.mobi/i/up.php" method="post" enctype="multipart/form-data">
-			Select image to upload:
-			<input type="hidden" name="MAX_FILE_SIZE" value="10000000">
-			<input type="file" onchange = "CREATE_VOTE.send_data();" name="picture">
-			<input type="text" name="type" value="1">
-			<input type="submit" value="upload" name="submit">
-		</form>
-		<input type="hidden" name="response_img_create_vote" id = "response_img_create_vote" value="">
+			</form>
+			<form style = "display:none" id = "picture_form_create_vote" action = "https://gurtom.mobi/i/up.php" method="post" enctype="multipart/form-data">
+				Select image to upload:
+				<input type="hidden" name="MAX_FILE_SIZE" value="10000000">
+				<input type="file" onchange = "CREATE_VOTE.send_data();" name="picture">
+				<input type="text" name="type" value="1">
+				<input type="submit" value="upload" name="submit">
+			</form>
+			<input type="hidden" name="response_img_create_vote" id = "response_img_create_vote" value="">
+		</div>
+		<div class="right_col"></div>
 	</div>
 </div>
 
@@ -2790,9 +2781,12 @@
 		<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back('#create-vote')" href="#">Back</a>
 	</div>
 	<div role="main" class="ui-content">
-		<form action="" accept-charset="UTF-8" method="post" onsubmit = "">
-			<fieldset id = "sphere_form"></fieldset>
-		</form>
+		<div class="left_col">
+			<form action="" accept-charset="UTF-8" method="post" onsubmit = "">
+				<fieldset id = "sphere_form"></fieldset>
+			</form>
+		</div>
+		<div class="right_col"></div>
 	</div>
 </div>
 
@@ -2817,40 +2811,16 @@
 	</div>
 </div>
 
-<!--
-<div id="options-page" data-role="page">
-	<div data-role="header" data-position="fixed" data-tap-toggle="false">
-		<h1>Options</h1>
-		<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#profile-page')" href="#profile-page">Back</a>
-		<a class="ui-btn ui-btn-right ui-icon-check ui-btn-icon-right" href="#" onclick = "alert(LOCALE_ARRAY_ADDITIONAL.saved_successfull[CURRENT_LANG]);">Save</a>
-	</div>
-	<div role="main" class="ui-content">
-		<form action="" accept-charset="UTF-8" method="post">
-			<div class="choose-language">
-				<select id = "select-lang2" name="select-name2">
-					<option value="en">Choose language</option>
-					<option value="en">English</option>
-					<option value="ru">Русский</option>
-					<option value="uk">Українська</option>
-				</select>
-			</div>
-			<fieldset data-role="controlgroup" data-iconpos="right">
-				<div class="ui-checkbox">
-					<label class="ui-btn ui-btn-inherit ui-btn-icon-right ui-checkbox-off">Specify the address for gps</label><input type="checkbox" name="" value="1" data-enhanced="true" />
-				</div>
-			</fieldset>
-		</form>
-	</div>
-</div>
--->
-
 <div id="community" data-role="page">
 	<div data-role="header" data-position="fixed" data-tap-toggle="false">
 		<h1>community</h1>
 		<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#profile-page')" href="#profile-page">Back</a>
 	</div>
 	<div role="main" class="ui-content">
-		<p>Описание как получается автризация по ГО</p>
+		<div class="left_col">
+			<p>Описание как получается автризация по ГО</p>
+		</div>
+		<div class="right_col"></div>
 	</div>
 </div>
 
@@ -2860,7 +2830,10 @@
 		<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#profile-page')" href="#profile-page">Back</a>
 	</div>
 	<div role="main" class="ui-content">
-		<p>Описание как получается автризация по Co-owners</p>
+		<div class="left_col">
+			<p>Описание как получается автризация по Co-owners</p>
+		</div>
+		<div class="right_col"></div>
 	</div>
 </div>
 
@@ -2870,9 +2843,12 @@
 		<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#profile-page')" href="#profile-page">Back</a>
 	</div>
 	<div role="main" class="ui-content">
-		<div id="auth_title"></div>
-		<div id="wallet-description"></div>
-		<div id="auth_wallet"></div>
+		<div class="left_col">
+			<div id="auth_title"></div>
+			<div id="wallet-description"></div>
+			<div id="auth_wallet"></div>
+		</div>
+		<div class="right_col"></div>
 	</div>
 </div>
 
@@ -2882,7 +2858,10 @@
 		<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#profile-page')" href="#profile-page">Back</a>
 	</div>
 	<div role="main" class="ui-content">
-		<div class="bankid_button ui-btn ui-btn-corner-all ui-btn-icon-right" onclick="location.href='/sn/bankid.php'" ></div>
+		<div class="left_col">
+			<div class="bankid_button ui-btn ui-btn-corner-all ui-btn-icon-right" onclick="location.href='/sn/bankid.php'" ></div>
+		</div>
+		<div class="right_col"></div>
 	</div>
 </div>
 
@@ -2902,18 +2881,20 @@
 		</div>
 	</div>
 	<div role="main" class="ui-content">
-		<div class="ui-checkbox">
-			<label id = "trusted_checkbox" data-checked = "true" onclick = "TRUST_LIST.filter_by_id(true)" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Trusted only</label><input type="checkbox" name="trusted_checkbox" value="1" data-enhanced="true" />
+		<div class="left_col">
+			<div class="ui-checkbox">
+				<label id = "trusted_checkbox" data-checked = "true" onclick = "TRUST_LIST.filter_by_id(true)" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Trusted only</label><input type="checkbox" name="trusted_checkbox" value="1" data-enhanced="true" />
+			</div>
+			<div class="ui-input-search ui-input-has-clear">
+				<input onkeyup="TRUST_LIST.init(true)" id = "searched_string" type="search" name="" placeholder="Search by ID" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" onclick = "$('#trust-list #searched_string').val(''); $('#trust-list #searched_string').keyup();" href="">Clear text</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />
+			</div>
+			<div id = "choose_sphere_trust" onclick = "TRUST_LIST.set_spheres_and_listeners(); $.mobile.navigate('#spheres-trust');">
+				<select disabled name=""><option style = "display:none" value="Choose vote type">Choose vote type</option>
+				</select>
+			</div>
+			<div id = "trust_list_all" class="trust-list"></div>
 		</div>
-		<div class="ui-input-search ui-input-has-clear">
-			<input onkeyup="TRUST_LIST.init(true)" id = "searched_string" type="search" name="" placeholder="Search by ID" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" onclick = "$('#trust-list #searched_string').val(''); $('#trust-list #searched_string').keyup();" href="">Clear text</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />
-		</div>
-		<div id = "choose_sphere_trust" onclick = "TRUST_LIST.set_spheres_and_listeners(); $.mobile.navigate('#spheres-trust');">
-			<select disabled name=""><option style = "display:none" value="Choose vote type">Choose vote type</option>
-			</select>
-		</div>
-		<div id = "trust_list_all" class="trust-list">
-		</div>
+		<div class="right_col"></div>
 	</div>
 </div>
 
@@ -2923,10 +2904,13 @@
 		<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back('#trust-list')" href="#">Back</a>
 	</div>
 	<div role="main" class="ui-content">
-		<form action="" accept-charset="UTF-8" method="post" onsubmit = "TRUST_LIST.save_and_delete_spheres(); return false;">
-			<fieldset id = "sphere_form">
-			</fieldset>
-		</form>
+		<div class="left_col">
+			<form action="" accept-charset="UTF-8" method="post" onsubmit = "TRUST_LIST.save_and_delete_spheres(); return false;">
+				<fieldset id = "sphere_form">
+				</fieldset>
+			</form>
+		</div>
+		<div class="right_col"></div>
 	</div>
 </div>
 
@@ -2944,39 +2928,15 @@
 		</div>
 	</div>
 	<div role="main" class="ui-content">
-		<table>
-			<tbody id = "content_table">
-			</tbody>
-		</table>
+		<div class="left_col">
+			<table>
+				<tbody id = "content_table">
+				</tbody>
+			</table>
+		</div>
+		<div class="right_col"></div>
 	</div>
 </div>
-
-<!-- <div id="create-pif-page" data-role="page">
-	<div data-role="header" data-position="fixed" data-tap-toggle="false">
-		<h1>Create Personal Fund</h1>
-		<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#create-pif-help">Ask</a>
-		<div id="create-pif-help" class="help-popup" data-role="popup" data-history="false">
-			<div class="title">
-				Description
-			</div>
-			<div class="text">
-				help text
-			</div>
-		</div>
-	</div>
-	<div role="main" class="ui-content">
-		<form action="" accept-charset="UTF-8" method="post">
-			<div class="select-field">
-				<label>Выберите тип валюты</label>
-				<select name=""><option value="UAH (украинская гривня)">UAH (украинская гривня)</option>
-				</select>
-			</div>
-			<div class="button-fixed">
-				<input type="submit" value="Сохранить" />
-			</div>
-		</form>
-	</div>
-</div> -->
 
 <div class="auth-panel" data-role="panel" id="left-panel" data-position="left" data-position-fixed="true" data-display="overlay">
 	<div class="panel-head">
@@ -2999,7 +2959,7 @@
 			onclick = "$.mobile.navigate('#votings-page')" href="#votings-page">Decision-making</a>
 		</li>
 		<li>
-			<a class="menu-icon-programs" data-link = "#social-investment" href="#social-investment">Social Investment</a>
+			<a class="menu-icon-programs" data-link = "#programs-page" href="#programs-page">Social Investment</a>
 		</li>
 		<li>
 			<a class="menu-icon-projects" data-link = "#social-entrepreneurship" href="#social-entrepreneurship">Social Entrepreneurship</a>
