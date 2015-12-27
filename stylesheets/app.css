@@ -55,11 +55,14 @@ label.ui-btn {
   border: none;
   color: #fff;
   text-shadow: none; }
-  .ui-btn.ui-shadow,
-  .ui-btn:visited.ui-shadow {
-    -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.4);
-    -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.4);
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.4); }
+
+/*
+.ui-btn.ui-shadow,
+.ui-btn:visited.ui-shadow {
+  -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.4);
+  -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.4);
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.4); }
+*/
 
 .ui-btn:hover {
   background-color: #4484f6;
@@ -180,9 +183,7 @@ label.ui-btn {
     color: #ffffff;
     font-weight: normal;
     text-shadow: none;
-    -moz-box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.3);
-    -webkit-box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.3);
-    box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.3); }
+    }
     .ui-page-theme-a .ui-header .ui-title {
       font-size: 1.3em;
       font-weight: normal;
@@ -269,9 +270,7 @@ label.ui-btn {
     -moz-border-radius: 0;
     -webkit-border-radius: 0;
     border-radius: 0;
-    -moz-box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.5);
-    -webkit-box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.5);
-    box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.5); }
+    }
     .ui-page-theme-a .help-popup .title {
       color: #4d4d4d;
       font-weight: 500;
@@ -316,9 +315,7 @@ label.ui-btn {
     -moz-border-radius: 0;
     -webkit-border-radius: 0;
     border-radius: 0;
-    -moz-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.3);
-    -webkit-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.3);
-    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.3); }
+    }
     .ui-page-theme-a .ui-input-search input {
       padding: 0.625em 0 0.625em 3em; }
     .ui-page-theme-a .ui-input-search:after {
@@ -440,9 +437,7 @@ label.ui-btn {
       font-weight: 300; }
     .ui-page-theme-a .date-group .ui-select, .ui-page-theme-a .select-group .ui-select {
       margin: 0 0.75em;
-      -moz-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.3);
-      -webkit-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.3);
-      box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.3); }
+      }
       .ui-page-theme-a .date-group .ui-select .ui-btn, .ui-page-theme-a .select-group .ui-select .ui-btn {
         padding-top: 0.5em;
         padding-bottom: 0.5em;
@@ -528,9 +523,7 @@ label.ui-btn {
   -moz-border-radius: 0;
   -webkit-border-radius: 0;
   border-radius: 0;
-  -moz-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.5);
-  -webkit-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.5);
-  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.5); }
+  }
   .ui-selectmenu.ui-popup .ui-header {
     background: #efefef;
     -moz-box-shadow: none;
@@ -960,9 +953,7 @@ label.ui-btn {
 #profile-page #change-password {
   border: none;
   background-color: #fff;
-  -moz-box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);
-  -webkit-box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);
-  box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5); }
+  }
 #profile-page .change-password label {
   font-weight: 300;
   text-align: center;
@@ -2332,9 +2323,6 @@ label.ui-btn {
   #trust-list .trust-list .item .ui-block-b img {
     width: 12%;
     margin: 0 0.375em 0.5em 0;
-    -moz-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.12);
-    -webkit-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.12);
-    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.12);
     -moz-border-radius: 28% 28% 28% 28%;
     -webkit-border-radius: 28%;
     border-radius: 28% 28% 28% 28%; }
@@ -2608,8 +2596,12 @@ label.ui-btn {
   padding-top: 56px !important; }
  .jqte_editor{min-height: 1.3em;}
 
-
-
+.ui-panel-display-overlay {
+  border: 1px;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none; 
+}
 
 
 #org_list .info {
@@ -2780,5 +2772,4 @@ label.ui-btn {
   -webkit-background-size: 5em;
   -moz-background-size: 5em;
   -o-background-size: 5em; 
-
 }
