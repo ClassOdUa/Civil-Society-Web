@@ -34,6 +34,10 @@ $( document ).bind( "mobileinit", function() {
     $.mobile.allowCrossDomainPages = true;
 });
 
+function f_escape_quotes(p_string){
+    return p_string.replace(/[\"]/g, "\\\"");
+}
+
 function message_result(p_result){
 	//Multilingual alert. TODO: change 'error' on 'msg' in all outputs
 	if(p_result.indexOf('error') > -1){
@@ -242,6 +246,16 @@ function lang_activate_el(element){
 }
 
 window.onload = function(){
+
+
+	$("#left-panel").on("panelbeforeopen",function(){
+		if(SUPER_PROFILE.auth == true){
+			console.log('LEFT PANEL: user authorised');
+		}else{
+			//TODO: rebuild left panel for not authorised view
+			console.log('LEFT PANEL: user NOT authorised');
+		}
+	});
 
 	if(location.href.indexOf('&lang=') > -1){
 		var lang_array = location.href.match(/&lang=[0-9]/i);
@@ -643,7 +657,6 @@ $(document).on("pagecontainershow", function () {
 			break;
 		case 'main-page':
 			console.log('main-page');
-
 			break;
 		case 'registration':
 			console.log('registration');
@@ -681,6 +694,14 @@ $(document).on("pagecontainershow", function () {
 			break;
 		case 'program-page':
 			console.log('program-page');
+			PROGRAMS.events();
+			break;
+		case 'pp-list-page':
+			console.log('pp-list-page');
+			PROJECT_PROPOSITION.init();
+			break;
+		case 'pp-page':
+			console.log('pp-page');
 			break;
 		case 'filter-page-programs':
 			console.log('filter-page-programs');
@@ -704,9 +725,11 @@ $(document).on("pagecontainershow", function () {
 			console.log('filter-page-requests');
 			break;
 		case 'weighted-votings-page':
+			PROGRAMS.events();
 			console.log('weighted-votings-page');
 			break;
 		case 'weighted-vote-page':
+			PROGRAMS.events();
 			console.log('weighted-vote-page');
 			break;
 		case 'my-fund-page':
@@ -1287,6 +1310,10 @@ var COMMON_OBJECT = {
 				case 'weighted-votings-page':
 					WEIGHTED_VOTINGS.reinit();
 					break;
+				case 'pp-list-page':
+					PROJECT_PROPOSITION.scrolled_down = 1;
+					PROJECT_PROPOSITION.init();
+					break;
 				case 'members':
 					MEMBERS.scrolled_down = 1;
 					MEMBERS.init();
@@ -1297,32 +1324,24 @@ var COMMON_OBJECT = {
 					break;
 			}
 		}
+
 	},
 	init_common_listeners: function(){
 		window.addEventListener("scroll", COMMON_OBJECT.custom_listeners );	
 
 		MEMBERS.events();
-
 		GROUPS.events();
-
 		CREATE_ITEM.events();
 	},
 	custom_swipe: function(object){
-		//console.log($(object).data('show'));
 		switch($(object).data('show')){
 			case 0:
-			//console.log(2);
-				$.mobile.activePage.find('.filters-panel').find('.filters-panel-inner').attr('style', 'display: none');
+				$.mobile.activePage.find('.filters-panel').find('.filters-panel-inner').slideUp(200);
 				$('.filter_slider_btn').show();
-				// $(object).html('Filter');
-				// $(object).data('show', 1);
 				break;
 			case 1:
-			//console.log(3);
-				$(object).attr('style', 'display: none');
+				$(object).hide();
 				$.mobile.activePage.find('.filters-panel').find('.filters-panel-inner').slideDown(500);
-				//$(object).html('Hide filter');
-				//$(object).data('show', 0);
 				break;
 		}
 	},
@@ -1369,7 +1388,7 @@ var COMMON_OBJECT = {
 			}
 		});
 	}
-};
+}
 
 var SUPER_PROFILE = {
 	auth: false,
@@ -1382,7 +1401,7 @@ var SUPER_PROFILE = {
 			location.reload(true);
 		}*/
 	}
-};
+}
 
 var NCO = {
 	list: {},
@@ -1400,31 +1419,26 @@ var NCO = {
 			if(p_result.indexOf('error') > -1 ){
 				message_result(p_result);
 			}else{
-				if(p_result > 1){
-					$('#nco_bid_btn').hide();
-					var l_add_list = '';
-					$.each(NCO.list, function(i, l_nco) {
-						if(SUPER_PROFILE.id == l_nco.id){
-							l_add_list = '<li class="nco_part ui-corner-all"><strong>' + l_nco.nco_name + '</strong> (<strong>ID</strong>:<span>' + l_nco.id + '</span>)<span class="phone">' + l_nco.nco_phone + '</span><span class="doc">' + l_nco.doc_type + ' ' + l_nco.doc_series + ' ' + l_nco.doc_number + ' ' + l_nco.doc_issue + ' ' + l_nco.doc_date + '</span><span class="addr">' + l_nco.country + ' ' + l_nco.state + ' ' + l_nco.county + ' ' + l_nco.city + ' ' + l_nco.street + ' ' + l_nco.build + ' ' + l_nco.ap + '</span></li>';
-						}
-					});
-
-					switch(p_result){
-						case '1':
-							$('.nko-list ol').append(l_add_list);
-						break;
-						case '2':
-							$('.nco_part').hide();
-							$('#nco_btn').hide();
-							$('.nko-list .title').html(LOCALE_ARRAY_ADDITIONAL.nco_accepted[CURRENT_LANG]);
-							$('.nko-list ol').html(l_add_list);
-						break;
+				$('.nco_bid_btn').hide();
+				var l_add_list = '';
+				$.each(NCO.list, function(i, l_nco) {
+					if(SUPER_PROFILE.id == l_nco.id){
+						l_add_list = '<li class="nco_part ui-corner-all"><strong>' + l_nco.nco_name + '</strong> (<strong>ID</strong>:<span>' + l_nco.id + '</span>)<span class="phone">' + l_nco.nco_phone + '</span><span class="doc">' + l_nco.doc_type + ' ' + l_nco.doc_series + ' ' + l_nco.doc_number + ' ' + l_nco.doc_issue + ' ' + l_nco.doc_date + '</span><span class="addr">' + l_nco.country + ' ' + l_nco.state + ' ' + l_nco.county + ' ' + l_nco.city + ' ' + l_nco.street + ' ' + l_nco.build + ' ' + l_nco.ap + '</span></li>';
 					}
+				});
+
+				switch(p_result){
+					case '1':
+						$('.ngo_bids_list').append(l_add_list);
+					break;
+					case '2':
+						$('.nco_part').hide();
+						$('#nco_btn').hide();
+						$('.nko-list .title').html(LOCALE_ARRAY_ADDITIONAL.nco_accepted[CURRENT_LANG]);
+						$('.ngo_bids_list').html(l_add_list);
+					break;
 				}
 			}
-
-			
-
 		});
 	},
 	selected_by_author: function(p_choosen_nco_id){
@@ -1432,7 +1446,7 @@ var NCO = {
 		var l_return = '';
 		$.each(self.list, function(i, l_nco) {
 			if(p_choosen_nco_id == l_nco.id){
-				l_return = '</span><div class="nco_choosen_name ui-corner-all"><strong>ID: ' 
+				l_return = '<span class="nco_choosen"></span><div class="nco_choosen_name ui-corner-all"><strong>ID: ' 
 							+ l_nco.id + ' :: ' 
 							+ l_nco.nco_name + '</strong><br /><span class="phone">'
 							+ l_nco.nco_phone + '</span><br /><span class="doc">'
@@ -1452,6 +1466,12 @@ var NCO = {
 		// 	self.init();
 		// }
 
+		var l_choosen_label = LOCALE_ARRAY_ADDITIONAL.choosen_nco[CURRENT_LANG];
+
+		if(p_nco_acceptance == '1'){
+			var l_choosen_label = LOCALE_ARRAY_ADDITIONAL.nco_accepted[CURRENT_LANG];
+		}
+
 		var l_nco_part = '';
 		var l_nco_selected = '';
 		var l_nco_bids_list = '';
@@ -1459,12 +1479,14 @@ var NCO = {
 		var l_nco_choice_btn = '';
 		var l_nco_in_list = 0;
 
-		//build NCO selected by Author
+		//build NGO selected by Author
 		if(p_choosen_nco_id > 0){
 			// l_nco_selected = self.selected_by_author(p_choosen_nco_id);
 			$.each(self.list, function(i, l_nco) {
 				if(p_choosen_nco_id == l_nco.id){
-					l_nco_selected = '<span class="nco_choosen"></span><div class="nco_choosen_name ui-corner-all"><strong>ID: ' 
+					l_nco_selected = '<span class="nco_choosen">'
+								+ l_choosen_label
+								+ '</span><div class="nco_choosen_name ui-corner-all"><strong>ID: ' 
 								+ l_nco.id + ' :: ' 
 								+ l_nco.nco_name + '</strong><br /><span class="phone">'
 								+ l_nco.nco_phone + '</span><br /><span class="doc">'
@@ -1477,7 +1499,7 @@ var NCO = {
 			});
 		}
 
-		//build list of NCO bids
+		//build list of NGO bids
 		if(p_nco_bids_list.length > 0 && p_nco_acceptance == '0'){
 			jQuery.each(p_nco_bids_list, function(i, l_nco) {
 				l_nco_bids_list += '<li class="nco_part ui-corner-all"><strong>' 
@@ -1490,10 +1512,17 @@ var NCO = {
 					l_nco_in_list = 1;
 				}
 			});
-			l_nco_bids_list = '<ul>' + l_nco_bids_list + '</ul>';
 		}
 
-		//Build NCO choice btn
+		if(p_nco_acceptance == '0'){
+			l_nco_bids_list = '<div class="ngo_bids_list_label">' 
+							+ LOCALE_ARRAY_ADDITIONAL.ngo_bids_list_label[CURRENT_LANG]
+							+ '</div><ul class="ngo_bids_list">' 
+							+ l_nco_bids_list 
+							+ '</ul>';
+		}
+
+		//Build NGO choice btn
 		if(SUPER_PROFILE.id == p_author_id && p_nco_acceptance == '0' ){
 			l_nco_choice_btn = '<a class="list-nco-btn nco-btn ui-btn ui-corner-all ui-shadow" p_type="' + p_type + '" p_id="' 
 								+ p_id + '" href="#">' 
@@ -1501,16 +1530,25 @@ var NCO = {
 								+ '</a>'
 		}
 
-		//Build NCO bid btn
+		//Default caption for BID button
+		var l_btn_caption = LOCALE_ARRAY_ADDITIONAL.create_nco[CURRENT_LANG];
+
+		//Build NGO bid btn
 		if(SUPER_PROFILE.nco == 1 && p_nco_acceptance == '0'  &&  l_nco_in_list == 0 ){
+
+			if(p_choosen_nco_id == SUPER_PROFILE.id){
+				//change caption of bid button if author choosed current NGO
+				l_btn_caption = LOCALE_ARRAY_ADDITIONAL.accept_ngo[CURRENT_LANG];
+			}
+
 			l_nco_bid_btn = '<a class="nco_bid_btn nco-btn ui-btn ui-corner-all ui-shadow" p_type="' + p_type + '" p_id="' 
 								+ p_id + '" href="#">' 
-								+ LOCALE_ARRAY_ADDITIONAL.create_nco[CURRENT_LANG]
+								+ l_btn_caption
 								+ '</a>';
 		}
 
 		$('.nco_status').html(l_nco_selected + l_nco_bid_btn + l_nco_choice_btn + l_nco_bids_list);
-		console.log(l_nco_selected);
+		//console.log(l_nco_selected);
 
 	},
 	events: function(){
@@ -1689,7 +1727,7 @@ var CREATE_ITEM = {
 				 + $('#create-item [name=dtex_month]').val() + "-" 
 				 + $('#create-item [name=dtex_date]').val();
 		var validation_row = [];
-		validation_row[ validation_row.length ] = { type: 0, value: $('#create-item [name=nco]').val(), error: LOCALE_ARRAY_ADDITIONAL.nco_not_selected[CURRENT_LANG] };
+		//validation_row[ validation_row.length ] = { type: 0, value: $('#create-item [name=nco]').val(), error: LOCALE_ARRAY_ADDITIONAL.nco_not_selected[CURRENT_LANG] };
 		validation_row[ validation_row.length ] = { type: 0, value: $('#create-item [name=amount]').val(), error: LOCALE_ARRAY_ADDITIONAL.no_amount[CURRENT_LANG] };
 		validation_row[ validation_row.length ] = { type: 0, value: $('#create-item [name=tags]').val(), error: LOCALE_ARRAY_ADDITIONAL.no_tags[CURRENT_LANG] };
 		validation_row[ validation_row.length ] = { type: 0, value: $('#create-item [name=descr]').val(), error: LOCALE_ARRAY_ADDITIONAL.no_description[CURRENT_LANG] };
@@ -1793,7 +1831,7 @@ var CREATE_ITEM = {
 				 + $('#create-item [name=dtex_month]').val() + "-" 
 				 + $('#create-item [name=dtex_date]').val();
 		var validation_row = [];
-		validation_row[ validation_row.length ] = { type: 0, value: $('#create-item [name=nco]').val(), error: LOCALE_ARRAY_ADDITIONAL.nco_not_selected[CURRENT_LANG] };
+		//validation_row[ validation_row.length ] = { type: 0, value: $('#create-item [name=nco]').val(), error: LOCALE_ARRAY_ADDITIONAL.nco_not_selected[CURRENT_LANG] };
 		validation_row[ validation_row.length ] = { type: 0, value: $('#create-item [name=amount]').val(), error: LOCALE_ARRAY_ADDITIONAL.no_amount[CURRENT_LANG] };
 		validation_row[ validation_row.length ] = { type: 0, value: $('#create-item [name=ben]').val(), error: LOCALE_ARRAY_ADDITIONAL.no_beneficiary[CURRENT_LANG] };
 		validation_row[ validation_row.length ] = { type: 0, value: $('#create-item [name=tags]').val(), error: LOCALE_ARRAY_ADDITIONAL.no_tags[CURRENT_LANG] };
@@ -1908,7 +1946,7 @@ var CREATE_ITEM = {
 				 + $('#create-item [name=dtex_month]').val() + "-" 
 				 + $('#create-item [name=dtex_date]').val();
 		var validation_row = [];
-		validation_row[ validation_row.length ] = { type: 0, value: $('#create-item [name=nco]').val(), error: LOCALE_ARRAY_ADDITIONAL.nco_not_selected[CURRENT_LANG] };
+		//validation_row[ validation_row.length ] = { type: 0, value: $('#create-item [name=nco]').val(), error: LOCALE_ARRAY_ADDITIONAL.nco_not_selected[CURRENT_LANG] };
 		validation_row[ validation_row.length ] = { type: 0, value: $('#create-item [name=amount]').val(), error: LOCALE_ARRAY_ADDITIONAL.no_amount[CURRENT_LANG] };
 		validation_row[ validation_row.length ] = { type: 0, value: $('#create-item [name=tags]').val(), error: LOCALE_ARRAY_ADDITIONAL.no_tags[CURRENT_LANG] };
 		validation_row[ validation_row.length ] = { type: 0, value: $('#create-item [name=descr]').val(), error: LOCALE_ARRAY_ADDITIONAL.no_description[CURRENT_LANG] };
@@ -2260,10 +2298,12 @@ var PIF = {
 						unique_array[unique_array.length] = currency_name;
 					}
 				});
-				$('#create-item [name=curr]').html(ui_pif_option);
-				if(location.href.indexOf('#create-item') > -1){
-					$('#create-item select').selectmenu().selectmenu("refresh", true);
-				}
+
+				// $('#create-item [name=curr]').html(ui_pif_option);
+				// if(location.href.indexOf('#create-item') > -1){
+				// 	$('#create-item select').selectmenu().selectmenu("refresh", true);
+				// }
+				
 				if(location.href.indexOf('#transaction-page') > -1){
 					funds.set_pif_options_transaction_page('#transaction-page');
 				}
@@ -2352,7 +2392,7 @@ var PIF = {
 												<div class="text-field">\
 													<label>' + LOCALE_ARRAY_ADDITIONAL.amount_of_money[CURRENT_LANG] + '</label>\
 													<div class="ui-input-text">\
-														<input type="text" name="amount" data-enhanced="true" />\
+														<input type="number" min="0" step="1" name="amount" data-enhanced="true" />\
 													</div>\
 												</div>\
 											</div>\
@@ -2385,6 +2425,800 @@ var PIF = {
 }
 //////////////////////////////////////////Projects 
 
+var PROGRAMS = {
+	data_array: [],
+	voters_list: [],
+	data_last_item: 10,
+	activated_easy_filter: 0,
+	activated_hard_filter: 0,
+	sphere_filter: -1,
+	last_opened_id: 0,
+	currency: 0,
+	currency_name: '',
+	my_add: 0,
+	init: function(call_back){
+		var self = this;
+		self.activated_easy_filter = 0;
+		self.activated_hard_filter = 0;
+		self.sphere_filter = 0;
+		self.data_last_item = 10;
+		$('#programs-page #searched_string').val('');
+
+		$('#programs-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.programs[CURRENT_LANG]);
+		//$('#programs-page #create_link').attr('style','display: none');
+
+		if(location.href.indexOf('#programs-page?tags_filter=') > -1){
+			var tag_filter = location.href.match(/=([a-zA-Z0-9а-яА-Я]*)/i)[1];
+			
+			var url = mainURL + '/program.php?filter=' + encodeURIComponent(tag_filter);
+			//console.log(tag_filter);
+			$('#programs-page #menu_link').attr('style', 'display:block');
+			$('#programs-page #my_activities_link').attr('style', 'display:none');
+		}else if(location.href.indexOf('#programs-page?my_program=true') > -1){
+			var url = mainURL + '/program.php?my=1';
+			$('#programs-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.my_programs[CURRENT_LANG]);
+			$('#programs-page #create_link').attr('style','display: block');
+			$('#programs-page #menu_link').attr('style', 'display:none');
+			$('#programs-page #my_activities_link').attr('style', 'display:block');
+			PIF.get_pif_array(true);
+		}else{
+			var url = mainURL + '/program.php';
+			$('#programs-page #menu_link').attr('style', 'display:block');
+			$('#programs-page #my_activities_link').attr('style', 'display:none');
+		}
+
+		$.mobile.loading( "show", {theme: "z"});
+		$.ajax({
+			url: url,
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+					//console.log(response);
+					self.data_array = $.parseJSON( response.responseText );
+					if(self.data_array.length == 0 && self.activated_hard_filter == 1){
+						alert(LOCALE_ARRAY_ADDITIONAL.no_data[CURRENT_LANG]);
+					}	
+					//console.log( self.data_array );
+					$.mobile.loading( "hide" );
+					self.check_current_url( 1 );
+					self.build_elements();
+					$('#programs-page #activated_filter').css('display', 'none'); 
+					$('#programs-page #solo_filter').css('display', 'block');	 
+					/*if(call_back){
+						call_back();
+					}*/	
+			},
+		});
+
+		self.events();
+	},
+	reinit: function(){
+		var self = this;
+		if(self.activated_easy_filter == 1 || self.activated_hard_filter == 1){
+			self.filter_data(-1, 1);
+		}else{
+
+			if(location.href.indexOf('#programs-page?tags_filter=') > -1){
+				var tag_filter = location.href.match(/=([a-zA-Z0-9а-яА-Я]*)/i)[1];
+				
+
+				var url = mainURL + '/program.php?filter=' + encodeURIComponent(tag_filter) + '&ls=' + self.data_last_item;
+				//console.log(tag_filter);
+			}else if(location.href.indexOf('#programs-page?my_program=true') > -1){
+				var url = mainURL + '/program.php?my=1&ls=' + self.data_last_item;
+			}else{
+				var url = mainURL + '/program.php?ls=' + self.data_last_item;
+			}
+
+			$.mobile.loading( "show", {theme: "z"});
+			$.ajax({
+				url: url,
+				type: "GET",
+				xhrFields: {
+				 withCredentials: true
+				},
+				crossDomain: true,
+				complete: function( response ){
+						////console.log(response);
+					
+						var query_array =$.parseJSON( response.responseText );
+						//console.log( self.data_array );
+						if(query_array.length > 0){
+							self.data_array = self.data_array.concat(query_array);
+							self.data_last_item += query_array.length;
+							self.check_current_url( 1 );
+							self.build_elements( 1, true, query_array);
+						}
+						$.mobile.loading( "hide" );	 
+				},
+			});
+		}
+	},
+	filter_data: function(sphere_id, reinit, name_sphere){
+		var self = this;
+		self.activated_easy_filter = 1;
+		$.mobile.loading( "show", {theme: "z"});
+
+		var url = mainURL + '/program.php';
+
+		switch($('#programs-page [name=sort]').val()){
+			case "Sort by id":
+				url += '?sort=0';
+				break;
+			case "Sort by name":
+				url += '?sort=1';
+				break;
+			case "Sort by newest":
+				url += '?sort=2';
+				break;
+			case "Sort by stars":
+				url += '?sort=4';
+				break;
+		}
+		switch($('#programs-page [name=sort_direction]').val()){
+			case "up":
+				url += '&direct=0';
+				break;
+			case "down":
+				url += '&direct=1';
+				break;	
+		}
+
+		if($('#programs-page #searched_string').val() != ""){
+			url += '&filter=' + $('#programs-page #searched_string').val();
+		}
+		if(self.activated_hard_filter){
+			var start_date = $('#filter-page-programs [name=start_year]').val() + "-" 
+							+ $('#filter-page-programs [name=start_month]').val() + "-" 
+							+ $('#filter-page-programs [name=start_date]').val();
+			var end_date = $('#filter-page-programs [name=end_year]').val() + "-" 
+						+ $('#filter-page-programs [name=end_month]').val() + "-" 
+						+ $('#filter-page-programs [name=end_date]').val();
+			url += '&start=' + start_date + '&finish=' + end_date;
+			
+			/*if(self.sphere_filter >= 0){
+				url += '&sph=' + self.sphere_filter;
+			}*/
+		}
+
+		if(reinit){
+			url += '&ls=' + self.data_last_item;
+			self.data_last_item += 10;	
+		}else{
+			self.data_last_item = 10;
+		}
+
+		$.ajax({
+			url: url,
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+					//console.log(url);
+					self.data_array = $.parseJSON( response.responseText );	
+					$.mobile.loading( "hide" );
+					//self.check_current_url( 1 );
+					if(reinit){
+						self.build_elements( "", true );	
+					}else{
+						self.build_elements();	
+					}
+					if(self.data_array.length == 0 && reinit != 1 && self.activated_hard_filter){
+						$('#programs-page #programs-list').html('<center>Empty</center>');
+					} 	
+			},
+		});
+	},
+	build_elements: function(ready_array, reinit, reinit_array){
+		var self = this;
+		var elements_string = '';
+		if(ready_array){
+			var build_array = FILTERS.filtered_array;
+		}else{
+			var build_array = self.data_array;
+		}
+		if(reinit_array){
+			build_array = reinit_array;
+		}
+		jQuery.each(build_array, function(i, one_voting) {
+			switch(one_voting.status){
+				case '0':
+					elements_string += self.collect_cash_build(one_voting);
+					break;
+				case '1':
+					elements_string += self.finished_collecting_build(one_voting);
+					break;
+				// case '2':
+					//elements_string += self.finished_voting_build(one_voting);
+					// break;
+				// case '3':
+					//elements_string += self.not_supported_build(one_voting);
+					// break;
+			}
+		});
+		if(reinit){
+			$('#programs-page #programs-list').append(elements_string);
+		}else{
+			$('#programs-page #programs-list').html(elements_string);
+		}
+	},
+	stars_action: function(current_star){
+		//$('.stars-wrap span').on('click', function(){
+			var star = $(current_star);
+			var allStar = star.parent().find('span');
+			var val = star.index();
+			var vote_id = $(current_star).data('vote_id');
+
+			if (star.hasClass('active') && !star.next().hasClass('active')) {
+				allStar.removeClass('active');
+				$.ajax({
+					url: mainURL + "/stars_add.php?id=" + vote_id + "&stars=0&obj=2",
+					type: "GET",
+					xhrFields: {
+						withCredentials: true
+					},
+					crossDomain: true,
+					complete: function( response ){
+						
+					}
+				});
+				return false;
+			}
+
+			$.ajax({
+				url: mainURL + "/stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=2",
+				type: "GET",
+				xhrFields: {
+					withCredentials: true
+				},
+				crossDomain: true,
+				complete: function( response ){
+					
+				}
+			});
+
+			star.siblings().removeClass('active');
+
+			for (var i = 0; i <= val; i++) {
+				allStar.eq(i).addClass('active');
+			}
+	 // });
+	},
+	collect_cash_build:function(one_voting){
+		var self = this;
+		var star_class = '';
+		self.my_add = one_voting.my_add;
+		if(one_voting.stars > 0){
+			star_class = 'icon-program-star';
+		}
+		var part_ui_string = '<div class="item ui-corner-all ' + star_class + ' fund-raising">\
+									<a onclick = "$.mobile.navigate(\'#program-page?program=' + one_voting.id + '\')" href="#">\
+										<div class="img">\
+											<img src="' + mainURL + one_voting.img + '" />\
+										</div>\
+										<div class="info">\
+											<div class="title">\
+												ID: <strong>' + one_voting.id + ' : ' + one_voting.title + '</strong>\
+											</div>\
+											<div class="amount up">\
+												<span>' + LOCALE_ARRAY_ADDITIONAL.amount_current[CURRENT_LANG] + '</span> - <strong>' + one_voting.amount_current + ' ' + PIF.get_currency_name_by_id( one_voting.currency_asking ) + '</strong>\
+											</div>\
+											<div class="my-amount">\
+												<span>' + LOCALE_ARRAY_ADDITIONAL.my_cash[CURRENT_LANG] + '</span> - <strong>' + one_voting.my_add + ' ' + PIF.get_currency_name_by_id( one_voting.currency_asking ) + '</strong>\
+											</div>\
+											<div class="contractors">\
+												<span>' + LOCALE_ARRAY_ADDITIONAL.count_contractors[CURRENT_LANG] + '</span> - <strong>' + one_voting.pp + '</strong>\
+											</div>\
+										</div>\
+									</a>\
+								</div>';
+		return part_ui_string;
+	},
+	finished_collecting_build:function(one_voting){
+		var self = this;
+		var star_class = '';
+		if(one_voting.stars > 0){
+			star_class = 'icon-program-star';
+		}
+		var part_ui_string = '<div class="item ui-corner-all ' + star_class + ' program-completed">\
+								<a onclick = "$.mobile.navigate(\'#program-page?program=' + one_voting.id + '\')" href="#">\
+									<div class="img">\
+										<img src="' + mainURL + one_voting.img + '" />\
+									</div>\
+									<div class="info">\
+										<div class="title">\
+											ID: <strong>' + one_voting.id + '</strong> : <strong>' + one_voting.title + '</strong>\
+										</div>\
+										<div class="ui-grid-a">\
+											<div class="ui-block-a">\
+												<div class="status">\
+													<span>' + LOCALE_ARRAY_ADDITIONAL.successfully_finished[CURRENT_LANG] + '</span>\
+												</div>\
+												<div class="amount up">\
+													<span>' + LOCALE_ARRAY_ADDITIONAL.amount_asking[CURRENT_LANG] + '</span> - <strong>' + one_voting.amount_asking + ' ' + PIF.get_currency_name_by_id( one_voting.currency_asking ) + '</strong>\
+												</div>\
+												<div class="my-amount">\
+													<span>' + LOCALE_ARRAY_ADDITIONAL.my_cash[CURRENT_LANG] + '</span> - <strong>' + one_voting.my_add + ' ' + PIF.get_currency_name_by_id( one_voting.currency_asking ) + '</strong>\
+												</div>\
+												<div class="contractors">\
+													<span>' + LOCALE_ARRAY_ADDITIONAL.count_contractors[CURRENT_LANG] + '</span> - <strong>' + one_voting.pp + '</strong>\
+												</div>\
+											</div>\
+										</div>\
+									</div>\
+								</a>\
+							</div>';
+		return part_ui_string;
+	},
+	check_current_url:function(type_trigger){
+		var self = this;
+		if(location.href.indexOf('#program-page?program=') > -1){
+			var match_array = location.href.match(/#program-page\?program=[0-9]*/i);
+			var object_id = match_array[0].match(/[0-9]+/i);
+			self.switch_page_for_build(object_id[0], type_trigger);
+		}		
+	},
+	switch_page_for_build:function(object_id, type_trigger){
+		var self = this;
+		var data_for_build;
+		jQuery.each(self.data_array, function(i, one_data) {
+			if(parseInt(one_data.id) == parseInt(object_id)){
+				data_for_build = one_data;
+			}
+		});
+		if(!data_for_build){
+			self.get_one_element(object_id, type_trigger);
+			return false;
+		}
+		switch(data_for_build.status){
+			case '0':
+				self.current_collect_cash( data_for_build, 0, type_trigger);
+				break;
+			case '1':
+				self.current_collect_cash(data_for_build, 0, type_trigger)
+				break;
+			// case '2':
+			// 	self.current_vote_page_voting_period( data_for_build, 1, type_trigger)
+			// 	break;
+			// case '3':
+			// 	self.current_vote_page_collect_supports( data_for_build, 1, type_trigger);
+			// 	break;
+		}
+
+		$('#program-page .btn-login-soc button').on('click', function(e){
+			$(this).next().fadeToggle(300);
+			if($('.overlay').length < 1) {
+				$(this).closest('.ui-page').append('<span class="overlay"></span>');
+			} else {
+				$('.overlay').remove();
+			}
+		});
+		$(document).on('click','.overlay', function() {
+			$(this).closest('.ui-page').find('#program-page .btn-login-soc button').trigger('click');
+		});
+	},
+	current_collect_cash: function(data_for_build, canceled, type_trigger){
+		var self = this;
+		$.mobile.loading( "show", {theme: "z"});
+
+		PROGRAMS.last_opened_id = data_for_build.id;
+		PROGRAMS.my_add = data_for_build.my_add;
+		
+
+		switch(data_for_build.stars){
+			case "0":
+				var stars_ui = '<span data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span>\ ';
+				break;
+			case "1":
+				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span>\ ';
+				break;
+			case "2":
+				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span>\ ';
+				break;
+			case "3":
+				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span>\ ';
+				break;
+			case "4":
+				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span>\ ';
+				break;
+		}
+
+		var tags_array = data_for_build.tags.split(",");
+		var ui_tags = '';
+		jQuery.each(tags_array, function(i, one_tag) {
+			ui_tags += '<span style = "cursor: pointer;" onclick = "$.mobile.navigate(\'#programs-page?tags_filter=' + one_tag.trim() + '\');">' + one_tag + '</span>';
+		});
+
+		var ui_pif_option = '';
+		var flag_selected = 0;
+		jQuery.each(PIF.pif_array, function(i, one_pif) {
+			if(one_pif.currency == data_for_build.currency_asking){
+				ui_pif_option += '<option data-currency = "' 
+								+ one_pif.currency + '" value="' 
+								+ one_pif.id + '">' 
+								+ one_pif.id + ' - ' 
+								+ one_pif.saldo + '</option>';
+				flag_selected = 1;
+			}
+		});
+
+		if(data_for_build.status == 0){
+			var status_item = '<div class="status yellow">\
+									' + LOCALE_ARRAY_ADDITIONAL.collect_cash[CURRENT_LANG] +'\
+								</div>';						
+		}else{
+			var status_item = '<div class="status green">\
+									' + LOCALE_ARRAY_ADDITIONAL.successfully_finished[CURRENT_LANG] + '\
+								</div>';	
+		}
+
+		var ui_donate_panel = '';
+		if(data_for_build.status == 0){
+			if(flag_selected == 1){
+				ui_donate_panel = '<div class="ui-grid-a">\
+										<div class="ui-block-a">\
+											<div>\
+												<label>' 
+			+ LOCALE_ARRAY_ADDITIONAL.choose_personal_fund[CURRENT_LANG]
+			+ '</label><select name="pif">' + ui_pif_option + '</select>\
+											</div>\
+										</div>\
+										<div class="ui-block-b">\
+											<div class="text-field">\
+												<label>' + LOCALE_ARRAY_ADDITIONAL.amount_of_money[CURRENT_LANG] + '</label>\
+												<div class="ui-input-text">\
+													<input type="number" min="0" step="1" name="amount" data-enhanced="true" />\
+												</div>\
+											</div>\
+										</div>\
+									</div>\
+									<div class="ui-grid-solo">\
+										<div class="ui-block-a">\
+											<button onclick = "PROGRAMS.donate(\'program\', ' + data_for_build.id + ', 2)" class="ui-btn ui-corner-all ui-shadow donate-btn">' + LOCALE_ARRAY_ADDITIONAL.donate[CURRENT_LANG] + '</button>\
+										</div>\
+										<div class="ui-block-a center">\
+											<div class="ui-checkbox">\
+												<label id = "anonimous_check" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">' + LOCALE_ARRAY_ADDITIONAL.anonymous_donation[CURRENT_LANG] + '</label><input type="checkbox" name="" value="1" data-enhanced="true" />\
+											</div>\
+										</div>\
+									</div>\
+								</div>';
+			}else{
+				if(PIF.pif_array.length == 0){
+					ui_donate_panel = '';
+					PIF.set_select_input('#program-page', 'PROGRAMS', 'program', data_for_build.id, 2, data_for_build.currency_asking);
+				}
+				ui_donate_panel = '<span>' + LOCALE_ARRAY_ADDITIONAL.warning_donate[CURRENT_LANG] +' <a href = "#my-fund-page">My funds</a></span>';
+			}
+		}		
+
+		var ui_string = '';
+		ui_string += '<div data-role="header" data-position="fixed" data-tap-toggle="false">\
+					<h1>\
+						' + LOCALE_ARRAY_ADDITIONAL.program[CURRENT_LANG] + '\
+					</h1>\
+					<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" href="#programs-page">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#program-help">Ask</a>\
+					<div id="program-help" class="help-popup" data-role="popup" data-history="false">\
+						<div class="title">\
+							' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
+						</div>\
+						<div class="text">\
+							' + LOCALE_ARRAY_ADDITIONAL.help_collect_cash_program[CURRENT_LANG] + '\
+						</div>\
+					</div>\
+				</div>\
+				<div role="main" class="ui-content">\
+					<div class="left_col">\
+					<div id = "program-item" class="program-item" p_id="' + data_for_build.id + '">\
+					<div class="img">\
+						<img width="100%" src="' +  mainURL + data_for_build.img + '" />\
+					</div>\
+					<div class="program-item-inner">\
+						<div class="stars-wrap">\
+							' + stars_ui + '\
+						</div>\
+						<div class="id">\
+							ID: <strong>' + data_for_build.id + ' : ' + data_for_build.title + '</strong>\
+						</div>\
+						<div class="username">\
+							' + LOCALE_ARRAY_ADDITIONAL.by[CURRENT_LANG] + ' @<strong>' + data_for_build.author + '</strong>\
+						</div>\
+						' + status_item + '\
+						<div class="amount up">\
+							<span>' + LOCALE_ARRAY_ADDITIONAL.amount_current[CURRENT_LANG] + '</span> - <strong><span id = "amount_up">' + data_for_build.amount_current + '</span> ' + PIF.get_currency_name_by_id( data_for_build.currency_asking ) + '</strong>\
+						</div>\
+						<div class="my-amount" my_add="' + data_for_build.my_add + '">\
+							<span>' + LOCALE_ARRAY_ADDITIONAL.my_cash[CURRENT_LANG] + '</span> - <strong><span id = "my_amount_current">' + data_for_build.my_add + '</span> ' + PIF.get_currency_name_by_id( data_for_build.currency_asking ) + '</strong>\
+						</div>\
+						<div class="nko-list">\
+							<div class="tag-list">\
+								' + ui_tags + '\
+							</div>\
+							<div class="text">\
+								' + data_for_build.description + '\
+							</div>\
+						</div>\
+						<div class="discuss-btn">\
+							<a class="ui-btn ui-corner-all ui-shadow" onclick="window.open(\'' + data_for_build.prog_discussion_link + '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_program[CURRENT_LANG] + '</a>\
+						</div>\
+						<div class="btn-login-soc">\
+							<button class="ui-btn ui-corner-all ui-shadow share-btn">' + LOCALE_ARRAY_ADDITIONAL.share_by_social_newtworks[CURRENT_LANG] + '</button>\
+							<div class="social-wrap">\
+								<div class="ui-grid-b">\
+									<div class="ui-block-a">\
+										<a target="_blank" class="vk" href="https://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(data_for_build.title) + '&image=' + mainURL + data_for_build.img + '"></a>\
+									</div>\
+									<div class="ui-block-b">\
+										<a target="_blank" class="fb" href="https://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href) + '&t=' + encodeURIComponent(data_for_build.title) + '"></a>\
+									</div>\
+									<div class="ui-block-c">\
+										<a target="_blank" class="tw" href="https://twitter.com/share?url=' + encodeURIComponent(location.href) + '&text=' + encodeURIComponent(data_for_build.title) + '"></a>\
+									</div>\
+									<div class="ui-block-a">\
+										<a target="_blank" class="gp" href="https://plus.google.com/share?url=' + encodeURIComponent(location.href) + '"></a>\
+									</div>\
+									<div class="ui-block-b">\
+										<a target="_blank" class="in" href="https://www.linkedin.com/cws/share?url=' + encodeURIComponent(location.href) + '"></a>\
+									</div>\
+									<div class="ui-block-c">\
+										<a target="_blank" class="ok" href="https://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href) + '&st.comments=' + encodeURIComponent(data_for_build.title) + '"></a>\
+									</div>\
+								</div>\
+							</div>\
+						</div>\
+						<div class="sms-btn">\
+							<a class="ui-btn ui-corner-all ui-shadow" href="#">SMS</a>\
+						</div>\
+						<hr>\
+						<div class="donate-wrap">\
+							' + ui_donate_panel + '\
+						</div>\
+						<hr>\
+						<div class="btn-next-page">\
+							<a class="ui-btn ui-btn-icon-right" href="#" onclick = "$.mobile.navigate(\'#history-page?item=program&id=' + data_for_build.id + '\');">' + LOCALE_ARRAY_ADDITIONAL.history_donation[CURRENT_LANG] + '</a>\
+						</div>\
+						<div class="btn-next-page">\
+							<a id = "weighted_voting_link" class="ui-btn ui-btn-icon-right"  href="">' + LOCALE_ARRAY_ADDITIONAL.votings_on_program[CURRENT_LANG] + '</a>\
+						</div>\
+						<div class="btn-next-page">\
+							<a id = "project_propositions_link" class="ui-btn ui-btn-icon-right" href="">' + LOCALE_ARRAY_ADDITIONAL.projects_propositions[CURRENT_LANG] + '</a>\
+						</div>\
+					</div>\
+				</div>\
+				</div><div class="right_col"></div>\
+			</div>';
+		
+		//$('#vote-page').html(ui_string);
+		//$.mobile.navigate("#vote-page");
+		//$.mobile.navigate("#vote-page?vote=" + data_for_build.id);
+		$('#program-page').html('');
+		$( ui_string ).appendTo( '#program-page' );
+		$('#program-page').enhanceWithin();
+		$('#program-page select').selectmenu().selectmenu("refresh", true);
+		$.mobile.loading( "hide" );
+	},
+	get_one_element: function(data_id, type_trigger){
+		var self = this;
+		var return_element;
+		$.ajax({
+			url: mainURL + '/program.php?id=' + data_id,
+			type: "GET",
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				return_element = $.parseJSON( response.responseText );
+				data_for_build = return_element[0];
+				self.data_array = data_for_build;
+				//console.log(self.data_array);
+				switch(data_for_build.status){
+					case '0':
+						self.current_collect_cash(data_for_build, 0, type_trigger);
+						break;
+					case '1':
+						self.current_collect_cash(data_for_build, 0, type_trigger)
+						break;
+					case '2':
+						self.current_collect_cash(data_for_build, 0, type_trigger)
+						break;
+				}
+
+				$('#program-page .btn-login-soc button').on('click', function(e){
+					$(this).next().fadeToggle(300);
+					if($('.overlay').length < 1) {
+						$(this).closest('.ui-page').append('<span class="overlay"></span>');
+					} else {
+						$('.overlay').remove();
+					}
+				});
+				$(document).on('click','.overlay', function() {
+					$(this).closest('.ui-page').find('#program-page .btn-login-soc button').trigger('click');
+				});
+			},
+		});
+	},
+	donate: function(selector, object_id, type_id){
+		var fund_id = $('#' + selector + '-page [name=pif]').val(); 
+		var currency = $('#' + selector + '-page option[value=' + fund_id + ']').data('currency');
+		var amount = $('#' + selector + '-page [name=amount]').val();
+		var open = 0;
+		if($('#' + selector + '-page #anonimous_check').hasClass('ui-checkbox-on')){
+			open = 1;
+		}
+		var l_json = $.parseJSON('{"fund_id":"' + fund_id + '", "currency":"' + currency + '", "amount":"' + amount + '", "type":"' + type_id + '", "id":"' + object_id + '", "open":"' + open + '"}');
+		
+		$.post(mainURL + '/fund_add_by_type.php', l_json, function(l_response){
+			if(l_response){
+				var response_data = $.parseJSON(l_response);
+				if(l_response.indexOf('error') == -1){
+					
+					$('#program-page [name=pif] option[value=' + $('#program-page [name=pif]').val() + ']').html($('#program-page [name=pif]').val() + ' - ' + response_data[0].saldo);
+
+					$('#program-page #amount_up').html(parseInt($('#amount_up').html()) + parseInt( amount ));
+					
+					$('#program-page #my_amount_current').html( parseInt( $('#my_amount_current').html() ) + parseInt( amount ) );
+
+					$('#program-page select').selectmenu().selectmenu("refresh", true);
+
+					PIF.get_pif_array(true);
+
+					//$('#weighted_voting_link').attr('onclick', '$.mobile.navigate(\'#weighted-votings-page?program=' + object_id + '\')');
+
+					alert(LOCALE_ARRAY_ADDITIONAL.donate_successfull[CURRENT_LANG]);
+				}else{
+					alert(LOCALE_ARRAY_ADDITIONAL.fund_closed[CURRENT_LANG]);
+				}
+			}
+		});
+	},
+	build_history_page: function(){
+		var self = this;
+		if(location.href.indexOf('#history-page?item=program&id=') > -1){
+			var match_array = location.href.match(/#history-page\?item=program&id=[0-9]*/i);
+			var object_id = match_array[0].match(/[0-9]+/i);
+			var my_add = 0;
+			$.mobile.loading( "show", {theme: "z"});
+			$.ajax({
+				url: mainURL + '/fund_public_cf.php?type=2&id=' + object_id,
+				type: "GET",
+				xhrFields: {
+					withCredentials: true
+				},
+				crossDomain: true,
+				complete: function( response ){
+					var funds_list = $.parseJSON( response.responseText );
+					//console.log('program');
+					//console.log('funds_list');
+					//console.log(funds_list);	
+					$.mobile.loading( "hide" );
+
+					var ui_funds = '';
+					var ui_cf = '';
+					var main_currency = PIF.get_currency_name_by_id( funds_list[0].cur );
+					jQuery.each(funds_list, function(j, one_fund) {
+						for (var i = 0; i < one_fund.cf.length; i++) {
+							var currency_name = PIF.get_currency_name_by_id( one_fund.cf[i].currency );
+							var cancel_span = '';
+							if(one_fund.cf[i].user_id == SUPER_PROFILE.id && SUPER_PROFILE.auth == true){
+								cancel_span = '<span style = "color: red; cursor: pointer;" onclick = "PROGRAMS.return_donate(\'' + one_fund.id + '\',\'' + one_fund.cur + '\',\'' + one_fund.cf[i].saldo + '\',2,\'' + object_id + '\',\'#program-page?program=' + object_id + '\')">' + LOCALE_ARRAY_ADDITIONAL.cancel_donate[CURRENT_LANG] + '</span>';
+								//cancel_span = '<span style = "color: red;">' + LOCALE_ARRAY_ADDITIONAL.cancel_donate[CURRENT_LANG] + '</span>';
+								my_add += parseInt(one_fund.cf[i].saldo);
+							}
+							ui_cf += '<tr>\
+										<td>' + cancel_span + ' ' + one_fund.cf[i].ts_created + '</td>\
+										<td>' + one_fund.cf[i].user_id + ' ' + one_fund.cf[i].fname + ' ' + one_fund.cf[i].lname + '</td>\
+										<td><strong>' + one_fund.cf[i].saldo + '</strong> ' + currency_name + '</td>\
+									</tr>';
+						}
+					});
+
+					ui_funds += '<div data-role="header" data-position="fixed" data-tap-toggle="false">\
+										<h1 class="long-title">\
+											' + LOCALE_ARRAY_ADDITIONAL.history_donation[CURRENT_LANG] + '\
+										</h1>\
+										<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back(\'#program-page?program=' + object_id + '\')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#request-history-help">Ask</a>\
+										<div id="request-history-help" class="help-popup" data-role="popup" data-history="false">\
+											<div class="title">\
+												' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
+											</div>\
+											<div class="text">\
+												' + LOCALE_ARRAY_ADDITIONAL.help_history_page_program[CURRENT_LANG] + '\
+											</div>\
+										</div>\
+									</div>\
+									<div role="main" class="ui-content">\
+									<div class="left_col">\
+										<div class="program-history-wrap">\
+											<div class="ui-grid-b">\
+												<div class="ui-block-a">\
+													<div class="my-amount">\
+														<strong>\
+															' + my_add + '\
+														 ' + main_currency + '</strong><span>' + LOCALE_ARRAY_ADDITIONAL.my_cash[CURRENT_LANG] + '</span>\
+													</div>\
+												</div>\
+												<div class="ui-block-b">\
+													<div class="amount up">\
+														<strong>\
+														' + funds_list[0].amount_current + '\
+														 ' + main_currency + '</strong><span>' + LOCALE_ARRAY_ADDITIONAL.amount_current[CURRENT_LANG] + '</span>\
+													</div>\
+												</div>\
+											</div>\
+											<table>\
+												<thead>\
+													<tr>\
+														<td>\
+															' + LOCALE_ARRAY_ADDITIONAL.date_and_time[CURRENT_LANG] + '\
+														</td>\
+														<td>\
+															' + LOCALE_ARRAY_ADDITIONAL.fio[CURRENT_LANG] + '\
+														</td>\
+														<td>\
+															' + LOCALE_ARRAY_ADDITIONAL.amount_of_money[CURRENT_LANG] + '\
+														</td>\
+													</tr>\
+												</thead>\
+												<tbody>\
+												' + ui_cf + '\
+												</tbody>\
+											</table>\
+										</div>\
+									</div>\
+									</div><div class="right_col"></div>';
+				$('#history-page').html( ui_funds ).enhanceWithin();
+							
+			},
+			});
+		}
+	},
+	return_donate: function(fund_id, currency, amount, type, type_id, return_page){
+		$.ajax({
+			url: mainURL + "/fund_return_by_type.php",
+			type: "POST",
+			data: {"fund_id": fund_id,
+				 "currency": currency,
+				 "amount": amount,
+				 "type": type,
+				 "id": type_id},
+			crossDomain: true,
+			xhrFields: {
+				withCredentials: true
+			},
+			complete: function(data){
+				alert(LOCALE_ARRAY_ADDITIONAL.return_donate_successfull[CURRENT_LANG]);
+				//console.log(return_page);
+				PIF.get_pif_array(true);
+				$('#weighted_voting_link').attr('onclick', 'alert(\'' + LOCALE_ARRAY_ADDITIONAL.only_for_donators[CURRENT_LANG] + '\');');
+				$.mobile.navigate(return_page);
+				//alert('okay');
+			}
+		});
+	},
+	events: function(){
+
+		$(document).on('click', '#weighted_voting_link', function(e){
+			if(PROGRAMS.my_add > 0){
+				$.mobile.navigate('#weighted-votings-page?program=' + PROGRAMS.last_opened_id);
+			}else{
+				alert(LOCALE_ARRAY_ADDITIONAL.only_for_donators[CURRENT_LANG]);
+			}
+		});
+
+		$(document).on('click', '#project_propositions_link', function(e){
+			$('#projects_list_back').attr('back_url', '#program-page?program=' + PROGRAMS.last_opened_id);
+			$.mobile.navigate('#projects-page?program=' + PROGRAMS.last_opened_id);
+		});
+
+	}
+}
+
 var PROJECTS = {
 	data_array: [],
 	voters_list: [],
@@ -2394,6 +3228,9 @@ var PROJECTS = {
 	sphere_filter: -1,
 	init: function(){
 		var self = this;
+
+		$.mobile.loading( "show", {theme: "z"});
+
 		self.activated_easy_filter = 0;
 		self.activated_hard_filter = 0;
 		self.sphere_filter = 0;
@@ -2404,20 +3241,33 @@ var PROJECTS = {
 		$('#projects-page #create_propositions_link').attr('style','display: none');
 		$('#projects-page #create_proposition_link').attr('style', 'display: none');
 
+		// if(SUPER_PROFILE.nco){
+		// 	$('.ngo_filter').show();
+		// }else{
+		// 	$('.ngo_filter').hide();
+		// }
+
 		if(location.href.indexOf('#projects-page?tags_filter=') > -1){
 			var tag_filter = location.href.match(/=([a-zA-Z0-9а-яА-Я]*)/i)[1];
-			
 			var url = mainURL + '/project.php?filter=' + encodeURIComponent(tag_filter);
-			$('#projects-page #menu_link').attr('style', 'display:block');
-			$('#projects-page #my_activities_link').attr('style', 'display:none');
-			//console.log(tag_filter);
+		}else if(location.href.indexOf('#projects-page?my_project=true') > -1){
+			var url = mainURL + '/project.php?my=1';
+			$('#projects-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.my_projects[CURRENT_LANG]);
+			$('#projects-page #create_link').attr('style','display: block');
+
+			PIF.get_pif_array(true);
+		}else if(location.href.indexOf('#projects-page?my_project_propositions=true') > -1){
+			var url = mainURL + '/project_propositions.php?my=1';
+			$('#projects-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.my_projects_propositions[CURRENT_LANG]);
+
+			$('#projects-page #create_link').attr('style', 'display:none');
+			PIF.get_pif_array(true);
 		}else if(location.href.indexOf('#projects-page?program=') > -1){
 			var match_array = location.href.match(/#projects-page\?program=[0-9]*/i);
 			var object_id = match_array[0].match(/[0-9]+/i);
 			var url = mainURL + '/project_propositions.php?program_id=' + object_id;
 			$('#projects-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.projects_propositions[CURRENT_LANG]);
 			var return_to = '#program-page?program=' + object_id;
-			$('#projects-page #menu_link').attr('style', 'display:block');
 			$('#projects-page #create_link').attr('style', 'display:none');
 			$('#projects-page #create_proposition_link').attr('style', 'display:block');
 			if(object_id == 0){
@@ -2426,27 +3276,10 @@ var PROJECTS = {
 				$('#projects-page #create_proposition_link').attr('onclick', '$.mobile.navigate(\'#create-item?project_proposition=true&item=' + object_id + '\')');
 			}
 			$('#projects-page #my_activities_link').attr('style', 'display:none');
-		}else if(location.href.indexOf('#projects-page?my_project=true') > -1){
-			var url = mainURL + '/project.php?my=1';
-			$('#projects-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.my_projects[CURRENT_LANG]);
-			$('#projects-page #create_link').attr('style','display: block');
-			$('#projects-page #menu_link').attr('style', 'display:none');
-			$('#projects-page #my_activities_link').attr('style', 'display:block');
-			PIF.get_pif_array(true);
-		}else if(location.href.indexOf('#projects-page?my_project_propositions=true') > -1){
-			var url = mainURL + '/project_propositions.php?my=1';
-			$('#projects-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.my_projects_propositions[CURRENT_LANG]);
-			$('#projects-page #menu_link').attr('style', 'display:none');
-			$('#projects-page #my_activities_link').attr('style', 'display:block');
-			$('#projects-page #create_link').attr('style', 'display:none');
-			PIF.get_pif_array(true);
 		}else{
 			var url = mainURL + '/project.php';
-			$('#programs-page #menu_link').attr('style', 'display:block');
-			$('#programs-page #my_activities_link').attr('style', 'display:none');
 		}
 
-		$.mobile.loading( "show", {theme: "z"});
 		$.ajax({
 			url: url,
 			type: "GET",
@@ -2462,13 +3295,17 @@ var PROJECTS = {
 					$('#projects-page #projects-list').html('<center>Empty</center>');
 				}	
 				//console.log( self.data_array );
-				$.mobile.loading( "hide" );
 				self.check_current_url( 1 );
 				self.build_elements();
 				$('#projects-page #activated_filter').css('display', 'none'); 
 				$('#projects-page #solo_filter').css('display', 'block');	 	
 			},
 		});
+
+		self.events();
+		PROJECT_PROPOSITION.events();
+
+		$.mobile.loading( "hide" );
 	},
 	reinit: function(){
 		var self = this;
@@ -2551,6 +3388,7 @@ var PROJECTS = {
 				url += '?sort=5';
 				break;	
 		}
+
 		switch($('#projects-page [name=sort_direction]').val()){
 			case "up":
 				url += '&direct=0';
@@ -2559,6 +3397,31 @@ var PROJECTS = {
 				url += '&direct=1';
 				break;	
 		}
+
+		switch($('#projects-page [name=ngo]').val()){
+			case "Accepted":
+				url += '&nco=1&ac=1';
+				break;
+			case "Offered":
+				url += '&nco=1&ac=0';
+				break;	
+			case "Open for offer":
+				url += '&nco=0&ac=0';
+				break;
+		}
+
+		switch($('#projects-page [name=ngo]').val()){
+			case "Accepted":
+				url += '&ngo=1';
+				break;
+			case "Offered":
+				url += '&ngo=2';
+				break;
+			case "Open for offer":
+				url += '&ngo=3';
+				break;
+		}
+
 
 		if($('#projects-page #searched_string').val() != ""){
 			url += '&filter=' + $('#projects-page #searched_string').val();
@@ -2864,6 +3727,11 @@ var PROJECTS = {
 		var self = this;
 		$.mobile.loading( "show", {theme: "z"});
 
+		//back button link setting if direct link opened
+		if($('#projects_list_back').attr('back_url') != '#projects-page?my_project=true'){
+			$('#projects_list_back').attr('back_url', '#social-entrepreneurship');
+		}
+
 		switch(data_for_build.stars){
 			case "0":
 				var stars_ui = '<span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROJECTS.stars_action(this)"></span>\ ';
@@ -2981,7 +3849,7 @@ var PROJECTS = {
 											<div class="text-field">\
 												<label>' + LOCALE_ARRAY_ADDITIONAL.amount_of_money[CURRENT_LANG] + '</label>\
 												<div class="ui-input-text">\
-													<input type="text" name="amount" data-enhanced="true" />\
+													<input type="number" min="0" step="1" name="amount" data-enhanced="true" />\
 												</div>\
 											</div>\
 										</div>\
@@ -3025,7 +3893,7 @@ var PROJECTS = {
 					<h1>\
 						' + LOCALE_ARRAY_ADDITIONAL.project[CURRENT_LANG] + '\
 					</h1>\
-					<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#project-help">Ask</a>\
+					<a class="back_btn ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" back_url="#projects-page" href="">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#project-help">Ask</a>\
 					<div id="project-help" class="help-popup" data-role="popup" data-history="false">\
 						<div class="title">\
 							' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
@@ -3061,16 +3929,7 @@ var PROJECTS = {
 						<div class="my-amount">\
 							<span>' + LOCALE_ARRAY_ADDITIONAL.my_cash[CURRENT_LANG] + '</span> - <strong><test id = "amount_up">' + data_for_build.my_add + '</test> ' + PIF.get_currency_name_by_id( data_for_build.currency_asking ) + '</strong>\
 						</div>\
-						<div class="nko-list">\
-							<div class="title">\
-								' + LOCALE_ARRAY_ADDITIONAL.nco_list_locale[CURRENT_LANG] + ':\
-							</div>\
-							<ol>\
-								' + nko_parts + '\
-							</ol>\
-						' + (data_for_build.nco_acceptance == '0' ? LOCALE_ARRAY_ADDITIONAL.nco_accept_no[CURRENT_LANG] : LOCALE_ARRAY_ADDITIONAL.nco_accept_yes[CURRENT_LANG]) 
-						+ nco_button + nco_create_button + nco_accept_button 
-						+ '</div>\
+						<div class="nco_status ui-corner-all"></div>\
 						<div class="desc">\
 							<div class="text">\
 								' + data_for_build.description + '\
@@ -3128,12 +3987,20 @@ var PROJECTS = {
 		$('#project-page').html('');
 		$( ui_string ).appendTo( '#project-page' );
 		$('#project-page').enhanceWithin();
-		$('#project-page select').selectmenu().selectmenu("refresh", true);	
+		$('#project-page select').selectmenu().selectmenu("refresh", true);
+
+		NCO.nco_build(4, data_for_build.id, data_for_build.creator_id, data_for_build.nco_id, data_for_build.nco_list, data_for_build.nco_acceptance);
+		NCO.events();
+
 		$.mobile.loading( "hide" );
 	},
 	current_collect_cash_project_proposition: function(data_for_build, canceled, type_trigger){
 		var self = this;
+		console.log(data_for_build);
 		$.mobile.loading( "show", {theme: "z"});
+
+		//back button link:
+		$('#projects_list_back').attr('back_url', '#program-page?program=' + data_for_build.program_id);
 
 		switch(data_for_build.stars){
 			case "0":
@@ -3155,42 +4022,58 @@ var PROJECTS = {
 
 		var tags_array = data_for_build.tags.split(",");
 		var ui_tags = '';
+ 
+ 		//Tags string
 		jQuery.each(tags_array, function(i, one_tag) {
 			ui_tags += '<span style = "cursor: pointer;" onclick = "$.mobile.navigate(\'#projects-page?program=' + data_for_build.program_id + 'tags_filter=' + one_tag.trim() + '\');">' + one_tag + '</span>';
 		});
 
 		var ui_pif_option = '';
 		var flag_selected = 0;
-		jQuery.each(PIF.pif_array, function(i, one_pif) {
-			if(one_pif.currency == data_for_build.currency_asking){
-				ui_pif_option += '<option data-currency = "' + one_pif.currency + '" value="' + one_pif.id + '">' + one_pif.id + ' - ' + one_pif.saldo + '</option>';
-				flag_selected = 1;
-			}
-		});
+
+		if(data_for_build.my_add){
+			flag_selected = 1;
+		}
+
+		//Setting global variables, if page opened from direck link
+		if(PROGRAMS.currency != data_for_build.currency_asking || PROGRAMS.my_add != data_for_build.my_program_add) {
+			PROGRAMS.my_add = data_for_build.my_program_add;
+			PROGRAMS.currency = data_for_build.currency_asking;
+			PROGRAMS.currency_name = PIF.get_currency_name_by_id(data_for_build.currency_asking);
+		}
+
+		ui_pif_option = '<label>' + LOCALE_ARRAY_ADDITIONAL.your_add[CURRENT_LANG] 
+						+ '</label><span class="support_value" my_add="'
+						+ PROGRAMS.my_add
+						+ '" currency="' 
+						+ PROGRAMS.currency
+						+ '"><b>' 
+						+ PROGRAMS.my_add
+						+ ' '
+						+ PROGRAMS.currency_name 
+						+ '</b></span>';
 
 		var ui_donate_panel = '';
 		if(data_for_build.status == 0){
 			if(flag_selected == 1){
 				var ui_donate_panel = '<div class="ui-grid-a">\
 										<div class="ui-block-a">\
-											<div>\
-												<label>' + LOCALE_ARRAY_ADDITIONAL.choose_personal_fund[CURRENT_LANG] + '</label><select name="pif">\
-												' + ui_pif_option + '\
-												</select>\
-											</div>\
+											<div>' 
+											+ ui_pif_option 
+											+ '</div>\
 										</div>\
 										<div class="ui-block-b">\
 											<div class="text-field">\
 												<label>' + LOCALE_ARRAY_ADDITIONAL.amount_of_money[CURRENT_LANG] + '</label>\
 												<div class="ui-input-text">\
-													<input type="text" name="amount" data-enhanced="true" />\
+													<input class="input_amount" type="number" min="0" step="1" max="' + PROGRAMS.my_add + '" value="' + PROGRAMS.my_add + '" name="amount" data-enhanced="true" />\
 												</div>\
 											</div>\
 										</div>\
 									</div>\
 									<div class="ui-grid-solo">\
 										<div class="ui-block-a">\
-											<button onclick = "PROJECTS.donate(\'project\', ' + data_for_build.id + ', 3)" class="ui-btn ui-corner-all ui-shadow donate-btn">' + LOCALE_ARRAY_ADDITIONAL.donate[CURRENT_LANG] + '</button>\
+											<button class="ui-btn ui-corner-all ui-shadow donate-btn support-pp-btn" p_id="' + data_for_build.id + '" my_add="' + data_for_build.my_add + '" my_program_add="' + PROGRAMS.my_add + '">' + LOCALE_ARRAY_ADDITIONAL.donate[CURRENT_LANG] + '</button>\
 										</div>\
 										<div class="ui-block-a center">\
 											<div class="ui-checkbox">\
@@ -3200,16 +4083,7 @@ var PROJECTS = {
 									</div>\
 								</div>';
 			}else{
-				ui_donate_panel = '';
-				if(PIF.pif_array.length == 0){
-					
-					PIF.set_select_input('#project-page', 'PROJECTS', 'project', data_for_build.id, 3, data_for_build.currency_asking);
-				}
-				if(SUPER_PROFILE.auth == true){
-					 ui_donate_panel = '<span>' + LOCALE_ARRAY_ADDITIONAL.warning_donate[CURRENT_LANG] +' <a href = "#my-fund-page">My funds</a></span>';
-				}else{
-					 ui_donate_panel = '<span>Please register for donate. <a href = "#registration">Registration</a></span>';
-				}
+				ui_donate_panel = LOCALE_ARRAY_ADDITIONAL.donate_program_first[CURRENT_LANG] ;
 			}
 		}
 
@@ -3258,11 +4132,11 @@ var PROJECTS = {
 						<div class="total-amount">\
 							<span>' + LOCALE_ARRAY_ADDITIONAL.amount_asking[CURRENT_LANG] + '</span> - <strong>' + data_for_build.amount_asking + ' ' + PIF.get_currency_name_by_id( data_for_build.currency_asking ) + '</strong>\
 						</div>\
-						<div class="amount up">\
-							<span>' + LOCALE_ARRAY_ADDITIONAL.amount_current[CURRENT_LANG] + '</span> - <strong><test id = "amount_up">' + data_for_build.amount_current + '</test> ' + PIF.get_currency_name_by_id( data_for_build.currency_asking ) + '</strong>\
+						<div class="amount_up">\
+							<span>' + LOCALE_ARRAY_ADDITIONAL.amount_current[CURRENT_LANG] + '</span> - <strong><span id="amount_up" amount_up="' + data_for_build.amount_current +'">' + data_for_build.amount_current + '</span> ' + PIF.get_currency_name_by_id( data_for_build.currency_asking ) + '</strong>\
 						</div>\
 						<div class="my-amount">\
-							<span>' + LOCALE_ARRAY_ADDITIONAL.my_cash[CURRENT_LANG] + '</span> - <strong><test id = "my_amount_current">' + data_for_build.my_add + '</test> ' + PIF.get_currency_name_by_id( data_for_build.currency_asking ) + '</strong>\
+							<span>' + LOCALE_ARRAY_ADDITIONAL.my_cash[CURRENT_LANG] + '</span> - <strong><span id="my_amount_current" my_amount_current="' + data_for_build.my_add + '">' + data_for_build.my_add + '</span> ' + PIF.get_currency_name_by_id( data_for_build.currency_asking ) + '</strong>\
 						</div>\
 						<div class="nco_status ui-corner-all"></div>\
 						<div class="desc">\
@@ -3326,6 +4200,8 @@ var PROJECTS = {
 
 		NCO.nco_build(3, data_for_build.id, data_for_build.author_id, data_for_build.nco_id, data_for_build.nco_list, data_for_build.nco_acceptance);
 		NCO.events();
+
+		//PROJECT_PROPOSITION.events();
 
 		$.mobile.loading( "hide" );
 	},
@@ -3635,167 +4511,51 @@ var PROJECTS = {
 			}
 		});
 	},
+	events: function(){
+
+		//TODO: check why blobal interception won't work here on the way back from program!
+		$(document).on('click', '.back_btn', function(e){
+			$.mobile.navigate($(this).attr('back_url'));
+		});
+
+		// $('.back_btn').click(function(){
+		// 	$.mobile.navigate($(this).attr('back_url'));
+		// });
+
+	}
 };
 
-var PROGRAMS = {
+var PROJECT_PROPOSITION = {
 	data_array: [],
 	voters_list: [],
 	data_last_item: 10,
 	activated_easy_filter: 0,
 	activated_hard_filter: 0,
 	sphere_filter: -1,
-	init: function(call_back){
+	init: function(){
 		var self = this;
-		self.activated_easy_filter = 0;
-		self.activated_hard_filter = 0;
-		self.sphere_filter = 0;
-		self.data_last_item = 10;
-		$('#programs-page #searched_string').val('');
+		var url = '';
 
-		$('#programs-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.programs[CURRENT_LANG]);
-		//$('#programs-page #create_link').attr('style','display: none');
-
-		if(location.href.indexOf('#programs-page?tags_filter=') > -1){
-			var tag_filter = location.href.match(/=([a-zA-Z0-9а-яА-Я]*)/i)[1];
+		if(location.href.indexOf('#pp-list-page?program=') > -1){
+			var match_array = location.href.match(/#pp-list-page\?program=[0-9]*/i);
+			var object_id = match_array[0].match(/[0-9]+/i);
+			url = mainURL + '/project_propositions.php?program_id=' + object_id;
+			$('#pp-list-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.projects_propositions[CURRENT_LANG]);
 			
-			var url = mainURL + '/program.php?filter=' + encodeURIComponent(tag_filter);
-			//console.log(tag_filter);
-			$('#programs-page #menu_link').attr('style', 'display:block');
-			$('#programs-page #my_activities_link').attr('style', 'display:none');
-		}else if(location.href.indexOf('#programs-page?my_program=true') > -1){
-			var url = mainURL + '/program.php?my=1';
-			$('#programs-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.my_programs[CURRENT_LANG]);
-			$('#programs-page #create_link').attr('style','display: block');
-			$('#programs-page #menu_link').attr('style', 'display:none');
-			$('#programs-page #my_activities_link').attr('style', 'display:block');
-			PIF.get_pif_array(true);
-		}else{
-			var url = mainURL + '/program.php';
-			$('#programs-page #menu_link').attr('style', 'display:block');
-			$('#programs-page #my_activities_link').attr('style', 'display:none');
-		}
-
-		$.mobile.loading( "show", {theme: "z"});
-		$.ajax({
-			url: url,
-			type: "GET",
-			xhrFields: {
-				withCredentials: true
-			},
-			crossDomain: true,
-			complete: function( response ){
-					//console.log(response);
-					self.data_array = $.parseJSON( response.responseText );
-					if(self.data_array.length == 0 && self.activated_hard_filter == 1){
-						alert(LOCALE_ARRAY_ADDITIONAL.no_data[CURRENT_LANG]);
-					}	
-					//console.log( self.data_array );
-					$.mobile.loading( "hide" );
-					self.check_current_url( 1 );
-					self.build_elements();
-					$('#programs-page #activated_filter').css('display', 'none'); 
-					$('#programs-page #solo_filter').css('display', 'block');	 
-					/*if(call_back){
-						call_back();
-					}*/	
-			},
-		});
-	},
-	reinit: function(){
-		var self = this;
-		if(self.activated_easy_filter == 1 || self.activated_hard_filter == 1){
-			self.filter_data(-1, 1);
-		}else{
-
-			if(location.href.indexOf('#programs-page?tags_filter=') > -1){
-				var tag_filter = location.href.match(/=([a-zA-Z0-9а-яА-Я]*)/i)[1];
-				
-
-				var url = mainURL + '/program.php?filter=' + encodeURIComponent(tag_filter) + '&ls=' + self.data_last_item;
-				//console.log(tag_filter);
-			}else if(location.href.indexOf('#programs-page?my_program=true') > -1){
-				var url = mainURL + '/program.php?my=1&ls=' + self.data_last_item;
+			var return_to = '#program-page?program=' + object_id;
+			if(object_id == 0){
+				$('#pp-list-page #create_link').attr('style', 'display:none');
+				return_to = '#social-entrepreneurship';
 			}else{
-				var url = mainURL + '/program.php?ls=' + self.data_last_item;
+				$('#pp-list-page #create_link').attr('style', 'display:block');
+				$('#projects-page #create_proposition_link').attr('onclick', '$.mobile.navigate(\'#create-item?project_proposition=true&item=' + object_id + '\')');
 			}
 
-			$.mobile.loading( "show", {theme: "z"});
-			$.ajax({
-				url: url,
-				type: "GET",
-				xhrFields: {
-				 withCredentials: true
-				},
-				crossDomain: true,
-				complete: function( response ){
-						////console.log(response);
-					
-						var query_array =$.parseJSON( response.responseText );
-						//console.log( self.data_array );
-						if(query_array.length > 0){
-							self.data_array = self.data_array.concat(query_array);
-							self.data_last_item += query_array.length;
-							self.check_current_url( 1 );
-							self.build_elements( 1, true, query_array);
-						}
-						$.mobile.loading( "hide" );	 
-				},
-			});
-		}
-	},
-	filter_data: function(sphere_id, reinit, name_sphere){
-		var self = this;
-		self.activated_easy_filter = 1;
-		$.mobile.loading( "show", {theme: "z"});
-
-		var url = mainURL + '/program.php';
-
-		switch($('#programs-page [name=sort]').val()){
-			case "Sort by id":
-				url += '?sort=0';
-				break;
-			case "Sort by name":
-				url += '?sort=1';
-				break;
-			case "Sort by newest":
-				url += '?sort=2';
-				break;
-			case "Sort by stars":
-				url += '?sort=4';
-				break;
-		}
-		switch($('#programs-page [name=sort_direction]').val()){
-			case "up":
-				url += '&direct=0';
-				break;
-			case "down":
-				url += '&direct=1';
-				break;	
-		}
-
-		if($('#programs-page #searched_string').val() != ""){
-			url += '&filter=' + $('#programs-page #searched_string').val();
-		}
-		if(self.activated_hard_filter){
-			var start_date = $('#filter-page-programs [name=start_year]').val() + "-" 
-							+ $('#filter-page-programs [name=start_month]').val() + "-" 
-							+ $('#filter-page-programs [name=start_date]').val();
-			var end_date = $('#filter-page-programs [name=end_year]').val() + "-" 
-						+ $('#filter-page-programs [name=end_month]').val() + "-" 
-						+ $('#filter-page-programs [name=end_date]').val();
-			url += '&start=' + start_date + '&finish=' + end_date;
-			
-			/*if(self.sphere_filter >= 0){
-				url += '&sph=' + self.sphere_filter;
-			}*/
-		}
-
-		if(reinit){
-			url += '&ls=' + self.data_last_item;
-			self.data_last_item += 10;	
-		}else{
-			self.data_last_item = 10;
-		}
+		}else if(location.href.indexOf('#pp-list-page?my_project_propositions=true') > -1){
+			url = mainURL + '/project_propositions.php?my=1';
+			$('#pp-list-page #create_link').attr('style', 'display:none');
+			$('#pp-list-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.my_projects_propositions[CURRENT_LANG]);
+		};
 
 		$.ajax({
 			url: url,
@@ -3805,282 +4565,127 @@ var PROGRAMS = {
 			},
 			crossDomain: true,
 			complete: function( response ){
-					//console.log(url);
-					self.data_array = $.parseJSON( response.responseText );	
-					$.mobile.loading( "hide" );
-					//self.check_current_url( 1 );
-					if(reinit){
-						self.build_elements( "", true );	
-					}else{
-						self.build_elements();	
-					}
-					if(self.data_array.length == 0 && reinit != 1 && self.activated_hard_filter){
-						$('#programs-page #programs-list').html('<center>Empty</center>');
-					} 	
+				////console.log(response);
+				self.data_array = $.parseJSON( response.responseText );
+				if(self.data_array.length == 0){
+					$('#pp-list').html('<center>Empty</center>');
+				}	
+				//console.log( self.data_array );
+				self.check_current_url( 1 );
+				self.build_elements();
+				$('#pp-list-page #activated_filter').css('display', 'none'); 
+				$('#pp-list-page #solo_filter').css('display', 'block');	 	
 			},
 		});
+
+
+		self.events();
 	},
-	build_elements: function(ready_array, reinit, reinit_array){
+
+	build_elements: function(){
 		var self = this;
 		var elements_string = '';
-		if(ready_array){
-			var build_array = FILTERS.filtered_array;
-		}else{
-			var build_array = self.data_array;
-		}
-		if(reinit_array){
-			build_array = reinit_array;
-		}
+
+		var build_array = self.data_array;
+
 		jQuery.each(build_array, function(i, one_voting) {
-			switch(one_voting.status){
-				case '0':
-					elements_string += self.collect_cash_build(one_voting);
-					break;
-				case '1':
-					elements_string += self.finished_collecting_build(one_voting);
-					break;
-				// case '2':
-					//elements_string += self.finished_voting_build(one_voting);
-					// break;
-				// case '3':
-					//elements_string += self.not_supported_build(one_voting);
-					// break;
-			}
+			elements_string += self.collect_cash_build(one_voting);
 		});
-		if(reinit){
-			$('#programs-page #programs-list').append(elements_string);
-		}else{
-			$('#programs-page #programs-list').html(elements_string);
-		}
-	},
-	stars_action: function(current_star){
-		//$('.stars-wrap span').on('click', function(){
-			var star = $(current_star);
-			var allStar = star.parent().find('span');
-			var val = star.index();
-			var vote_id = $(current_star).data('vote_id');
 
-			if (star.hasClass('active') && !star.next().hasClass('active')) {
-				allStar.removeClass('active');
-				$.ajax({
-					url: mainURL + "/stars_add.php?id=" + vote_id + "&stars=0&obj=2",
-					type: "GET",
-					xhrFields: {
-						withCredentials: true
-					},
-					crossDomain: true,
-					complete: function( response ){
-						
-					}
-				});
-				return false;
-			}
+		$('#pp-list').append(elements_string);
 
-			$.ajax({
-				url: mainURL + "/stars_add.php?id=" + vote_id + "&stars=" + (val+1) + "&obj=2",
-				type: "GET",
-				xhrFields: {
-					withCredentials: true
-				},
-				crossDomain: true,
-				complete: function( response ){
-					
-				}
-			});
+	},
 
-			star.siblings().removeClass('active');
-
-			for (var i = 0; i <= val; i++) {
-				allStar.eq(i).addClass('active');
-			}
-	 // });
-	},
-	collect_cash_build:function(one_voting){
-		var self = this;
-		var star_class = '';
-		if(one_voting.stars > 0){
-			star_class = 'icon-program-star';
-		}
-		var part_ui_string = '<div class="item ui-corner-all ' + star_class + ' fund-raising">\
-									<a onclick = "$.mobile.navigate(\'#program-page?program=' + one_voting.id + '\')" href="#">\
-										<div class="img">\
-											<img src="' + mainURL + one_voting.img + '" />\
-										</div>\
-										<div class="info">\
-											<div class="title">\
-												ID: <strong>' + one_voting.id + ' : ' + one_voting.title + '</strong>\
-											</div>\
-											<div class="amount up">\
-												<span>' + LOCALE_ARRAY_ADDITIONAL.amount_current[CURRENT_LANG] + '</span> - <strong>' + one_voting.amount_current + ' ' + PIF.get_currency_name_by_id( one_voting.currency_asking ) + '</strong>\
-											</div>\
-											<div class="my-amount">\
-												<span>' + LOCALE_ARRAY_ADDITIONAL.my_cash[CURRENT_LANG] + '</span> - <strong>' + one_voting.my_add + ' ' + PIF.get_currency_name_by_id( one_voting.currency_asking ) + '</strong>\
-											</div>\
-											<div class="contractors">\
-												<span>' + LOCALE_ARRAY_ADDITIONAL.count_contractors[CURRENT_LANG] + '</span> - <strong>' + one_voting.pp + '</strong>\
-											</div>\
-										</div>\
-									</a>\
-								</div>';
-		return part_ui_string;
-	},
-	finished_collecting_build:function(one_voting){
-		var self = this;
-		var star_class = '';
-		if(one_voting.stars > 0){
-			star_class = 'icon-program-star';
-		}
-		var part_ui_string = '<div class="item ui-corner-all ' + star_class + ' program-completed">\
-								<a onclick = "$.mobile.navigate(\'#program-page?program=' + one_voting.id + '\')" href="#">\
-									<div class="img">\
-										<img src="' + mainURL + one_voting.img + '" />\
-									</div>\
-									<div class="info">\
-										<div class="title">\
-											ID: <strong>' + one_voting.id + '</strong> : <strong>' + one_voting.title + '</strong>\
-										</div>\
-										<div class="ui-grid-a">\
-											<div class="ui-block-a">\
-												<div class="status">\
-													<span>' + LOCALE_ARRAY_ADDITIONAL.successfully_finished[CURRENT_LANG] + '</span>\
-												</div>\
-												<div class="amount up">\
-													<span>' + LOCALE_ARRAY_ADDITIONAL.amount_asking[CURRENT_LANG] + '</span> - <strong>' + one_voting.amount_asking + ' ' + PIF.get_currency_name_by_id( one_voting.currency_asking ) + '</strong>\
-												</div>\
-												<div class="my-amount">\
-													<span>' + LOCALE_ARRAY_ADDITIONAL.my_cash[CURRENT_LANG] + '</span> - <strong>' + one_voting.my_add + ' ' + PIF.get_currency_name_by_id( one_voting.currency_asking ) + '</strong>\
-												</div>\
-												<div class="contractors">\
-													<span>' + LOCALE_ARRAY_ADDITIONAL.count_contractors[CURRENT_LANG] + '</span> - <strong>' + one_voting.pp + '</strong>\
-												</div>\
-											</div>\
-										</div>\
-									</div>\
-								</a>\
-							</div>';
-		return part_ui_string;
-	},
-	check_current_url:function(type_trigger){
-		var self = this;
-		if(location.href.indexOf('#program-page?program=') > -1){
-			var match_array = location.href.match(/#program-page\?program=[0-9]*/i);
-			var object_id = match_array[0].match(/[0-9]+/i);
-			self.switch_page_for_build(object_id[0], type_trigger);
-		}		
-	},
-	switch_page_for_build:function(object_id, type_trigger){
-		var self = this;
-		var data_for_build;
-		/*jQuery.each(self.data_array, function(i, one_data) {
-			if(parseInt(one_data.id) == parseInt(object_id)){
-				data_for_build = one_data;
-			}
-		});*/
-		//if(!data_for_build){
-			self.get_one_element(object_id, type_trigger);
-			return false;
-		//}
-		switch(data_for_build.status){
-			case '0':
-				self.current_collect_cash( data_for_build, 0, type_trigger);
-				break;
-			case '1':
-				self.current_collect_cash(data_for_build, 0, type_trigger)
-				break;
-			case '2':
-				//self.current_vote_page_voting_period( data_for_build, 1, type_trigger)
-				break;
-			case '3':
-				//self.current_vote_page_collect_supports( data_for_build, 1, type_trigger);
-				break;
-		}
-
-		$('#program-page .btn-login-soc button').on('click', function(e){
-			$(this).next().fadeToggle(300);
-			if($('.overlay').length < 1) {
-				$(this).closest('.ui-page').append('<span class="overlay"></span>');
-			} else {
-				$('.overlay').remove();
-			}
-		});
-		$(document).on('click','.overlay', function() {
-			$(this).closest('.ui-page').find('#program-page .btn-login-soc button').trigger('click');
-		});
-	},
-	current_collect_cash: function(data_for_build, canceled, type_trigger){
+	project_proposition: function(data_for_build, canceled, type_trigger){
 		var self = this;
 		$.mobile.loading( "show", {theme: "z"});
 
+		//back button link:
+		$('#projects_list_back').attr('back_url', '#program-page?program=' + data_for_build.program_id);
+
+		$('.star').attr('data-vote_id', data_for_build.id);
+		$('.star').attr('onclick', 'PROJECTS.stars_action(this, 1)');
 		switch(data_for_build.stars){
 			case "0":
-				var stars_ui = '<span data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span>\ ';
+				$('.star').removeClass('active');
 				break;
 			case "1":
-				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span>\ ';
+				$('.star').removeClass('active');
+				$('#star1').addClass('active');
 				break;
 			case "2":
-				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span>\ ';
+				$('.star').removeClass('active');
+				$('#star1').addClass('active');
+				$('#star2').addClass('active');
 				break;
 			case "3":
-				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span>\ ';
+				$('.star').removeClass('active');
+				$('#star1').addClass('active');
+				$('#star2').addClass('active');
+				$('#star3').addClass('active');
 				break;
 			case "4":
-				var stars_ui = '<span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span><span class = "active" data-vote_id = "' + data_for_build.id + '" onclick = "PROGRAMS.stars_action(this)"></span>\ ';
+				$('.star').addClass('active');
 				break;
 		}
 
-		var tags_array = data_for_build.tags.split(",");
+		$('.pp-page .id').attr('p_id', data_for_build.id);
+		$('.pp-page .id').html('ID: <strong>' + data_for_build.id + ' : ' + data_for_build.title + '</strong>');
+
+/*		var tags_array = data_for_build.tags.split(",");
 		var ui_tags = '';
+ 
+ 		//Tags string
 		jQuery.each(tags_array, function(i, one_tag) {
-			ui_tags += '<span style = "cursor: pointer;" onclick = "$.mobile.navigate(\'#programs-page?tags_filter=' + one_tag.trim() + '\');">' + one_tag + '</span>';
+			ui_tags += '<span style = "cursor: pointer;" onclick = "$.mobile.navigate(\'#projects-page?program=' + data_for_build.program_id + 'tags_filter=' + one_tag.trim() + '\');">' + one_tag + '</span>';
 		});
 
 		var ui_pif_option = '';
 		var flag_selected = 0;
-		jQuery.each(PIF.pif_array, function(i, one_pif) {
-			if(one_pif.currency == data_for_build.currency_asking){
-				ui_pif_option += '<option data-currency = "' 
-								+ one_pif.currency + '" value="' 
-								+ one_pif.id + '">' 
-								+ one_pif.id + ' - ' 
-								+ one_pif.saldo + '</option>';
-				flag_selected = 1;
-			}
-		});
 
-		if(data_for_build.status == 0){
-			var status_item = '<div class="status yellow">\
-									' + LOCALE_ARRAY_ADDITIONAL.collect_cash[CURRENT_LANG] +'\
-								</div>';						
-		}else{
-			var status_item = '<div class="status green">\
-									' + LOCALE_ARRAY_ADDITIONAL.successfully_finished[CURRENT_LANG] + '\
-								</div>';	
+		if(data_for_build.my_add){
+			flag_selected = 1;
 		}
+
+		//Setting global variables, if page opened from direck link
+		if(PROGRAMS.currency != data_for_build.currency_asking || PROGRAMS.my_add != data_for_build.my_program_add) {
+			PROGRAMS.my_add = data_for_build.my_program_add;
+			PROGRAMS.currency = data_for_build.currency_asking;
+			PROGRAMS.currency_name = PIF.get_currency_name_by_id(data_for_build.currency_asking);
+		}
+
+		ui_pif_option = '<label>' + LOCALE_ARRAY_ADDITIONAL.your_add[CURRENT_LANG] 
+						+ '</label><span class="support_value" my_add="'
+						+ PROGRAMS.my_add
+						+ '" currency="' 
+						+ PROGRAMS.currency
+						+ '"><b>' 
+						+ PROGRAMS.my_add
+						+ ' '
+						+ PROGRAMS.currency_name 
+						+ '</b></span>';
 
 		var ui_donate_panel = '';
 		if(data_for_build.status == 0){
 			if(flag_selected == 1){
-				ui_donate_panel = '<div class="ui-grid-a">\
+				var ui_donate_panel = '<div class="ui-grid-a">\
 										<div class="ui-block-a">\
-											<div>\
-												<label>' 
-			+ LOCALE_ARRAY_ADDITIONAL.choose_personal_fund[CURRENT_LANG]
-			+ '</label><select name="pif">' + ui_pif_option + '</select>\
-											</div>\
+											<div>' 
+											+ ui_pif_option 
+											+ '</div>\
 										</div>\
 										<div class="ui-block-b">\
 											<div class="text-field">\
 												<label>' + LOCALE_ARRAY_ADDITIONAL.amount_of_money[CURRENT_LANG] + '</label>\
 												<div class="ui-input-text">\
-													<input type="text" name="amount" data-enhanced="true" />\
+													<input type="number" min="0" step="1" max="' + PROGRAMS.my_add + '" value="' + PROGRAMS.my_add + '" name="amount" data-enhanced="true" />\
 												</div>\
 											</div>\
 										</div>\
 									</div>\
 									<div class="ui-grid-solo">\
 										<div class="ui-block-a">\
-											<button onclick = "PROGRAMS.donate(\'program\', ' + data_for_build.id + ', 2)" class="ui-btn ui-corner-all ui-shadow donate-btn">' + LOCALE_ARRAY_ADDITIONAL.donate[CURRENT_LANG] + '</button>\
+											<button class="ui-btn ui-corner-all ui-shadow donate-btn support-pp-btn" p_id="' + data_for_build.id + '">' + LOCALE_ARRAY_ADDITIONAL.donate[CURRENT_LANG] + '</button>\
 										</div>\
 										<div class="ui-block-a center">\
 											<div class="ui-checkbox">\
@@ -4088,48 +4693,33 @@ var PROGRAMS = {
 											</div>\
 										</div>\
 									</div>\
-								</div>\ ';
+								</div>';
 			}else{
-				if(PIF.pif_array.length == 0){
-					ui_donate_panel = '';
-					PIF.set_select_input('#program-page', 'PROGRAMS', 'program', data_for_build.id, 2, data_for_build.currency_asking);
-				}
-				if(SUPER_PROFILE.auth == true){
-					ui_donate_panel = '<span>' + LOCALE_ARRAY_ADDITIONAL.warning_donate[CURRENT_LANG] +' <a href = "#my-fund-page">My funds</a></span>';
-				}else{
-					ui_donate_panel = '<span>Please register for donate. <a href = "#registration">Registration</a></span>';
-				}
+				ui_donate_panel = LOCALE_ARRAY_ADDITIONAL.donate_program_first[CURRENT_LANG] ;
 			}
-		}		
-
-		var weighted_votings_link = '';
-		if( parseInt( data_for_build.my_add) > 0 ){
-			weighted_votings_link = '$.mobile.navigate(\'#weighted-votings-page?program=' + data_for_build.id + '\')';
-		}else{
-			weighted_votings_link = 'alert(\'' + LOCALE_ARRAY_ADDITIONAL.only_for_donators[CURRENT_LANG] + '\');';
 		}
-		var ui_string = '';
-		ui_string += '<div data-role="header" data-position="fixed" data-tap-toggle="false">\
-					<h1>\
-						' + LOCALE_ARRAY_ADDITIONAL.program[CURRENT_LANG] + '\
-					</h1>\
-					<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back(\'#programs-page\')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#program-help">Ask</a>\
-					<div id="program-help" class="help-popup" data-role="popup" data-history="false">\
-						<div class="title">\
-							' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
-						</div>\
-						<div class="text">\
-							' + LOCALE_ARRAY_ADDITIONAL.help_collect_cash_program[CURRENT_LANG] + '\
-						</div>\
-					</div>\
-				</div>\
-				<div role="main" class="ui-content">\
-					<div class="left_col">\
-					<div id = "program-item" class="program-item">\
-					<div class="img">\
-						<img width="100%" src="' +  mainURL + data_for_build.img + '" />\
-					</div>\
-					<div class="program-item-inner">\
+
+		if(data_for_build.status == 0){
+			var status_item = '<div class="status yellow">\
+									' + LOCALE_ARRAY_ADDITIONAL.collect_cash_to[CURRENT_LANG] + ' ' + data_for_build.dt_expired + '\
+								</div>';						
+		}else{
+			var status_item = '<div class="status green">\
+									' + LOCALE_ARRAY_ADDITIONAL.successfully_finished[CURRENT_LANG] + '\
+								</div>';	
+		}
+*/
+
+		$('#pp-page [data-role=header] h1').html(LOCALE_ARRAY_ADDITIONAL.project_proposition[CURRENT_LANG]);
+		$('#pp-page .ui-icon-back').attr('back_url', '#pp-list-page?program=' + data_for_build.program_id);
+		$('#pp-page-help .title').html(LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG]);
+		$('#pp-page-help .text').html(LOCALE_ARRAY_ADDITIONAL.help_project_proposition[CURRENT_LANG]);
+
+		$('#pp-page .project-item .img img').attr('src', mainURL + data_for_build.img);
+
+/*		var ui_string = '';
+		ui_string += '
+					<div class="project-item-inner">\
 						<div class="stars-wrap">\
 							' + stars_ui + '\
 						</div>\
@@ -4140,35 +4730,39 @@ var PROGRAMS = {
 							' + LOCALE_ARRAY_ADDITIONAL.by[CURRENT_LANG] + ' @<strong>' + data_for_build.author + '</strong>\
 						</div>\
 						' + status_item + '\
+						<div class="total-amount">\
+							<span>' + LOCALE_ARRAY_ADDITIONAL.amount_asking[CURRENT_LANG] + '</span> - <strong>' + data_for_build.amount_asking + ' ' + PIF.get_currency_name_by_id( data_for_build.currency_asking ) + '</strong>\
+						</div>\
 						<div class="amount up">\
 							<span>' + LOCALE_ARRAY_ADDITIONAL.amount_current[CURRENT_LANG] + '</span> - <strong><test id = "amount_up">' + data_for_build.amount_current + '</test> ' + PIF.get_currency_name_by_id( data_for_build.currency_asking ) + '</strong>\
 						</div>\
 						<div class="my-amount">\
 							<span>' + LOCALE_ARRAY_ADDITIONAL.my_cash[CURRENT_LANG] + '</span> - <strong><test id = "my_amount_current">' + data_for_build.my_add + '</test> ' + PIF.get_currency_name_by_id( data_for_build.currency_asking ) + '</strong>\
 						</div>\
-						<div class="nko-list">\
-							<div class="tag-list">\
-								' + ui_tags + '\
-							</div>\
+						<div class="nco_status ui-corner-all"></div>\
+						<div class="desc">\
 							<div class="text">\
 								' + data_for_build.description + '\
 							</div>\
+							<div class="tag-list">\
+								' + ui_tags + '\
+							</div>\
 						</div>\
 						<div class="discuss-btn">\
-							<a class="ui-btn ui-corner-all ui-shadow" onclick="window.open(\'' + data_for_build.prog_discussion_link + '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_program[CURRENT_LANG] + '</a>\
+							<a class="ui-btn ui-corner-all ui-shadow" onclick="window.open(\'' + data_for_build.project_discussion_link + '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_project_proposition[CURRENT_LANG] + '</a>\
 						</div>\
 						<div class="btn-login-soc">\
 							<button class="ui-btn ui-corner-all ui-shadow share-btn">' + LOCALE_ARRAY_ADDITIONAL.share_by_social_newtworks[CURRENT_LANG] + '</button>\
 							<div class="social-wrap">\
 								<div class="ui-grid-b">\
 									<div class="ui-block-a">\
-										<a target="_blank" class="vk" href="https://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(data_for_build.title) + '&image=' + mainURL + data_for_build.img + '"></a>\
+										<a target="_blank" class="vk" href="https://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
 									</div>\
 									<div class="ui-block-b">\
-										<a target="_blank" class="fb" href="https://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href) + '&t=' + encodeURIComponent(data_for_build.title) + '"></a>\
+										<a target="_blank" class="fb" href="https://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href) + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
 									</div>\
 									<div class="ui-block-c">\
-										<a target="_blank" class="tw" href="https://twitter.com/share?url=' + encodeURIComponent(location.href) + '&text=' + encodeURIComponent(data_for_build.title) + '"></a>\
+										<a target="_blank" class="tw" href="https://twitter.com/share?url=' + encodeURIComponent(location.href) + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
 									</div>\
 									<div class="ui-block-a">\
 										<a target="_blank" class="gp" href="https://plus.google.com/share?url=' + encodeURIComponent(location.href) + '"></a>\
@@ -4177,7 +4771,7 @@ var PROGRAMS = {
 										<a target="_blank" class="in" href="https://www.linkedin.com/cws/share?url=' + encodeURIComponent(location.href) + '"></a>\
 									</div>\
 									<div class="ui-block-c">\
-										<a target="_blank" class="ok" href="https://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href) + '&st.comments=' + encodeURIComponent(data_for_build.title) + '"></a>\
+										<a target="_blank" class="ok" href="https://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href) + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
 									</div>\
 								</div>\
 							</div>\
@@ -4188,144 +4782,105 @@ var PROGRAMS = {
 						<hr>\
 						<div class="donate-wrap">\
 							' + ui_donate_panel + '\
-						</div>\
 						<hr>\
 						<div class="btn-next-page">\
-							<a class="ui-btn ui-btn-icon-right" href="#" onclick = "$.mobile.navigate(\'#history-page?item=program&id=' + data_for_build.id + '\');">' + LOCALE_ARRAY_ADDITIONAL.history_donation[CURRENT_LANG] + '</a>\
-						</div>\
-						<div class="btn-next-page">\
-							<a id = "weighted_voting_link" class="ui-btn ui-btn-icon-right" onclick = "' + weighted_votings_link + '" href="#">' + LOCALE_ARRAY_ADDITIONAL.votings_on_program[CURRENT_LANG] + '</a>\
-						</div>\
-						<div class="btn-next-page">\
-							<a class="ui-btn ui-btn-icon-right" onclick = "$.mobile.navigate(\'#projects-page?program=' + data_for_build.id + '\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.projects_propositions[CURRENT_LANG] + '</a>\
+							<a class="ui-btn ui-btn-icon-right" href="#" onclick = "$.mobile.navigate(\'#history-page?item=project_proposition&id=' + data_for_build.id + '\');">' + LOCALE_ARRAY_ADDITIONAL.history_donation[CURRENT_LANG] + '</a>\
 						</div>\
 					</div>\
+					</div><div class="right_col"></div>\
 				</div>\
-				</div><div class="right_col"></div>\
 			</div>';
 		
 		//$('#vote-page').html(ui_string);
 		//$.mobile.navigate("#vote-page");
 		//$.mobile.navigate("#vote-page?vote=" + data_for_build.id);
-		$('#program-page').html('');
-		$( ui_string ).appendTo( '#program-page' );
-		$('#program-page').enhanceWithin();
-		$('#program-page select').selectmenu().selectmenu("refresh", true);
+		$('#project-page').html('');
+		$( ui_string ).appendTo( '#project-page' );
+		$('#project-page').enhanceWithin();
+		$('#project-page select').selectmenu().selectmenu("refresh", true);	
+
+		NCO.nco_build(3, data_for_build.id, data_for_build.author_id, data_for_build.nco_id, data_for_build.nco_list, data_for_build.nco_acceptance);
+		NCO.events();
+
+		//PROJECT_PROPOSITION.events();
+*/
 		$.mobile.loading( "hide" );
 	},
-	get_one_element: function(data_id, type_trigger){
-		var self = this;
-		var return_element;
+	support: function(p_id, p_amount){
+
+		var l_json = $.parseJSON('{"id":"' + p_id + '", "amount":"' + p_amount + '"}');
+
 		$.ajax({
-			url: mainURL + '/program.php?id=' + data_id,
+			url: mainURL + "/project_proposition_support.php", 
+			type: "POST",
+			data: l_json, 
+			crossDomain: true,
+			xhrFields: {
+				withCredentials: true
+			},
+			complete: function(p_result){
+				//console.log(p_result);
+				var l_result = $.parseJSON(p_result.responseText);
+				var l_up = $('.amount_up #amount_up').attr('amount_up');
+				var l_my = $('.project-item-inner #my_amount_current').attr('my_amount_current');
+
+				var l_amount_up = l_up - l_my + l_result[0].amount_current;
+
+				$('.amount_up #amount_up').html(l_amount_up);
+				$('.amount_up #amount_up').attr('amount_up', l_amount_up);
+
+				$('.project-item-inner #my_amount_current').html(l_result[0].amount_current);
+				$('.project-item-inner #my_amount_current').attr('my_amount_current', l_result[0].amount_current);
+
+				$(this).attr('my_add', l_result[0].amount_current);
+
+				//alert(l_result[0].amount_current);
+
+			}
+		});
+
+
+
+	},
+	build_history_page: function(){
+		var self = this;
+		if(location.href.indexOf('#history-page?item=project&id=') > -1 || location.href.indexOf('#history-page?item=project_proposition&id=') > -1){
+			if(location.href.indexOf('#history-page?item=project&id=') > -1){
+				var match_array = location.href.match(/#history-page\?item=project&id=[0-9]*/i);
+				var object_id = match_array[0].match(/[0-9]+/i);
+				var type = 4;
+				var return_page = '#project-page?project=' + object_id;				
+				//var return_page = '#project-page?project=';
+			}else{
+				var match_array = location.href.match(/#history-page\?item=project_proposition&id=[0-9]*/i);
+				var object_id = match_array[0].match(/[0-9]+/i);
+				var type = 3;
+				var return_page = '#project-page?project_proposition=' + object_id;
+			}
+			var my_add = 0;
+			$.mobile.loading( "show", {theme: "z"});
+			$.ajax({
+			url: mainURL + '/fund_public_cf.php?type=' + type + '&id=' + object_id,
 			type: "GET",
 			xhrFields: {
 				withCredentials: true
 			},
 			crossDomain: true,
 			complete: function( response ){
-				return_element = $.parseJSON( response.responseText );
-				data_for_build = return_element[0];
-				self.data_array = data_for_build;
-				//console.log(self.data_array);
-				switch(data_for_build.status){
-					case '0':
-						self.current_collect_cash( data_for_build, 0, type_trigger);
-						break;
-					case '1':
-						self.current_collect_cash(data_for_build, 0, type_trigger)
-						break;
-					case '2':
-						self.current_collect_cash(data_for_build, 0, type_trigger)
-						break;
-				}
-
-				$('#program-page .btn-login-soc button').on('click', function(e){
-					$(this).next().fadeToggle(300);
-					if($('.overlay').length < 1) {
-						$(this).closest('.ui-page').append('<span class="overlay"></span>');
-					} else {
-						$('.overlay').remove();
-					}
-				});
-				$(document).on('click','.overlay', function() {
-					$(this).closest('.ui-page').find('#program-page .btn-login-soc button').trigger('click');
-				});
-			},
-		});
-	},
-	donate: function(selector, object_id, type_id){
-		var fund_id = $('#' + selector + '-page [name=pif]').val(); 
-		var currency = $('#' + selector + '-page option[value=' + fund_id + ']').data('currency');
-		var amount = $('#' + selector + '-page [name=amount]').val();
-		var open = 0;
-		if($('#' + selector + '-page #anonimous_check').hasClass('ui-checkbox-on')){
-			open = 1;
-		}
-		
-		$.ajax({
-			url: mainURL + "/fund_add_by_type.php",
-			type: "POST",
-			data: {"fund_id": fund_id,
-				 "currency": currency,
-				 "amount": amount,
-				 "type": type_id,
-				 "id": object_id,
-				 "open": open},
-			crossDomain: true,
-			xhrFields: {
-				withCredentials: true
-			},
-			complete: function(data){
-				if(data){
-					var response_data = $.parseJSON(data.responseText);
-					if(data.responseText.indexOf('error') == -1){
-						alert(LOCALE_ARRAY_ADDITIONAL.donate_successfull[CURRENT_LANG]);
-						$('#' + selector + '-page [name=pif] option[value=' + $('#' + selector + '-page [name=pif]').val() + ']').html($('#' + selector + '-page [name=pif]').val() + ' - ' + response_data[0].saldo);
-						$('#' + selector + '-page #amount_up').html( parseInt( $('#' + selector + '-page #amount_up').html() ) + parseInt( amount ));
-						$('#' + selector + '-page #my_amount_current').html( parseInt( $('#' + selector + '-page #my_amount_current').html() ) + parseInt( amount ) );
-						$('#' + selector + '-page select').selectmenu().selectmenu("refresh", true);
-						PIF.get_pif_array(true);
-						$('#weighted_voting_link').attr('onclick', '$.mobile.navigate(\'#weighted-votings-page?program=' + object_id + '\')');
-						//console.log("donate ok");
-					}else{
-						alert(LOCALE_ARRAY_ADDITIONAL.fund_closed[CURRENT_LANG]);
-					}
-				}
-			}
-		});
-	},
-	build_history_page: function(){
-		var self = this;
-		if(location.href.indexOf('#history-page?item=program&id=') > -1){
-			var match_array = location.href.match(/#history-page\?item=program&id=[0-9]*/i);
-			var object_id = match_array[0].match(/[0-9]+/i);
-			var my_add = 0;
-			$.mobile.loading( "show", {theme: "z"});
-			$.ajax({
-				url: mainURL + '/fund_public_cf.php?type=2&id=' + object_id,
-				type: "GET",
-				xhrFields: {
-					withCredentials: true
-				},
-				crossDomain: true,
-				complete: function( response ){
 					var funds_list = $.parseJSON( response.responseText );
-					//console.log('program');
-					//console.log('funds_list');
-					//console.log(funds_list);	
+					//console.log('project_proposition or project');	
 					$.mobile.loading( "hide" );
 
 					var ui_funds = '';
 					var ui_cf = '';
 					var main_currency = PIF.get_currency_name_by_id( funds_list[0].cur );
-					jQuery.each(funds_list, function(j, one_fund) {
+
+					jQuery.each(funds_list, function(i, one_fund) {
 						for (var i = 0; i < one_fund.cf.length; i++) {
 							var currency_name = PIF.get_currency_name_by_id( one_fund.cf[i].currency );
 							var cancel_span = '';
 							if(one_fund.cf[i].user_id == SUPER_PROFILE.id && SUPER_PROFILE.auth == true){
-								cancel_span = '<span style = "color: red; cursor: pointer;" onclick = "PROGRAMS.return_donate(\'' + one_fund.id + '\',\'' + one_fund.cur + '\',\'' + one_fund.cf[i].saldo + '\',2,\'' + object_id + '\',\'#program-page?program=' + object_id + '\')">' + LOCALE_ARRAY_ADDITIONAL.cancel_donate[CURRENT_LANG] + '</span>';
-								//cancel_span = '<span style = "color: red;">' + LOCALE_ARRAY_ADDITIONAL.cancel_donate[CURRENT_LANG] + '</span>';
+								cancel_span = '<span style = "color: red; cursor: pointer;" onclick = "PROJECTS.return_donate(\'' + one_fund.id + '\',\'' + one_fund.cur + '\',\'' + one_fund.cf[i].saldo + '\',\'' + type + '\',\'' + object_id + '\',\'' + return_page + object_id + '\')">' + LOCALE_ARRAY_ADDITIONAL.cancel_donate[CURRENT_LANG] + '</span>';
 								my_add += parseInt(one_fund.cf[i].saldo);
 							}
 							ui_cf += '<tr>\
@@ -4333,20 +4888,20 @@ var PROGRAMS = {
 										<td>' + one_fund.cf[i].user_id + ' ' + one_fund.cf[i].fname + ' ' + one_fund.cf[i].lname + '</td>\
 										<td><strong>' + one_fund.cf[i].saldo + '</strong> ' + currency_name + '</td>\
 									</tr>';
-						}
+						} 
 					});
 
 					ui_funds += '<div data-role="header" data-position="fixed" data-tap-toggle="false">\
 										<h1 class="long-title">\
 											' + LOCALE_ARRAY_ADDITIONAL.history_donation[CURRENT_LANG] + '\
 										</h1>\
-										<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back(\'#program-page?program=' + object_id + '\')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#request-history-help">Ask</a>\
-										<div id="request-history-help" class="help-popup" data-role="popup" data-history="false">\
+										<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back(\'' + return_page + '\')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#project_proposition-history-help">Ask</a>\
+										<div id="project_proposition-history-help" class="help-popup" data-role="popup" data-history="false">\
 											<div class="title">\
 												' + LOCALE_ARRAY_ADDITIONAL.description[CURRENT_LANG] + '\
 											</div>\
 											<div class="text">\
-												' + LOCALE_ARRAY_ADDITIONAL.help_history_page_program[CURRENT_LANG] + '\
+												' + LOCALE_ARRAY_ADDITIONAL.help_history_page_project_project[CURRENT_LANG] + '\
 											</div>\
 										</div>\
 									</div>\
@@ -4366,6 +4921,13 @@ var PROGRAMS = {
 														<strong>\
 														' + funds_list[0].amount_current + '\
 														 ' + main_currency + '</strong><span>' + LOCALE_ARRAY_ADDITIONAL.amount_current[CURRENT_LANG] + '</span>\
+													</div>\
+												</div>\
+												<div class="ui-block-c">\
+													<div class="total-amount">\
+														<strong>\
+														' + funds_list[0].amount_asking + '\
+														' + main_currency + '</strong><span>' + LOCALE_ARRAY_ADDITIONAL.amount_asking[CURRENT_LANG] + '</span>\
 													</div>\
 												</div>\
 											</div>\
@@ -4388,37 +4950,34 @@ var PROGRAMS = {
 												</tbody>\
 											</table>\
 										</div>\
-									</div>\
-									</div><div class="right_col"></div>';
+										</div><div class="right_col"></div>\
+									</div>';
 				$('#history-page').html( ui_funds ).enhanceWithin();
 							
 			},
 			});
 		}
 	},
-	return_donate: function(fund_id, currency, amount, type, type_id, return_page){
-		$.ajax({
-			url: mainURL + "/fund_return_by_type.php",
-			type: "POST",
-			data: {"fund_id": fund_id,
-				 "currency": currency,
-				 "amount": amount,
-				 "type": type,
-				 "id": type_id},
-			crossDomain: true,
-			xhrFields: {
-				withCredentials: true
-			},
-			complete: function(data){
-				alert(LOCALE_ARRAY_ADDITIONAL.return_donate_successfull[CURRENT_LANG]);
-				//console.log(return_page);
-				PIF.get_pif_array(true);
-				$('#weighted_voting_link').attr('onclick', 'alert(\'' + LOCALE_ARRAY_ADDITIONAL.only_for_donators[CURRENT_LANG] + '\');');
-				$.mobile.navigate(return_page);
-				//alert('okay');
+	events: function(){
+
+		$('body').on('click', '.support-pp-btn', function(){
+			var l_id = $(this).attr('p_id');
+			var l_max_amount = $(this).attr('my_program_add');
+			var l_amount = $('.input_amount').val();
+
+			if(l_max_amount >= l_amount){
+				PROJECT_PROPOSITION.support(l_id, l_amount);
+			}else{
+				alert(LOCALE_ARRAY_ADDITIONAL.incorrect_support_amount[CURRENT_LANG]);
 			}
+
 		});
-	}	
+
+		$(document).on('click', '#pp-list-back', function(e){
+			$.mobile.navigate($(this).attr('back_url'));
+		});
+
+	}
 };
 
 var REQUESTS = {
@@ -4524,17 +5083,7 @@ var REQUESTS = {
 	filter_data: function(sphere_id, reinit, name_sphere){
 		var self = this;
 		self.activated_easy_filter = 1;
-		/*if(sphere_id >= 0){
-			self.sphere_filter = sphere_id;
-			//console.log(sphere_id);
-			for (var i = 0; i < SPHERES.spheres.length; i++) {
-				if(SPHERES.spheres[i].selector_name == name_sphere){
-					var type_sphere = SPHERES.spheres[i].name;
-					break;
-				}
-			}
-			$('#filter-page #choose_spheres').html(LOCALE_ARRAY_ADDITIONAL.choose_sphere[CURRENT_LANG] + ': ' + type_sphere);
-		}*/
+
 		$.mobile.loading("show", {theme: "z"});
 
 		var url = mainURL + '/request.php';
@@ -4562,6 +5111,7 @@ var REQUESTS = {
 				url += '?sort=6';
 				break;	
 		}
+
 		switch($('#requests-page [name=sort_direction]').val()){
 			case "up":
 				url += '&direct=0';
@@ -4571,7 +5121,17 @@ var REQUESTS = {
 				break;	
 		}
 
-		
+		switch($('#requests-page [name=ngo]').val()){
+			case "Accepted":
+				url += '&nco=1&ac=1';
+				break;
+			case "Offered":
+				url += '&nco=1&ac=0';
+				break;	
+			case "Open for offer":
+				url += '&nco=0&ac=0';
+				break;
+		}
 
 		if($('#requests-page #searched_string').val() != ""){
 			url += '&filter=' + $('#requests-page #searched_string').val();
@@ -4898,75 +5458,76 @@ var REQUESTS = {
 			}
 		});
 
-		var nko_parts = '';
-		var nco_create_flag = 0;
-		jQuery.each(data_for_build.nco_list, function(i, one_nko) {
-			if( data_for_build.nco_id == '0' ){
-					nko_parts += '<li>\
-									<div>\
-										<strong>' + one_nko.reg_name + '</strong> (<strong>ID</strong>:<span>' + one_nko.user_id + '</span>)<span class="phone">' + one_nko.reg_phone + '</span><span class="doc">' + one_nko.reg_doc + '</span><span class="addr">' + one_nko.reg_address + '</span>\
-									</div>\
-								</li>\ ';
-			}else{
-				if( data_for_build.nco_id == one_nko.user_id){
-					nko_parts += '<li>\
-									<div>\
-										<strong>' + one_nko.reg_name + '</strong> (<strong>ID</strong>:<span>' + one_nko.user_id + '</span>)<span class="phone">' + one_nko.reg_phone + '</span><span class="doc">' + one_nko.reg_doc + '</span><span class="addr">' + one_nko.reg_address + '</span>\
-									</div>\
-								</li>\ ';
-					nco_create_flag = 1;
-				}
-			} 
-		});
+		// var nko_parts = '';
+		// var nco_create_flag = 0;
+		// jQuery.each(data_for_build.nco_list, function(i, one_nko) {
+		// 	if( data_for_build.nco_id == '0' ){
+		// 			nko_parts += '<li>\
+		// 							<div>\
+		// 								<strong>' + one_nko.reg_name + '</strong> (<strong>ID</strong>:<span>' + one_nko.user_id + '</span>)<span class="phone">' + one_nko.reg_phone + '</span><span class="doc">' + one_nko.reg_doc + '</span><span class="addr">' + one_nko.reg_address + '</span>\
+		// 							</div>\
+		// 						</li>';
+		// 	}else{
+		// 		if( data_for_build.nco_id == one_nko.user_id){
+		// 			nko_parts += '<li>\
+		// 							<div>\
+		// 								<strong>' + one_nko.reg_name + '</strong> (<strong>ID</strong>:<span>' + one_nko.user_id + '</span>)<span class="phone">' + one_nko.reg_phone + '</span><span class="doc">' + one_nko.reg_doc + '</span><span class="addr">' + one_nko.reg_address + '</span>\
+		// 							</div>\
+		// 						</li>';
+		// 			nco_create_flag = 1;
+		// 		}
+		// 	} 
+		// });
 
-		if(SUPER_PROFILE.id == data_for_build.author_id && data_for_build.nco_acceptance == '0' ){
-			var nco_button = '<div class="nko-btn">\
-								<a class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate(\'#nko-page?request=' + data_for_build.id + '\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.choose_nco[CURRENT_LANG] + '</a>\
-							</div>\
-							<div class="nko-status red">\
-								' + (data_for_build.nco_list.length > 0 ? "" : LOCALE_ARRAY_ADDITIONAL.nco_not_selected[CURRENT_LANG]) + '\
-							</div>';
-		}else{
-			var nco_button = '';
-		}
-		var nco_create_button = '';
-		var creator_check = 0;
-		if(SUPER_PROFILE.nco == '1' && data_for_build.nco_acceptance == '0' && data_for_build.nco_id == '0' ){
-			if( data_for_build.nco_list.length == 0 ){
-				nco_create_button = '<div class="nko-btn">\
-								<a class="ui-btn ui-corner-all ui-shadow" onclick = "NCO.offer_accept_nco(5,' + data_for_build.id + ',\'#request-page\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.create_nco[CURRENT_LANG] + '</a>\
-							</div>';
-			}else{
-				jQuery.each(data_for_build.nco_list, function(i, one_nko) {
-					if( SUPER_PROFILE.id == one_nko.user_id ){
-						creator_check = 1;
-					} 
-				});
-				if(creator_check == 0){
-					nco_create_button = '<div class="nko-btn">\
-								<a class="ui-btn ui-corner-all ui-shadow" onclick = "NCO.offer_accept_nco(5,' + data_for_build.id + '\'#request-page\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.create_nco[CURRENT_LANG] + '</a>\
-							</div>';
-				}
-			}
-		}
-		var nco_accept_button = '';
-		var creator_check_accept = 0;
-		if(SUPER_PROFILE.nco == '1' && data_for_build.nco_acceptance == '0' && data_for_build.nco_id == '0' ){
-			jQuery.each(data_for_build.nco_list, function(i, one_nko) {
-				if( SUPER_PROFILE.id == one_nko.user_id ){
-					creator_check_accept = 1;
-				} 
-			});
-			if(creator_check_accept == 0){
-				jQuery.each(data_for_build.nco_list, function(i, one_nko) {
-					if( data_for_build.nco_id == one_nko.user_id){
-						nco_accept_button = '<div class="nko-btn">\
-							<a class="ui-btn ui-corner-all ui-shadow" onclick = "NCO.offer_accept_nco(5,' + data_for_build.id + '\'#request-page\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.accept_nco[CURRENT_LANG] + '</a>\
-						</div>';
-					} 
-				});
-			}
-		}
+		// if(SUPER_PROFILE.id == data_for_build.author_id && data_for_build.nco_acceptance == '0' ){
+		// 	var nco_button = '<div class="nko-btn">\
+		// 						<a class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate(\'#nko-page?request=' + data_for_build.id + '\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.choose_nco[CURRENT_LANG] + '</a>\
+		// 					</div>\
+		// 					<div class="nko-status red">\
+		// 						' + (data_for_build.nco_list.length > 0 ? "" : LOCALE_ARRAY_ADDITIONAL.nco_not_selected[CURRENT_LANG]) + '\
+		// 					</div>';
+		// }else{
+		// 	var nco_button = '';
+		// }
+		// var nco_create_button = '';
+		// var creator_check = 0;
+		// if(SUPER_PROFILE.nco == '1' && data_for_build.nco_acceptance == '0' && data_for_build.nco_id == '0' ){
+		// 	if( data_for_build.nco_list.length == 0 ){
+		// 		nco_create_button = '<div class="nko-btn">\
+		// 						<a class="ui-btn ui-corner-all ui-shadow" onclick = "NCO.offer_accept_nco(5,' + data_for_build.id + ',\'#request-page\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.create_nco[CURRENT_LANG] + '</a>\
+		// 					</div>';
+		// 	}else{
+		// 		jQuery.each(data_for_build.nco_list, function(i, one_nko) {
+		// 			if( SUPER_PROFILE.id == one_nko.user_id ){
+		// 				creator_check = 1;
+		// 			} 
+		// 		});
+		// 		if(creator_check == 0){
+		// 			nco_create_button = '<div class="nko-btn">\
+		// 						<a class="ui-btn ui-corner-all ui-shadow" onclick = "NCO.offer_accept_nco(5,' + data_for_build.id + '\'#request-page\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.create_nco[CURRENT_LANG] + '</a>\
+		// 					</div>';
+		// 		}
+		// 	}
+		// }
+		// var nco_accept_button = '';
+		// var creator_check_accept = 0;
+		// if(SUPER_PROFILE.nco == '1' && data_for_build.nco_acceptance == '0' && data_for_build.nco_id == '0' ){
+		// 	jQuery.each(data_for_build.nco_list, function(i, one_nko) {
+		// 		if( SUPER_PROFILE.id == one_nko.user_id ){
+		// 			creator_check_accept = 1;
+		// 		} 
+		// 	});
+		// 	if(creator_check_accept == 0){
+		// 		jQuery.each(data_for_build.nco_list, function(i, one_nko) {
+		// 			if( data_for_build.nco_id == one_nko.user_id){
+		// 				nco_accept_button = '<div class="nko-btn">\
+		// 					<a class="ui-btn ui-corner-all ui-shadow" onclick = "NCO.offer_accept_nco(5,' + data_for_build.id + '\'#request-page\')" href="#">' + LOCALE_ARRAY_ADDITIONAL.accept_nco[CURRENT_LANG] + '</a>\
+		// 				</div>';
+		// 			} 
+		// 		});
+		// 	}
+		// }
+
 		var ui_donate_panel = '';
 		if(data_for_build.status == 0){
 			if(flag_selected == 1){
@@ -4982,7 +5543,7 @@ var REQUESTS = {
 											<div class="text-field">\
 												<label>' + LOCALE_ARRAY_ADDITIONAL.amount_of_money[CURRENT_LANG] + '</label>\
 												<div class="ui-input-text">\
-													<input type="text" name="amount" data-enhanced="true" />\
+													<input type="number" min="0" step="1" name="amount" data-enhanced="true" />\
 												</div>\
 											</div>\
 										</div>\
@@ -5005,7 +5566,7 @@ var REQUESTS = {
 					PIF.set_select_input('#request-page', 'REQUESTS', 'request', data_for_build.id, 5, data_for_build.currency_asking);
 				}
 				if(SUPER_PROFILE.auth == true){
-					ui_donate_panel = '<span>' + LOCALE_ARRAY_ADDITIONAL.warning_donate[CURRENT_LANG] +' <a href = "#my-fund-page">My funds</a></span>';
+					ui_donate_panel = '<span>' + LOCALE_ARRAY_ADDITIONAL.warning_donate[CURRENT_LANG] + ' <a href = "#my-fund-page">My funds</a></span>';
 				}else{
 					ui_donate_panel = '<span>Please register for donate. <a href = "#registration">Registration</a></span>';
 				}
@@ -5024,9 +5585,7 @@ var REQUESTS = {
 
 		var ui_string = '';
 		ui_string += '<div data-role="header" data-position="fixed" data-tap-toggle="false">\
-					<h1>\
-						' + LOCALE_ARRAY_ADDITIONAL.request[CURRENT_LANG] + '\
-					</h1>\
+					<h1>' + LOCALE_ARRAY_ADDITIONAL.request[CURRENT_LANG] + '</h1>\
 					<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back(\'#requests-page\')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#request-help">Ask</a>\
 					<div id="request-help" class="help-popup" data-role="popup" data-history="false">\
 						<div class="title">\
@@ -5054,7 +5613,7 @@ var REQUESTS = {
 							<span class="bg">' + LOCALE_ARRAY_ADDITIONAL.beneficiary[CURRENT_LANG] + ' @<strong>' + data_for_build.beneficiary + '</strong></span>\
 						</div>\
 						<div class="username">\
-							' + LOCALE_ARRAY_ADDITIONAL.by[CURRENT_LANG] + ' @<strong>' + data_for_build.author_id + ' ' + data_for_build.author + '</strong>\
+							' + LOCALE_ARRAY_ADDITIONAL.by[CURRENT_LANG] + ' @<strong>' + data_for_build.creator_id + ' :: ' + data_for_build.author + '</strong>\
 						</div>\
 						' + status_item + '\
 						<div class="total-amount">\
@@ -5066,17 +5625,7 @@ var REQUESTS = {
 						<div class="my-amount">\
 							<span>' + LOCALE_ARRAY_ADDITIONAL.my_cash[CURRENT_LANG] + '</span> - <strong><test id = "my_amount_current">' + data_for_build.my_add + '</test> ' + PIF.get_currency_name_by_id( data_for_build.currency_asking ) + '</strong>\
 						</div>\
-						<div class="nko-list">\
-							<div class="title">\
-								' + LOCALE_ARRAY_ADDITIONAL.nco_list_locale[CURRENT_LANG] + ':\
-							</div>\
-							<ol>\
-								' + nko_parts + '\
-							</ol>\
-						</div>\
-						' + (data_for_build.nco_acceptance == '0' ? LOCALE_ARRAY_ADDITIONAL.nco_accept_no[CURRENT_LANG] : LOCALE_ARRAY_ADDITIONAL.nco_accept_yes[CURRENT_LANG] ) + '\
-						' + nco_button + '\
-						' + nco_create_button + '\
+						<div class="nco_status ui-corner-all"></div>\
 						<div class="desc">\
 							<div class="text">\
 								' + data_for_build.description + '\
@@ -5136,6 +5685,10 @@ var REQUESTS = {
 		$( ui_string ).appendTo( '#request-page' );
 		$('#request-page').enhanceWithin();
 		$('#request-page select').selectmenu().selectmenu("refresh", true);	
+
+		NCO.nco_build(5, data_for_build.id, data_for_build.creator_id, data_for_build.nco_id, data_for_build.nco_list, data_for_build.nco_acceptance);
+		NCO.events();
+
 		$.mobile.loading( "hide" );
 	},
 	check_nko_page: function(){
@@ -5435,10 +5988,10 @@ var REQUESTS = {
 
 var funds = {
 	currency : {
-		"1" : "ICAN",
 		"980" : "UAH",
 		"840" : "USD",
-		"978" : "EUR"
+		"978" : "EUR",
+		"1" : "ICAN"
 	},
 	init : function(callback_function){
 		var self = this;
@@ -5750,10 +6303,18 @@ var WEIGHTED_VOTINGS = {
 			if(location.href.indexOf('#weighted-votings-page?program=') > -1){
 				var match_array = location.href.match(/#weighted-votings-page\?program=[0-9]*/i);
 				var object_id = match_array[0].match(/[0-9]+/i);
+
+				PROGRAMS.last_opened_id = object_id;
+				$("#wv-list-back").attr('program', object_id);
+				$("#wv-list-back").attr('back_url', '#program-page?program=' + object_id);
+
 				var url = mainURL + '/weighted_votings.php?program_id=' + object_id;
 				$('#weighted-votings-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.weighted_votings[CURRENT_LANG]);
 				$('#weighted-votings-page #create_voting_link').attr('style','display: block');
 				$('#weighted-votings-page #create_voting_link').attr('onclick', "$.mobile.navigate(\'#create-item?weighted_voting=true&item=" + object_id + "\')");
+				$('#weighted-votings-page').attr('program_id', object_id);
+
+
 			}else{
 				if(location.href.indexOf('#weighted-votings-page?my=1') > -1){
 					$('#weighted-votings-page #ui_title').html(LOCALE_ARRAY_ADDITIONAL.my_weighted_votings[CURRENT_LANG]);
@@ -5792,6 +6353,8 @@ var WEIGHTED_VOTINGS = {
 					$('#weighted-votings-page #solo_filter').css('display', 'block');	 	
 				},
 			});
+
+			self.events();
 		}
 	},
 	filter_data: function(sphere_id, reinit, name_sphere){
@@ -6246,16 +6809,16 @@ var WEIGHTED_VOTINGS = {
 	},
 	current_vote_page_voting_period: function(data_for_build, finished, type_trigger){
 		var self = this;
-		for (var k = 0; k < SPHERES.spheres.length; k++) {
-			if(SPHERES.spheres[k].type == parseInt( data_for_build.type ) ){
-				var type_sphere = SPHERES.spheres[k].name;
-				break;
-			}
-		}
-		var organization = '';
-		if(data_for_build.org){
-			var organization = data_for_build.org + " - ";
-		}
+		// for (var k = 0; k < SPHERES.spheres.length; k++) {
+		// 	if(SPHERES.spheres[k].type == parseInt( data_for_build.type ) ){
+		// 		var type_sphere = SPHERES.spheres[k].name;
+		// 		break;
+		// 	}
+		// }
+		// var organization = '';
+		// if(data_for_build.org){
+		// 	var organization = data_for_build.org + " - ";
+		// }
 
 
 		var selected_class_yes = '';
@@ -6390,9 +6953,6 @@ var WEIGHTED_VOTINGS = {
 										</div>\
 										<div class="username">\
 											' + LOCALE_ARRAY_ADDITIONAL.by[CURRENT_LANG] + ' @<strong>' + data_for_build.author + '</strong>\
-										</div>\
-										<div class="address">\
-											' + LOCALE_ARRAY_ADDITIONAL.sphere[CURRENT_LANG] + ' - ' + type_sphere + ' - ' + organization + data_for_build.sphere + '\
 										</div>\
 										</div>' + status_vote + 
 										'<div class="desc">' + data_for_build.description + ' </div>\
@@ -6653,7 +7213,7 @@ var WEIGHTED_VOTINGS = {
 				},
 				crossDomain: true,
 				complete: function( response ){
-						self.get_one_element(object_id);
+						self.get_one_element(object_id, 6); //6 is wv type number
 						//console.log('ok');
 				},
 			});
@@ -6781,8 +7341,17 @@ var WEIGHTED_VOTINGS = {
 		$('#voters-page').html('');
 		$( ui_string ).appendTo( '#voters-page' );
 		$('#voters-page').enhanceWithin();
+	},
+	events: function(){
+
+		$(document).on('click', '#wv-list-back', function(e){
+			$.mobile.navigate($(this).attr('back_url'));
+		});
+
 	}
 };
+
+
 /////////////////////////////////////////////////			
 
 var TRUST_LIST = {
@@ -7963,6 +8532,8 @@ var GROUPS = {
 	full_sph_list_load: 0,
 	sph_full_list: [],
 	group_id: 0,
+	group_name: '',
+	group_city: '',
 	group_owner_id: 0,
 	filter: '',
 	reinit: 0,
@@ -7970,6 +8541,8 @@ var GROUPS = {
 	scrolled_down: 0,
 	init: function(){
 		var self = this;
+
+		LIST_OF_ITEM.load = 1;
 
 		$.mobile.loading( "show", {theme: "z"});
 
@@ -8010,10 +8583,7 @@ var GROUPS = {
 		$.ajax({
 			url: mainURL + '/groups.php?ls=' + self.last_item_groups + l_filter,
 			type: "GET",
-			xhrFields: {
-				withCredentials: true
-			},
-			crossDomain: true,
+			async: false,
 			complete: function( response ){
 				//console.log(response);
 				self.items_list_groups = $.parseJSON(response.responseText);
@@ -8028,58 +8598,94 @@ var GROUPS = {
 	},
 	groups_spheres: function(p_group_id){
 		var self = this;
+		$.mobile.loading( "show", {theme: "z"});
+		$('#create_sphere').hide();
+		$('#members-btn').hide();
+		$('#membership_ask').hide();
+		$('#membership_stop').hide();
 
-		if(p_group_id > 0){
+		//if direct url link used
+		if(p_group_id == 0){
+			if(location.href.indexOf('#my-spheres-options?id=') > -1){
+				var match_array = location.href.match(/#my-spheres-options\?id=[0-9]*/i);
+				p_group_id = match_array[0].match(/[0-9]+/i);
+				$('#search_group').val(p_group_id);
 
-			console.log(GROUPS.group_owner_id);
-			console.log(SUPER_PROFILE.id);
+				GROUPS.init();
 
-			if(GROUPS.group_owner_id == SUPER_PROFILE.id 
-				&& SUPER_PROFILE.id > 0 && GROUPS.group_owner_id > 0){
-
-				$('#create_sphere').show();
-				$('#members-btn').show();
-				$('#membership_ask').hide();
-				$('#membership_stop').hide();
-
-			}else{
-
-				$('#create_sphere').hide();
-				$('#members-btn').hide();
-				$('#membership_ask').show();
-				$('#membership_stop').show();
-				
 			}
+		}
 
-			$.mobile.loading( "show", {theme: "z"});
-			$.ajax({
-				url: mainURL + '/groups_spheres.php?org_id=' + p_group_id,
-				type: "GET",
-				xhrFields: {
-					withCredentials: true
-				},
-				crossDomain: true,
-				complete: function( response ){
-					//console.log(response);
+		$.each(GROUPS.items_list_groups, function(i, l_one_item) {
 
-					self.items_list_spheres = $.parseJSON(response.responseText);
-					if(self.items_list_spheres.length > 0){
+			if(p_group_id == l_one_item.id){
+				GROUPS.group_owner_id = l_one_item.user_id;
+				GROUPS.group_id = l_one_item.id;
 
-						//TODO: exqlude doubles!!!
-						$('#group_spheres_list').html(LIST_OF_ITEM.build_items_list(self.items_list_spheres));
+				switch(CURRENT_LANG){
+					case 'en':
+						GROUPS.group_city = l_one_item.city_en;
+						GROUPS.group_name = l_one_item.org_en;
+					break;
+					case 'uk':
+						GROUPS.group_city = l_one_item.city_uk;
+						GROUPS.group_name = l_one_item.org_uk;
+					break;
+					case 'ru':
+						GROUPS.group_city = l_one_item.city_ru;
+						GROUPS.group_name = l_one_item.org_ru;
+					break;
+				}
+			}
+		});
 
-					}else{
-						$('#group_spheres_list').html('');
-					}
-					$.mobile.loading( "hide" );	
-				},
-			});
-		} else {
-			$('#create_sphere').hide();
-			$('#members-btn').hide();
+		console.log(GROUPS.group_owner_id);
+		console.log(SUPER_PROFILE.id);
+
+		if(GROUPS.group_owner_id == SUPER_PROFILE.id 
+			&& SUPER_PROFILE.id > 0 && GROUPS.group_owner_id > 0){
+
+			$('#create_sphere').show();
+			$('#members-btn').show();
 			$('#membership_ask').hide();
 			$('#membership_stop').hide();
+
+		}else{
+
+			$('#create_sphere').hide();
+			$('#members-btn').hide();
+			$('#membership_ask').show();
+			$('#membership_stop').show();
+			
 		}
+
+		$.ajax({
+			url: mainURL + '/groups_spheres.php?org_id=' + p_group_id,
+			type: "GET",
+
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			complete: function( response ){
+				//console.log(response);
+
+				self.items_list_spheres = $.parseJSON(response.responseText);
+				if(self.items_list_spheres.length > 0){
+
+					//TODO: exqlude doubles!!!
+					$('#group_spheres_list').html(LIST_OF_ITEM.build_items_list(self.items_list_spheres));
+
+				}else{
+					$('#group_spheres_list').html('');
+				}
+			},
+		});
+
+		$('#group_id_name').html('<h3>ID:' + GROUPS.group_id + ' :: ' + GROUPS.group_name + '</h3>');
+
+		$.mobile.loading( "hide" );	
+
 	},
 	spheres_add: function(){
 		var full_list_spheres = [
@@ -8152,12 +8758,19 @@ var GROUPS = {
 
 		$('body').on('click', '#add_btn', function(){
 			var p_result = '';
+			var l_json = '{"name_en":"' 
+							+ f_escape_quotes($('input[name=name_en]').val())
+							+ '", "name_uk":"' 
+							+ f_escape_quotes($('input[name=name_uk]').val())
+							+ '", "name_ru":"' 
+							+ f_escape_quotes($('input[name=name_ru]').val())
+							+ '"}';
+			console.log(l_json);
 			var group_add_ask = confirm(LOCALE_ARRAY_ADDITIONAL.group_add_question[CURRENT_LANG]);
 			if(group_add_ask){
-				$.post(mainURL + '/groups_add.php', $.parseJSON('{"name_en":"' + $('input[name=name_en]').val()
-					+ '", "name_uk":"' + $('input[name=name_uk]').val() 
-					+ '", "name_ru":"' + $('input[name=name_ru]').val() 
-					+ '"}'), function(p_result){
+				$.post(mainURL + '/groups_add.php', 
+						$.parseJSON(l_json),
+						function(p_result){
 
 					if(p_result.indexOf('error') > -1 ){
 							message_result(p_result);
@@ -8176,6 +8789,7 @@ var GROUPS = {
 
 		$('#membership_ask').click(function(){
 			var membership_ask = confirm(LOCALE_ARRAY_ADDITIONAL.membership_ask[CURRENT_LANG]);
+			console.log(membership_ask);
 			if(membership_ask){
 				$.post(mainURL + '/groups_membership_request.php', $.parseJSON('{"request":1, "id":' + GROUPS.group_id + '}'), function(l_result){
 					message_result(l_result);
@@ -8215,8 +8829,8 @@ var GROUPS = {
 			var l_text = $('#sph_name').val();
 			var l_select = $('#full_spheres_list').val();
 
-			$.post(mainURL + '/groups_sphere_add.php', $.parseJSON('{"t":"' + l_text
-					+ '", "s":"' + l_select 
+			$.post(mainURL + '/groups_sphere_add.php', $.parseJSON('{"t":"' + f_escape_quotes(l_text)
+					+ '", "s":"' + f_escape_quotes(l_select) 
 					+ '", "g":"' + GROUPS.group_id 
 					+ '"}'), function(l_result){
 				message_result(l_result);
@@ -8326,6 +8940,7 @@ var MEMBERS = {
 };
 
 var LIST_OF_ITEM = {
+	load: 0,
 	build_items_list: function(p_items_list){
 		var self = this;
 		var l_elements_string = '';
@@ -8347,6 +8962,7 @@ var LIST_OF_ITEM = {
 
 			switch( parseInt(l_one_item.type_id) ){
 				case 4:
+					//groups
 					l_item_properties = ' user_id="' + l_one_item.user_id + '" org_id="' + l_one_item.id + '" style="cursor:pointer" ';
 					l_classes = ' group-item ';
 					l_image = mainURL + '/uploads/news.svg';
@@ -8469,6 +9085,7 @@ var LIST_OF_ITEM = {
 
 		self.events();
 
+		LIST_OF_ITEM.load = 0;
 		return l_elements_string;
 
 		// if(p_reinit){
@@ -8489,21 +9106,24 @@ var LIST_OF_ITEM = {
 			var l_id = $('#nco-page .ui-icon-back').attr('p_id');
 			var l_nco = $(this).attr('n_id');
 			$.get(mainURL + '/nco_choice.php', { type: l_type, id: l_id, nco: l_nco }, function(p_result){
-				if( p_result.indexOf('error') > -1 ){
-					var l_msg = $.parseJSON(p_result);
-					switch(CURRENT_LANG){
-						case 'en':
-							alert(l_msg[0].error);
-							break;
-						case 'uk':
-							alert(l_msg[0].error_uk);
-							break;
-						case 'ru':
-							alert(l_msg[0].error_ru);
-							break;
+				if( p_result.indexOf('status') > -1 ){
+					var l_result = $.parseJSON(p_result);
+
+					switch(l_result[1].status){
+						case '1':
+							console.log(l_result[1].status);
+						break;
+						case '2':
+							$('.nco_choosen').html(LOCALE_ARRAY_ADDITIONAL.nco_accepted[CURRENT_LANG]);
+							$('.nco_choosen').show();
+							$('.list-nco-btn').hide();
+							$('.ngo_bids_list_label').hide();
+							$('.ngo_bids_list').hide();
+						break;
 					}
 				}
-
+				message_result(p_result);
+				$.mobile.navigate($('#nco-page .ui-icon-back').prop('href'));
 			});
 		});
 
@@ -12570,6 +13190,29 @@ function change_nan(number){
 			});
 		}
 
+		//NAVIGATION EVENTS:
+
+		//Global back_btn intercept
+		$(document).on('click', '.back_btn', function(e){
+			$.mobile.navigate($(this).attr('back_url'));
+		});
+
+
+		//social-entrepreneurship navigation
+		$('#social-entrepreneurship .menu-icon-projects').click(function(){
+			$('#projects_list_back').attr('back_url', '#social-entrepreneurship');
+			$.mobile.navigate('#projects-page'); 
+		});
+
+		//My activities navigation
+		$('#my-activities-page .icon-projects').click(function(){
+			$('#projects_list_back').attr('back_url', '#my-activities-page');
+			$.mobile.navigate('#projects-page?my_project=true'); 
+		});
+
+
+
+
 		function init(){
 			if(readCookie("lang")){
 				$('#select-lang2 > option[value="' + readCookie("lang") + '"]').attr('selected', 'selected');
@@ -12638,19 +13281,8 @@ function change_nan(number){
 					}					
 				}
 			});
-			/*$.ajax({
-					url: mainURL + "/list_adr_country.php",
-					type:"GET",
-					xhrFields: {
-						withCredentials: true
-					},
-					crossDomain: true,
-					complete: function(response){
-						var data = response.responseText;
-						
-						}
-					});*/
 		}
+
 		init();
 
 		function auth(turn){
@@ -12664,6 +13296,13 @@ function change_nan(number){
 				set_unset_links(1, '[data-link=#trust-list]');
 				SOCIAL.init();
 				SOCIAL.listener();
+
+				if(PROFILE.nco == 1){
+					$('.ngo_filter').show();
+				}else{
+					$('.ngo_filter').hide();
+				}
+
 			}else{
 				PROFILE.auth = false;
 				SUPER_PROFILE.auth = false;
@@ -12671,6 +13310,8 @@ function change_nan(number){
 				set_unset_links(0, '.menu-icon-activities');
 				set_unset_links(0, '.menu-icon-options');
 				set_unset_links(0, '[data-link=#trust-list]');
+				$('.ngo_filter').hide();
+
 			}			
 		}
 
@@ -12934,7 +13575,7 @@ function change_nan(number){
 				//TODO: All events for profile must be in PRIFILE.events!!!
 
 				$('#profile-page [name=fn]').on('change', function(){
-					var l_fn = $('#profile-page [name=fn]').val().replace('"', "'");
+					var l_fn = $('#profile-page [name=fn]').val().replace(/[\"]/g, "'");
 					var l_url = mainURL + "/profile_edit.php";
 					var l_data = $.parseJSON('{"fn":"'+ l_fn + '"}');
 					$.post(l_url, l_data);
@@ -12944,7 +13585,7 @@ function change_nan(number){
 				});
 
 				$('#profile-page [name=ln]').on('change', function(){
-					var l_ln = $('#profile-page [name=ln]').val().replace('"', "'");
+					var l_ln = $('#profile-page [name=ln]').val().replace(/[\"]/, "'");
 					var l_url = mainURL + "/profile_edit.php";
 					var l_data = $.parseJSON('{"ln":"'+ l_ln + '"}');
 					$.post(l_url, l_data);
@@ -13009,9 +13650,9 @@ function change_nan(number){
 						});
 					}
 				});
-
 			},
 		};
+
 		$("#login-form").submit(function(){
 			var form = $(this);
 			var login = $(form).find("[name=login]").val();
@@ -13044,9 +13685,11 @@ function change_nan(number){
 			});
 			return false;
 		});
+
 		$("#forgot-password .ui-btn-right").click(function(){
 			$("#forgot-password form").submit();
 		});
+
 		$("#forgot-password form").submit(function(){
 			var user_name = $(this).find("input[type=text]").val();
 			var data = {
@@ -13074,7 +13717,7 @@ function change_nan(number){
 			});
 			return false;
 		});
-		//
+
 		$("#register-form").submit(function(){
 			var user_name = $(this).find("[name=username]").val();
 			var user_email = $(this).find("[name=email]").val();
@@ -13240,8 +13883,8 @@ function change_nan(number){
 							SOCIAL.init();
 						}
 					}); 	
-					
 				}
+
 			},
 			logout:function(){
 				var self = this;
@@ -13321,7 +13964,6 @@ function change_nan(number){
 					// } else {
 					// 	ribbons += '<a href="sn/fb.php"><img style = "filter: alpha(Opacity=30);" class="ui-corner-all ribbon" src="images/icon-gp.png"></a>';
 					// }
-
 
 					$('#profile-page #ribbons').html( ribbons );
 					$("#left-panel").addClass("auth-panel");

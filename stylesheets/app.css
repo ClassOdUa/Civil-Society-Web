@@ -15,6 +15,10 @@ button,
   font-family: "Roboto", sans-serif;
   color: #4d4d4d; }
 
+.menu {
+  line-height: 1;
+}
+
 legend,
 .ui-input-text input,
 .ui-input-search input {
@@ -1348,6 +1352,7 @@ label.ui-btn {
   display: block;
   margin: 0 3em 0 3.5em;
   text-align: left; }
+.project-item,
 #vote-page .vote-item,
 #vote-page .program-item,
 #vote-page .request-item,
@@ -1375,6 +1380,7 @@ label.ui-btn {
   -moz-border-radius: 0.3125em 0.3125em 0 0;
   -webkit-border-radius: 0.3125em;
   border-radius: 0.3125em 0.3125em 0 0; }
+  .project-item .vote-item-inner,
   #vote-page .vote-item .vote-item-inner,
   #vote-page .vote-item .program-item-inner,
   #vote-page .vote-item .request-item-inner,
@@ -2076,6 +2082,7 @@ label.ui-btn {
     padding-right: 2.3em;
     background: #ffffff;
     overflow: hidden;
+    cursor: pointer;
     margin-bottom: 1.5em; }
     .news-list .item.news-icon:after {
       content: '';
@@ -2762,5 +2769,16 @@ label.ui-btn {
   margin: 0.5em;
   padding: 0.5em;
   background-color: #E9E8E8;
+
+}
+
+.news_img_list{
+  background: url("../images/menu-icon-news.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 5em;
+  -webkit-background-size: 5em;
+  -moz-background-size: 5em;
+  -o-background-size: 5em; 
 
 }
