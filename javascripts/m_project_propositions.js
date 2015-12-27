@@ -9,6 +9,7 @@ var PROJECT_PROPOSITION = {
 	init: function(){
 		var self = this;
 		var url = '';
+		$.mobile.loading( "show", {theme: "z"});
 
 		if(location.href.indexOf('#pp-list-page?program=') > -1){
 			var match_array = location.href.match(/#pp-list-page\?program=[0-9]*/i);
@@ -48,7 +49,9 @@ var PROJECT_PROPOSITION = {
 				self.check_current_url( 1 );
 				self.build_elements();
 				$('#pp-list-page #activated_filter').css('display', 'none'); 
-				$('#pp-list-page #solo_filter').css('display', 'block');	 	
+				$('#pp-list-page #solo_filter').css('display', 'block');
+				$.mobile.loading( "hide" );
+	 	
 			},
 		});
 

@@ -53,10 +53,10 @@ var REQUESTS = {
 				self.check_current_url( 1 );
 				self.build_elements();
 				$('#requests-page #activated_filter').css('display', 'none'); 
-				$('#requests-page #solo_filter').css('display', 'block');	
+				$('#requests-page #solo_filter').css('display', 'block');
+				$.mobile.loading( "hide" );
 			},
 		});
-		$.mobile.loading( "hide" );
 
 	},
 	reinit: function(){

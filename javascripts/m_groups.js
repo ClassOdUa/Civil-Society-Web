@@ -70,10 +70,10 @@ var GROUPS = {
 					$('#org_list').append(LIST_OF_ITEM.build_items_list(l_groups_json));
 					GROUPS.last_item_groups += l_groups_json.length;
 				}
+				$.mobile.loading( "hide" );	
 			},
 		});
 
-		$.mobile.loading( "hide" );	
 	},
 	groups_spheres: function(p_group_id){
 		var self = this;

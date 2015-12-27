@@ -19,7 +19,9 @@
 
     <gap:plugin name="cordova-plugin-whitelist" source="npm" version="1.0.0" />
         <access origin="https://gurtom.mobi"/>
+        <access origin="*" />
 
+    <gap:plugin name="nl.x-services.plugins.socialsharing" />
 
 
 

@@ -30,7 +30,7 @@ var NEWS = {
 							NEWS.news_last_item += l_news_json.length;
 							NEWS.build_elements(l_news_json);
 						}
-
+						$.mobile.loading( "hide" );	
 					},
 				});
 				NEWS.news_busy = 0;
@@ -39,7 +39,6 @@ var NEWS = {
 		// console.log(NEWS.news_list.length);
 		// console.log(NEWS.news_list);
 
-		$.mobile.loading( "hide" );	
 	},
 	build_elements: function(p_build_array){
 		var self = this;

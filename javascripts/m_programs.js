@@ -55,7 +55,6 @@ var PROGRAMS = {
 						alert(LOCALE_ARRAY_ADDITIONAL.no_data[CURRENT_LANG]);
 					}	
 					//console.log( self.data_array );
-					$.mobile.loading( "hide" );
 					self.check_current_url( 1 );
 					self.build_elements();
 					$('#programs-page #activated_filter').css('display', 'none'); 
@@ -63,6 +62,8 @@ var PROGRAMS = {
 					/*if(call_back){
 						call_back();
 					}*/	
+					$.mobile.loading( "hide" );
+
 			},
 		});
 

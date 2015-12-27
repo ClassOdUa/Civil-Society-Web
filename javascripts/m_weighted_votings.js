@@ -62,11 +62,12 @@ var WEIGHTED_VOTINGS = {
 						alert(LOCALE_ARRAY_ADDITIONAL.no_data[CURRENT_LANG]);
 					}	
 					//console.log( self.votings_array );
-					$.mobile.loading( "hide" );
 					self.check_current_url( 1 );
 					self.build_elements();
 					$('#weighted-votings-page #activated_filter').css('display', 'none'); 
-					$('#weighted-votings-page #solo_filter').css('display', 'block');	 	
+					$('#weighted-votings-page #solo_filter').css('display', 'block');
+					$.mobile.loading( "hide" );
+ 	
 				},
 			});
 
@@ -146,7 +147,6 @@ var WEIGHTED_VOTINGS = {
 			complete: function( response ){
 				////console.log(response);
 				self.votings_array = $.parseJSON( response.responseText );	
-				$.mobile.loading( "hide" );
 				self.check_current_url( 1 );
 				if(reinit){
 					self.build_elements( "", true );	
@@ -155,7 +155,8 @@ var WEIGHTED_VOTINGS = {
 				}
 				if(self.votings_array.length == 0 && reinit != 1 && self.activated_hard_filter == 1){
 					alert(LOCALE_ARRAY_ADDITIONAL.no_data[CURRENT_LANG]);
-				} 	
+				}
+				$.mobile.loading( "hide" );
 			},
 		});
 	},

@@ -77,14 +77,14 @@ var PROJECTS = {
 				self.check_current_url( 1 );
 				self.build_elements();
 				$('#projects-page #activated_filter').css('display', 'none'); 
-				$('#projects-page #solo_filter').css('display', 'block');	 	
+				$('#projects-page #solo_filter').css('display', 'block');
+				$.mobile.loading( "hide" );
 			},
 		});
 
 		self.events();
 		PROJECT_PROPOSITION.events();
 
-		$.mobile.loading( "hide" );
 	},
 	reinit: function(){
 		var self = this;

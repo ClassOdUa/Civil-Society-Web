@@ -52,9 +52,9 @@ var MEMBERS = {
 					$('#members_list').append(LIST_OF_ITEM.build_items_list(self.items_list_members));
 					self.last_item_members += 10;
 				}
+				$.mobile.loading( "hide" );	
 			},
 		});
-		$.mobile.loading( "hide" );	
 	},
 	events: function(){
 

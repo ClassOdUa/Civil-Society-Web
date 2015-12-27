@@ -2,9 +2,13 @@ var NCO = {
 	list: {},
 	init: function(){
 		var self = this;
+		$.mobile.loading( "show", {theme: "z"});
+
 		$.post(mainURL + '/nco.php', function(p_result){
 			self.list = $.parseJSON(p_result);
 			$('#nco_full_list').html(LIST_OF_ITEM.build_items_list(self.list));
+			$.mobile.loading( "hide" );
+
 		});
 	},
 	offer_accept_nco: function(object_type, object_id, page){

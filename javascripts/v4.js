@@ -757,7 +757,9 @@ $(document).on("pagecontainershow", function () {
 			break;
 		case 'my-tasks-page':
 			console.log('my-tasks-page');
+			$.mobile.loading( "show", {theme: "z"});
 			TASKS.init();
+	 		$.mobile.loading( "hide" );	
 			break;
 		case 'social-investment':
 			console.log('social-investment');

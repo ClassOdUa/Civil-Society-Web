@@ -59,7 +59,6 @@ var TRUST_LIST = {
 			},
 			crossDomain: true,
 			complete: function( response ){
-				$.mobile.loading( "hide" );
 				//console.log(response);
 				if(response && response.responseText.indexOf('error') == -1){
 					self.trust_array = $.parseJSON( response.responseText );
@@ -72,7 +71,8 @@ var TRUST_LIST = {
 					if( response.responseText.indexOf('error') > -1 ){
 						message_result(response.responseText);
 					}
-				}	
+				}
+				$.mobile.loading( "hide" );
 			},
 		});
 	},

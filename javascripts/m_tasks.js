@@ -20,10 +20,10 @@ var TASKS = {
 					self.build_elements(true, query_array);
 					self.tasks_last_item += query_array.length;
 				}
+		 		$.mobile.loading( "hide" );	
 				//console.log(self.tasks_list);
 			},
 		});
- 		$.mobile.loading( "hide" );	
 	},
 	reinit: function(){
 		var self = this;

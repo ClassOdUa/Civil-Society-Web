@@ -30,6 +30,8 @@ var CREATE_VOTE = {
 			error = 1;
 		}
 		if(error != 1){
+			$.mobile.loading( "show", {theme: "z"});
+
 			var start_date = $('#create-vote [name=s_time_year]').val() + "-" 
 							+ $('#create-vote [name=s_time_month]').val() + "-" 
 							+ $('#create-vote [name=s_time_date]').val();
@@ -119,6 +121,8 @@ var CREATE_VOTE = {
 							}
 						}
 					}
+					$.mobile.loading( "hide" );
+
 					/*if(response){
 						var id = $.parseJSON(response.responseText);
 						id = id[0].id;
@@ -665,12 +669,13 @@ var VOTINGS = {
 				if(call_back){
 					call_back();
 				}
+				$.mobile.loading( "hide" );
+
 			},
 		});
 
 		$('.right_col').html(LOCALE_ARRAY_ADDITIONAL.right_col_votings_page[CURRENT_LANG]);
 
-		$.mobile.loading( "hide" );
 	},
 	filter_data: function(sphere_id, reinit, name_sphere){
 		var self = this;
