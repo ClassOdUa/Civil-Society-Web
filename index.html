@@ -35,7 +35,25 @@
 		<script src="./javascripts/purl.js?t=1"></script>
 		<script src="./leaflet/leaflet.js"></script>
 
-		<script src="./javascripts/v3.js?t=1"></script>
+		<script src="./javascripts/m_variables.js"></script>
+		<script src="./javascripts/m_profile.js"></script>
+		<script src="./javascripts/m_news.js"></script>
+		<script src="./javascripts/m_groups.js"></script>
+		<script src="./javascripts/m_members.js"></script>
+		<script src="./javascripts/m_funds.js"></script>
+		<script src="./javascripts/m_nco.js"></script>
+		<script src="./javascripts/m_votings.js"></script>
+		<script src="./javascripts/m_programs.js"></script>
+		<script src="./javascripts/m_project_propositions.js"></script>
+		<script src="./javascripts/m_projects.js"></script>
+		<script src="./javascripts/m_requests.js"></script>
+		<script src="./javascripts/m_weighted_votings.js"></script>
+		<script src="./javascripts/m_tasks.js"></script>
+		<script src="./javascripts/m_trust_list.js"></script>
+
+
+		<script src="./javascripts/v4.js"></script>
+
 	</head>
 <body>
 
@@ -365,6 +383,23 @@
 					<input type="submit" value="Restore access" class="ui-btn ui-btn-corner-all ui-shadow" />
 				</div>
 			</form>
+		</div>
+		<div class="right_col"></div>
+	</div>
+</div>
+
+<div id="news-page" data-role="page">
+	<div data-role="header" data-position="fixed" data-tap-toggle="false">
+		<h1>News</h1>
+		<a class="ui-btn ui-btn-left ui-icon-bars ui-btn-icon-notext" href="#left-panel">Menu</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#news-help">Ask</a>
+		<div id="news-help" class="help-popup" data-role="popup" data-history="false">
+			<div class="title">Description</div>
+			<div class="text">help text</div>
+		</div>
+	</div>
+	<div role="main" class="ui-content">
+		<div class="left_col">
+			<div id = "news_list" class="news-list"></div>
 		</div>
 		<div class="right_col"></div>
 	</div>
@@ -1020,8 +1055,8 @@
 <div id="projects-page" data-role="page">
 	<div data-role="header" data-position="fixed" data-tap-toggle="false">
 		<h1 id = "ui_title">Projects</h1>
-		<a id = "menu_link" class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back('#social-entrepreneurship')" href="#">Back</a>
-		<a id = "my_activities_link" style = "display:none" class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back('#my-activities-page')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#projects-help">Ask</a>
+		<a id = "projects_list_back" class="back_btn ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" back_url="#social-entrepreneurship" href="">Back</a>
+		<a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#projects-help">Ask</a>
 		<div id="projects-help" class="help-popup" data-role="popup" data-history="false">
 			<div class="title">
 				Description
@@ -1052,6 +1087,16 @@
 						<option value="up">Sort up</option>
 					</select>
 				</div>
+
+				<div class="ngo_filter" onchange="PROJECTS.filter_data()">
+					<select data-direct = "0" name="ngo">
+						<option>NGO options</option>
+						<option value="Accepted">Accepted</option>
+						<option value="Offered">Offered</option>
+						<option value="Open for offer">Open for offer</option> 
+					</select>
+				</div>
+
 				<div id = "solo_filter" onclick = "$.mobile.navigate('#filter-page-projects'); PROJECTS.activated_hard_filter = 1;  $('#projects-page #activated_filter').css('display', 'block'); $('#projects-page #solo_filter').css('display', 'none');" class="ui-grid-solo">
 					<div class="ui-block-a">
 						<div class="ui-input-btn ui-btn ui-btn-icon-right filter-normal">
@@ -1071,6 +1116,11 @@
 						</div>
 					</div>
 				</div>
+				<div onclick="COMMON_OBJECT.custom_swipe(this)" data-show="0" class="ui-block-a">
+					<div class="ui-input-btn ui-btn ui-btn-icon-right filter-save">
+						<span>Закрити панель фільтру</span><input value="" data-enhanced="true" type="button">
+					</div>
+				</div>
 			</form>
 		</div>
 	</div>
@@ -1087,6 +1137,176 @@
 </div>
 
 <div id="project-page" data-role="page">
+</div>
+
+<div id="pp-list-page" data-role="page">
+	<div data-role="header" data-position="fixed" data-tap-toggle="false">
+		<h1 id = "ui_title">Project propositions</h1>
+		<a id = "pp_list_back" class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" href="">Back</a>
+		<a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#pp-list-help">Ask</a>
+		<div id="pp-list-help" class="help-popup" data-role="popup" data-history="false">
+			<div class="title">
+				Description
+			</div>
+			<div class="text">
+				help text
+			</div>
+		</div>
+	</div>
+	<div class="filters-panel">
+		<div class="filters-panel-inner">
+			<form action="" accept-charset="UTF-8" method="post" onsubmit="return false;">
+				<div class="ui-input-search ui-input-has-clear">
+					<input onkeyup="PROJECT_PROPOSITION.filter_data()" onchange="PROJECT_PROPOSITION.filter_data()" id = "searched_string" type="search" name="" placeholder="Search by ID or name" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">Clear text</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />
+				</div>
+				<div onchange = "PROJECT_PROPOSITION.filter_data()">
+					<select data-direct = "0" name="sort" placeholder="Sort by newest">
+						<option value="Sort by id">Sort by id</option>
+						<option value="Sort by name">Sort by name</option>
+						<option value="Sort by date create">Sort by date create</option>
+						<option value="Sort by date end">Sort by date end</option>
+						<option value="Sort by stars">Sort by title</option>
+						<option value="Sort by amount asking">Sort by amount asking</option>  
+					</select>
+				</div>
+				<div>
+					<select onchange="PROJECT_PROPOSITION.filter_data()" name="sort_direction"><option value="down">Sort down</option>
+						<option value="up">Sort up</option>
+					</select>
+				</div>
+
+				<div class="ngo_filter" onchange="PROJECT_PROPOSITION.filter_data()">
+					<select data-direct = "0" name="ngo">
+						<option>NGO options</option>
+						<option value="Accepted">Accepted</option>
+						<option value="Offered">Offered</option>
+						<option value="Open for offer">Open for offer</option> 
+					</select>
+				</div>
+
+				<div id = "solo_filter" onclick = "$.mobile.navigate('#filter-page-projects'); PROJECTS.activated_hard_filter = 1;  $('#projects-page #activated_filter').css('display', 'block'); $('#projects-page #solo_filter').css('display', 'none');" class="ui-grid-solo">
+					<div class="ui-block-a">
+						<div class="ui-input-btn ui-btn ui-btn-icon-right filter-normal">
+							<span>Filter</span><input type="button" value="" data-enhanced="true" />
+						</div>
+					</div>
+				</div>
+				<div style = "display: none" id = "activated_filter" class="ui-grid-a">
+					<div class="ui-block-a">
+						<div id = "filter_activator" onclick = "PROJECT_PROPOSITION.activated_hard_filter = 1; $.mobile.navigate('#filter-page-projects');" class="ui-input-btn ui-btn ui-btn-icon-right filter-active">
+							<span>Filter is activated</span><input type="button" value="" data-enhanced="true" />
+						</div>
+					</div>
+					<div class="ui-block-b">
+						<div class="ui-input-btn ui-btn ui-btn-icon-right filter-clear">
+							 <span>Clear filter</span><input type="button" value="" onclick = "PROJECT_PROPOSITION.init()" data-enhanced="true" />
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div role="main" class="ui-content">
+		<div class="left_col">
+			<a id = "filter_slider" class="ui-btn ui-corner-all ui-shadow" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>
+			<a id = "create_proposition_link" class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate('#')" href="#">Create project proposion</a>
+			<div id = "pp-list" class="pp-list"></div>
+		</div>
+		<div class="right_col"></div>
+	</div>
+</div>
+
+<div id="pp-page" data-role="page">
+	<div data-role="header" data-position="fixed" data-tap-toggle="false">\
+		<h1>Project_proposition</h1>
+		<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" href="">Back</a>
+		<a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#pp-page-help">Ask</a>
+		<div id="pp-page-help" class="help-popup" data-role="popup" data-history="false">
+			<div class="title"></div>
+			<div class="text"></div>
+		</div>
+	</div>
+	<div role="main" class="ui-content">
+		<div class="left_col">
+			<div id = "pp-item" class="project-item">
+				<div class="img">
+					<img width="100%" src="/uploads/program.svg" />
+				</div>
+ 				<div class="project-item-inner">
+					<div class="stars-wrap">
+						<span id="star1" class="star"></span>
+						<span id="star2" class="star"></span>
+						<span id="star3" class="star"></span>
+						<span id="star4" class="star"></span>
+					</div>
+					<div class="id"></div>
+<!--
+						<div class="username">\
+							' + LOCALE_ARRAY_ADDITIONAL.by[CURRENT_LANG] + ' @<strong>' + data_for_build.author + '</strong>\
+						</div>\
+						' + status_item + '\
+						<div class="total-amount">\
+							<span>' + LOCALE_ARRAY_ADDITIONAL.amount_asking[CURRENT_LANG] + '</span> - <strong>' + data_for_build.amount_asking + ' ' + PIF.get_currency_name_by_id( data_for_build.currency_asking ) + '</strong>\
+						</div>\
+						<div class="amount up">\
+							<span>' + LOCALE_ARRAY_ADDITIONAL.amount_current[CURRENT_LANG] + '</span> - <strong><test id = "amount_up">' + data_for_build.amount_current + '</test> ' + PIF.get_currency_name_by_id( data_for_build.currency_asking ) + '</strong>\
+						</div>\
+						<div class="my-amount">\
+							<span>' + LOCALE_ARRAY_ADDITIONAL.my_cash[CURRENT_LANG] + '</span> - <strong><test id = "my_amount_current">' + data_for_build.my_add + '</test> ' + PIF.get_currency_name_by_id( data_for_build.currency_asking ) + '</strong>\
+						</div>\
+						<div class="nco_status ui-corner-all"></div>\
+						<div class="desc">\
+							<div class="text">\
+								' + data_for_build.description + '\
+							</div>\
+							<div class="tag-list">\
+								' + ui_tags + '\
+							</div>\
+						</div>\
+						<div class="discuss-btn">\
+							<a class="ui-btn ui-corner-all ui-shadow" onclick="window.open(\'' + data_for_build.project_discussion_link + '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_project_proposition[CURRENT_LANG] + '</a>\
+						</div>\
+						<div class="btn-login-soc">\
+							<button class="ui-btn ui-corner-all ui-shadow share-btn">' + LOCALE_ARRAY_ADDITIONAL.share_by_social_newtworks[CURRENT_LANG] + '</button>\
+							<div class="social-wrap">\
+								<div class="ui-grid-b">\
+									<div class="ui-block-a">\
+										<a target="_blank" class="vk" href="https://vkontakte.ru/share.php?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(data_for_build.name) + '&image=' + mainURL + data_for_build.img + '"></a>\
+									</div>\
+									<div class="ui-block-b">\
+										<a target="_blank" class="fb" href="https://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href) + '&t=' + encodeURIComponent(data_for_build.name) + '"></a>\
+									</div>\
+									<div class="ui-block-c">\
+										<a target="_blank" class="tw" href="https://twitter.com/share?url=' + encodeURIComponent(location.href) + '&text=' + encodeURIComponent(data_for_build.name) + '"></a>\
+									</div>\
+									<div class="ui-block-a">\
+										<a target="_blank" class="gp" href="https://plus.google.com/share?url=' + encodeURIComponent(location.href) + '"></a>\
+									</div>\
+									<div class="ui-block-b">\
+										<a target="_blank" class="in" href="https://www.linkedin.com/cws/share?url=' + encodeURIComponent(location.href) + '"></a>\
+									</div>\
+									<div class="ui-block-c">\
+										<a target="_blank" class="ok" href="https://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + encodeURIComponent(location.href) + '&st.comments=' + encodeURIComponent(data_for_build.name) + '"></a>\
+									</div>\
+								</div>\
+							</div>\
+						</div>\
+						<div class="sms-btn">\
+							<a class="ui-btn ui-corner-all ui-shadow" href="#">SMS</a>\
+						</div>\
+						<hr>\
+						<div class="donate-wrap">\
+							' + ui_donate_panel + '\
+						<hr>\
+						<div class="btn-next-page">\
+							<a class="ui-btn ui-btn-icon-right" href="#" onclick = "$.mobile.navigate(\'#history-page?item=project_proposition&id=' + data_for_build.id + '\');">' + LOCALE_ARRAY_ADDITIONAL.history_donation[CURRENT_LANG] + '</a>\
+						</div>
+					</div> -->
+				</div>
+			</div>
+		</div>
+		<div class="right_col"></div>
+	</div>
 </div>
 
 <div id="one_item" data-role="page">
@@ -1191,10 +1411,21 @@
 					</select>
 				</div>
 				<div>
-					<select onchange="REQUESTS.filter_data()" name="sort_direction"><option value="down">Sort down</option>
+					<select onchange="REQUESTS.filter_data()" name="sort_direction">
+						<option value="down">Sort down</option>
 						<option value="up">Sort up</option>
 					</select>
 				</div>
+
+				<div class="ngo_filter">
+					<select onchange = "REQUESTS.filter_data()" name="ngo" >
+						<option value="NGO options">NGO options</option>
+						<option value="Accepted">Accepted</option>
+						<option value="Offered">Offered</option>
+						<option value="Open for offer">Open for offer</option>
+					</select>
+				</div>
+
 				<div id = "solo_filter" onclick = "$.mobile.navigate('#filter-page-requests'); REQUESTS.activated_hard_filter = 1;  $('#requests-page #activated_filter').css('display', 'block'); $('#requests-page #solo_filter').css('display', 'none');" class="ui-grid-solo">
 					<div class="ui-block-a">
 						<div class="ui-input-btn ui-btn ui-btn-icon-right filter-normal">
@@ -1214,13 +1445,20 @@
 						</div>
 					</div>
 				</div>
+
+				<div onclick="COMMON_OBJECT.custom_swipe(this)" data-show="0" class="ui-block-a">
+					<div class="ui-input-btn ui-btn ui-btn-icon-right filter-save">
+						<span>Закрити панель фільтру</span><input value="" data-enhanced="true" type="button">
+					</div>
+				</div>
+
 			</form>
 		</div>
 	</div>
 	<div role="main" class="ui-content">
 		<div class="left_col">
-			<a  id = "filter_slider"  class="ui-btn ui-corner-all ui-shadow" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>
-			<a style = "display:none" id = "create_link" class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate('#create-item?request=true')" href="#">Create request</a>
+			<a id = "filter_slider" class="filter_slider_btn ui-btn ui-corner-all ui-shadow" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>
+			<a id = "create_link" class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate('#create-item?request=true')" href="#">Create request</a>
 			<div id = "requests-list" class="requests-list">
 			</div>
 		</div>
@@ -1231,7 +1469,7 @@
 <div id="request-page" data-role="page">
 </div>
 
-<div id="filter-page-requests" data-role="page">
+<!-- <div id="filter-page-requests" data-role="page">
 	<div data-role="header" data-position="fixed" data-tap-toggle="false">
 		<h1>Filter</h1>
 		<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#filter-help">Ask</a>
@@ -1277,12 +1515,12 @@
 			</div>
 		</form>
 	</div>
-</div>
+</div> -->
 
 <div id="weighted-votings-page" data-role="page">
 	<div data-role="header" data-position="fixed" data-tap-toggle="false">
 		<h1 id = "ui_title">Weighted Votings</h1>
-		<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "inner_back()" href="#">Back</a>
+		<a id = "wv-list-back" class="back_btn ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" href="">Back</a>
 		<a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#weighted-votings-help">Ask</a>
 		<div id="weighted-votings-help" class="help-popup" data-role="popup" data-history="false">
 			<div class="title">
@@ -1490,7 +1728,6 @@
 					</div>
 					<div class="ui-block-c">
 						<div class="total-amount">
-
 							<strong></strong><span>Нужное количество</span>
 						</div>
 					</div>
@@ -1802,7 +2039,7 @@
 				<a class="ui-btn ui-btn-icon-right icon-votings" data-link = "#weighted-votings-page" onclick = "$.mobile.navigate('#weighted-votings-page?my=1')" href="#">My weighted votins on programs</a>
 			</div>
 			<div class="btn-next-page">
-				<a class="ui-btn ui-btn-icon-right icon-projects" data-link = "#my_project-page" onclick = "$.mobile.navigate('#projects-page?my_project=true')" href="#">My projects</a>
+				<a class="ui-btn ui-btn-icon-right icon-projects" href="">My projects</a>
 			</div>
 			<div class="btn-next-page">
 				<a class="ui-btn ui-btn-icon-right icon-requests" data-link = "#my_request-page" onclick = "$.mobile.navigate('#requests-page?my_request=true')" href="#">My requests</a>
@@ -1815,7 +2052,7 @@
 <div id="my-groups" data-role="page">
 	<div data-role="header" data-position="fixed" data-tap-toggle="false">
 		<h1>My groups</h1>
-		<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#my-activities-page')" href="#my-activities-page">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#my-groups-help">Ask</a>
+		<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" href="">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#my-groups-help">Ask</a>
 		<div id="my-groups-help" class="help-popup" data-role="popup" data-history="false">
 			<div class="title">
 				Description
@@ -1854,6 +2091,8 @@
 	</div>
 	<div role="main" class="ui-content">
 		<div class="left_col">
+
+			<div id="group_id_name"></div>
 
 			<a id="create_sphere" class="ui-btn ui-corner-all ui-shadow" href="">Create sphere</a>
 
@@ -1919,7 +2158,8 @@
 <div id="social-entrepreneurship" data-role="page">
 	<div data-role="header" data-position="fixed" data-tap-toggle="false">
 		<h1>Social Entrepreneurship</h1>
-		<a class="ui-btn ui-btn-left ui-icon-bars ui-btn-corner-all ui-btn-icon-notext" href="#left-panel">Menu</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#social-entrepreneurship-help">Ask</a>
+		<a class="ui-btn ui-btn-left ui-icon-bars ui-btn-corner-all ui-btn-icon-notext" href="#left-panel">Menu</a>
+		<a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#social-entrepreneurship-help">Ask</a>
 		<div id="social-entrepreneurship-help" class="help-popup" data-role="popup" data-history="false">
 			<div class="title">
 				Description
@@ -1932,7 +2172,7 @@
 	<div role="main" class="ui-content">
 		<div class="left_col">
 			<div class="btn-next-page">
-				<a class="ui-btn ui-btn-icon-right menu-icon-projects" onclick = "$.mobile.navigate('#projects-page')" data-link = "#projects-page" href="#">Projects</a>
+				<a class="ui-btn ui-btn-icon-right menu-icon-projects" data-link = "#projects-page" href="#projects-page">Projects</a>
 			</div>
 			
 			<div class="btn-next-page">
@@ -2076,8 +2316,15 @@
 					</div>
 				</div>
 				<div id = "curr" class="select-field">
-					<label id = "curr-label">Choose currency</label><select name="curr"></select>
+					<label id = "curr-label">Choose currency</label>
+					<select name="curr">
+						<option value="1">ICAN</option>
+						<option value="980">UAH</option>
+						<option value="840">USD</option>
+						<option value="978">EUR</option>
+					</select>
 				</div>
+
 				<div id = "amount" class="text-field">
 					<label id = "amount-label">The required amount of funds</label>
 					<div class="ui-input-text">
@@ -2370,40 +2617,40 @@
 	<div class="filters-panel">
 		<div class="filters-panel-inner">
 			<form action="" accept-charset="UTF-8" method="post" onsubmit="return false;">
-						<div class="ui-input-search ui-input-has-clear">
-							<input onkeyup="MY_VOTINGS.filter_data()" onchange="MY_VOTINGS.filter_data()" id = "searched_string" type="search" name="" placeholder="Search by ID or name" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">Clear text</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />
+				<div class="ui-input-search ui-input-has-clear">
+					<input onkeyup="MY_VOTINGS.filter_data()" onchange="MY_VOTINGS.filter_data()" id = "searched_string" type="search" name="" placeholder="Search by ID or name" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">Clear text</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />
+				</div>
+				<div onchange = "MY_VOTINGS.filter_data()">
+					<select data-direct = "0" name="sort" placeholder="Sort by newest"><option value="Sort by newest">Sort by newest</option>
+					<option value="Sort by stars">Sort by stars</option>
+					<option value="Sort by supported">Sort by supported</option>
+					</select>
+				</div>
+				<div>
+					<select onchange="MY_VOTINGS.filter_data()" name="sort_direction"><option value="down">Sort down</option>
+						<option value="up">Sort up</option>
+					</select>
+				</div>
+				<div id = "solo_filter" onclick = "$.mobile.navigate('#filter-page'); MY_VOTINGS.activated_hard_filter = 1;  $('#my-votings-page #activated_filter').css('display', 'block'); $('#my-votings-page #solo_filter').css('display', 'none');" class="ui-grid-solo">
+					<div class="ui-block-a">
+						<div class="ui-input-btn ui-btn ui-btn-icon-right filter-normal">
+							<span>Filter</span><input type="button" value="" data-enhanced="true" />
 						</div>
-						<div onchange = "MY_VOTINGS.filter_data()">
-							<select data-direct = "0" name="sort" placeholder="Sort by newest"><option value="Sort by newest">Sort by newest</option>
-							<option value="Sort by stars">Sort by stars</option>
-							<option value="Sort by supported">Sort by supported</option>
-							</select>
+					</div>
+				</div>
+				<div style = "display:none" id = "activated_filter" class="ui-grid-a">
+					<div class="ui-block-a">
+						<div id = "filter_activator" onclick = "MY_VOTINGS.activated_hard_filter = 1; $.mobile.navigate('#filter-page');" class="ui-input-btn ui-btn ui-btn-icon-right filter-active">
+							<span>Filter is activated</span><input type="button" value="" data-enhanced="true" />
 						</div>
-						<div>
-							<select onchange="MY_VOTINGS.filter_data()" name="sort_direction"><option value="down">Sort down</option>
-								<option value="up">Sort up</option>
-							</select>
+					</div>
+					<div class="ui-block-b">
+						<div class="ui-input-btn ui-btn ui-btn-icon-right filter-clear">
+							 <span>Clear filter</span><input type="button" value="" onclick = "MY_VOTINGS.init()" data-enhanced="true" />
 						</div>
-						<div id = "solo_filter" onclick = "$.mobile.navigate('#filter-page'); MY_VOTINGS.activated_hard_filter = 1;  $('#my-votings-page #activated_filter').css('display', 'block'); $('#my-votings-page #solo_filter').css('display', 'none');" class="ui-grid-solo">
-							<div class="ui-block-a">
-								<div class="ui-input-btn ui-btn ui-btn-icon-right filter-normal">
-									<span>Filter</span><input type="button" value="" data-enhanced="true" />
-								</div>
-							</div>
-						</div>
-						<div style = "display:none" id = "activated_filter" class="ui-grid-a">
-							<div class="ui-block-a">
-								<div id = "filter_activator" onclick = "MY_VOTINGS.activated_hard_filter = 1; $.mobile.navigate('#filter-page');" class="ui-input-btn ui-btn ui-btn-icon-right filter-active">
-									<span>Filter is activated</span><input type="button" value="" data-enhanced="true" />
-								</div>
-							</div>
-							<div class="ui-block-b">
-								<div class="ui-input-btn ui-btn ui-btn-icon-right filter-clear">
-									 <span>Clear filter</span><input type="button" value="" onclick = "MY_VOTINGS.init()" data-enhanced="true" />
-								</div>
-							</div>
-						</div>
-					</form>
+					</div>
+				</div>
+			</form>
 		</div>
 	</div>
 	<div role="main" class="ui-content">
@@ -2547,7 +2794,7 @@
 				<div class="text-field">
 					<label>Minimum support amount</label>
 					<div class="ui-input-text">
-						<input  type="text" name="sprt" placeholder="123" value="30" data-enhanced="true" />
+						<input  type="text" name="sprt" placeholder="3" value="3" data-enhanced="true" />
 					</div>
 				</div>
 				<fieldset class="date-group" data-role="controlgroup" data-type="horizontal">
@@ -2584,9 +2831,17 @@
 					</div>
 				</fieldset>
 				<fieldset class="select-group" data-role="controlgroup" data-type="horizontal">
-					<legend>Enter age members who can vote</legend><span class="label">From</span>
+					<legend>Enter age members who can vote</legend><span class="label age_from">From</span>
 					<select name="age_from">
-						<option selected value="16">16</option>
+						<option selected value="8">8</option>
+						<option value="9">9</option>
+						<option value="10">10</option>
+						<option value="11">11</option>
+						<option value="12">12</option>
+						<option value="13">13</option>
+						<option value="14">14</option>
+						<option value="15">15</option>
+						<option value="16">16</option>
 						<option value="17">17</option>
 						<option value="18">18</option>
 						<option value="19">19</option>
@@ -2671,91 +2926,98 @@
 						<option value="98">98</option>
 						<option value="99">99</option>
 					</select>
-					<span class="label">To</span><select name="age_to">
-						<option selected value="16">16</option>
-						<option value="17">17</option>
-						<option value="18">18</option>
-						<option value="19">19</option>
-						<option value="20">20</option>
-						<option value="21">21</option>
-						<option value="22">22</option>
-						<option value="23">23</option>
-						<option value="24">24</option>
-						<option value="25">25</option>
-						<option value="26">26</option>
-						<option value="27">27</option>
-						<option value="28">28</option>
-						<option value="29">29</option>
-						<option value="30">30</option>
-						<option value="31">31</option>
-						<option value="32">32</option>
-						<option value="33">33</option>
-						<option value="34">34</option>
-						<option value="35">35</option>
-						<option value="36">36</option>
-						<option value="37">37</option>
-						<option value="38">38</option>
-						<option value="39">39</option>
-						<option value="40">40</option>
-						<option value="41">41</option>
-						<option value="42">42</option>
-						<option value="43">43</option>
-						<option value="44">44</option>
-						<option value="45">45</option>
-						<option value="46">46</option>
-						<option value="47">47</option>
-						<option value="48">48</option>
-						<option value="49">49</option>
-						<option value="50">50</option>
-						<option value="51">51</option>
-						<option value="52">52</option>
-						<option value="53">53</option>
-						<option value="54">54</option>
-						<option value="55">55</option>
-						<option value="56">56</option>
-						<option value="57">57</option>
-						<option value="58">58</option>
-						<option value="59">59</option>
-						<option value="60">60</option>
-						<option value="61">61</option>
-						<option value="62">62</option>
-						<option value="63">63</option>
-						<option value="64">64</option>
-						<option value="65">65</option>
-						<option value="66">66</option>
-						<option value="67">67</option>
-						<option value="68">68</option>
-						<option value="69">69</option>
-						<option value="70">70</option>
-						<option value="71">71</option>
-						<option value="72">72</option>
-						<option value="73">73</option>
-						<option value="74">74</option>
-						<option value="75">75</option>
-						<option value="76">76</option>
-						<option value="77">77</option>
-						<option value="78">78</option>
-						<option value="79">79</option>
-						<option value="80">80</option>
-						<option value="81">81</option>
-						<option value="82">82</option>
-						<option value="83">83</option>
-						<option value="84">84</option>
-						<option value="85">85</option>
-						<option value="86">86</option>
-						<option value="87">87</option>
-						<option value="88">88</option>
-						<option value="89">89</option>
-						<option value="90">90</option>
-						<option value="91">91</option>
-						<option value="92">92</option>
-						<option value="93">93</option>
-						<option value="94">94</option>
-						<option value="95">95</option>
-						<option value="96">96</option>
-						<option value="97">97</option>
+					<span class="label age_from">To</span><select name="age_to">
+						<option selected value="99">99</option>
 						<option value="98">98</option>
-						<option value="99">99</option>
+						<option value="97">97</option>
+						<option value="96">96</option>
+						<option value="95">95</option>
+						<option value="94">94</option>
+						<option value="93">93</option>
+						<option value="92">92</option>
+						<option value="91">91</option>
+						<option value="90">90</option>
+						<option value="89">89</option>
+						<option value="88">88</option>
+						<option value="87">87</option>
+						<option value="86">86</option>
+						<option value="85">85</option>
+						<option value="84">84</option>
+						<option value="83">83</option>
+						<option value="82">82</option>
+						<option value="81">81</option>
+						<option value="80">80</option>
+						<option value="79">79</option>
+						<option value="78">78</option>
+						<option value="77">77</option>
+						<option value="76">76</option>
+						<option value="75">75</option>
+						<option value="74">74</option>
+						<option value="73">73</option>
+						<option value="72">72</option>
+						<option value="71">71</option>
+						<option value="70">70</option>
+						<option value="69">69</option>
+						<option value="68">68</option>
+						<option value="67">67</option>
+						<option value="66">66</option>
+						<option value="65">65</option>
+						<option value="64">64</option>
+						<option value="63">63</option>
+						<option value="62">62</option>
+						<option value="61">61</option>
+						<option value="60">60</option>
+						<option value="59">59</option>
+						<option value="58">58</option>
+						<option value="57">57</option>
+						<option value="56">56</option>
+						<option value="55">55</option>
+						<option value="54">54</option>
+						<option value="53">53</option>
+						<option value="52">52</option>
+						<option value="51">51</option>
+						<option value="50">50</option>
+						<option value="49">49</option>
+						<option value="48">48</option>
+						<option value="47">47</option>
+						<option value="46">46</option>
+						<option value="45">45</option>
+						<option value="44">44</option>
+						<option value="43">43</option>
+						<option value="42">42</option>
+						<option value="41">41</option>
+						<option value="40">40</option>
+						<option value="39">39</option>
+						<option value="38">38</option>
+						<option value="37">37</option>
+						<option value="36">36</option>
+						<option value="35">35</option>
+						<option value="34">34</option>
+						<option value="33">33</option>
+						<option value="32">32</option>
+						<option value="31">31</option>
+						<option value="30">30</option>
+						<option value="29">29</option>
+						<option value="28">28</option>
+						<option value="27">27</option>
+						<option value="26">26</option>
+						<option value="25">25</option>
+						<option value="24">24</option>
+						<option value="23">23</option>
+						<option value="22">22</option>
+						<option value="21">21</option>
+						<option value="20">20</option>
+						<option value="19">19</option>
+						<option value="18">18</option>
+						<option value="17">17</option>
+						<option value="16">16</option>
+						<option value="15">15</option>
+						<option value="14">14</option>
+						<option value="13">13</option>
+						<option value="12">12</option>
+						<option value="11">11</option>
+						<option value="10">10</option>
+						<option value="9">9</option>
 					</select>
 				</fieldset>
 				<div class="btn-create">
@@ -2785,27 +3047,6 @@
 			<form action="" accept-charset="UTF-8" method="post" onsubmit = "">
 				<fieldset id = "sphere_form"></fieldset>
 			</form>
-		</div>
-		<div class="right_col"></div>
-	</div>
-</div>
-
-<div id="news-page" data-role="page">
-	<div data-role="header" data-position="fixed" data-tap-toggle="false">
-		<h1>News</h1>
-		<a class="ui-btn ui-btn-left ui-icon-bars ui-btn-icon-notext" href="#left-panel">Menu</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-icon-notext" href="#news-help">Ask</a>
-		<div id="news-help" class="help-popup" data-role="popup" data-history="false">
-			<div class="title">
-				Description
-			</div>
-			<div class="text">
-				help text
-			</div>
-		</div>
-	</div>
-	<div role="main" class="ui-content">
-		<div class="left_col">
-			<div id = "news_list" class="news-list"></div>
 		</div>
 		<div class="right_col"></div>
 	</div>
