@@ -12,7 +12,7 @@ button,
 .ui-btn {
   font-size: 1em;
   line-height: 1.3;
-  font-family: "Roboto", sans-serif;
+  font-family: sans-serif;
   color: #4d4d4d; }
 
 .menu {
@@ -30,7 +30,6 @@ legend,
 div.ui-controlgroup-label {
   font-weight: normal;
   font-size: 16px; }
-
 
 .ui-panel-inner .right-panel {
   width: 30em;
@@ -51,33 +50,12 @@ div.ui-controlgroup-label {
   margin-left: 1%;
 }
 
-.img_fb {
-  background: #3b5998 url(../images/icon-fb.png) no-repeat;
-}
-.img_gp {
-  background: #d44132 url(../images/icon-gp.png) no-repeat;
-}
-.img_in {
-  background: #0077b5 url(../images/icon-in.png) no-repeat;
-}
-
 .btn_circle {
-  width: 3em;
-  height: 3em;
+  width: 40px;
+  height: 40px;
+  margin-right: 1em;
   -webkit-border-radius: 50%;
   border-radius: 50%;
-  cursor: pointer;
-  background-size: contain;
-  margin: 0em 1em 0em 1em;
-}
-
-.centered {
-  text-align: center;
-  margin: 0.5em auto;
-}
-
-.centered div{
-  display: inline-block;
 }
 
 .spining_circle {
@@ -124,20 +102,6 @@ div.ui-controlgroup-label {
 #right-panel {
   background: #fff; 
 }
-
-
-/*GoogleMaps-->*/
-.mapCanvas {
-width: 100%;
-height: 400px;
-}
-.infoPanel {
-margin-left: 10px;
-}
-.infoPanel div {
-margin-bottom: 5px;
-}
-/*<---oogleMaps*/
 
 /* Buttons
 -----------------------------------------------------------------------------------------------------------*/
@@ -234,6 +198,7 @@ label.ui-btn {
   -webkit-background-size: 14px 12px;
   background-size: 14px 12px; }
 
+
 .ui-btn.ui-checkbox-on:after {
   border-color: #4caf50;
   background: #4caf50 url(../images/checkbox.png) no-repeat 50% 50%;
@@ -268,7 +233,7 @@ label.ui-btn {
 
 /* Loader */
 .ui-icon-loading {
-  background: url("../images/ajax-loader.gif");
+  background-image: url(../images/ajax-loader.gif);
   background-size: 2.875em 2.875em; }
 
 .center {
@@ -391,7 +356,8 @@ label.ui-btn {
     border: none;
     padding: 0.5em 1em;
     background-color: #fff; }
-    .ui-page-theme-a .ui-input-text input, .ui-page-theme-a .ui-input-text textarea {
+    .ui-page-theme-a .ui-input-text input, 
+    .ui-page-theme-a .ui-input-text textarea {
       outline: none;
       border: none;
       margin: 0;
@@ -648,6 +614,7 @@ label.ui-btn {
     font-weight: normal;
     outline: none; }
 
+
 #left-panel {
   background: #fff; }
   #left-panel.ui-panel-open {
@@ -880,20 +847,44 @@ label.ui-btn {
     font-weight: normal; }
 
 #main-page {
+  //background: url(../images/bg.png) 50% 50% no-repeat;
   -moz-background-size: cover;
   -o-background-size: cover;
   -webkit-background-size: cover;
   background-size: cover; }
-
-
+  #main-page #lang {
+    float: right;
+    margin-right: 1.5em;
+    position: relative; }
+    #main-page #lang label {
+      margin: 0;
+      font-size: 1.3em;
+      line-height: 1.1em;
+      font-weight: normal;
+      padding: 0.7em 0;
+      padding-right: 1.2em; }
+    #main-page #lang .ui-select {
+      position: absolute;
+      width: 100%;
+      top: 0.6em;
+      left: 0;
+      margin: 0; }
+      #main-page #lang .ui-select .ui-btn {
+        display: block;
+        background-color: transparent; }
+        #main-page #lang .ui-select .ui-btn span {
+          opacity: 0; }
+        #main-page #lang .ui-select .ui-btn:after {
+          border-top: none;
+          border-bottom: 5px solid #ffffff;
+          border-right: 5px solid transparent;
+          border-left: 5px solid transparent; }
   #main-page #logo {
     text-align: center; }
     #main-page #logo img {
       max-width: 25%; }
   #main-page .name {
-    margin-top: 0.75em;
-    margin-bottom: 0.75em;
-     }
+    margin: 0.75em 1.5em 1.5em; }
     #main-page .name h1 {
       margin: 0;
       font-size: 2.2em;
@@ -904,11 +895,9 @@ label.ui-btn {
       text-transform: uppercase;
       background-color: rgba(0, 0, 0, 0.4); }
 
-.ui-grid-a {
-  margin: 0 1em;}
+.ui-grid-a {margin: 0 1em;}
 
-  #main-page .ui-input-text {
-    margin: 0 0.5em; }
+  #main-page .ui-input-text {margin: 0 0.5em; }
     #main-page .ui-input-text input {
       padding: 0;
       border: none;
@@ -942,7 +931,7 @@ label.ui-btn {
     #main-page .btn-login-soc button {
       z-index: 5;
       outline: none; }
-  #main-page .social-wrap {
+  .social-wrap {
     display: none;
     position: absolute;
     z-index: 10;
@@ -952,16 +941,13 @@ label.ui-btn {
     left: 0;
     bottom: 2.75em;
     background: #ffffff; }
-    #main-page .social-wrap .title {
-      margin-bottom: 0.25em; }
-    #main-page .social-wrap a:after {
-      top: 50%;
-      margin-top: -8px; }
+    .social-wrap .title {margin-bottom: 0.25em; }
+    .social-wrap a:after {top: 50%; margin-top: -8px; }
 
-#profile-page .user-info {
+.user-info {
   overflow: hidden;
   padding: 0 0.5em; }
-  #profile-page .user-info .avatar {
+  .user-info .avatar {
     float: left;
     width: 5.25em;
     height: 5.25em;
@@ -976,33 +962,16 @@ label.ui-btn {
     -moz-border-radius: 2.625em 2.625em;
     -webkit-border-radius: 2.625em;
     border-radius: 2.625em 2.625em; }
-    #profile-page .user-info .avatar img {
-      display: block;
-      max-width: 100%; }
-  #profile-page .user-info .info {
-    margin-left: 6em;
-    line-height: 1.5em; }
-    #profile-page .user-info .info .id {
-      font-weight: bold; }
-    #profile-page .user-info .info span {
-      font-weight: 300; }
-    #profile-page .user-info .info .login span:first-child {
-      font-weight: normal; }
-#profile-page .pass-btn {
-  margin-bottom: 1.5em; }
-#profile-page #change-password {
-  border: none;
-  background-color: #fff;
-  }
-#profile-page .change-password label {
-  font-weight: 300;
-  text-align: center;
-  padding-top: 0.5em; }
-#profile-page .change-password .text-field {
-  padding: 0.5em 0;
-  margin-bottom: 0; }
-#profile-page .change-password .btn-save {
-  padding: 0 1em; }
+    .user-info .avatar img {display: block;max-width: 100%; }
+    .user-info .info {margin-left: 6em; line-height: 1.5em; }
+    .user-info .info .id {font-weight: bold; }
+    .user-info .info span {font-weight: 300; }
+    .user-info .info .login span:first-child {font-weight: normal; }
+    .pass-btn {margin-bottom: 1.5em; }
+  #profile-page #change-password {border: none; background-color: #fff; }
+  .change-password label {font-weight: 300; text-align: center; padding-top: 0.5em; }
+  .change-password .text-field {padding: 0.5em 0; margin-bottom: 0; }
+  .change-password .btn-save {padding: 0 1em; }
 
 .filters-panel {
   padding: 0.5em 1em;
@@ -1010,97 +979,40 @@ label.ui-btn {
   -ms-user-select: none;
   -webkit-user-select: none;
   user-select: none; }
-  .filters-panel .filters-panel-inner {
+  .filters-panel-inner {
     display: none;
     margin: 0 -2px;
     padding: 0 2px;
     overflow: hidden; }
-    .filters-panel .filters-panel-inner form > div {
-      margin: 0 0 1.25em; }
+    .filters-panel-inner form > div {margin: 0 0 1.25em; }
 
-.votings-list .item,
-.programs-list .item,
-.requests-list .item,
-.projects-list .item {
+.item {
   position: relative;
   height: 7.6em;
   background: #ffffff;
   overflow: hidden;
   margin-bottom: 1.5em; }
-  .votings-list .item > a,
-  .programs-list .item > a,
-  .requests-list .item > a,
-  .projects-list .item > a {
-    text-decoration: none; }
-  .votings-list .item .img,
-  .programs-list .item .img,
-  .requests-list .item .img,
-  .projects-list .item .img {
+  .item > a {text-decoration: none; }
+  .item .img {
     display: none;
     float: left;
     width: 25%;
     height: 7.6em;
     overflow: hidden; }
-    .votings-list .item .img img,
-    .programs-list .item .img img,
-    .requests-list .item .img img,
-    .projects-list .item .img img {
-      display: block;
-      max-height: 100%; }
-  .votings-list .item .info,
-  .programs-list .item .info,
-  .requests-list .item .info,
-  .projects-list .item .info {
-    padding: 0.25em 0.7em;
-    color: #4d4d4d; }
-    .votings-list .item .info .title,
-    .programs-list .item .info .title,
-    .requests-list .item .info .title,
-    .projects-list .item .info .title {
-      font-size: 0.75em;
-      margin-bottom: 0.5em;
-      margin-right: 0.6em; }
-    .votings-list .item .info .status, .votings-list .item .info .count, .votings-list .item .info .total-count, .votings-list .item .info .country, .votings-list .item .info .total-amount, .votings-list .item .info .amount, .votings-list .item .info .my-amount, .votings-list .item .info .contractors,
-    .programs-list .item .info .status,
-    .programs-list .item .info .count,
-    .programs-list .item .info .total-count,
-    .programs-list .item .info .country,
-    .programs-list .item .info .total-amount,
-    .programs-list .item .info .amount,
-    .programs-list .item .info .my-amount,
-    .programs-list .item .info .contractors,
-    .requests-list .item .info .status,
-    .requests-list .item .info .count,
-    .requests-list .item .info .total-count,
-    .requests-list .item .info .country,
-    .requests-list .item .info .total-amount,
-    .requests-list .item .info .amount,
-    .requests-list .item .info .my-amount,
-    .requests-list .item .info .contractors,
-    .projects-list .item .info .status,
-    .projects-list .item .info .count,
-    .projects-list .item .info .total-count,
-    .projects-list .item .info .country,
-    .projects-list .item .info .total-amount,
-    .projects-list .item .info .amount,
-    .projects-list .item .info .my-amount,
-    .projects-list .item .info .contractors {
-      font-size: 0.65em;
-      margin-bottom: 0.2em; }
-    .votings-list .item .info .status,
-    .programs-list .item .info .status,
-    .requests-list .item .info .status,
-    .projects-list .item .info .status {
-      color: #4484f6; }
-    .votings-list .item .info .count strong,
-    .programs-list .item .info .count strong,
-    .requests-list .item .info .count strong,
-    .projects-list .item .info .count strong {
-      margin-left: 1em; }
-      .votings-list .item .info .count strong:after,
-      .programs-list .item .info .count strong:after,
-      .requests-list .item .info .count strong:after,
-      .projects-list .item .info .count strong:after {
+    .item .img img {display: block; max-height: 100%; }
+    .item .info {padding: 0.25em 0.7em; color: #4d4d4d; }
+    .item .info .title {font-size: 0.75em; margin-bottom: 0.5em; margin-right: 0.6em; }
+    .item .info .status,
+    .item .info .count,
+    .item .info .total-count,
+    .item .info .country,
+    .item .info .total-amount,
+    .item .info .amount,
+    .item .info .my-amount,
+    .item .info .contractors {font-size: 0.65em; margin-bottom: 0.2em; }
+    .item .info .status {color: #4484f6; }
+    .item .info .count strong {margin-left: 1em; }
+      .item .info .count strong:after {
         content: '';
         display: inline-block;
         width: 9px;
@@ -1111,15 +1023,9 @@ label.ui-btn {
         -o-background-size: 9px 8px;
         -webkit-background-size: 9px 8px;
         background-size: 9px 8px; }
-    .votings-list .item .info .total-count strong,
-    .programs-list .item .info .total-count strong,
-    .requests-list .item .info .total-count strong,
-    .projects-list .item .info .total-count strong {
+    .item .info .total-count strong {
       margin-left: 1em; }
-    .votings-list .item .info .voting-line,
-    .programs-list .item .info .voting-line,
-    .requests-list .item .info .voting-line,
-    .projects-list .item .info .voting-line {
+    .item .info .voting-line {
       display: table;
       width: 100%;
       border: 1px solid #afafaf;
@@ -1132,40 +1038,23 @@ label.ui-btn {
       -moz-border-radius: 0.8em;
       -webkit-border-radius: 0.8em;
       border-radius: 0.8em; }
-      .votings-list .item .info .voting-line > span,
-      .programs-list .item .info .voting-line > span,
-      .requests-list .item .info .voting-line > span,
-      .projects-list .item .info .voting-line > span {
+      .item .info .voting-line > span {
         display: table-cell;
         vertical-align: middle;
         padding: 0.1em 0; }
-      .votings-list .item .info .voting-line .left,
-      .programs-list .item .info .voting-line .left,
-      .requests-list .item .info .voting-line .left,
-      .projects-list .item .info .voting-line .left {
+      .item .info .voting-line .left {
         background-color: #4caf50;
         *zoom: 1;
         filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FF4CAF50', endColorstr='#FF238827');
-        background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzRjYWY1MCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzIzODgyNyIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+/*        background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzRjYWY1MCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzIzODgyNyIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');*/
         background-size: 100%;
         background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #4caf50), color-stop(100%, #238827));
         background-image: -moz-linear-gradient(top, #4caf50 0%, #238827 100%);
         background-image: -webkit-linear-gradient(top, #4caf50 0%, #238827 100%);
         background-image: linear-gradient(to bottom, #4caf50 0%, #238827 100%); }
-      .votings-list .item .info .voting-line .middle,
-      .programs-list .item .info .voting-line .middle,
-      .requests-list .item .info .voting-line .middle,
-      .projects-list .item .info .voting-line .middle {
-        background: #03a9f4; }
-      .votings-list .item .info .voting-line .right,
-      .programs-list .item .info .voting-line .right,
-      .requests-list .item .info .voting-line .right,
-      .projects-list .item .info .voting-line .right {
-        background: #f44336; }
-    .votings-list .item .info .total-amount strong:after,
-    .programs-list .item .info .total-amount strong:after,
-    .requests-list .item .info .total-amount strong:after,
-    .projects-list .item .info .total-amount strong:after {
+      .item .info .voting-line .middle {background: #03a9f4; }
+      .item .info .voting-line .right {background: #f44336; }
+    .item .info .total-amount strong:after {
       content: '';
       display: inline-block;
       width: 7px;
@@ -1176,10 +1065,7 @@ label.ui-btn {
       -o-background-size: 7px 7px;
       -webkit-background-size: 7px 7px;
       background-size: 7px 7px; }
-    .votings-list .item .info .amount strong:after,
-    .programs-list .item .info .amount strong:after,
-    .requests-list .item .info .amount strong:after,
-    .projects-list .item .info .amount strong:after {
+    .item .info .amount strong:after {
       content: '';
       display: inline-block;
       width: 13px;
@@ -1191,20 +1077,9 @@ label.ui-btn {
       -o-background-size: 13px 7px;
       -webkit-background-size: 13px 7px;
       background-size: 13px 7px; }
-    .votings-list .item .info .amount.up strong:after,
-    .programs-list .item .info .amount.up strong:after,
-    .requests-list .item .info .amount.up strong:after,
-    .projects-list .item .info .amount.up strong:after {
-      background-image: url(../images/icon-amount-up.png); }
-    .votings-list .item .info .amount.down strong:after,
-    .programs-list .item .info .amount.down strong:after,
-    .requests-list .item .info .amount.down strong:after,
-    .projects-list .item .info .amount.down strong:after {
-      background-image: url(../images/icon-amount-down.png); }
-    .votings-list .item .info .my-amount strong:after,
-    .programs-list .item .info .my-amount strong:after,
-    .requests-list .item .info .my-amount strong:after,
-    .projects-list .item .info .my-amount strong:after {
+    .item .info .amount.up strong:after {background-image: url(../images/icon-amount-up.png); }
+    .item .info .amount.down strong:after {background-image: url(../images/icon-amount-down.png); }
+    .item .info .my-amount strong:after {
       content: '';
       display: inline-block;
       width: 8px;
@@ -1215,10 +1090,7 @@ label.ui-btn {
       -o-background-size: 8px 8px;
       -webkit-background-size: 8px 8px;
       background-size: 8px 8px; }
-    .votings-list .item .info .contractors strong:after,
-    .programs-list .item .info .contractors strong:after,
-    .requests-list .item .info .contractors strong:after,
-    .projects-list .item .info .contractors strong:after {
+    .item .info .contractors strong:after {
       content: '';
       display: inline-block;
       width: 7px;
@@ -1229,19 +1101,10 @@ label.ui-btn {
       -o-background-size: 7px 7px;
       -webkit-background-size: 7px 7px;
       background-size: 7px 7px; }
-  .votings-list .item.icon-voting-star:after, .votings-list .item.icon-program-star:after, .votings-list .item.icon-request-star:after, .votings-list .item.icon-project-star:after,
-  .programs-list .item.icon-voting-star:after,
-  .programs-list .item.icon-program-star:after,
-  .programs-list .item.icon-request-star:after,
-  .programs-list .item.icon-project-star:after,
-  .requests-list .item.icon-voting-star:after,
-  .requests-list .item.icon-program-star:after,
-  .requests-list .item.icon-request-star:after,
-  .requests-list .item.icon-project-star:after,
-  .projects-list .item.icon-voting-star:after,
-  .projects-list .item.icon-program-star:after,
-  .projects-list .item.icon-request-star:after,
-  .projects-list .item.icon-project-star:after {
+  .item.icon-voting-star:after,
+  .item.icon-program-star:after,
+  .item.icon-request-star:after,
+  .item.icon-project-star:after {
     content: '';
     position: absolute;
     width: 14px;
@@ -1253,89 +1116,28 @@ label.ui-btn {
     -o-background-size: 14px 13px;
     -webkit-background-size: 14px 13px;
     background-size: 14px 13px; }
-  .votings-list .item.voting-completed, .votings-list .item.program-completed, .votings-list .item.request-completed, .votings-list .item.project-completed,
-  .programs-list .item.voting-completed,
-  .programs-list .item.program-completed,
-  .programs-list .item.request-completed,
-  .programs-list .item.project-completed,
-  .requests-list .item.voting-completed,
-  .requests-list .item.program-completed,
-  .requests-list .item.request-completed,
-  .requests-list .item.project-completed,
-  .projects-list .item.voting-completed,
-  .projects-list .item.program-completed,
-  .projects-list .item.request-completed,
-  .projects-list .item.project-completed {
-    background: #e8fde9; }
-    .votings-list .item.voting-completed .status, .votings-list .item.program-completed .status, .votings-list .item.request-completed .status, .votings-list .item.project-completed .status,
-    .programs-list .item.voting-completed .status,
-    .programs-list .item.program-completed .status,
-    .programs-list .item.request-completed .status,
-    .programs-list .item.project-completed .status,
-    .requests-list .item.voting-completed .status,
-    .requests-list .item.program-completed .status,
-    .requests-list .item.request-completed .status,
-    .requests-list .item.project-completed .status,
-    .projects-list .item.voting-completed .status,
-    .projects-list .item.program-completed .status,
-    .projects-list .item.request-completed .status,
-    .projects-list .item.project-completed .status {
-      color: #268a2a; }
-  .votings-list .item.voting-supporters .status, .votings-list .item.fund-raising .status,
-  .programs-list .item.voting-supporters .status,
-  .programs-list .item.fund-raising .status,
-  .requests-list .item.voting-supporters .status,
-  .requests-list .item.fund-raising .status,
-  .projects-list .item.voting-supporters .status,
-  .projects-list .item.fund-raising .status {
-    color: #ff9000;
-    margin-bottom: 0.8em; }
-  .votings-list .item.voting-supporters .voting-line, .votings-list .item.voting-supporters .total-count, .votings-list .item.fund-raising .voting-line, .votings-list .item.fund-raising .total-count,
-  .programs-list .item.voting-supporters .voting-line,
-  .programs-list .item.voting-supporters .total-count,
-  .programs-list .item.fund-raising .voting-line,
-  .programs-list .item.fund-raising .total-count,
-  .requests-list .item.voting-supporters .voting-line,
-  .requests-list .item.voting-supporters .total-count,
-  .requests-list .item.fund-raising .voting-line,
-  .requests-list .item.fund-raising .total-count,
-  .projects-list .item.voting-supporters .voting-line,
-  .projects-list .item.voting-supporters .total-count,
-  .projects-list .item.fund-raising .voting-line,
-  .projects-list .item.fund-raising .total-count {
-    display: none; }
-  .votings-list .item.voting-canceled,
-  .programs-list .item.voting-canceled,
-  .requests-list .item.voting-canceled,
-  .projects-list .item.voting-canceled {
-    background: #fde8e8; }
-    .votings-list .item.voting-canceled .status,
-    .programs-list .item.voting-canceled .status,
-    .requests-list .item.voting-canceled .status,
-    .projects-list .item.voting-canceled .status {
-      color: #f44336; }
-    .votings-list .item.voting-canceled .count, .votings-list .item.voting-canceled .total-count, .votings-list .item.voting-canceled .voting-line,
-    .programs-list .item.voting-canceled .count,
-    .programs-list .item.voting-canceled .total-count,
-    .programs-list .item.voting-canceled .voting-line,
-    .requests-list .item.voting-canceled .count,
-    .requests-list .item.voting-canceled .total-count,
-    .requests-list .item.voting-canceled .voting-line,
-    .projects-list .item.voting-canceled .count,
-    .projects-list .item.voting-canceled .total-count,
-    .projects-list .item.voting-canceled .voting-line {
-      display: none; }
+  .item.voting-completed,
+  .item.program-completed,
+  .item.request-completed,
+  .item.project-completed {background: #e8fde9; }
+    .item.voting-completed .status,
+    .item.program-completed .status,
+    .item.request-completed .status,
+    .item.project-completed .status {color: #268a2a; }
+    .item.voting-supporters .status, 
+    .item.fund-raising .status {color: #ff9000; margin-bottom: 0.8em; }
+    .item.voting-supporters .voting-line,
+    .item.voting-supporters .total-count,
+    .item.fund-raising .voting-line,
+    .item.fund-raising .total-count {display: none; }
+    .item.voting-canceled {background: #fde8e8; }
+      .item.voting-canceled .status {color: #f44336; }
+      .item.voting-canceled .count, .item.voting-canceled .total-count, .item.voting-canceled .voting-line {display: none; }
   @media all and (min-width: 20.0625em) {
-    .votings-list .item .img,
-    .programs-list .item .img,
-    .requests-list .item .img,
-    .projects-list .item .img {
-      display: block; }
-    .votings-list .item .info,
-    .programs-list .item .info,
-    .requests-list .item .info,
-    .projects-list .item .info {
-      margin-left: 25%; } }
+    .item .img {display: block; }
+    .item .info {margin-left: 25%; }
+  }
+
 
 @media all and (min-width: 900px) {
   .left_col {
@@ -1350,195 +1152,42 @@ label.ui-btn {
     display: block;
   }
   .right_menu{
-    
   }
 }
 
 @media all and (max-width: 899px) {
-  .left_col {
-    width: 100%;
-    float: none;
-  }
-  .right_col {
-    display: none;
-  }
+  .left_col {width: 100%;float: none;}
+  .right_col {display: none;}
 }
 
-#other_adr {
-  display: none;
-}
+#other_adr {display: none;}
 
-.programs-list .item .ui-grid-a .ui-block-a,
-.requests-list .item .ui-grid-a .ui-block-a,
-.projects-list .item .ui-grid-a .ui-block-a {
-  width: 40%; }
-.programs-list .item .ui-grid-a .ui-block-b,
-.requests-list .item .ui-grid-a .ui-block-b,
-.projects-list .item .ui-grid-a .ui-block-b {
-  width: 60%; }
-.programs-list .item .ui-grid-a .status,
-.requests-list .item .ui-grid-a .status,
-.projects-list .item .ui-grid-a .status {
-  margin-bottom: 0.8em; }
+.item .ui-grid-a .ui-block-a {width: 40%; }
+.item .ui-grid-a .ui-block-b {width: 60%; }
+.item .ui-grid-a .status {margin-bottom: 0.8em; }
 
-#votings-page .ui-content, #programs-page .ui-content, #requests-page .ui-content, #projects-page .ui-content, #my-votings-page .ui-content, #weighted-votings-page .ui-content {
-  padding-top: 0; }
+.ui-content {padding-top: 0; }
 
-#vote-page .ui-header .ui-title, #vote-page-full .ui-header .ui-title, #my-vote-page .ui-header .ui-title, #program-page .ui-header .ui-title, #request-page .ui-header .ui-title, #project-page .ui-header .ui-title, #weighted-vote-page .ui-header .ui-title {
-  display: block;
-  margin: 0 3em 0 3.5em;
-  text-align: left; }
-.project-item,
-#vote-page .vote-item,
-#vote-page .program-item,
-#vote-page .request-item,
-#vote-page .project-item, #vote-page-full .vote-item,
-#vote-page-full .program-item,
-#vote-page-full .request-item,
-#vote-page-full .project-item, #my-vote-page .vote-item,
-#my-vote-page .program-item,
-#my-vote-page .request-item,
-#my-vote-page .project-item, #program-page .vote-item,
-#program-page .program-item,
-#program-page .request-item,
-#program-page .project-item, #request-page .vote-item,
-#request-page .program-item,
-#request-page .request-item,
-#request-page .project-item, #project-page .vote-item,
-#project-page .program-item,
-#project-page .request-item,
-#project-page .project-item, #weighted-vote-page .vote-item,
-#weighted-vote-page .program-item,
-#weighted-vote-page .request-item,
-#weighted-vote-page .project-item {
+.ui-header .ui-title {display: block; margin: 0 3em 0 3.5em; text-align: left; }
+.vote-item, .program-item, .request-item, .project-item {
   background: #ffffff;
   overflow: hidden;
   -moz-border-radius: 0.3125em 0.3125em 0 0;
   -webkit-border-radius: 0.3125em;
   border-radius: 0.3125em 0.3125em 0 0; }
-  .project-item .vote-item-inner,
-  #vote-page .vote-item .vote-item-inner,
-  #vote-page .vote-item .program-item-inner,
-  #vote-page .vote-item .request-item-inner,
-  #vote-page .vote-item .project-item-inner,
-  #vote-page .program-item .vote-item-inner,
-  #vote-page .program-item .program-item-inner,
-  #vote-page .program-item .request-item-inner,
-  #vote-page .program-item .project-item-inner,
-  #vote-page .request-item .vote-item-inner,
-  #vote-page .request-item .program-item-inner,
-  #vote-page .request-item .request-item-inner,
-  #vote-page .request-item .project-item-inner,
-  #vote-page .project-item .vote-item-inner,
-  #vote-page .project-item .program-item-inner,
-  #vote-page .project-item .request-item-inner,
-  #vote-page .project-item .project-item-inner, #vote-page-full .vote-item .vote-item-inner,
-  #vote-page-full .vote-item .program-item-inner,
-  #vote-page-full .vote-item .request-item-inner,
-  #vote-page-full .vote-item .project-item-inner,
-  #vote-page-full .program-item .vote-item-inner,
-  #vote-page-full .program-item .program-item-inner,
-  #vote-page-full .program-item .request-item-inner,
-  #vote-page-full .program-item .project-item-inner,
-  #vote-page-full .request-item .vote-item-inner,
-  #vote-page-full .request-item .program-item-inner,
-  #vote-page-full .request-item .request-item-inner,
-  #vote-page-full .request-item .project-item-inner,
-  #vote-page-full .project-item .vote-item-inner,
-  #vote-page-full .project-item .program-item-inner,
-  #vote-page-full .project-item .request-item-inner,
-  #vote-page-full .project-item .project-item-inner, #my-vote-page .vote-item .vote-item-inner,
-  #my-vote-page .vote-item .program-item-inner,
-  #my-vote-page .vote-item .request-item-inner,
-  #my-vote-page .vote-item .project-item-inner,
-  #my-vote-page .program-item .vote-item-inner,
-  #my-vote-page .program-item .program-item-inner,
-  #my-vote-page .program-item .request-item-inner,
-  #my-vote-page .program-item .project-item-inner,
-  #my-vote-page .request-item .vote-item-inner,
-  #my-vote-page .request-item .program-item-inner,
-  #my-vote-page .request-item .request-item-inner,
-  #my-vote-page .request-item .project-item-inner,
-  #my-vote-page .project-item .vote-item-inner,
-  #my-vote-page .project-item .program-item-inner,
-  #my-vote-page .project-item .request-item-inner,
-  #my-vote-page .project-item .project-item-inner, 
-  #program-page .vote-item .vote-item-inner,
-  #program-page .vote-item .program-item-inner,
-  #program-page .vote-item .request-item-inner,
-  #program-page .vote-item .project-item-inner,
-  #program-page .program-item .vote-item-inner,
-  #program-page .program-item .program-item-inner,
-  #program-page .program-item .request-item-inner,
-  #program-page .program-item .project-item-inner,
-  #program-page .request-item .vote-item-inner,
-  #program-page .request-item .program-item-inner,
-  #program-page .request-item .request-item-inner,
-  #program-page .request-item .project-item-inner,
-  #program-page .project-item .vote-item-inner,
-  #program-page .project-item .program-item-inner,
-  #program-page .project-item .request-item-inner,
-  #program-page .project-item .project-item-inner, 
-  #request-page .vote-item .vote-item-inner,
-  #request-page .vote-item .program-item-inner,
-  #request-page .vote-item .request-item-inner,
-  #request-page .vote-item .project-item-inner,
-  #request-page .program-item .vote-item-inner,
-  #request-page .program-item .program-item-inner,
-  #request-page .program-item .request-item-inner,
-  #request-page .program-item .project-item-inner,
-  #request-page .request-item .vote-item-inner,
-  #request-page .request-item .program-item-inner,
-  #request-page .request-item .request-item-inner,
-  #request-page .request-item .project-item-inner,
-  #request-page .project-item .vote-item-inner,
-  #request-page .project-item .program-item-inner,
-  #request-page .project-item .request-item-inner,
-  #request-page .project-item .project-item-inner, 
-  #project-page .vote-item .vote-item-inner,
-  #project-page .vote-item .program-item-inner,
-  #project-page .vote-item .request-item-inner,
-  #project-page .vote-item .project-item-inner,
-  #project-page .program-item .vote-item-inner,
-  #project-page .program-item .program-item-inner,
-  #project-page .program-item .request-item-inner,
-  #project-page .program-item .project-item-inner,
-  #project-page .request-item .vote-item-inner,
-  #project-page .request-item .program-item-inner,
-  #project-page .request-item .request-item-inner,
-  #project-page .request-item .project-item-inner,
-  #project-page .project-item .vote-item-inner,
-  #project-page .project-item .program-item-inner,
-  #project-page .project-item .request-item-inner,
-  #project-page .project-item .project-item-inner, 
-  #weighted-vote-page .vote-item .vote-item-inner,
-  #weighted-vote-page .vote-item .program-item-inner,
-  #weighted-vote-page .vote-item .request-item-inner,
-  #weighted-vote-page .vote-item .project-item-inner,
-  #weighted-vote-page .program-item .vote-item-inner,
-  #weighted-vote-page .program-item .program-item-inner,
-  #weighted-vote-page .program-item .request-item-inner,
-  #weighted-vote-page .program-item .project-item-inner,
-  #weighted-vote-page .request-item .vote-item-inner,
-  #weighted-vote-page .request-item .program-item-inner,
-  #weighted-vote-page .request-item .request-item-inner,
-  #weighted-vote-page .request-item .project-item-inner,
-  #weighted-vote-page .project-item .vote-item-inner,
-  #weighted-vote-page .project-item .program-item-inner,
-  #weighted-vote-page .project-item .request-item-inner,
-  #weighted-vote-page .project-item .project-item-inner {
-    padding: 0 1em; }
-#vote-page .img img, #vote-page-full .img img, #my-vote-page .img img, #program-page .img img, #request-page .img img, #project-page .img img, #weighted-vote-page .img img {
-  display: block;
-  max-width: 100%;}
-#vote-page .stars-wrap, #vote-page-full .stars-wrap, #my-vote-page .stars-wrap, #program-page .stars-wrap, #request-page .stars-wrap, #project-page .stars-wrap, #weighted-vote-page .stars-wrap {
+  .vote-item-inner,
+  .program-item-inner,
+  .request-item-inner,
+  .project-item-inner {padding: 0 1em;}
+.img img {display: block;max-width: 100%;}
+.stars-wrap {
   margin: 1.5em 0;
   padding: 0.75em 0;
   text-align: center;
   line-height: 1.25em;
   border-top: 1px solid #bebebe;
   border-bottom: 1px solid #bebebe; }
-  #vote-page .stars-wrap span, #vote-page-full .stars-wrap span, #my-vote-page .stars-wrap span, #program-page .stars-wrap span, #request-page .stars-wrap span, #project-page .stars-wrap span, #weighted-vote-page .stars-wrap span {
+  .stars-wrap span {
     display: inline-block;
     margin: 0 1em;
     width: 1.3125em;
@@ -1551,35 +1200,31 @@ label.ui-btn {
     -o-background-size: 1.3125em, 1.25em;
     -webkit-background-size: 1.3125em, 1.25em;
     background-size: 1.3125em, 1.25em; }
-    #vote-page .stars-wrap span:first-child, #vote-page-full .stars-wrap span:first-child, #my-vote-page .stars-wrap span:first-child, #program-page .stars-wrap span:first-child, #request-page .stars-wrap span:first-child, #project-page .stars-wrap span:first-child, #weighted-vote-page .stars-wrap span:first-child {
-      margin-left: 0; }
-    #vote-page .stars-wrap span:last-child, #vote-page-full .stars-wrap span:last-child, #my-vote-page .stars-wrap span:last-child, #program-page .stars-wrap span:last-child, #request-page .stars-wrap span:last-child, #project-page .stars-wrap span:last-child, #weighted-vote-page .stars-wrap span:last-child {
-      margin-right: 0; }
-    #vote-page .stars-wrap span.active, #vote-page-full .stars-wrap span.active, #my-vote-page .stars-wrap span.active, #program-page .stars-wrap span.active, #request-page .stars-wrap span.active, #project-page .stars-wrap span.active, #weighted-vote-page .stars-wrap span.active {
-      background-image: url(../images/icon-star-active.png); }
-#vote-page .id, #vote-page .username, #vote-page .benitsifiar, #vote-page .address, #vote-page .num-votes-support, #vote-page .status, #vote-page .desc, #vote-page-full .id, #vote-page-full .username, #vote-page-full .benitsifiar, #vote-page-full .address, #vote-page-full .num-votes-support, #vote-page-full .status, #vote-page-full .desc, #my-vote-page .id, #my-vote-page .username, #my-vote-page .benitsifiar, #my-vote-page .address, #my-vote-page .num-votes-support, #my-vote-page .status, #my-vote-page .desc, #program-page .id, #program-page .username, #program-page .benitsifiar, #program-page .address, #program-page .num-votes-support, #program-page .status, #program-page .desc, #request-page .id, #request-page .username, #request-page .benitsifiar, #request-page .address, #request-page .num-votes-support, #request-page .status, #request-page .desc, #project-page .id, #project-page .username, #project-page .benitsifiar, #project-page .address, #project-page .num-votes-support, #project-page .status, #project-page .desc, #weighted-vote-page .id, #weighted-vote-page .username, #weighted-vote-page .benitsifiar, #weighted-vote-page .address, #weighted-vote-page .num-votes-support, #weighted-vote-page .status, #weighted-vote-page .desc {
-  font-size: 0.75em;
-  margin: 1em 0; }
-#vote-page .username .bg, #vote-page .id .bg, #vote-page .benitsifiar .bg, #vote-page-full .username .bg, #vote-page-full .id .bg, #vote-page-full .benitsifiar .bg, #my-vote-page .username .bg, #my-vote-page .id .bg, #my-vote-page .benitsifiar .bg, #program-page .username .bg, #program-page .id .bg, #program-page .benitsifiar .bg, #request-page .username .bg, #request-page .id .bg, #request-page .benitsifiar .bg, #project-page .username .bg, #project-page .id .bg, #project-page .benitsifiar .bg, #weighted-vote-page .username .bg, #weighted-vote-page .id .bg, #weighted-vote-page .benitsifiar .bg {
-  display: inline-block;
-  padding: 0 2px;
-  background-color: #e9e8e8;
-  border: 1px solid #cac9c9;
-  -moz-border-radius: 0.5em;
-  -webkit-border-radius: 0.5em;
-  border-radius: 0.5em; }
-#vote-page .num-votes-support, #vote-page-full .num-votes-support, #my-vote-page .num-votes-support, #program-page .num-votes-support, #request-page .num-votes-support, #project-page .num-votes-support, #weighted-vote-page .num-votes-support {
+    .stars-wrap span:first-child {margin-left: 0; }
+    }
+  .stars-wrap span:last-child {margin-right: 0; }
+    .stars-wrap span.active {background-image: url(../images/icon-star-active.png); }
+  .id, .username, .benitsifiar, .address, .num-votes-support, .status, .desc {font-size: 0.75em;margin: 1em 0; }
+  .username .bg, .id .bg, .benitsifiar .bg {
+    display: inline-block;
+    padding: 0 2px;
+    background-color: #e9e8e8;
+    border: 1px solid #cac9c9;
+    -moz-border-radius: 0.5em;
+    -webkit-border-radius: 0.5em;
+    border-radius: 0.5em; }
+  .num-votes-support {
   line-height: 1.5em; }
-  #vote-page .num-votes-support .counter, #vote-page-full .num-votes-support .counter, #my-vote-page .num-votes-support .counter, #program-page .num-votes-support .counter, #request-page .num-votes-support .counter, #project-page .num-votes-support .counter, #weighted-vote-page .num-votes-support .counter {
+  .num-votes-support .counter {
     display: inline-block;
     margin-left: 1em;
     background: #ff9000;
     color: #ffffff; }
-    #vote-page .num-votes-support .counter span, #vote-page-full .num-votes-support .counter span, #my-vote-page .num-votes-support .counter span, #program-page .num-votes-support .counter span, #request-page .num-votes-support .counter span, #project-page .num-votes-support .counter span, #weighted-vote-page .num-votes-support .counter span {
+    .num-votes-support .counter span {
       display: inline-block;
       font-weight: 900;
       padding: 0 0.5em 0 0.25em; }
-      #vote-page .num-votes-support .counter span:before, #vote-page-full .num-votes-support .counter span:before, #my-vote-page .num-votes-support .counter span:before, #program-page .num-votes-support .counter span:before, #request-page .num-votes-support .counter span:before, #project-page .num-votes-support .counter span:before, #weighted-vote-page .num-votes-support .counter span:before {
+      .num-votes-support .counter span:before {
         content: '';
         display: inline-block;
         width: 9px;
@@ -1592,59 +1237,42 @@ label.ui-btn {
         -o-background-size: 9px 8px;
         -webkit-background-size: 9px 8px;
         background-size: 9px 8px; }
-    #vote-page .num-votes-support .counter strong, #vote-page-full .num-votes-support .counter strong, #my-vote-page .num-votes-support .counter strong, #program-page .num-votes-support .counter strong, #request-page .num-votes-support .counter strong, #project-page .num-votes-support .counter strong, #weighted-vote-page .num-votes-support .counter strong {
-      display: inline-block;
-      padding: 0 0.25em;
-      border-left: 1px solid #d75d00; }
-    #vote-page .num-votes-support .counter.no-bg, #vote-page-full .num-votes-support .counter.no-bg, #my-vote-page .num-votes-support .counter.no-bg, #program-page .num-votes-support .counter.no-bg, #request-page .num-votes-support .counter.no-bg, #project-page .num-votes-support .counter.no-bg, #weighted-vote-page .num-votes-support .counter.no-bg {
-      background: none;
-      color: #4d4d4d; }
-      #vote-page .num-votes-support .counter.no-bg span:before, #vote-page-full .num-votes-support .counter.no-bg span:before, #my-vote-page .num-votes-support .counter.no-bg span:before, #program-page .num-votes-support .counter.no-bg span:before, #request-page .num-votes-support .counter.no-bg span:before, #project-page .num-votes-support .counter.no-bg span:before, #weighted-vote-page .num-votes-support .counter.no-bg span:before {
-        background-image: url(../images/icon-voting-count.png); }
-#vote-page .status, #vote-page .nko-status, #vote-page-full .status, #vote-page-full .nko-status, #my-vote-page .status, #my-vote-page .nko-status, #program-page .status, #program-page .nko-status, #request-page .status, #request-page .nko-status, #project-page .status, #project-page .nko-status, #weighted-vote-page .status, #weighted-vote-page .nko-status {
-  margin: 1.5em 0; }
-  #vote-page .status.blue, #vote-page .nko-status.blue, #vote-page-full .status.blue, #vote-page-full .nko-status.blue, #my-vote-page .status.blue, #my-vote-page .nko-status.blue, #program-page .status.blue, #program-page .nko-status.blue, #request-page .status.blue, #request-page .nko-status.blue, #project-page .status.blue, #project-page .nko-status.blue, #weighted-vote-page .status.blue, #weighted-vote-page .nko-status.blue {
-    color: #4484f6; }
-  #vote-page .status.green, #vote-page .nko-status.green, #vote-page-full .status.green, #vote-page-full .nko-status.green, #my-vote-page .status.green, #my-vote-page .nko-status.green, #program-page .status.green, #program-page .nko-status.green, #request-page .status.green, #request-page .nko-status.green, #project-page .status.green, #project-page .nko-status.green, #weighted-vote-page .status.green, #weighted-vote-page .nko-status.green {
-    color: #268a2a; }
-  #vote-page .status.yellow, #vote-page .nko-status.yellow, #vote-page-full .status.yellow, #vote-page-full .nko-status.yellow, #my-vote-page .status.yellow, #my-vote-page .nko-status.yellow, #program-page .status.yellow, #program-page .nko-status.yellow, #request-page .status.yellow, #request-page .nko-status.yellow, #project-page .status.yellow, #project-page .nko-status.yellow, #weighted-vote-page .status.yellow, #weighted-vote-page .nko-status.yellow {
-    color: white; background-color: #ff9000;}
-  #vote-page .status.red, #vote-page .nko-status.red, #vote-page-full .status.red, #vote-page-full .nko-status.red, #my-vote-page .status.red, #my-vote-page .nko-status.red, #program-page .status.red, #program-page .nko-status.red, #request-page .status.red, #request-page .nko-status.red, #project-page .status.red, #project-page .nko-status.red, #weighted-vote-page .status.red, #weighted-vote-page .nko-status.red {
-    color: #f44336; }
-#vote-page .nko-status, #vote-page-full .nko-status, #my-vote-page .nko-status, #program-page .nko-status, #request-page .nko-status, #project-page .nko-status, #weighted-vote-page .nko-status {
-  font-size: 0.75em;
-  text-align: center;
-  margin: 1.5em 0 3em; }
-#vote-page .total-amount, #vote-page .amount, #vote-page .my-amount, #vote-page .contractors, #vote-page-full .total-amount, #vote-page-full .amount, #vote-page-full .my-amount, #vote-page-full .contractors, #my-vote-page .total-amount, #my-vote-page .amount, #my-vote-page .my-amount, #my-vote-page .contractors, #program-page .total-amount, #program-page .amount, #program-page .my-amount, #program-page .contractors, #request-page .total-amount, #request-page .amount, #request-page .my-amount, #request-page .contractors, #project-page .total-amount, #project-page .amount, #project-page .my-amount, #project-page .contractors, #weighted-vote-page .total-amount, #weighted-vote-page .amount, #weighted-vote-page .my-amount, #weighted-vote-page .contractors {
-  font-size: 0.75em; }
-#vote-page .total-amount strong:after, #vote-page-full .total-amount strong:after, #my-vote-page .total-amount strong:after, #program-page .total-amount strong:after, #request-page .total-amount strong:after, #project-page .total-amount strong:after, #weighted-vote-page .total-amount strong:after {
-  content: '';
-  display: inline-block;
-  width: 7px;
-  height: 7px;
-  margin-left: 0.2em;
-  background: url(../images/icon-amount.png) 0 0 no-repeat;
-  -moz-background-size: 7px 7px;
-  -o-background-size: 7px 7px;
-  -webkit-background-size: 7px 7px;
-  background-size: 7px 7px; }
-#vote-page .amount strong:after, #vote-page-full .amount strong:after, #my-vote-page .amount strong:after, #program-page .amount strong:after, #request-page .amount strong:after, #project-page .amount strong:after, #weighted-vote-page .amount strong:after {
-  content: '';
-  display: inline-block;
-  width: 13px;
-  height: 7px;
-  margin-left: 0.2em;
-  background-repeat: no-repeat;
-  background-position: 0 0;
-  -moz-background-size: 13px 7px;
-  -o-background-size: 13px 7px;
-  -webkit-background-size: 13px 7px;
-  background-size: 13px 7px; }
-#vote-page .amount.up strong:after, #vote-page-full .amount.up strong:after, #my-vote-page .amount.up strong:after, #program-page .amount.up strong:after, #request-page .amount.up strong:after, #project-page .amount.up strong:after, #weighted-vote-page .amount.up strong:after {
-  background-image: url(../images/icon-amount-up.png); }
-#vote-page .amount.down strong:after, #vote-page-full .amount.down strong:after, #my-vote-page .amount.down strong:after, #program-page .amount.down strong:after, #request-page .amount.down strong:after, #project-page .amount.down strong:after, #weighted-vote-page .amount.down strong:after {
-  background-image: url(../images/icon-amount-down.png); }
-#vote-page .my-amount strong:after, #vote-page-full .my-amount strong:after, #my-vote-page .my-amount strong:after, #program-page .my-amount strong:after, #request-page .my-amount strong:after, #project-page .my-amount strong:after, #weighted-vote-page .my-amount strong:after {
+    .num-votes-support .counter strong {display: inline-block; padding: 0 0.25em; border-left: 1px solid #d75d00; }
+      .num-votes-support .counter.no-bg {background: none; color: #4d4d4d; }
+      .num-votes-support .counter.no-bg span:before {background-image: url(../images/icon-voting-count.png); }
+.status, .nko-status {margin: 1.5em 0; }
+  .status.blue, .nko-status.blue {color: #4484f6; }
+  .status.green, .nko-status.green {color: #268a2a; }
+  .status.yellow, .nko-status.yellow {color: white; background-color: #ff9000;}
+  .status.red, .nko-status.red {color: #f44336; }
+  .nko-status {font-size: 0.75em; text-align: center; margin: 1.5em 0 3em; }
+  .total-amount, .amount, .my-amount, .contractors {font-size: 0.75em; }
+  .total-amount strong:after {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    margin-left: 0.2em;
+    background: url(../images/icon-amount.png) 0 0 no-repeat;
+    -moz-background-size: 7px 7px;
+    -o-background-size: 7px 7px;
+    -webkit-background-size: 7px 7px;
+    background-size: 7px 7px; }
+  .amount strong:after {
+    content: '';
+    display: inline-block;
+    width: 13px;
+    height: 7px;
+    margin-left: 0.2em;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    -moz-background-size: 13px 7px;
+    -o-background-size: 13px 7px;
+    -webkit-background-size: 13px 7px;
+    background-size: 13px 7px; }
+  .amount.up strong:after {background-image: url(../images/icon-amount-up.png); }
+  .amount.down strong:after {background-image: url(../images/icon-amount-down.png); }
+  .my-amount strong:after {
   content: '';
   display: inline-block;
   width: 8px;
@@ -1655,7 +1283,7 @@ label.ui-btn {
   -o-background-size: 8px 8px;
   -webkit-background-size: 8px 8px;
   background-size: 8px 8px; }
-#vote-page .contractors strong:after, #vote-page-full .contractors strong:after, #my-vote-page .contractors strong:after, #program-page .contractors strong:after, #request-page .contractors strong:after, #project-page .contractors strong:after, #weighted-vote-page .contractors strong:after {
+  .contractors strong:after {
   content: '';
   display: inline-block;
   width: 7px;
@@ -1666,20 +1294,17 @@ label.ui-btn {
   -o-background-size: 7px 7px;
   -webkit-background-size: 7px 7px;
   background-size: 7px 7px; }
-#vote-page .nko-list, #vote-page-full .nko-list, #my-vote-page .nko-list, #program-page .nko-list, #request-page .nko-list, #project-page .nko-list, #weighted-vote-page .nko-list {
+  .nko-list {
   margin-top: 1.5em;
   font-size: 0.75em; }
-  #vote-page .nko-list ol, #vote-page-full .nko-list ol, #my-vote-page .nko-list ol, #program-page .nko-list ol, #request-page .nko-list ol, #project-page .nko-list ol, #weighted-vote-page .nko-list ol {
-    padding: 0; }
-    #vote-page .nko-list ol li, #vote-page-full .nko-list ol li, #my-vote-page .nko-list ol li, #program-page .nko-list ol li, #request-page .nko-list ol li, #project-page .nko-list ol li, #weighted-vote-page .nko-list ol li {
+  .nko-list ol {padding: 0; }
+    .nko-list ol li {
       list-style-position: inside;
       font-weight: bold;
       margin-bottom: 1em; }
-      #vote-page .nko-list ol li > div, #vote-page-full .nko-list ol li > div, #my-vote-page .nko-list ol li > div, #program-page .nko-list ol li > div, #request-page .nko-list ol li > div, #project-page .nko-list ol li > div, #weighted-vote-page .nko-list ol li > div {
-        font-weight: normal; }
-      #vote-page .nko-list ol li .phone, #vote-page .nko-list ol li .doc, #vote-page .nko-list ol li .addr, #vote-page-full .nko-list ol li .phone, #vote-page-full .nko-list ol li .doc, #vote-page-full .nko-list ol li .addr, #my-vote-page .nko-list ol li .phone, #my-vote-page .nko-list ol li .doc, #my-vote-page .nko-list ol li .addr, #program-page .nko-list ol li .phone, #program-page .nko-list ol li .doc, #program-page .nko-list ol li .addr, #request-page .nko-list ol li .phone, #request-page .nko-list ol li .doc, #request-page .nko-list ol li .addr, #project-page .nko-list ol li .phone, #project-page .nko-list ol li .doc, #project-page .nko-list ol li .addr, #weighted-vote-page .nko-list ol li .phone, #weighted-vote-page .nko-list ol li .doc, #weighted-vote-page .nko-list ol li .addr {
-        display: block; }
-        #vote-page .nko-list ol li .phone:before, #vote-page .nko-list ol li .doc:before, #vote-page .nko-list ol li .addr:before, #vote-page-full .nko-list ol li .phone:before, #vote-page-full .nko-list ol li .doc:before, #vote-page-full .nko-list ol li .addr:before, #my-vote-page .nko-list ol li .phone:before, #my-vote-page .nko-list ol li .doc:before, #my-vote-page .nko-list ol li .addr:before, #program-page .nko-list ol li .phone:before, #program-page .nko-list ol li .doc:before, #program-page .nko-list ol li .addr:before, #request-page .nko-list ol li .phone:before, #request-page .nko-list ol li .doc:before, #request-page .nko-list ol li .addr:before, #project-page .nko-list ol li .phone:before, #project-page .nko-list ol li .doc:before, #project-page .nko-list ol li .addr:before, #weighted-vote-page .nko-list ol li .phone:before, #weighted-vote-page .nko-list ol li .doc:before, #weighted-vote-page .nko-list ol li .addr:before {
+      .nko-list ol li > div {font-weight: normal;}
+      .nko-list ol li .phone, .nko-list ol li .doc, .nko-list ol li .addr {display: block;}
+        .nko-list ol li .phone:before, .nko-list ol li .doc:before, .nko-list ol li .addr:before {
           content: '';
           position: relative;
           top: 1px;
@@ -1693,12 +1318,12 @@ label.ui-btn {
           -o-background-size: contain;
           -webkit-background-size: contain;
           background-size: contain; }
-      #vote-page .nko-list ol li .phone:before, #vote-page-full .nko-list ol li .phone:before, #my-vote-page .nko-list ol li .phone:before, #program-page .nko-list ol li .phone:before, #request-page .nko-list ol li .phone:before, #project-page .nko-list ol li .phone:before, #weighted-vote-page .nko-list ol li .phone:before {
-        background-image: url(../images/phone.png); }
+/*      #vote-page .nko-list ol li .phone:before, #vote-page-full .nko-list ol li .phone:before, #my-vote-page .nko-list ol li .phone:before, #program-page .nko-list ol li .phone:before, #request-page .nko-list ol li .phone:before, #project-page .nko-list ol li .phone:before, #weighted-vote-page .nko-list ol li .phone:before {
+        background-image: url(../images/svg/phone.svg); }
       #vote-page .nko-list ol li .doc:before, #vote-page-full .nko-list ol li .doc:before, #my-vote-page .nko-list ol li .doc:before, #program-page .nko-list ol li .doc:before, #request-page .nko-list ol li .doc:before, #project-page .nko-list ol li .doc:before, #weighted-vote-page .nko-list ol li .doc:before {
-        background-image: url(../images/doc.png); }
+        background-image: url(../images/svg/doc.svg); }
       #vote-page .nko-list ol li .addr:before, #vote-page-full .nko-list ol li .addr:before, #my-vote-page .nko-list ol li .addr:before, #program-page .nko-list ol li .addr:before, #request-page .nko-list ol li .addr:before, #project-page .nko-list ol li .addr:before, #weighted-vote-page .nko-list ol li .addr:before {
-        background-image: url(../images/pin.png); }
+        background-image: url(../images/svg/pin.svg); }*/
 
 #program-page .nko-btn, #request-page .nko-btn, #project-page .nko-btn {
   margin: 1.5em 0; }
@@ -1842,7 +1467,7 @@ label.ui-btn {
     background-color: #4caf50;
     *zoom: 1;
     filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FF4CAF50', endColorstr='#FF238827');
-    background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzRjYWY1MCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzIzODgyNyIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+/*    background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzRjYWY1MCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzIzODgyNyIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA=='); */
     background-size: 100%;
     background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #4caf50), color-stop(100%, #238827));
     background-image: -moz-linear-gradient(top, #4caf50 0%, #238827 100%);
@@ -2368,6 +1993,7 @@ label.ui-btn {
     -webkit-border-radius: 28%;
     border-radius: 28% 28% 28% 28%; }
 
+
 #create-pif-page .button-fixed .ui-btn {
   background-color: #8bc34a;
   -moz-border-radius: 0;
@@ -2416,12 +2042,12 @@ label.ui-btn {
         -o-background-size: contain;
         -webkit-background-size: contain;
         background-size: contain; }
-    .select-nko-wrap ol li .phone:before {
+/*    .select-nko-wrap ol li .phone:before {
       background-image: url(../images/phone.png); }
     .select-nko-wrap ol li .doc:before {
       background-image: url(../images/doc.png); }
     .select-nko-wrap ol li .addr:before {
-      background-image: url(../images/pin.png); }
+      background-image: url(../images/pin.png); }*/
 .select-nko-wrap .ui-checkbox {
   float: right;
   margin: 0; }
@@ -2601,25 +2227,25 @@ label.ui-btn {
     background-size: 21px 21px; }
 
   #my-activities-page .btn-next-page .ui-btn.icon-votings:before {
-    background-image: url(../images/menu-icon-votings.png);
+    background-image: url(../images/svg/menu-icon-votings.svg);
     -moz-background-size: 19px 21px;
     -o-background-size: 19px 21px;
     -webkit-background-size: 19px 21px;
     background-size: 19px 21px; }
   #my-activities-page .btn-next-page .ui-btn.icon-projects:before {
-    background-image: url(../images/menu-icon-projects.png);
+    background-image: url(../images/svg/menu-icon-projects.svg);
     -moz-background-size: 19px 19px;
     -o-background-size: 19px 19px;
     -webkit-background-size: 19px 19px;
     background-size: 19px 19px; }
   #my-activities-page .btn-next-page .ui-btn.icon-programs:before {
-    background-image: url(../images/menu-icon-programs.png);
+    background-image: url(../images/svg/menu-icon-programs.svg);
     -moz-background-size: 22px 20px;
     -o-background-size: 22px 20px;
     -webkit-background-size: 22px 20px;
     background-size: 22px 20px; }
   #my-activities-page .btn-next-page .ui-btn.icon-requests:before {
-    background-image: url(../images/menu-icon-requests.png);
+    background-image: url(../images/svg/menu-icon-requests.svg);
     -moz-background-size: 22px 19px;
     -o-background-size: 22px 19px;
     -webkit-background-size: 22px 19px;
@@ -2642,6 +2268,7 @@ label.ui-btn {
   -webkit-box-shadow: none;
   box-shadow: none; 
 }
+
 
 #org_list .info {
   margin-left: 1em;
@@ -2668,6 +2295,7 @@ label.ui-btn {
   overflow-y: hidden;
   width: 27%;
 }
+
 
 .ribbon {
   width: 2em;
@@ -2728,6 +2356,7 @@ label.ui-btn {
   float: left;
   width: 75%;
   display: inline-block;
+
 }
 
 .grid-b{
@@ -2746,6 +2375,7 @@ label.ui-btn {
   height: 5.5em;
   width: 6em;
 }
+
 
 .grid-c{
   background-color: #4484F6;
@@ -2792,6 +2422,7 @@ label.ui-btn {
   margin: 0.5em;
   padding: 0.5em;
   background-color: #E9E8E8;
+
 }
 
 .news_img_list{
@@ -2802,7 +2433,4 @@ label.ui-btn {
   -webkit-background-size: 5em;
   -moz-background-size: 5em;
   -o-background-size: 5em; 
-}
-
-.right_menu{
 }

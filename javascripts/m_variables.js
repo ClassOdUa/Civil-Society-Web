@@ -24,4 +24,6 @@ var g_ar_projects = [];
 var g_ar_requests = [];
 var g_ar_nav_seeds = [];
 var g_current_page = '';
-var g_group_creator_id = 0; 
+var g_group_creator_id = 0;
+//check is it PhoneGap or WebBrowser
+var g_phonegap = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;

@@ -1,8 +1,10 @@
 var PROFILE = {
-	auth : false,
+	auth: false,
 	profile_obj: [],
+	ind: 0,
+	ida: 0,
 	getProfile:function(){
-		var that = this;					
+		var that = this;
 		//console.log("profile_obj");
 		//console.log(that.profile_obj);
 		if(that.profile_obj && !that.profile_obj.error){
@@ -25,7 +27,7 @@ var PROFILE = {
 			//createCookie('id_cookie', that.profile_obj.id);
 			//OLD_ID_COOKIE = that.profile_obj.id;
 
-			SUPER_PROFILE.gender = that.gender;
+			SUPER_PROFILE.gender = that.profile_obj.gender;
 			SUPER_PROFILE.id = that.profile_obj.id;
 			SUPER_PROFILE.nco = that.profile_obj.nco;
 			SUPER_PROFILE.payment = that.profile_obj.payment;
@@ -34,16 +36,15 @@ var PROFILE = {
 				var soc = SOCIAL[i];
 				for(var b in that.profile_obj){
 					if(b != i) continue;								
-						if(that.profile_obj[b] != 0){
-							soc.auth = true;
-						}else{
-							soc.auth = false;
-						}	
+					if(that.profile_obj[b] != 0){
+						soc.auth = true;
+					}else{
+						soc.auth = false;
+					}	
 					//soc.auth = that.profile_obj[b]?true:false;
 
-					}
 				}
-			
+			}
 			that.updateMenu();
 			SOCIAL.init();
 		}else{
@@ -76,7 +77,7 @@ var PROFILE = {
 						//createCookie('id_cookie', that.profile_obj.id);
 						//OLD_ID_COOKIE = that.profile_obj.id;
 
-					SUPER_PROFILE.gender = that.gender;
+					SUPER_PROFILE.gender = that.profile_obj.gender;
 					SUPER_PROFILE.id = that.profile_obj.id;
 					SUPER_PROFILE.nco = that.profile_obj.nco;
 					SUPER_PROFILE.payment = that.profile_obj.payment;
@@ -109,8 +110,7 @@ var PROFILE = {
 			$('#profile-page .login > span:eq(1)').html(this.login);
 			$('#profile-page #avatar').attr('src', '.' + this.avatar);
 			$('#menu_avatar').html('<img id="avatar" src="' +  mainURL + this.avatar + '">');
-			console.log(this.gender);
-			$('input:radio[name=gender]').filter('[value="'+ this.gender + '"]').attr('checked', true);
+			$('input:radio[name=gender]').filter('[value="'+ this.gender + '"]').next().click()
 			var match_array = this.birth.match(/[0-9]+/ig);
 			var year_val = match_array[0];
 			$('#profile-page [name=year] option[value=' + year_val + ']').prop('selected', true);
@@ -157,6 +157,8 @@ var PROFILE = {
 			// 	ribbons += '<a href="sn/fb.php"><img style = "filter: alpha(Opacity=30);" class="ui-corner-all ribbon" src="images/icon-gp.png"></a>';
 			// }
 
+			PROFILE.address_list();
+
 			$('#profile-page #ribbons').html( ribbons );
 			$("#left-panel").addClass("auth-panel");
 		} else {
@@ -169,6 +171,47 @@ var PROFILE = {
 			$(".user-info .name").html("");
 		}
 	},
+	address_list: function(){
+		var l_a = 0;
+		var l_adr = '';
+		var l_ida = 0;
+		for (var l_i = 0; l_i < 3; l_i++) {
+			l_a = l_i + 1;
+
+			if(l_i < this.adr.length){
+				l_adr = '';
+				switch(CURRENT_LANG){
+					case 'en':
+						l_adr = this.adr[l_i].city_en;
+						break;
+					case 'uk':
+						l_adr = this.adr[l_i].city_uk;
+						break;
+					case 'ru':
+						l_adr = this.adr[l_i].city_ru;
+						break;
+				}
+				l_adr = l_adr + ', ' + this.adr[l_i].str + ', ' + this.adr[l_i].bld;
+				l_ida = this.adr[l_i].ida;
+			}else{
+				l_ida = 0;
+				l_adr = LOCALE_ARRAY_ADDITIONAL.address[CURRENT_LANG];
+			}
+
+			$('#profile-page .address-item [ind=' + l_a + ']').attr('ida', l_ida);
+			$('#profile-page .address-item [ind=' + l_a + ']').html(l_adr);
+		}
+	},
+	address: function(){
+		GoogleMapsAdress.initialize();
+		if(PROFILE.ida > 0){
+			ADRESS.init();
+			$('#delete_address').show();
+		}else{
+			$('#delete_address').hide();
+
+		}
+	},
 	events:function(){
 
 		$('#btn_other_adr').click(function(){
@@ -178,6 +221,9 @@ var PROFILE = {
 
 		$('#logout').click(function(){
 			PROFILE.auth = false;
+			PROFILE.ID = 0;
+			PROFILE.ind = 0;
+			PROFILE.adr = [];
 			$('#login-form [name=login]').val('');
 			$('#login-form [name=pass]').val('');
 			$('#menu_avatar').html('');
@@ -211,6 +257,55 @@ var PROFILE = {
 			location.href = mainURL + '/sn/in.php';
 		});
 
+		$('#profile-page .address-item a').click(function(){
+			PROFILE.ind = $(this).attr('ind');
+			PROFILE.ida = $(this).attr('ida');
+			$.mobile.navigate('#address-page');
+		});
+
+		$('#address-page .btn-save').click(function(){
+			ADRESS.save_address();
+		});	
+
+		$('#findgps').click(function(){
+			$.mobile.loading( "show", {theme: "z"});
+			navigator.geolocation.getCurrentPosition(function (pos) {
+				var lat = pos.coords.latitude;
+				var lng = pos.coords.longitude;
+				if (lat == null) {
+					alert(LOCALE_ARRAY_ADDITIONAL.gps_not_activated[CURRENT_LANG]);
+				} else {
+					g_lat = lat;
+					g_lng = lng;
+					//console.log(lat);
+					//console.log(lng);
+					GoogleMapsAdress.moveMarker(lat, lng);
+					var geocoder = new google.maps.Geocoder();
+					var latLng = new google.maps.LatLng(lat, lng);
+					if(geocoder){
+						geocoder.geocode({'latLng': latLng,'language': 'en'},function(results, status) {
+							if (status == google.maps.GeocoderStatus.OK) {
+								//console.log(results);
+								var address = results[0].address_components;
+
+								var country = ADRESS.getGPSByType(address,"country");
+								var state = ADRESS.getGPSByType(address,"administrative_area_level_1");
+								var county = ADRESS.getGPSByType(address,"administrative_area_level_3");
+								var city = ADRESS.getGPSByType(address,"locality");
+								//console.log('build: ' + results[0].address_components[0].long_name);
+								var street = ADRESS.getGPSByType(address,"route");
+								var build = ADRESS.getGPSByType(address,"street_number");
+
+								ADRESS.gpsSet(country,state,county,city,street,build, lat, lng);
+							} else {
+								alert(LOCALE_ARRAY_ADDITIONAL.gps_not_activated[CURRENT_LANG]);
+							}
+						});
+					}
+				}
+			});
+			$.mobile.loading( "hide" );
+		});
 	},
 };
 
@@ -459,36 +554,29 @@ var SUPER_PROFILE = {
 var ADRESS = {
 	address_arr: [],
 	init:function(){
-		if(location.href.indexOf('#address-item') > -1){
-			var match_array = location.href.match(/#address-item-[0-9]*/i);
-			var object_id = match_array[0].match(/[0-9]+/i);
-			
-			this.setListener(object_id);
+		var object_id = PROFILE.ida;
 
-			function callback_country(object_id){
-				return function(){
-					ADRESS.selectCountry(object_id, $('#address-item-' + object_id + ' [name=country] > option:eq(0)').val());
-					if(location.href.indexOf('#address-item-' + object_id) > -1){
-						$('#address-item-' + object_id + ' [name=country]').selectmenu("refresh", true);
-					}
-					ADRESS.enable(object_id, 'state');
-				}
+		this.setListener();
+
+		function callback_country(){
+			return function(){
+				ADRESS.selectCountry($('#address-page [name=country] > option:eq(0)').val());
+				$('#address-page [name=country]').selectmenu("refresh", true);
+				ADRESS.enable('state');
 			}
+		}
 
-			this.getCountry(object_id, callback_country(object_id));
-			this.disable(object_id, 'state');
-			this.disable(object_id, 'county');
-			this.disable(object_id, 'city');
-			this.disable(object_id, 'index');				
+		this.getCountry(callback_country());
+		this.disable('state');
+		this.disable('county');
+		this.disable('city');
+		this.disable('index');				
 
-			this.setDefault();
-			window.ADRESS = ADRESS;
-			this.getCurrent(false,false, object_id);
-			return false;
-	 	}
-
+		this.setDefault();
 		window.ADRESS = ADRESS;
-		this.getCurrent(false,false, false);
+		self.address_arr = PROFILE.adr;
+		return false;
+
 	},
 	levFind:function(source,obj){
 		var clone = jQuery.extend(true, {}, obj);
@@ -502,7 +590,7 @@ var ADRESS = {
 			}
 		return arr.sort(levSort)[0];
 	},
-	gpsSet: function(page,country,state,county,city,street,house, lat, lng){
+	gpsSet: function(country,state,county,city,street,house, lat, lng){
 		var self = this;
 		if(country){
 			var name = "country";
@@ -529,19 +617,19 @@ var ADRESS = {
 			var select_func = self.selectCity.bind(self);
 			city = null;
 		} else {
-			$("#address-item-" + page + " [name=street]").val(street);
-			$("#address-item-" + page + " [name=house]").val(house);
-			$.mobile.loading( "hide" ); //анимация загрузки
+			$("#address-page [name=street]").val(street);
+			$("#address-page [name=house]").val(house);
+			$.mobile.loading( "hide" );
 			return ;
 		}
 
 		var res = this.levFind(source,list_place);
 		//console.log(source + ' 1 ' + self.city);
 
-		self.setOption(page, name,res.id);
+		self.setOption(name,res.id);
 
-		select_func(page, res.id,function(){
-			self.gpsSet(page, country,state,county,city,street,house);
+		select_func(res.id,function(){
+			self.gpsSet(country, state, county, city, street, house);
 		});
 	},
 	getGPSByType:function(results,type){
@@ -553,85 +641,44 @@ var ADRESS = {
 		}
 		return "";
 	},
-	setListener:function(page){
+	setListener:function(){
 		var self = this;
-		self.clear_listeners(page);
-		$("#address-item-" + page + " [name=country]").change(function(){
+		self.clear_listeners();
+		$("#address-page [name=country]").change(function(){
 			var value = $(this).val();
-			self.selectCountry(page, value);
-			$("#address-item-" + page + " [name=country]").selectmenu("refresh", true);
+			self.selectCountry(value);
+			$("#address-page [name=country]").selectmenu("refresh", true);
 		});
-		$("#address-item-" + page + " [name=state]").change(function(){
+		$("#address-page [name=state]").change(function(){
 			var value = $(this).val();
-			self.selectState(page, value);
-			$("#address-item-" + page + " [name=state]").selectmenu("refresh", true);
+			self.selectState(value);
+			$("#address-page [name=state]").selectmenu("refresh", true);
 		});
-		$("#address-item-" + page + " [name=county]").change(function(){
+		$("#address-page [name=county]").change(function(){
 			var value = $(this).val();
-			self.selectCounty(page, value);
-			$("#address-item-" + page + " [name=county]").selectmenu("refresh", true);
+			self.selectCounty(value);
+			$("#address-page [name=county]").selectmenu("refresh", true);
 		});
-		$("#address-item-" + page + " [name=city]").change(function(){
+		$("#address-page [name=city]").change(function(){
 			var value = $(this).val();
-			self.selectCity(page, value);
-			$("#address-item-" + page + " [name=city]").selectmenu("refresh", true);
+			self.selectCity(value);
+			$("#address-page [name=city]").selectmenu("refresh", true);
 		});
-		$('#address-item-' + page + ' .btn-delete.ui-btn.ui-corner-all').click(function(){
-			self.delete_address(page);
+		$('#address-page .btn-delete.ui-btn.ui-corner-all').click(function(){
+			self.delete_address();
 		});
-		$("#address-item-" + page + " .ui-btn-right.ui-btn.ui-icon-check.ui-btn-icon-right").click(function(){
-			$('#address-item-' + page + ' .btn-save.ui-btn.ui-corner-all').click();
+		$("#address-page .ui-btn-right.ui-btn.ui-icon-check.ui-btn-icon-right").click(function(){
+			$('#address-page .btn-save.ui-btn.ui-corner-all').click();
 		});
-		$("#findgps-" + page).click(function(){
-			$.mobile.loading( "show", {
-				//text: "foo",
-				//textVisible: true,
-				theme: "z"
-				//html: ""
-			});
-			navigator.geolocation.getCurrentPosition(function (pos) {
-				var lat = pos.coords.latitude;
-				var lng = pos.coords.longitude;
-				if (lat == null) {
-					alert(LOCALE_ARRAY_ADDITIONAL.gps_not_activated[CURRENT_LANG]);
-				} else {
-					g_lat = lat;
-					g_lng = lng;
-					//console.log(lat);
-					//console.log(lng);
-					GoogleMapsAdress.moveMarker(lat, lng, page);
-					var geocoder = new google.maps.Geocoder();
-					var latLng = new google.maps.LatLng(lat, lng);
-					if(geocoder){
-						geocoder.geocode({'latLng': latLng,'language': 'en'},function(results, status) {
-							if (status == google.maps.GeocoderStatus.OK) {
-								//console.log(results);
-								var address = results[0].address_components;
 
-								var country = self.getGPSByType(address,"country");
-								var state = self.getGPSByType(address,"administrative_area_level_1");
-								var county = self.getGPSByType(address,"administrative_area_level_3");
-								var city = self.getGPSByType(address,"locality");
-								//console.log('build: ' + results[0].address_components[0].long_name);
-								var street = self.getGPSByType(address,"route");
-								var build = self.getGPSByType(address,"street_number");
-								ADRESS.gpsSet(page, country,state,county,city,street,build, lat, lng);
-							} else {
-								alert(LOCALE_ARRAY_ADDITIONAL.gps_not_activated[CURRENT_LANG]);
-							}
-						});
-					}
-				}
-			});
-		});
-		$("#address-item-" + page + " [name=house]").change(function(){
+		$("#address-page [name=house]").change(function(){
 			var value = $(this).val();
 
 			var m = "https://maps.googleapis.com/maps/api/geocode/json?address=" 
-			+ $("#address-item-" + page + " [name=house]").val() + ",+"
-			+ $("#address-item-" + page + " [name=street]").val() + ",+"
-			+ $("#address-item-" + page + " [name=city] option:selected").text() + ",+"
-			+ $("#address-item-" + page + " [name=country] option:selected").text()
+			+ $("#address-page [name=house]").val() + ",+"
+			+ $("#address-page [name=street]").val() + ",+"
+			+ $("#address-page [name=city] option:selected").text() + ",+"
+			+ $("#address-page [name=country] option:selected").text()
 			+ "&sensor=false";
 
 			$.ajax({
@@ -653,45 +700,35 @@ var ADRESS = {
 
 		});
 	},
-	clear_listeners: function(page){
+	clear_listeners: function(){
 		var self = this;
-		$("#address-item-" + page + " [name=country]").off();
-		$("#address-item-" + page + " [name=state]").off();
-		$("#address-item-" + page + " [name=county]").off();
-		$("#address-item-" + page + " [name=city]").off();
-		$('#address-item-' + page + ' .btn-delete.ui-btn.ui-corner-all').off();
-		$("#address-item-" + page + " .ui-btn-right.ui-btn.ui-icon-check.ui-btn-icon-right").off();
-		$("#findgps-" + page).off();
+		$('#address-page [name=country]').off();
+		$('#address-page [name=state]').off();
+		$('#address-page [name=county]').off();
+		$('#address-page [name=city]').off();
+		$('#address-page .btn-delete.ui-btn.ui-corner-all').off();
+		$('#address-page .ui-btn-right.ui-btn.ui-icon-check.ui-btn-icon-right').off();
 	},
-	save_address:function(page){
+	save_address:function(){
 		var self = this;
 		var reg_adr = 0;
 
-		$.mobile.loading( "show", {
-			//text: "foo",
-			//textVisible: true,
-			theme: "z",
-			//html: ""
-			});
+		$.mobile.loading( "show", {theme: "z"});
 
-		if($('#address-item-' + page + ' .ui-btn.ui-btn-inherit.ui-btn-icon-left').hasClass('ui-checkbox-on')){
+		if($('#address-page .ui-btn.ui-btn-inherit.ui-btn-icon-left').hasClass('ui-checkbox-on')){
 			reg_adr = 1;
 		}				
 		
-		if(ADRESS.address_arr[page-1]){
-			var ida = ADRESS.address_arr[page-1]['ida'];
-		}else{
-			var ida = '';
-		}
+		var ida = PROFILE.ida;
 
 		$.ajax({
 			url: mainURL + '/user_address_add.php?ida=' + ida
-														+ ('&c=' + $('#address-item-' + page + ' [name=city]').val()).replace("'", "`")
-														+ ('&str=' + $('#address-item-' + page + ' [name=street]').val()).replace("'", "`")
-														+ '&bld=' + $('#address-item-' + page + ' [name=house]').val()
-														+ '&oth=' + $('#address-item-' + page + ' [name=comment]').val()
-														+ '&zip=' + $('#address-item-' + page + ' [name=index]').val()
-														+ '&reg_adr=' + reg_adr + '&lat=' + GoogleMapsAdress.lt_value + '&lng=' + GoogleMapsAdress.ln_value,
+														+ ('&c=' + $('#address-page [name=city]').val()).replace("'", "`")
+														+ ('&str=' + $('#address-page [name=street]').val()).replace("'", "`")
+														+ '&bld=' + $('#address-page [name=house]').val()
+														+ '&oth=' + $('#address-page [name=comment]').val()
+														+ '&zip=' + $('#address-page [name=index]').val()
+														+ '&reg_adr=' + reg_adr + '&lat=' + GoogleMapsAdress.lat + '&lng=' + GoogleMapsAdress.lng,
 			type: "GET",
 			xhrFields: {
 				withCredentials: true
@@ -704,122 +741,107 @@ var ADRESS = {
 				SPHERES.initial(false, true);
 				$.mobile.navigate('#votings-page?&nh=1');
 				//$.mobile.navigate("#edit-address");
-
 			},
 		});
 	},
-	delete_address:function(page){
-		$.mobile.loading( "show", {
-			//text: "foo",
-			//textVisible: true,
-			theme: "z",
-			//html: ""
-		});
+	delete_address:function(){
+		$.mobile.loading( "show", {theme: "z"});
 		var self = this;
-		if(ADRESS.address_arr[page-1]){
-			if(ADRESS.address_arr[page-1]['ida']){
-				$.ajax({
-					url: mainURL + '/user_address_rm.php?ida=' + ADRESS.address_arr[page-1]['ida'],
-					type: "GET",
-					xhrFields: {
-						withCredentials: true
-					},
-					crossDomain: true,
-					complete: function(){
-						//alert('Deleting complete');	
-					
-						function callback_current(){
-							return function(){
-								$.mobile.loading( "hide" );
-							}
+		if(PROFILE.ida){
+			$.ajax({
+				url: mainURL + '/user_address_rm.php?ida=' + PROFILE.ida,
+				type: "GET",
+				xhrFields: {
+					withCredentials: true
+				},
+				crossDomain: true,
+				complete: function(){
+					//alert('Deleting complete');	
+					function callback_current(){
+						return function(){
+							$.mobile.loading( "hide" );
 						}
-						$.mobile.navigate("#edit-address");
-						SPHERES.initial(false, true);						
-						//self.getCurrent(0, callback_current(), page);				
-
-					},
-				});
-			}
+					}
+					$.mobile.navigate("#profile-page");
+					SPHERES.initial(false, true);						
+					//self.getCurrent(0, callback_current(), page);				
+				},
+			});
 		}
 	},
-	clear_address_info: function(page){
+	clear_address_info:function(){
 		var self = this;
-		$('#edit-address [href=#address-item-' + page + ']').html(LOCALE_ARRAY_ADDITIONAL.address[CURRENT_LANG] + page);
-		
-				//
+		$('#profile-page [ind=' + PROFILE.ind + ']').html(LOCALE_ARRAY_ADDITIONAL.address[CURRENT_LANG]);
 
-		function callback_country(page){
+		function callback_country(){
 			return function(){
 				//self.enable(page, 'state');
 				function callback_select_country(){
 					return function(){
 						//self.disable(page, 'state');
-						self.enable(page, 'state');
+						self.enable('state');
 						//console.log('state');
 					}
 				}
-				self.selectCountry(page, $('#address-item-' + page + ' [name=country] > option:eq(0)').val(), callback_select_country());
-				//
+				self.selectCountry($('#address-page [name=country] > option:eq(0)').val(), callback_select_country());
 
-
-				if(location.href.indexOf('#address-item-' + page) > -1){
-					$('#address-item-' + page + ' [name=country]').selectmenu("refresh", true);							
-					//$('#address-item-' + page + ' [name=state]').selectmenu("refresh", true);						 							
+				if(location.href.indexOf('#address-page') > -1){
+					$('#address-page [name=country]').selectmenu("refresh", true);						
 				}
 			}
 		}
-		self.getCountry(page, callback_country(page));
-		//self.disable(page, 'state');
-		self.disable(page, 'county');
-		self.disable(page, 'city');
-		self.disable(page, 'index');
-		$('#address-item-' + page + ' [name=street]').val('');
-		$('#address-item-' + page + ' [name=house]').val('');
-		$('#address-item-' + page + ' [name=comment]').val('');
-		$('#address-item-' + page + ' .ui-btn ui-btn-inherit.ui-btn-icon-left.ui-checkbox-on').attr('class', 'ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off');
-		$('#address-item-' + page + ' [name=off_address]').data('cacheval', 'true');
+		self.getCountry(callback_country());
+		//self.disable('state');
+		self.disable('county');
+		self.disable('city');
+		self.disable('index');
+		$('#address-page [name=street]').val('');
+		$('#address-page [name=house]').val('');
+		$('#address-page [name=comment]').val('');
+		$('#address-page .ui-btn ui-btn-inherit.ui-btn-icon-left.ui-checkbox-on').attr('class', 'ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off');
+		$('#address-page [name=off_address]').data('cacheval', 'true');
 	},
-	selectCountry:function(page, idc,cb_){
-		this.disable(page, "county");
-		this.enable(page, "state");
-		this.getState(page, idc,function(res){
-			$("#address-item-" + page + " [name=state]").val('');
+	selectCountry:function(idc,cb_){
+		this.disable("county");
+		this.enable("state");
+		this.getState(idc,function(res){
+			$("#address-page [name=state]").val('');
 			if(cb_)cb_(res);
 		});
 	},
-	selectState:function(page, ids, cb_){
-		this.disable(page, "city");
-		this.enable(page, "county")
-		var idc = $("#address-item-" + page + " [name=country]").val();
+	selectState:function(ids, cb_){
+		this.disable("city");
+		this.enable("county")
+		var idc = $("#address-page [name=country]").val();
 		//alert(idc + ',' + ids);
-		this.getCounty(page, idc,ids,function(res){
-			$("#address-item-" + page + " [name=county]").val('');
+		this.getCounty(idc,ids,function(res){
+			$("#address-page [name=county]").val('');
 			if(cb_)cb_(res);					
 		});
 	},
-	selectCounty:function(page, idr, cb_){
-		this.disable(page, "index");
-		this.enable(page, "city");
-		var idc = $("#address-item-" + page + " [name=country]").val();
-		var ids = $("#address-item-" + page + " [name=state]").val();
+	selectCounty:function(idr, cb_){
+		this.disable("index");
+		this.enable("city");
+		var idc = $("#address-page [name=country]").val();
+		var ids = $("#address-page [name=state]").val();
 
-		this.getCity(page, idc,ids,idr,function(res){
-			$("#address-item-" + page + " [name=city]").val('');
+		this.getCity(idc,ids,idr,function(res){
+			$("#address-page [name=city]").val('');
 			if(cb_)cb_(res);					
 		});
 	},
-	selectCity:function(page, idcity,cb_){
-		this.enable(page, "index");
+	selectCity:function(idcity,cb_){
+		this.enable("index");
 		//console.log(idcity);
-		this.getIndex(page, idcity,function(res){
-			$("#address-item-" + page + " [name=index]").val('');
+		this.getIndex(idcity,function(res){
+			$("#address-page [name=index]").val('');
 			if(cb_)cb_(res);					
 		});
 	},
-	getCountry:function(page, cb){/*cb*/
+	getCountry:function(cb){/*cb*/
 		var self = this;
 		if(self.country){
-			$("#address-item-" + page + " [name=country]").html('');
+			$("#address-page [name=country]").html('');
 				for(var i = 0; i < self.country.length; i++){
 					var c = self.country[i];
 					var option = document.createElement("option");
@@ -850,7 +872,7 @@ var ADRESS = {
 						}
 					}
 
-					$("#address-item-" + page + " [name=country]").append(option);
+					$("#address-page [name=country]").append(option);
 					//console.log(1);
 				}
 				if(cb){
@@ -870,7 +892,7 @@ var ADRESS = {
 					// //console.log(data);
 					self.country = jQuery.parseJSON(data);
 					//console.log(self.country);
-					$("#address-item-" + page + " [name=country]").html('');
+					$("#address-page [name=country]").html('');
 
 					for(var i = 0; i < self.country.length; i++){
 						var c = self.country[i];
@@ -902,7 +924,7 @@ var ADRESS = {
 							}
 						}
 
-						$("#address-item-" + page + " [name=country]").append(option);
+						$("#address-page [name=country]").append(option);
 						//console.log(1);
 					}
 					if(cb){
@@ -912,7 +934,7 @@ var ADRESS = {
 			});
 		}
 	},
-	getState:function(page, idc,cb){
+	getState:function(idc,cb){
 		var self = this;
 		if(self.state){
 			$.ajax({
@@ -926,8 +948,8 @@ var ADRESS = {
 			complete: function(response){
 				var data = response.responseText;
 				self.state = jQuery.parseJSON(data);
-				$("#address-item-" + page + " [name=state]").html('');
-				$("#address-item-" + page + " [name=state]").show();
+				$("#address-page [name=state]").html('');
+				$("#address-page [name=state]").show();
 				for(var i = 0; i < self.state.length; i++){
 					var c = self.state[i];
 					var option = document.createElement("option");
@@ -958,7 +980,7 @@ var ADRESS = {
 						}
 					}
 
-						$("#address-item-" + page + " [name=state]").append(option);
+						$("#address-page [name=state]").append(option);
 					
 					}
 					//lang_activate_el("#address-item-" + page + " [name=state]");
@@ -968,44 +990,6 @@ var ADRESS = {
 				}
 			});
 
-			/*$("#address-item-" + page + " [name=state]").html('');
-				$("#address-item-" + page + " [name=state]").show();
-				for(var i = 0; i < self.state.length; i++){
-					var c = self.state[i];
-					var option = document.createElement("option");
-					$(option).val(c.id);
-					if(CURRENT_LANG){
-						switch(CURRENT_LANG){
-							case 'uk':
-								$(option).html(c.name_uk);
-								break;
-							case 'en':
-								$(option).html(c.name_en);
-								break;
-							case 'ru':
-								$(option).html(c.name_ru);
-								break;
-						}
-					} else {
-						switch(DEFAULT_LANG){
-							case 'uk':
-								$(option).html(c.name_uk);
-								break;
-							case 'en':
-								$(option).html(c.name_en);
-								break;
-							case 'ru':
-								$(option).html(c.name_ru);
-								break;
-						}
-					}
-
-					$("#address-item-" + page + " [name=state]").append(option);
-				}
-				//lang_activate_el("#address-item-" + page + " [name=state]");
-				if(cb){
-					cb(self.state);
-				}*/
 		} else {
 			$.ajax({
 			url: mainURL + "/list_adr_state.php?idc="+idc,
@@ -1018,8 +1002,8 @@ var ADRESS = {
 			complete: function(response){
 				var data = response.responseText;
 				self.state = jQuery.parseJSON(data);
-				$("#address-item-" + page + " [name=state]").html('');
-				$("#address-item-" + page + " [name=state]").show();
+				$("#address-page [name=state]").html('');
+				$("#address-page [name=state]").show();
 				for(var i = 0; i < self.state.length; i++){
 					var c = self.state[i];
 					var option = document.createElement("option");
@@ -1050,7 +1034,7 @@ var ADRESS = {
 						}
 					}
 
-						$("#address-item-" + page + " [name=state]").append(option);
+						$("#address-page [name=state]").append(option);
 					
 					}
 					//lang_activate_el("#address-item-" + page + " [name=state]");
@@ -1061,7 +1045,7 @@ var ADRESS = {
 			});
 		}
 	},
-	getCounty:function(page, idc,ids,cb){
+	getCounty:function(idc,ids,cb){
 		var self = this;
 		$.ajax({
 			url: mainURL + "/list_adr_county.php?idc="+idc+"&ids="+ids,
@@ -1074,8 +1058,8 @@ var ADRESS = {
 				var data = response.responseText;
 			 // //console.log(data);
 				self.county = jQuery.parseJSON(data);
-				$("#address-item-" + page + " [name=county]").html('');
-				$("#address-item-" + page + " [name=county]").show();
+				$("#address-page [name=county]").html('');
+				$("#address-page [name=county]").show();
 				for(var i = 0; i < self.county.length; i++){
 					var c = self.county[i];
 					var option = document.createElement("option");
@@ -1106,7 +1090,7 @@ var ADRESS = {
 						}
 					}
 
-					$("#address-item-" + page + " [name=county]").append(option);
+					$("#address-page [name=county]").append(option);
 					
 				}
 				//lang_activate_el("#address-item-" + page + " [name=county]");
@@ -1116,7 +1100,7 @@ var ADRESS = {
 			}
 		})
 	},
-	getCity:function(page, idc,ids,idr,cb){
+	getCity:function(idc,ids,idr,cb){
 		var self = this;
 		$.ajax({
 			url: mainURL + "/list_adr_city.php?idc="+idc+"&ids="+ids+"&idr="+idr,
@@ -1128,8 +1112,8 @@ var ADRESS = {
 			complete: function(response){
 				var data = response.responseText;
 				self.city = jQuery.parseJSON(data);
-				$("#address-item-" + page + " [name=city]").html('');
-				$("#address-item-" + page + " [name=city]").show();
+				$("#address-page [name=city]").html('');
+				$("#address-page [name=city]").show();
 				for(var i = 0; i < self.city.length; i++){
 					var c = self.city[i];
 					var option = document.createElement("option");
@@ -1160,7 +1144,7 @@ var ADRESS = {
 						}
 					}
 
-					$("#address-item-" + page + " [name=city]").append(option);
+					$("#address-page [name=city]").append(option);
 					
 				}
 				//lang_activate_el("#address-item-" + page + " [name=city]");
@@ -1170,7 +1154,7 @@ var ADRESS = {
 			}
 		})
 	},
-	getIndex:function(page, idcity,cb){
+	getIndex:function(idcity,cb){
 		var self = this;
 		$.ajax({
 			url: mainURL + "/list_adr_zip.php?id="+idcity,
@@ -1183,15 +1167,15 @@ var ADRESS = {
 				var data = response.responseText;
 				//console.log(data);
 				self.indexes = jQuery.parseJSON(data);
-				$("#address-item-" + page + " [name=index]").html('');
-				$("#address-item-" + page + " [name=index]").show();
+				$("#address-page [name=index]").html('');
+				$("#address-page [name=index]").show();
 				for(var i = 0; i < self.indexes.length; i++){
 					var c = self.indexes[i];
 					var option = document.createElement("option");
 					$(option).val(c.id);
 					$(option).html(c.zip);
 
-					$("#address-item-" + page + " [name=index]").append(option);
+					$("#address-page [name=index]").append(option);
 				}
 				if(cb){
 					cb(self.indexes);
@@ -1199,102 +1183,17 @@ var ADRESS = {
 			}
 		})
 	},
-	enable:function(page, name,choose){
-	var self = this;				
-		$('#address-item-' + page + ' [name="'+name+'"]').attr("disabled",false);
-		if(!choose)$('#address-item-' + page + ' [name="'+name+'"]').parent().find("span").html(LOCALE_ARRAY_ADDITIONAL.choose[CURRENT_LANG] + self.set_locale_names( name ));
-	},
-	getCurrent:function(not_refresh, callback_redirect, page){
+	enable:function(name,choose){
 		var self = this;
-		var lang_address = CURRENT_LANG;
-		if(self.address_arr.length > 0 && location.href.indexOf('#address-item') > -1){
-			if(page && self.address_arr[page-1]){
-				self.set_one_address(page, not_refresh, callback_redirect);						
-			}else{
-				if(page){
-					self.clear_address_info(page);
-				}
-			}
-			if(location.href.indexOf('#edit-address') > -1){
-				for (var i = 1; i < 4; i++) {
-					if(self.address_arr[i-1]){
-						$('#edit-address [href=#address-item-' + i + ']').html(self.address_arr[i-1]['str'] + ' ' +
-																			 self.address_arr[i-1]['bld'] + ', ' + 
-																			 self.address_arr[i-1]['city_' + lang_address]);
-					}else{
-						$('#edit-address [href=#address-item-' + i + ']').html(LOCALE_ARRAY_ADDITIONAL.address[CURRENT_LANG] + i);	
-					}
-				}
-				if(i < 3){
-					for (var j = i; j < 4; j++) {
-						$('#edit-address [href=#address-item-' + j + ']').html(LOCALE_ARRAY_ADDITIONAL.address[CURRENT_LANG] + j);		
-					}
-				}
-			}
-		} else {
-			$.ajax({
-				url: mainURL + "/user_address.php",
-				type:"GET",
-				crossDomain: true,
-				xhrFields: {
-					withCredentials: true
-				},
-				complete: function(response){
-					var data = response.responseText;
-					var address_arr = jQuery.parseJSON(data);
-					for(var i in address_arr){
-						var address = address_arr[i];
-						var en = address.str+" "+address.bld+", "+address.city_en;
-						var ru = address.str+" "+address.bld+", "+address.city_ru;
-						var uk = address.str+" "+address.bld+", "+address.city_uk;
-						$(".address-item a.js-address:eq("+i+")")
-							.data("en",en)
-							.data("ru",ru)
-							.data("uk",uk);
-
-						$(".address-item a.js-sphere:eq("+i+")")
-							.data("en","Choose sphere for "+en)
-							.data("ru","Выберите сферы для "+ru)
-							.data("uk","Виберіть галузі для "+uk);
-					}
-
-					self.address_arr = address_arr;
-					var lang_address = CURRENT_LANG;
-					if(page && self.address_arr[page-1]){
-						self.set_one_address(page, not_refresh, callback_redirect);						
-					} else {
-						if(page){
-							self.clear_address_info(page);
-						}
-					}				
-					if(location.href.indexOf('#edit-address') > -1){
-						$('#edit-address [href=#address-item-' + 1 + ']').html(LOCALE_ARRAY_ADDITIONAL.address[CURRENT_LANG] + 1);	
-						for (var i = 1; i < 4; i++) {
-							if(self.address_arr[i-1]){
-								$('#edit-address [href=#address-item-' + i + ']').html(self.address_arr[i-1]['str'] + ' ' +
-																					 self.address_arr[i-1]['bld'] + ', ' + 
-																					 self.address_arr[i-1]['city_' + lang_address]);
-							} else {
-								$('#edit-address [href=#address-item-' + i + ']').html(LOCALE_ARRAY_ADDITIONAL.address[CURRENT_LANG] + i);
-							}
-						}
-						if(i < 3){
-							for (var j = i; j < 4; j++) {
-								$('#edit-address [href=#address-item-' + j + ']').html(LOCALE_ARRAY_ADDITIONAL.address[CURRENT_LANG] + j);
-							}
-						}
-					}
-				}
-			});
-		}
+		$('#address-page [name="'+name+'"]').attr("disabled",false);
+		if(!choose)$('#address-page [name="'+name+'"]').parent().find("span").html(LOCALE_ARRAY_ADDITIONAL.choose[CURRENT_LANG] + self.set_locale_names( name ));
 	},
-	set_one_address: function(page, not_refresh, callback_redirect){
-		var self = this;				
-		var z = page;
-		var one_address = self.address_arr[page-1];
-		$('#address-item-' + z + ' #delete_address').attr('style', 'display: block');
+	set_one_address: function(not_refresh, callback_redirect){
+		var self = this;
+		var one_address = PROFILE.adr[PROFILE.ind-1];
+		$('#address-page #delete_address').attr('style', 'display: block');
 
-		function callback_country(z){
+		function callback_country(){
 			return function(){
 				 function callback_state(){
 				 	return function(){
@@ -1302,62 +1201,63 @@ var ADRESS = {
 				 			return function(){
 				 				function callback_city(){
 				 					return function(){
-				 						$('#address-item-' + z + ' [name=city] option[value=' + one_address['city_id'] + ']').attr('selected', 'selected');
-				 						$('#address-item-' + z + ' [name=index] option[value=' + one_address['zip'] + ']').attr('selected', 'selected');
-				 						$('#address-item-' + z + ' [name=street]').val(one_address['str']);
-										$('#address-item-' + z + ' [name=house]').val(one_address['bld']);
-										$('#address-item-' + z + ' [name=comment]').val(one_address['oth']);
-										//Корректировка работы в firefox
-										if($('#address-item-' + z + ' [name=county] option').length == 1){
-											$('#address-item-' + z + ' [name=county]').val( $('#address-item-' + z + ' [name=county] option[selected="selected"]').val() );
-											$('#address-item-' + z + ' [name=county]').parent().children('span').html( $('#address-item-' + z + ' [name=county] option[selected="selected"]').html() );
-										}//правильно отображение области
-										if($('#address-item-' + z + ' [name=city] option').length == 1){
-											$('#address-item-' + z + ' [name=city]').val( $('#address-item-' + z + ' [name=city] option[selected="selected"]').val() );
-											$('#address-item-' + z + ' [name=city]').parent().children('span').html( $('#address-item-' + z + ' [name=city] option[selected="selected"]').html() );
-										}//правильно отображение города
-											$('#address-item-' + z + ' [name=index]').val( $('#address-item-' + z + ' [name=index] option[selected="selected"]').val() );
-											$('#address-item-' + z + ' [name=index]').parent().children('span').html( $('#address-item-' + z + ' [name=index] option[selected="selected"]').html() );
-										//правильно отображение индекса
-										if(location.href.indexOf('#address-item-' + z) > -1){
-											$('#address-item-' + z + ' [name=country]').selectmenu("refresh", true);
-											$('#address-item-' + z + ' [name=state]').selectmenu("refresh", true);
-											$('#address-item-' + z + ' [name=county]').selectmenu("refresh", true);
-											$('#address-item-' + z + ' [name=city]').selectmenu("refresh", true);
-											$('#address-item-' + z + ' [name=index]').selectmenu("refresh", true);
-											//alert($('#address-item-' + z + ' [name=index]').val());
+				 						$('#address-page [name=city] option[value=' + one_address['city_id'] + ']').attr('selected', 'selected');
+				 						$('#address-page [name=index] option[value=' + one_address['zip'] + ']').attr('selected', 'selected');
+				 						$('#address-page [name=street]').val(one_address['str']);
+										$('#address-page [name=house]').val(one_address['bld']);
+										$('#address-page [name=comment]').val(one_address['oth']);
+										//firefox correctoin
+										if($('#address-page [name=county] option').length == 1){
+											$('#address-page [name=county]').val( $('#address-page [name=county] option[selected="selected"]').val() );
+											$('#address-page [name=county]').parent().children('span').html( $('#address-page [name=county] option[selected="selected"]').html() );
+										}//county
+										if($('#address-page [name=city] option').length == 1){
+											$('#address-page [name=city]').val( $('#address-page [name=city] option[selected="selected"]').val() );
+											$('#address-page [name=city]').parent().children('span').html( $('#address-page [name=city] option[selected="selected"]').html() );
+										}//city
+											$('#address-page [name=index]').val( $('#address-page [name=index] option[selected="selected"]').val() );
+											$('#address-page [name=index]').parent().children('span').html( $('#address-page [name=index] option[selected="selected"]').html() );
+										//index
+										if(location.href.indexOf('#address-page') > -1){
+											$('#address-page [name=country]').selectmenu("refresh", true);
+											$('#address-page [name=state]').selectmenu("refresh", true);
+											$('#address-page [name=county]').selectmenu("refresh", true);
+											$('#address-page [name=city]').selectmenu("refresh", true);
+											$('#address-page [name=index]').selectmenu("refresh", true);
+											//alert($('#address-page [name=index]').val());
 										}
 				 					}
 				 				}
-				 				$('#address-item-' + z + ' [name=county] option[value=' + one_address['county_id'] + ']').attr('selected', 'selected');
-				 				self.selectCity(z, one_address['city_id'], callback_city());
+				 				$('#address-page [name=county] option[value=' + one_address['county_id'] + ']').attr('selected', 'selected');
+				 				self.selectCity(one_address['city_id'], callback_city());
 				 			}
 				 		}
-					$('#address-item-' + z + ' [name=state] option[value=' + one_address['state_id'] + ']').attr('selected', 'selected');
-					self.selectCounty(z, one_address['county_id'], callback_county());
+					$('#address-page [name=state] option[value=' + one_address['state_id'] + ']').attr('selected', 'selected');
+					self.selectCounty(one_address['county_id'], callback_county());
 					//alert(one_address['county_en']);									
 				 	}									
 				//alert(county_id);
 				}
 
-				$('#address-item-' + z + ' [name=country] option[value=' + one_address['country_id'] + ']').attr('selected', 'selected');
-		 		self.selectState(z, one_address['state_id'], callback_state());
+				$('#address-page [name=country] option[value=' + one_address['country_id'] + ']').attr('selected', 'selected');
+		 		self.selectState(one_address['state_id'], callback_state());
 			}
 		}
 		if(!not_refresh){
-			self.selectCountry(z, one_address['country_id'], callback_country(z));
+			self.selectCountry(one_address['country_id'], callback_country());
 		}				
-			//$('#address-item-' + z + ' [name=street]').val(one_address['str']);
-			//$('#address-item-' + z + ' [name=house]').val(one_address['bld']);
+			//$('#address-page [name=street]').val(one_address['str']);
+			//$('#address-page [name=house]').val(one_address['bld']);
 		if(callback_redirect){
 			callback_redirect();
 		}
 	},
-	setOption:function(page, name,id){
-		$("#address-item-" + page + " [name="+name+"]").val(id).attr('selected', true).siblings('option').removeAttr('selected');
-		$("#address-item-" + page + " [name="+name+"]").selectmenu("refresh", true);
+	setOption:function(name,id){
+		$("#address-page [name="+name+"]").val(id).attr('selected', true).siblings('option').removeAttr('selected');
+		$("#address-page [name="+name+"]").selectmenu("refresh", true);
 	},
 	setDefault:function(){
+		// is it right or must be deleted?
 		for(var i = 1; i <= 3; i++){
 			$(".address-item a.js-address:eq("+ (i-1) +")")
 						.data("en","Address "+i)
@@ -1370,35 +1270,35 @@ var ADRESS = {
 		}
 		//lang_activate_el($("#edit-address"));
 	},
-	disable:function(page, name){
+	disable:function(name){
 		if(name == "state"){
-			$('#address-item-' + page + ' [name="state"]').parent().find("span").html(LOCALE_ARRAY_ADDITIONAL.set[CURRENT_LANG] + ' ' + LOCALE_ARRAY_ADDITIONAL.country[CURRENT_LANG]);
-			$('#address-item-' + page + ' [name="state"]').html("<option disabled>" + LOCALE_ARRAY_ADDITIONAL.set[CURRENT_LANG] + " " + LOCALE_ARRAY_ADDITIONAL.country[CURRENT_LANG] + "</option>");
-			$('#address-item-' + page + ' [name="state"]').attr("disabled","disabled");
-			$('#address-item-' + page + ' [name="state"]').val("");
+			$('#address-page [name="state"]').parent().find("span").html(LOCALE_ARRAY_ADDITIONAL.set[CURRENT_LANG] + ' ' + LOCALE_ARRAY_ADDITIONAL.country[CURRENT_LANG]);
+			$('#address-page [name="state"]').html("<option disabled>" + LOCALE_ARRAY_ADDITIONAL.set[CURRENT_LANG] + " " + LOCALE_ARRAY_ADDITIONAL.country[CURRENT_LANG] + "</option>");
+			$('#address-page [name="state"]').attr("disabled","disabled");
+			$('#address-page [name="state"]').val("");
 
 			name = "county";
 		}
 		if(name == "county"){
-			$('#address-item-' + page + ' [name="county"]').parent().find("span").html(LOCALE_ARRAY_ADDITIONAL.set[CURRENT_LANG] + ' ' + LOCALE_ARRAY_ADDITIONAL.state[CURRENT_LANG]);
-			$('#address-item-' + page + ' [name="county"]').html("<option disabled>" + LOCALE_ARRAY_ADDITIONAL.set[CURRENT_LANG] + " " + LOCALE_ARRAY_ADDITIONAL.state[CURRENT_LANG] + "</option>");
-			$('#address-item-' + page + ' [name="county"]').attr("disabled","disabled");
-			$('#address-item-' + page + ' [name="county"]').val("");
+			$('#address-page [name="county"]').parent().find("span").html(LOCALE_ARRAY_ADDITIONAL.set[CURRENT_LANG] + ' ' + LOCALE_ARRAY_ADDITIONAL.state[CURRENT_LANG]);
+			$('#address-page [name="county"]').html("<option disabled>" + LOCALE_ARRAY_ADDITIONAL.set[CURRENT_LANG] + " " + LOCALE_ARRAY_ADDITIONAL.state[CURRENT_LANG] + "</option>");
+			$('#address-page [name="county"]').attr("disabled","disabled");
+			$('#address-page [name="county"]').val("");
 
 			name = "city";
 		}
 		if(name == "city"){
-			$('#address-item-' + page + ' [name="city"]').parent().find("span").html(LOCALE_ARRAY_ADDITIONAL.set[CURRENT_LANG] + ' ' + LOCALE_ARRAY_ADDITIONAL.county[CURRENT_LANG]);
-			$('#address-item-' + page + ' [name="city"]').html("<option disabled>" + LOCALE_ARRAY_ADDITIONAL.set[CURRENT_LANG] + " " + LOCALE_ARRAY_ADDITIONAL.county[CURRENT_LANG] + "</option>");
-			$('#address-item-' + page + ' [name="city"]').attr("disabled","disabled");
-			$('#address-item-' + page + ' [name="city"]').val("");
+			$('#address-page [name="city"]').parent().find("span").html(LOCALE_ARRAY_ADDITIONAL.set[CURRENT_LANG] + ' ' + LOCALE_ARRAY_ADDITIONAL.county[CURRENT_LANG]);
+			$('#address-page [name="city"]').html("<option disabled>" + LOCALE_ARRAY_ADDITIONAL.set[CURRENT_LANG] + " " + LOCALE_ARRAY_ADDITIONAL.county[CURRENT_LANG] + "</option>");
+			$('#address-page [name="city"]').attr("disabled","disabled");
+			$('#address-page [name="city"]').val("");
 			name = "index";
 		}
 		if(name == "index"){
-			$('#address-item-' + page + ' [name="index"]').parent().find("span").html(LOCALE_ARRAY_ADDITIONAL.set[CURRENT_LANG] + ' ' + LOCALE_ARRAY_ADDITIONAL.city[CURRENT_LANG]);
-			$('#address-item-' + page + ' [name="index"]').html("<option disabled>" + LOCALE_ARRAY_ADDITIONAL.set[CURRENT_LANG] + " " + LOCALE_ARRAY_ADDITIONAL.city[CURRENT_LANG] + "</option>");
-			$('#address-item-' + page + ' [name="index"]').attr("disabled","disabled");
-			$('#address-item-' + page + ' [name="index"]').val("");
+			$('#address-page [name="index"]').parent().find("span").html(LOCALE_ARRAY_ADDITIONAL.set[CURRENT_LANG] + ' ' + LOCALE_ARRAY_ADDITIONAL.city[CURRENT_LANG]);
+			$('#address-page [name="index"]').html("<option disabled>" + LOCALE_ARRAY_ADDITIONAL.set[CURRENT_LANG] + " " + LOCALE_ARRAY_ADDITIONAL.city[CURRENT_LANG] + "</option>");
+			$('#address-page [name="index"]').attr("disabled","disabled");
+			$('#address-page [name="index"]').val("");
 		}
 	},
 	set_locale_names: function( name ){
@@ -1420,4 +1320,127 @@ var ADRESS = {
 				break;
 		}
 	}
-};
+}
+
+var GoogleMapsAdress = {
+	geocoder: new google.maps.Geocoder(),
+	marker: false,
+	map: false,
+	lt_value: false,
+	ln_value: false,
+	geocodePosition: function(pos) {
+		var self = this;
+	  self.geocoder.geocode({
+		latLng: pos
+	  }, function(responses) {
+		if (responses && responses.length > 0) {
+		    self.updateMarkerAddress(responses[0].formatted_address);
+		    jQuery.each(LOCALE_ARRAY, function(i, one_element) {
+				if($(one_element['selector'])){
+					if(one_element['value']){
+						$(one_element['selector']).attr(one_element['value'], one_element[CURRENT_LANG]);
+					}else{
+						$(one_element['selector']).html(one_element[CURRENT_LANG]);
+					}
+						
+				}
+			});
+		    //console.log(responses);
+		} else {
+		  self.updateMarkerAddress('Cannot determine address at this location.');
+		}
+	  });
+	},
+	updateMarkerStatus: function(str) {
+		var self = this;
+	},
+	updateMarkerPosition: function(latLng) {
+		var self = this;
+	},
+	setCheckBoxes: function(latLng){
+		var self = this;
+		self.lt_value = latLng.lat();
+	    self.ln_value = latLng.lng();
+		var geocoder = new google.maps.Geocoder();
+		var latLng = new google.maps.LatLng(latLng.lat(), latLng.lng());
+		if(location.href.indexOf('#address-page') > -1){
+
+			if(geocoder){
+				geocoder.geocode({'latLng': latLng,'language': 'en'},function(results, status) {
+				if (status == google.maps.GeocoderStatus.OK) {
+					 var address = results[0].address_components;
+					 var country = ADRESS.getGPSByType(address,"country");
+					 var state = ADRESS.getGPSByType(address,"administrative_area_level_1");
+					 var county = ADRESS.getGPSByType(address,"administrative_area_level_3");
+					 var city = ADRESS.getGPSByType(address,"locality");
+					 //console.log('build: ' + results[0].address_components[0].long_name);
+					 var street = ADRESS.getGPSByType(address,"route");
+					 var build = ADRESS.getGPSByType(address,"street_number");
+					 ADRESS.gpsSet(country,state,county,city,street,build, latLng.lat(), latLng.lng());
+				} else {
+					console.log(LOCALE_ARRAY_ADDITIONAL.gps_not_activated[CURRENT_LANG]);
+				}
+				});
+			}
+		}
+	},
+	updateMarkerAddress: function(str) {
+		var self = this;
+	},
+	moveMarker: function(height, length){
+		var self = this;
+		self.lat = height;
+		self.lng = length;
+		self.marker.setPosition( new google.maps.LatLng( height, length ) );
+		self.map.panTo( new google.maps.LatLng( height, length ) );
+		self.map.setOptions({ zoom: 18 });
+	},
+	initialize: function() {
+		var self = this;
+		var l_title = 'Point A';
+		var l_zoom = 8;
+		self.lat = 50.447753;
+		self.lng = 30.5229279;
+		if(PROFILE.ida > 0){
+			var l_i = PROFILE.ind - 1;
+			self.lat = PROFILE.adr[l_i].lat;
+			self.lng = PROFILE.adr[l_i].lng;
+			l_zoom = 18;
+		}
+
+		var latLng = new google.maps.LatLng(self.lat, self.lng);
+
+		self.map = new google.maps.Map(document.getElementById('mapCanvas_1'), {
+			zoom: l_zoom,
+			center: latLng,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		});
+
+		self.marker = new google.maps.Marker({
+			position: latLng,
+			title: l_title,
+			map: self.map,
+			draggable: true
+		});
+	  
+		// Update current position info.
+		self.updateMarkerPosition(latLng);
+		self.geocodePosition(latLng);
+	
+		// Add dragging event listeners.
+		google.maps.event.addListener(self.marker, 'dragstart', function() {
+			self.updateMarkerAddress('Dragging...');
+		});
+	  
+		google.maps.event.addListener(self.marker, 'drag', function() {
+			self.updateMarkerStatus('Dragging...');
+			self.updateMarkerPosition(self.marker.getPosition());
+		});
+	  
+		google.maps.event.addListener(self.marker, 'dragend', function() {
+			self.updateMarkerStatus('Drag ended');
+			self.geocodePosition(self.marker.getPosition());
+			self.setCheckBoxes(self.marker.getPosition());
+		});
+	}
+}

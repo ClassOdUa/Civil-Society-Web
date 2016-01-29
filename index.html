@@ -29,13 +29,14 @@
 		<script src="./vendor/jquerymobile-swipeupdown.js?t=1"></script>
 		<script src="./vendor/jquery-te-1.4.0/jquery-te-1.4.0.min.js?t=1"></script>
 		<script src="./vendor/Chart.min.js?t=1"></script>
-		<script src="./javascripts/locale.js?t=1"></script>
+		<script src="./javascripts/locale.js"></script>
 		<script src="./javascripts/app.js?t=1"></script>
 		<script src="./javascripts/jquery.form.min.js?t=1"></script>
 		<script src="./javascripts/purl.js?t=1"></script>
+		<script src="./javascripts/m_variables.js"></script>
+
 		<script src="./leaflet/leaflet.js"></script>
 
-		<script src="./javascripts/m_variables.js"></script>
 		<script src="./javascripts/m_profile.js"></script>
 		<script src="./javascripts/m_news.js"></script>
 		<script src="./javascripts/m_groups.js"></script>
@@ -50,48 +51,35 @@
 		<script src="./javascripts/m_weighted_votings.js"></script>
 		<script src="./javascripts/m_tasks.js"></script>
 		<script src="./javascripts/m_trust_list.js"></script>
-
+		<script src="./javascripts/m_right_side.js"></script>
 
 		<script src="./javascripts/v4.js"></script>
 
 	</head>
 <body>
 
-<style>
-  .mapCanvas {
-	width: 100%;
-	height: 400px;
-  }
-  .infoPanel {
-	margin-left: 10px;
-  }
-  .infoPanel div {
-	margin-bottom: 5px;
-  }
-</style>
-
 <div id="main-page" data-role="page">
 	<div data-role="header" data-position="fixed" data-tap-toggle="false">
 		<h1>Log in</h1>
 		<a class="ui-btn ui-btn-left ui-icon-bars ui-btn-icon-notext" href="#left-panel">Menu</a>
-		<div id="lang">
-			<label data-en="Language" data-ru="Язык" data-uk="Мова">Language</label><select id="select-lang">
-				<option value="en">
-					English
-				</option>
-				<option value="ru">
-					Русский
-				</option>
-				<option value="uk">
-					Українська
-				</option>
-			</select>
-		</div>
 	</div>
 	<div role="main" class="ui-content">
 		<div class="left_col">
 			<div id="logo">
 				<img src="./images/logo.png" />
+			</div>
+			<div id="lang">
+				<select id="select-lang">
+					<option value="en">
+						English
+					</option>
+					<option value="ru">
+						Русский
+					</option>
+					<option value="uk">
+						Українська
+					</option>
+				</select>
 			</div>
 			<div class="name">
 				<h1>
@@ -115,42 +103,23 @@
 					<label><input type="checkbox" name="remember" value="1" />Remember me</label>
 				</div>
 				<div class="btn-login">
-					<button type="submit" class="ui-btn ui-corner-all ui-shadow">LOG IN</button>
+					<button type="submit" class="ui-btn ui-corner-all ">LOG IN</button>
 				</div>
 			</form>
 			<div class="center">
 				<a class="ui-btn ui-btn-inline ui-corner-all ui-btn-reg" href="#registration">Registration</a><a class="ui-btn ui-btn-inline ui-corner-all ui-btn-pass" href="#forgot-password">Forgot password?</a>
 			</div>
-			<div class="btn-login-soc">
-				<button class="ui-btn ui-corner-all ui-shadow">LOG IN BY SOCIAL NETWORKS</button>
-				<div class="social-wrap">
-					<div class="title">
-						Sign in by social Networks
-					</div>
-					<div class="ui-grid-b">
-						<div class="ui-block-a">
-							<a class="gp" onclick = "location.href = 'https://gurtom.mobi/sn/gp.php'" href=""></a>
-						</div>
-						<div class="ui-block-b">
-							<a class="fb" onclick = "location.href = 'https://gurtom.mobi/sn/fb.php'" href=""></a>
-						</div>
-						<div class="ui-block-c">
-							<a class="in" onclick = "location.href = 'https://gurtom.mobi/sn/in.php'" href=""></a>
-						</div>
-						<!-- <div class="ui-block-a">
-							<a class="ok" onclick = "location.href = 'https://gurtom.mobi/sn/ok.php'" href=""></a>
-						</div>
-						<div class="ui-block-b">
-							<a class="tw" onclick = "location.href = 'https://gurtom.mobi/sn/tw.php'" href=""></a>
-						</div>
-						<div class="ui-block-c">
-							<a class="vk" onclick = "location.href = 'https://gurtom.mobi/sn/vk.php'" href=""></a>
-						</div> -->
-					</div>
-				</div>
+
+			<div class="centered">
+				<div class="btn-login-soc"></div>
+			</div>
+			<div class="centered">
+				<div class="btn_circle img_gp"></div>
+				<div class="btn_circle img_fb"></div>
+				<div class="btn_circle img_in"></div>
 			</div>
 		</div>
-		<div class="right_col"><div style="position: absolute; width: 55%; height: 80%;" id="map"></div></div>
+		<div class="right_col"><div id="map"></div><div class="right_menu">1<br />2</div></div>
 	</div>
 </div>
 
@@ -349,11 +318,13 @@
 					</div>
 				</div>
 				<div>
-					<input type="submit" value="Register" class="ui-btn ui-btn-corner-all ui-shadow" />
+					<input type="submit" value="Register" class="ui-btn ui-btn-corner-all " />
 				</div>
 			</form>
 		</div>
-		<div class="right_col"></div>
+		<div class="right_col">
+			<a class="ui-btn ui-btn-left ui-icon-bars ui-btn-icon-notext" href="#right-panel">Right_Menu</a>
+		</div>
 	</div>
 </div>
 
@@ -374,15 +345,46 @@
 		<div class="left_col">
 			<form action="" accept-charset="UTF-8" method="post">
 				<div class="text-field">
-					<label>Enter your login to restore access</label>
+					<label>Enter your e-mail to restore access</label>
 					<div class="ui-input-text">
-						<input type="text" name="" placeholder="Username" data-enhanced="true" />
+						<input type="text" name="forgot-password-e-mail" placeholder="e-mail" required title="e-mail minimun 5 characters required!" data-enhanced="true" />
 					</div>
 				</div>
-				<div class="button-fixed">
-					<input type="submit" value="Restore access" class="ui-btn ui-btn-corner-all ui-shadow" />
-				</div>
+				<input type="submit" value="Restore access" class="ui-btn ui-btn-corner-all " />
 			</form>
+		</div>
+		<div class="right_col"></div>
+	</div>
+</div>
+
+<div id="reset-password" data-role="page">
+	<div data-role="header" data-position="fixed" data-tap-toggle="false">
+		<h1>Reset password</h1>
+		<a class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-notext" onclick = "$.mobile.navigate('#')" href="#">Back</a><a data-rel="popup" data-transition="pop" class="ui-btn ui-btn-right ui-icon-help ui-btn-corner-all ui-btn-icon-notext" href="#reset-help">Ask</a>
+		<div id="reset-help" class="help-popup" data-role="popup" data-history="false">
+			<div class="title">
+				Description
+			</div>
+			<div class="text">
+				help text
+			</div>
+		</div>
+	</div>
+	<div role="main" class="ui-content">
+		<div class="left_col">
+			<div class="text-field">
+				<label>New password</label>
+				<div class="ui-input-text">
+					<input type="password" name="new_password1" pattern=".{6,40}" required title="7 to 40 characters" placeholder="New password" data-enhanced="true" />
+				</div>
+			</div>
+			<div class="text-field">
+				<label>Repeat new password</label>
+				<div class="ui-input-text">
+					<input type="password" name="new_password2" pattern=".{6,40}" required title="7 to 40 characters" placeholder="Repeat new password" data-enhanced="true" />
+				</div>
+			</div>
+			<button id="btn_save_new_pass" class="ui-btn ui-corner-all">Save new password</button>
 		</div>
 		<div class="right_col"></div>
 	</div>
@@ -424,7 +426,7 @@
 	<div role="main" class="ui-content">
 		<div class="left_col">
 			<div class="user-info">
-				<div class="avatar" style = "cursor:pointer">
+				<div class="avatar">
 					<img id = "avatar" src="" />
 				</div>
 				<div class="info">
@@ -450,7 +452,7 @@
 				<a class="ui-btn ui-btn-icon-right" href="#edit-address">Address</a>
 			</div>
 			<div class="pass-btn">
-				<a class="ui-btn ui-corner-all ui-shadow" data-rel="popup" data-transition="pop" href="#change-password">Change password here</a>
+				<a class="ui-btn ui-corner-all " data-rel="popup" data-transition="pop" href="#change-password">Change password here</a>
 			</div>
 			<div data-role="popup" id="change-password" data-history="false">
 				<div class="change-password">
@@ -465,7 +467,7 @@
 							<input type="password" name="user_password_repeat" placeholder="Accept password" data-enhanced="true" />
 						</div>
 						<div class="btn-save">
-							<button id = "change_pass_button" class="ui-btn ui-corner-all ui-shadow">Save</button>
+							<button id = "change_pass_button" class="ui-btn ui-corner-all ">Save</button>
 						</div>
 				   </div>
 				</div>
@@ -682,14 +684,17 @@
 					<a class="ui-btn ui-btn-icon-right" href="#address-item-1"></a>
 				</div>
 			</div>
-			<div class="address-item">
-				<div class="btn-next-page">
-					<a class="ui-btn ui-btn-icon-right" href="#address-item-2"></a>
+			<button id="btn_other_adr"></button>
+			<div id="other_adr">
+				<div class="address-item">
+					<div class="btn-next-page">
+						<a class="ui-btn ui-btn-icon-right" href="#address-item-2"></a>
+					</div>
 				</div>
-			</div>
-			<div class="address-item">
-				<div class="btn-next-page">
-					<a class="ui-btn ui-btn-icon-right" href="#address-item-3"></a>
+				<div class="address-item">
+					<div class="btn-next-page">
+						<a class="ui-btn ui-btn-icon-right" href="#address-item-3"></a>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -705,7 +710,7 @@
 	<div role="main" class="ui-content">
 		<div class="left_col">
 			<div class="mapCanvas" id = "mapCanvas_1"></div>
-			<a id = "findgps-1" class="ui-btn ui-corner-all ui-shadow" href="#">Find an address using GPS</a>
+			<a id = "findgps-1" class="ui-btn ui-corner-all " href="#">Find an address using GPS</a>
 			<form accept-charset="UTF-8" onsubmit = 'ADRESS.save_address(1); return false;'>
 				<div>
 					<label class="country">Country</label><select required name="country"></select>
@@ -720,7 +725,7 @@
 					<label class="city">City</label><select required name="city"></select>
 				</div>
 				<div>
-					<label class="post_index">Index</label><select required name="index"></select>
+					<label class="post_index">Index</label><select name="index"></select>
 				</div>
 				<div class="text-field">
 					<label class="street">Street</label>
@@ -745,9 +750,9 @@
 				</div>
 				<div class="gmap"></div>
 
-				<button class="ui-btn ui-corner-all ui-shadow btn-save">Save address</button>
+				<button class="ui-btn ui-corner-all  btn-save">Save address</button>
 			</form>
-			<button id = "delete_address" style = "display:none" class="ui-btn ui-corner-all ui-shadow btn-delete">Delete address</button>
+			<button id = "delete_address" style = "display:none" class="ui-btn ui-corner-all  btn-delete">Delete address</button>
 		</div>
 		<div class="right_col">
 			
@@ -763,7 +768,7 @@
 	<div role="main" class="ui-content">
 		<div class="left_col">
 			<div class="mapCanvas" id = "mapCanvas_2"></div>
-			<a id = "findgps-2" class="ui-btn ui-corner-all ui-shadow" href="#">Find an address using GPS</a>
+			<a id = "findgps-2" class="ui-btn ui-corner-all " href="#">Find an address using GPS</a>
 			<form accept-charset="UTF-8" onsubmit = 'ADRESS.save_address(2); return false;'>
 				<div>
 					<label class="country">Country</label><select required name="country"></select>
@@ -778,7 +783,7 @@
 					<label class="city">City</label><select required name="city"></select>
 				</div>
 				<div>
-					<label class="post_index">Index</label><select required name="index"></select>
+					<label class="post_index">Index</label><select name="index"></select>
 				</div>
 				<div class="text-field">
 					<label class="street">Street</label>
@@ -800,9 +805,9 @@
 				<div class="ui-checkbox">
 					<label class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Address official registration</label><input type="checkbox" name="off_address" value="1" data-enhanced="true" />
 				</div>
-				<button class="ui-btn ui-corner-all ui-shadow btn-save">Save address</button>
+				<button class="ui-btn ui-corner-all  btn-save">Save address</button>
 			</form>
-			<button id = "delete_address" style = "display:none" class="ui-btn ui-corner-all ui-shadow btn-delete">Delete address</button>
+			<button id = "delete_address" style = "display:none" class="ui-btn ui-corner-all  btn-delete">Delete address</button>
 		</div>
 		<div class="right_col">
 			
@@ -818,7 +823,7 @@
 	<div role="main" class="ui-content">
 		<div class="left_col">
 			<div class="mapCanvas" id = "mapCanvas_3"></div>
-				<a id = "findgps-3" class="ui-btn ui-corner-all ui-shadow" href="#">Find an address using GPS</a>
+				<a id = "findgps-3" class="ui-btn ui-corner-all " href="#">Find an address using GPS</a>
 			<form accept-charset="UTF-8" onsubmit = 'ADRESS.save_address(3); return false;'>
 				<div>
 					<label class="country">Country</label><select required name="country"></select>
@@ -831,7 +836,7 @@
 				</div>
 					<label class="city">City</label><select required name="city"></select>
 				<div>
-					<label class="post_index">Index</label><select required name="index"></select>
+					<label class="post_index">Index</label><select name="index"></select>
 				</div>
 				<div class="text-field">
 					<label class="street">Street</label>
@@ -853,9 +858,9 @@
 				<div class="ui-checkbox">
 					<label class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Address official registration</label><input type="checkbox" name="off_address" value="1" data-enhanced="true" />
 				</div>
-				<button class="ui-btn ui-corner-all ui-shadow btn-save">Save address</button>
+				<button class="ui-btn ui-corner-all  btn-save">Save address</button>
 			</form>
-			<button id = "delete_address" style = "display:none" class="ui-btn ui-corner-all ui-shadow btn-delete">Delete address</button>
+			<button id = "delete_address" style = "display:none" class="ui-btn ui-corner-all  btn-delete">Delete address</button>
 		</div>
 		<div class="right_col">
 			
@@ -884,7 +889,7 @@
 				<fieldset id = "sphere_form">
 				</fieldset>
 				<div class="btn-save">
-					<input type="submit" value="Save" class="ui-btn ui-btn-corner-all ui-shadow" />
+					<input type="submit" value="Save" class="ui-btn ui-btn-corner-all " />
 				</div>
 			</form>
 		</div>
@@ -927,7 +932,7 @@
 				<fieldset id = "sphere_form">
 				</fieldset>
 				<div class="btn-save">
-					<input type="submit" value="Save" class="ui-btn ui-btn-corner-all ui-shadow" />
+					<input type="submit" value="Save" class="ui-btn ui-btn-corner-all " />
 				</div>
 			</form>
 		</div>
@@ -993,8 +998,8 @@
 	</div>
 	<div role="main" class="ui-content">
 		<div class="left_col">
-			<a id = "filter_slider"  class="ui-btn ui-corner-all ui-shadow" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>
-			<a id = "create_link" class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate('#create-item?program=true')" href="#">Create program</a>
+			<a id = "filter_slider"  class="ui-btn ui-corner-all " data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>
+			<a id = "create_link" class="ui-btn ui-corner-all " onclick = "$.mobile.navigate('#create-item?program=true')" href="#">Create program</a>
 			<div id = "programs-list" class="programs-list"></div>
 		</div>
 		<div class="right_col"></div>
@@ -1126,9 +1131,9 @@
 	</div>
 	<div role="main" class="ui-content">
 		<div class="left_col">
-			<a id = "filter_slider" class="ui-btn ui-corner-all ui-shadow" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>
-			<a id = "create_link" class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate('#create-item?project=true')" href="#">Create project</a>
-			<a style = "display:none" id = "create_proposition_link" class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate('#')" href="#">
+			<a id = "filter_slider" class="ui-btn ui-corner-all " data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>
+			<a id = "create_link" class="ui-btn ui-corner-all " onclick = "$.mobile.navigate('#create-item?project=true')" href="#">Create project</a>
+			<a style = "display:none" id = "create_proposition_link" class="ui-btn ui-corner-all " onclick = "$.mobile.navigate('#')" href="#">
         Create project proposion</a>
 			<div id = "projects-list" class="projects-list"></div>
 		</div>
@@ -1208,8 +1213,8 @@
 	</div>
 	<div role="main" class="ui-content">
 		<div class="left_col">
-			<a id = "filter_slider" class="ui-btn ui-corner-all ui-shadow" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>
-			<a id = "create_proposition_link" class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate('#')" href="#">Create project proposion</a>
+			<a id = "filter_slider" class="ui-btn ui-corner-all " data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>
+			<a id = "create_proposition_link" class="ui-btn ui-corner-all " onclick = "$.mobile.navigate('#')" href="#">Create project proposion</a>
 			<div id = "pp-list" class="pp-list"></div>
 		</div>
 		<div class="right_col"></div>
@@ -1264,10 +1269,10 @@
 							</div>\
 						</div>\
 						<div class="discuss-btn">\
-							<a class="ui-btn ui-corner-all ui-shadow" onclick="window.open(\'' + data_for_build.project_discussion_link + '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_project_proposition[CURRENT_LANG] + '</a>\
+							<a class="ui-btn ui-corner-all " onclick="window.open(\'' + data_for_build.project_discussion_link + '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_project_proposition[CURRENT_LANG] + '</a>\
 						</div>\
 						<div class="btn-login-soc">\
-							<button class="ui-btn ui-corner-all ui-shadow share-btn">' + LOCALE_ARRAY_ADDITIONAL.share_by_social_newtworks[CURRENT_LANG] + '</button>\
+							<button class="ui-btn ui-corner-all  share-btn">' + LOCALE_ARRAY_ADDITIONAL.share_by_social_newtworks[CURRENT_LANG] + '</button>\
 							<div class="social-wrap">\
 								<div class="ui-grid-b">\
 									<div class="ui-block-a">\
@@ -1292,7 +1297,7 @@
 							</div>\
 						</div>\
 						<div class="sms-btn">\
-							<a class="ui-btn ui-corner-all ui-shadow" href="#">SMS</a>\
+							<a class="ui-btn ui-corner-all " href="#">SMS</a>\
 						</div>\
 						<hr>\
 						<div class="donate-wrap">\
@@ -1457,8 +1462,8 @@
 	</div>
 	<div role="main" class="ui-content">
 		<div class="left_col">
-			<a id = "filter_slider" class="filter_slider_btn ui-btn ui-corner-all ui-shadow" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>
-			<a id = "create_link" class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate('#create-item?request=true')" href="#">Create request</a>
+			<a id = "filter_slider" class="filter_slider_btn ui-btn ui-corner-all " data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>
+			<a id = "create_link" class="ui-btn ui-corner-all " onclick = "$.mobile.navigate('#create-item?request=true')" href="#">Create request</a>
 			<div id = "requests-list" class="requests-list">
 			</div>
 		</div>
@@ -1572,8 +1577,8 @@
 	</div>
 	<div role="main" class="ui-content">
 		<div class="left_col">
-			<a  id = "filter_slider" class="ui-btn ui-corner-all ui-shadow" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>
-			<a style = "display:none" id = "create_voting_link" class="ui-btn ui-corner-all ui-shadow" onclick = "$.mobile.navigate('#')" href="#">
+			<a  id = "filter_slider" class="ui-btn ui-corner-all " data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>
+			<a style = "display:none" id = "create_voting_link" class="ui-btn ui-corner-all " onclick = "$.mobile.navigate('#')" href="#">
 			Create weighted voting</a>
 			<div class="votings-list" id = 'votings_list'></div>
 		</div>
@@ -1622,12 +1627,12 @@
 						</select>
 					</div>
 					<div class="btn-create">
-						<input type="submit" onclick = "funds.create_fund($('#choose_currency_div select').val());" value="Создать" class="ui-btn ui-btn-corner-all ui-shadow" />
+						<input type="submit" onclick = "funds.create_fund($('#choose_currency_div select').val());" value="Создать" class="ui-btn ui-btn-corner-all " />
 					</div>
 				</form>
 			</div>
 			<div class="btn-trans">
-				<button onclick = "$.mobile.navigate('#transaction-page')" class="ui-btn ui-corner-all ui-shadow btn-save">Перевод средств</button>
+				<button onclick = "$.mobile.navigate('#transaction-page')" class="ui-btn ui-corner-all  btn-save">Перевод средств</button>
 			</div>
 		</div>
 	</div>
@@ -1667,7 +1672,7 @@
 					</div>
 				</div>
 				<div class="btn-create">
-					<input id = "transaction-label" onclick = "funds.set_cash()" type="submit" value="Перевести" class="ui-btn ui-btn-corner-all ui-shadow" />
+					<input id = "transaction-label" onclick = "funds.set_cash()" type="submit" value="Перевести" class="ui-btn ui-btn-corner-all " />
 				</div>
 			</form>
 		</div>
@@ -1934,6 +1939,14 @@
 	</div>
 </div>
 
+<div id="loading" data-role="page">
+	<div data-role="header" data-position="fixed" data-tap-toggle="false">
+		<h1>Loading</h1>
+	</div>
+	<div role="main" class="ui-content">
+	</div>
+</div>
+
 <div id="test" data-role="page">
 	<div data-role="header" data-position="fixed" data-tap-toggle="false">
 		<h1>TEST</h1>
@@ -1948,7 +1961,6 @@
 		</div>
 	</div>
 	<div role="main" class="ui-content">
-	
 		<div class="sph_selector">
 			<div class="sph_selector_type" data-role="collapsible">
 				<h3>TYPE 1</h3>
@@ -1998,7 +2010,6 @@
 				</div>
 			</div>
 		</div>
-
 	</div>
 </div>
 
@@ -2068,7 +2079,7 @@
 				<input id = "search_group" class = "search_string" type="search" name="" placeholder="Search.." data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">Clear text</a><input type="button" value="speech" data-icon="speech" data-iconpos="notext" />
 			</div>
 
-			<a id="btn_group_create" class="ui-btn ui-corner-all ui-shadow" href="#create-org">Create group/org</a>
+			<a id="btn_group_create" class="ui-btn ui-corner-all " href="#create-org">Create group/org</a>
 
 			<div class="news-list" id = 'org_list'></div>
 		</div>
@@ -2094,13 +2105,13 @@
 
 			<div id="group_id_name"></div>
 
-			<a id="create_sphere" class="ui-btn ui-corner-all ui-shadow" href="">Create sphere</a>
+			<a id="create_sphere" class="ui-btn ui-corner-all " href="">Create sphere</a>
 
-			<a id="members-btn" class="ui-btn ui-corner-all ui-shadow" href="#members">Manage user list</a>
+			<a id="members-btn" class="ui-btn ui-corner-all " href="#members">Manage user list</a>
 
-			<a id="membership_ask" class="ui-btn ui-corner-all ui-shadow" href="#membership-ask">Ask for membership</a>
+			<a id="membership_ask" class="ui-btn ui-corner-all " href="#membership-ask">Ask for membership</a>
 
-			<a id="membership_stop" class="ui-btn ui-corner-all ui-shadow" href="#membership-stop">Stop membership</a>
+			<a id="membership_stop" class="ui-btn ui-corner-all " href="#membership-stop">Stop membership</a>
 
 			<div class="vote-list news-list" id = 'group_spheres_list'></div>
 		</div>
@@ -2234,7 +2245,7 @@
 				<div class="text-field">
 					<label class="city">City</label><select name="city"></select>
 				</div> -->
-				<input id="add_btn" type="submit" value="Add group" class="ui-btn ui-input-btn ui-corner-all ui-shadow" />
+				<input id="add_btn" type="submit" value="Add group" class="ui-btn ui-input-btn ui-corner-all " />
 			</form>
 		</div>
 		<div class="right_col"></div>
@@ -2318,7 +2329,6 @@
 				<div id = "curr" class="select-field">
 					<label id = "curr-label">Choose currency</label>
 					<select name="curr">
-						<option value="1">ICAN</option>
 						<option value="980">UAH</option>
 						<option value="840">USD</option>
 						<option value="978">EUR</option>
@@ -2466,11 +2476,11 @@
 				<div id = "nco_content">
 				</div>
 				<div class="btn-nko">
-					<input id = "choose-nco-label" type="submit" onclick = "$.mobile.navigate('#create-item-nko-page')" value="Выбрать НКО" class="ui-btn ui-btn-corner-all ui-shadow" />
+					<input id = "choose-nco-label" type="submit" onclick = "$.mobile.navigate('#create-item-nko-page')" value="Выбрать НКО" class="ui-btn ui-btn-corner-all " />
 					<input type = "hidden" name = "nco" value = "">
 				</div>
 				<div class="btn-create">
-					<input id = "create-label" id = "submit" onclick = "CREATE_ITEM.create_object()" type="submit" value="Create" class="ui-btn ui-btn-corner-all ui-shadow" />
+					<input id = "create-label" id = "submit" onclick = "CREATE_ITEM.create_object()" type="submit" value="Create" class="ui-btn ui-btn-corner-all " />
 				</div>
 			</form>
 			<div style = "display:none">
@@ -2527,13 +2537,14 @@
 		</div>
 	</div>
 		<div class="left_col">
+			<div class="ui-input-search ui-input-has-clear">
+				<input onkeyup="VOTINGS.filter_data()" onchange="VOTINGS.filter_data()" id = "searched_string" type="search" name="" placeholder="Search by ID or name" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">Clear text</a>
+				<input type="button" value="speech" data-icon="speech" data-iconpos="notext" />
+			</div>
 			<div class="filters-panel">
 				<div class="filters-panel-inner">
 					<form action="" accept-charset="UTF-8" method="post" onsubmit="return false;">
-						<div class="ui-input-search ui-input-has-clear">
-							<input onkeyup="VOTINGS.filter_data()" onchange="VOTINGS.filter_data()" id = "searched_string" type="search" name="" placeholder="Search by ID or name" data-enhanced="true" /><a class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-input-clear-hidden" href="">Clear text</a>
-							<input type="button" value="speech" data-icon="speech" data-iconpos="notext" />
-						</div>
+
 						<div>
 							<select onchange="VOTINGS.filter_data()" name="sort" placeholder="Sort by newest">
 								<option value='0'>Sort by newest</option>
@@ -2578,8 +2589,8 @@
 						<fieldset class = "sphere_form"></fieldset>
 
 						<div class="ui-grid-a">
-							<div onclick = "COMMON_OBJECT.custom_swipe(this)" data-show = "0" class="ui-block-a">
-								<div  class="ui-input-btn ui-btn ui-btn-icon-right filter-save">
+							<div data-show = "0" class="ui-block-a swiper">
+								<div class="ui-input-btn ui-btn ui-btn-icon-right filter-save">
 									<span>Close filter</span><input type="button" value="" data-enhanced="true" />
 								</div>
 							</div>
@@ -2593,8 +2604,8 @@
 				</div>
 			</div>
 			<div role="main" class="ui-content">
-				<a  id = "filter_slider"  class="ui-btn ui-corner-all ui-shadow filter_slider_btn" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>
-				<a class="ui-btn ui-corner-all ui-shadow create-vote" href="#create-vote">Создать голосование</a>
+				<a  id = "filter_slider"  class="ui-btn ui-corner-all  filter_slider_btn" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>
+				<a class="ui-btn ui-corner-all  create-vote" href="#create-vote">Создать голосование</a>
 				<div class="votings-list" id = 'votings_list'></div>
 			</div>
 		</div>
@@ -2655,8 +2666,8 @@
 	</div>
 	<div role="main" class="ui-content">
 		<div class="left_col">
-			<a  id = "filter_slider"  class="ui-btn ui-corner-all ui-shadow" data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>		
-			<a class="ui-btn ui-corner-all ui-shadow create-vote" href="#create-vote">Создать голосование</a>
+			<a  id = "filter_slider"  class="ui-btn ui-corner-all " data-show = "1" onclick = "COMMON_OBJECT.custom_swipe(this)" href="#">Filter panel</a>		
+			<a class="ui-btn ui-corner-all  create-vote" href="#create-vote">Создать голосование</a>
 			<div class="votings-list" id = 'votings_list'></div>
 		</div>
 		<div class="right_col"></div>
@@ -3021,7 +3032,7 @@
 					</select>
 				</fieldset>
 				<div class="btn-create">
-					<input type="submit" value="Create vote" class="ui-btn ui-btn-corner-all ui-shadow" />
+					<input type="submit" value="Create vote" class="ui-btn ui-btn-corner-all " />
 				</div>
 			</form>
 			<form style = "display:none" id = "picture_form_create_vote" action = "https://gurtom.mobi/i/up.php" method="post" enctype="multipart/form-data">
@@ -3192,12 +3203,13 @@
 	</div>
 	<ul class="menu">
 		<li>
+			<a class="menu-neighborhoods neighborhoods" data-link = "" href="">Neighborhoods</a>
+		</li>
+		<li>
 			<a class="menu-icon-news" data-link = "#news-page" href="#news-page">News</a>
 		</li>
 		<li>
-			<a class="menu-icon-votings" 
-			data-link = "#votings-page" 
-			onclick = "$.mobile.navigate('#votings-page')" href="#votings-page">Decision-making</a>
+			<a class="menu-votings menu-icon-votings" data-link = "" href="">Decision-making</a>
 		</li>
 		<li>
 			<a class="menu-icon-programs" data-link = "#programs-page" href="#programs-page">Social Investment</a>
@@ -3227,6 +3239,14 @@
 			<a class="menu-icon-logout" href="#main-page">Logout</a>
 		</li>
 	</ul>
+</div>
+
+<div class="right-panel" data-role="panel" id="right-panel" data-position="right" data-position-fixed="true" data-display="overlay">
+<!-- 	<div class="right_menu">
+		<a id="btn_map" class="ui-btn btn_inline">Map</a>
+		<a id="btn_info" class="ui-btn btn_inline spining_circle">Info</a>
+	</div> -->
+
 </div>
 
 <script src="./javascripts/phonegap_only.js"></script>

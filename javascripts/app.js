@@ -235,8 +235,8 @@
         //    }
         //}
 
-        $('.chart').on('click', function(){
-            $(this).find('.info').toggleClass('animated');
-        })
+        // $('.chart').on('click', function(){
+        //     $(this).find('.info').toggleClass('animated');
+        // })
     })
 })(jQuery);

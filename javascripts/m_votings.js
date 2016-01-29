@@ -557,7 +557,7 @@ var SPHERES = {
 			var l_sph_tree = [];
 
 			$.each(self.list, function(i, l_one_item){
-				console.log(l_one_item);
+				//console.log(l_one_item);
 
 				if(l_sph_tree[l_one_item.type] === undefined){ 
 					l_sph_tree[l_one_item.type] = ''; 
@@ -587,6 +587,7 @@ var SPHERES = {
 			alert(l_idc);
 
 		});
+
 	},
 };
 
@@ -597,6 +598,7 @@ var VOTINGS = {
 	activated_easy_filter: 0,
 	activated_hard_filter: 0,
 	sphere_filter: -1,
+	neighborhoods: 0,
 	init: function(call_back){
 		var self = this;
 		self.activated_easy_filter = 0;
@@ -633,6 +635,12 @@ var VOTINGS = {
 				url += match_array_sph[0];
 			}
 
+			if((location.href.indexOf('&nh=1') > -1) || VOTINGS.neighborhoods == 1){
+				url += '&nh=1';
+				$('#nh_info').hide();
+				$('#map').show();
+			}
+
 			if(location.href.indexOf('&type=') > -1){
 				var match_array_type = location.href.match(/&type=[0-9]*/i);
 				url += match_array_type[0];
@@ -649,7 +657,7 @@ var VOTINGS = {
 			}
 		}
 
-		//console.log('init:' + url);
+		console.log('init:' + url);
 
 		$.ajax({
 			url: url,
@@ -674,8 +682,7 @@ var VOTINGS = {
 			},
 		});
 
-		$('.right_col').html(LOCALE_ARRAY_ADDITIONAL.right_col_votings_page[CURRENT_LANG]);
-
+		//$('.right_col').html(LOCALE_ARRAY_ADDITIONAL.right_col_votings_page[CURRENT_LANG]);
 	},
 	filter_data: function(sphere_id, reinit, name_sphere){
 		var self = this;
@@ -692,6 +699,8 @@ var VOTINGS = {
 					break;
 				}
 			}
+
+			//TODO: delete next string after my_votings will be made as standard list
 			$('#filter-page #choose_spheres').html(LOCALE_ARRAY_ADDITIONAL.choose_sphere[CURRENT_LANG] + ': ' + type_sphere);
 		}
 
@@ -753,11 +762,14 @@ var VOTINGS = {
 				url += '&' + match_array[0].match(/filter=[%a-zA-Z0-9]*/i);
 			}
 
-
-
 			if(location.href.indexOf('&sph=') > -1){
 				var match_array_sph = location.href.match(/&sph=[0-9]*/i);
 				url += match_array_sph[0];
+			}
+
+
+			if((location.href.indexOf('&nh=1') > -1) || VOTINGS.neighborhoods == 1){
+				url += '&nh=1';
 			}
 
 			if(location.href.indexOf('&type=') > -1){
@@ -794,8 +806,9 @@ var VOTINGS = {
 					}else{
 						self.build_elements();	
 					}
-				} else if(self.votings_array.length == 0 && reinit != 1 && self.activated_hard_filter == 1){
-					alert(LOCALE_ARRAY_ADDITIONAL.no_data[CURRENT_LANG]);
+				} else if(self.votings_array.length == 0 && reinit != 1){
+					$('#votings-page #votings_list').html('<center><h3>' + LOCALE_ARRAY_ADDITIONAL.no_data[CURRENT_LANG] + '</h3></center>');
+					//alert(LOCALE_ARRAY_ADDITIONAL.no_data[CURRENT_LANG]);
 				}
 				$.mobile.loading( "hide" );
 			},
@@ -831,12 +844,16 @@ var VOTINGS = {
 				url += match_array_sph[0];
 			}
 
+			if((location.href.indexOf('&nh=1') > -1) || VOTINGS.neighborhoods == 1){
+				url += '&nh=1';
+			}
+
 			if(location.href.indexOf('&type=') > -1){
 				var match_array_type = location.href.match(/&type=[0-9]*/i);
 				url += match_array_type[0];
 			}
 
-			//console.log('REinit:' + url);
+			console.log('REinit:' + url);
 
 			$.ajax({
 				url: url,
@@ -1169,7 +1186,7 @@ var VOTINGS = {
 
 		if(SUPER_PROFILE.id == data_for_build.author_id && data_for_build.sprtd == "0"){
 			var delete_button = '<div class="delete_vote_button">\
-									<a onclick = "VOTINGS.delete_voting(\'' + data_for_build.id + '\', \'#votings-page\')" class="ui-btn ui-corner-all ui-shadow special_href" href="#">' + LOCALE_ARRAY_ADDITIONAL.delete_vote[CURRENT_LANG] + '</a>\
+									<a onclick = "VOTINGS.delete_voting(\'' + data_for_build.id + '\', \'#votings-page\')" class="ui-btn ui-corner-all  special_href" href="#">' + LOCALE_ARRAY_ADDITIONAL.delete_vote[CURRENT_LANG] + '</a>\
 								</div> ';
 		}else{
 			var delete_button = '';
@@ -1240,13 +1257,13 @@ var VOTINGS = {
 		var create_project_button = '';
 		if( data_for_build.cpb == "1" && SUPER_PROFILE.auth == true){
 			create_project_button = '<div id = "create_project_button" class="btn-login-soc">\
-										<a class="ui-btn ui-corner-all ui-shadow" onclick="VOTINGS.create_project_request(\'' + data_for_build.id + '\',\'project\')">' + LOCALE_ARRAY_ADDITIONAL.create_project[CURRENT_LANG] + '</a>\
+										<a class="ui-btn ui-corner-all " onclick="VOTINGS.create_project_request(\'' + data_for_build.id + '\',\'project\')">' + LOCALE_ARRAY_ADDITIONAL.create_project[CURRENT_LANG] + '</a>\
 									</div>';
 		}	
 		var create_request_button = '';
 		if( data_for_build.crb == "1" && SUPER_PROFILE.auth == true){
 			create_request_button = '<div id = "create_request_button" class="btn-login-soc">\
-										<a class="ui-btn ui-corner-all ui-shadow" onclick="VOTINGS.create_project_request(\'' + data_for_build.id + '\',\'request\')">' + LOCALE_ARRAY_ADDITIONAL.create_request[CURRENT_LANG] + '</a>\
+										<a class="ui-btn ui-corner-all " onclick="VOTINGS.create_project_request(\'' + data_for_build.id + '\',\'request\')">' + LOCALE_ARRAY_ADDITIONAL.create_request[CURRENT_LANG] + '</a>\
 									</div>';
 		}
 		var ui_string = '';
@@ -1287,10 +1304,10 @@ var VOTINGS = {
 											</div>' + status_vote +
 											'<div class="desc">' + data_for_build.description + ' </div>\
 											<div class="discuss-btn">\
-												<a class="ui-btn ui-corner-all ui-shadow" onclick="window.open(\'' + data_for_build.chat + '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_voting[CURRENT_LANG] + '</a>\
+												<a class="ui-btn ui-corner-all " onclick="window.open(\'' + data_for_build.chat + '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_voting[CURRENT_LANG] + '</a>\
 											</div>\
 											<div class="btn-login-soc">\
-												<button class="ui-btn ui-corner-all ui-shadow share-btn"> ' + LOCALE_ARRAY_ADDITIONAL.share_by_social_newtworks[CURRENT_LANG] + '</button>\
+												<button class="ui-btn ui-corner-all  share-btn"> ' + LOCALE_ARRAY_ADDITIONAL.share_by_social_newtworks[CURRENT_LANG] + '</button>\
 												<div class="social-wrap">\
 													<div class="ui-grid-b">\
 														<div class="ui-block-a">\
@@ -1315,7 +1332,7 @@ var VOTINGS = {
 												</div>\
 											</div>\
 											<div class="sms-btn">\
-												<a class="ui-btn ui-corner-all ui-shadow" href="#">SMS</a>\
+												<a class="ui-btn ui-corner-all " href="#">SMS</a>\
 											</div>' + delete_button + '\
 											' + create_project_button + '\
 											' + create_request_button + '\
@@ -1461,13 +1478,13 @@ var VOTINGS = {
 		var create_project_button = '';
 		if( data_for_build.cpb == "1" && SUPER_PROFILE.auth == true){
 			create_project_button = '<div id = "create_project_button" class="btn-login-soc">\
-										<a class="ui-btn ui-corner-all ui-shadow" onclick="VOTINGS.create_project_request(\'' + data_for_build.id + '\',\'project\')">' + LOCALE_ARRAY_ADDITIONAL.create_project[CURRENT_LANG] + '</a>\
+										<a class="ui-btn ui-corner-all " onclick="VOTINGS.create_project_request(\'' + data_for_build.id + '\',\'project\')">' + LOCALE_ARRAY_ADDITIONAL.create_project[CURRENT_LANG] + '</a>\
 									</div>';
 		}	
 		var create_request_button = '';
 		if( data_for_build.crb == "1" && SUPER_PROFILE.auth == true){
 			create_request_button = '<div id = "create_request_button" class="btn-login-soc">\
-										<a class="ui-btn ui-corner-all ui-shadow" onclick="VOTINGS.create_project_request(\'' + data_for_build.id + '\',\'request\')">' + LOCALE_ARRAY_ADDITIONAL.create_request[CURRENT_LANG] + '</a>\
+										<a class="ui-btn ui-corner-all " onclick="VOTINGS.create_project_request(\'' + data_for_build.id + '\',\'request\')">' + LOCALE_ARRAY_ADDITIONAL.create_request[CURRENT_LANG] + '</a>\
 									</div>';
 		}
 		var charts = '';
@@ -1537,10 +1554,10 @@ var VOTINGS = {
 									</div>' + status_vote + 
 									'<div class="desc">' + data_for_build.description + ' </div>\
 									<div class="discuss-btn">\
-										<a class="ui-btn ui-corner-all ui-shadow" onclick="window.open(\'' + data_for_build.chat + '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_voting[CURRENT_LANG] + '</a>\
+										<a class="ui-btn ui-corner-all " onclick="window.open(\'' + data_for_build.chat + '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_voting[CURRENT_LANG] + '</a>\
 									</div>\
 									<div class="btn-login-soc">\
-										<button data-role="button" class="ui-btn ui-corner-all ui-shadow share-btn">' + LOCALE_ARRAY_ADDITIONAL.share_by_social_newtworks[CURRENT_LANG] + '</button>\
+										<button data-role="button" class="ui-btn ui-corner-all  share-btn">' + LOCALE_ARRAY_ADDITIONAL.share_by_social_newtworks[CURRENT_LANG] + '</button>\
 										<div class="social-wrap">\
 											<div class="ui-grid-b">\
 												<div class="ui-block-a">\
@@ -1565,7 +1582,7 @@ var VOTINGS = {
 										</div>\
 									</div>\
 									<div class="sms-btn">\
-										<a class="ui-btn ui-corner-all ui-shadow" href="#">SMS</a>\
+										<a class="ui-btn ui-corner-all " href="#">SMS</a>\
 									</div>\
 									' + create_project_button + '\
 									' + create_request_button + '\
@@ -2557,7 +2574,7 @@ var MY_VOTINGS = {
 
 		if(data_for_build.sprtd == "0"){
 			var delete_button = '<div class="delete_vote_button">\
-									<a onclick = "VOTINGS.delete_voting(\'' + data_for_build.id + '\', \'#my-votings-page\')" class="ui-btn ui-corner-all ui-shadow special_href" href="#">' + LOCALE_ARRAY_ADDITIONAL.delete_vote[CURRENT_LANG] + '</a>\
+									<a onclick = "VOTINGS.delete_voting(\'' + data_for_build.id + '\', \'#my-votings-page\')" class="ui-btn ui-corner-all  special_href" href="#">' + LOCALE_ARRAY_ADDITIONAL.delete_vote[CURRENT_LANG] + '</a>\
 								</div> ';
 		}else{
 			var delete_button = '';
@@ -2604,13 +2621,13 @@ var MY_VOTINGS = {
 		var create_project_button = '';
 		if( data_for_build.cpb == "1" && SUPER_PROFILE.auth == true){
 			create_project_button = '<div id = "create_project_button" class="btn-login-soc">\
-										<a class="ui-btn ui-corner-all ui-shadow" onclick="VOTINGS.create_project_request(\'' + data_for_build.id + '\',\'project\')">' + LOCALE_ARRAY_ADDITIONAL.create_project[CURRENT_LANG] + '</a>\
+										<a class="ui-btn ui-corner-all " onclick="VOTINGS.create_project_request(\'' + data_for_build.id + '\',\'project\')">' + LOCALE_ARRAY_ADDITIONAL.create_project[CURRENT_LANG] + '</a>\
 									</div>';
 		}	
 		var create_request_button = '';
 		if( data_for_build.crb == "1" && SUPER_PROFILE.auth == true){
 			create_request_button = '<div id = "create_request_button" class="btn-login-soc">\
-										<a class="ui-btn ui-corner-all ui-shadow" onclick="VOTINGS.create_project_request(\'' + data_for_build.id + '\',\'request\')">' + LOCALE_ARRAY_ADDITIONAL.create_request[CURRENT_LANG] + '</a>\
+										<a class="ui-btn ui-corner-all " onclick="VOTINGS.create_project_request(\'' + data_for_build.id + '\',\'request\')">' + LOCALE_ARRAY_ADDITIONAL.create_request[CURRENT_LANG] + '</a>\
 									</div>';
 		}
 		var ui_string = '';
@@ -2650,10 +2667,10 @@ var MY_VOTINGS = {
 											</div>' + status_vote +
 											'<div class="desc">' + data_for_build.description + ' </div>\
 											<div class="discuss-btn">\
-												 <a class="ui-btn ui-corner-all ui-shadow" onclick="window.open(\'' + data_for_build.chat + '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_voting[CURRENT_LANG] + '</a>\
+												 <a class="ui-btn ui-corner-all " onclick="window.open(\'' + data_for_build.chat + '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_voting[CURRENT_LANG] + '</a>\
 											</div>\
 											<div class="btn-login-soc">\
-												<button class="ui-btn ui-corner-all ui-shadow share-btn">' + LOCALE_ARRAY_ADDITIONAL.share_by_social_newtworks[CURRENT_LANG] + '</button>\
+												<button class="ui-btn ui-corner-all  share-btn">' + LOCALE_ARRAY_ADDITIONAL.share_by_social_newtworks[CURRENT_LANG] + '</button>\
 												<div class="social-wrap">\
 													<div class="ui-grid-b">\
 														<div class="ui-block-a">\
@@ -2678,7 +2695,7 @@ var MY_VOTINGS = {
 												</div>\
 											</div>\
 											<div class="sms-btn">\
-												<a class="ui-btn ui-corner-all ui-shadow" href="#">SMS</a>\
+												<a class="ui-btn ui-corner-all " href="#">SMS</a>\
 											</div>' + delete_button + '\
 											' + create_project_button + '\
 											' + create_request_button + '\
@@ -2814,13 +2831,13 @@ var MY_VOTINGS = {
 		var create_project_button = '';
 		if( data_for_build.cpb == "1" && SUPER_PROFILE.auth == true){
 			create_project_button = '<div id = "create_project_button" class="btn-login-soc">\
-										<a class="ui-btn ui-corner-all ui-shadow" onclick="VOTINGS.create_project_request(\'' + data_for_build.id + '\',\'project\')">' + LOCALE_ARRAY_ADDITIONAL.create_project[CURRENT_LANG] + '</a>\
+										<a class="ui-btn ui-corner-all " onclick="VOTINGS.create_project_request(\'' + data_for_build.id + '\',\'project\')">' + LOCALE_ARRAY_ADDITIONAL.create_project[CURRENT_LANG] + '</a>\
 									</div>';
 		}	
 		var create_request_button = '';
 		if( data_for_build.crb == "1" && SUPER_PROFILE.auth == true){
 			create_request_button = '<div id = "create_request_button" class="btn-login-soc">\
-										<a class="ui-btn ui-corner-all ui-shadow" onclick="VOTINGS.create_project_request(\'' + data_for_build.id + '\',\'request\')">' + LOCALE_ARRAY_ADDITIONAL.create_request[CURRENT_LANG] + '</a>\
+										<a class="ui-btn ui-corner-all " onclick="VOTINGS.create_project_request(\'' + data_for_build.id + '\',\'request\')">' + LOCALE_ARRAY_ADDITIONAL.create_request[CURRENT_LANG] + '</a>\
 									</div>';
 		}
 		var charts = '';
@@ -2889,10 +2906,10 @@ var MY_VOTINGS = {
 										</div>' + status_vote + 
 										'<div class="desc">' + data_for_build.description + ' </div>\
 										<div class="discuss-btn">\
-											<a class="ui-btn ui-corner-all ui-shadow" onclick="window.open(\'' + data_for_build.chat + '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_voting[CURRENT_LANG] + '</a>\
+											<a class="ui-btn ui-corner-all " onclick="window.open(\'' + data_for_build.chat + '\', \'\'); return false;">' + LOCALE_ARRAY_ADDITIONAL.discussion_of_voting[CURRENT_LANG] + '</a>\
 										</div>\
 										<div class="btn-login-soc">\
-											<button data-role="button" class="ui-btn ui-corner-all ui-shadow share-btn">' + LOCALE_ARRAY_ADDITIONAL.share_by_social_newtworks[CURRENT_LANG] + '</button>\
+											<button data-role="button" class="ui-btn ui-corner-all  share-btn">' + LOCALE_ARRAY_ADDITIONAL.share_by_social_newtworks[CURRENT_LANG] + '</button>\
 											<div class="social-wrap">\
 												<div class="ui-grid-b">\
 													<div class="ui-block-a">\
@@ -2917,7 +2934,7 @@ var MY_VOTINGS = {
 											</div>\
 										</div>\
 										<div class="sms-btn">\
-											<a class="ui-btn ui-corner-all ui-shadow" href="#">SMS</a>\
+											<a class="ui-btn ui-corner-all " href="#">SMS</a>\
 										</div>\
 									 	' + create_project_button + '\
 										' + create_request_button + '\

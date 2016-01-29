@@ -51,33 +51,12 @@ div.ui-controlgroup-label {
   margin-left: 1%;
 }
 
-.img_fb {
-  background: #3b5998 url(../images/icon-fb.png) no-repeat;
-}
-.img_gp {
-  background: #d44132 url(../images/icon-gp.png) no-repeat;
-}
-.img_in {
-  background: #0077b5 url(../images/icon-in.png) no-repeat;
-}
-
 .btn_circle {
-  width: 3em;
-  height: 3em;
+  width: 40px;
+  height: 40px;
+  margin-right: 1em;
   -webkit-border-radius: 50%;
   border-radius: 50%;
-  cursor: pointer;
-  background-size: contain;
-  margin: 0em 1em 0em 1em;
-}
-
-.centered {
-  text-align: center;
-  margin: 0.5em auto;
-}
-
-.centered div{
-  display: inline-block;
 }
 
 .spining_circle {
@@ -233,6 +212,7 @@ label.ui-btn {
   -o-background-size: 14px 12px;
   -webkit-background-size: 14px 12px;
   background-size: 14px 12px; }
+
 
 .ui-btn.ui-checkbox-on:after {
   border-color: #4caf50;
@@ -647,6 +627,7 @@ label.ui-btn {
     color: #4d4d4d;
     font-weight: normal;
     outline: none; }
+
 
 #left-panel {
   background: #fff; }
@@ -1337,6 +1318,7 @@ label.ui-btn {
     .projects-list .item .info {
       margin-left: 25%; } }
 
+
 @media all and (min-width: 900px) {
   .left_col {
     width: 35%;
@@ -1362,6 +1344,7 @@ label.ui-btn {
   .right_col {
     display: none;
   }
+
 }
 
 #other_adr {
@@ -2368,6 +2351,7 @@ label.ui-btn {
     -webkit-border-radius: 28%;
     border-radius: 28% 28% 28% 28%; }
 
+
 #create-pif-page .button-fixed .ui-btn {
   background-color: #8bc34a;
   -moz-border-radius: 0;
@@ -2643,6 +2627,7 @@ label.ui-btn {
   box-shadow: none; 
 }
 
+
 #org_list .info {
   margin-left: 1em;
 }
@@ -2668,6 +2653,7 @@ label.ui-btn {
   overflow-y: hidden;
   width: 27%;
 }
+
 
 .ribbon {
   width: 2em;
@@ -2728,6 +2714,7 @@ label.ui-btn {
   float: left;
   width: 75%;
   display: inline-block;
+
 }
 
 .grid-b{
@@ -2746,6 +2733,7 @@ label.ui-btn {
   height: 5.5em;
   width: 6em;
 }
+
 
 .grid-c{
   background-color: #4484F6;
@@ -2792,6 +2780,7 @@ label.ui-btn {
   margin: 0.5em;
   padding: 0.5em;
   background-color: #E9E8E8;
+
 }
 
 .news_img_list{
@@ -2805,4 +2794,5 @@ label.ui-btn {
 }
 
 .right_menu{
+
 }

@@ -1,8 +1,7 @@
-var l_app = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
+//console.log(l_phonegap);
 
-console.log(l_app);
-
-if ( l_app ) {
+//If PhoneGap then clear elements
+if ( g_phonegap ) {
 	$('.btn-login-soc').html('');
 	$('.social-wrap').html('');
 	$('.refund').html('');
